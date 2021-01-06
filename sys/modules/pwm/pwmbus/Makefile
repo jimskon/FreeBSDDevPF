@@ -1,0 +1,20 @@
+# $FreeBSD: releng/12.1/sys/modules/pwm/pwmbus/Makefile 349430 2019-06-26 17:28:55Z ian $
+
+.PATH:	${SRCTOP}/sys/dev/pwm
+
+KMOD=	pwmbus
+SRCS=	pwmbus.c
+
+.if !empty(OPT_FDT)
+SRCS+=	ofw_pwm.c ofw_pwmbus.c ofw_bus_if.h
+.endif
+
+# Generated files...
+SRCS+=	\
+	bus_if.h \
+	device_if.h \
+	opt_platform.h \
+	pwmbus_if.c \
+	pwmbus_if.h \
+
+.include <bsd.kmod.mk>

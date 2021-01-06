@@ -1,0 +1,10 @@
+# $FreeBSD: releng/12.1/sys/riscv/conf/QEMU 351343 2019-08-21 16:27:19Z markj $
+
+#NO_UNIVERSE
+
+include "GENERIC"
+
+ident QEMU
+
+options 	HZ=100
+options 	ROOTDEVNAME=\"ufs:/dev/vtbd0\"

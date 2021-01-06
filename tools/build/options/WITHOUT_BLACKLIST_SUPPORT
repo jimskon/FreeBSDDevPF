@@ -1,0 +1,8 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_BLACKLIST_SUPPORT 351761 2019-09-03 16:52:44Z emaste $
+Set to build some programs without
+.Xr libblacklist 3
+support, like
+.Xr fingerd 8 ,
+.Xr ftpd 8 ,
+and
+.Xr sshd 8 .

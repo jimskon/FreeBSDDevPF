@@ -1,0 +1,5 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_BSD_CRTBEGIN 352394 2019-09-16 13:41:24Z andrew $
+Disable the BSD licensed
+.Pa crtbegin.o
+and
+.Pa crtend.o .

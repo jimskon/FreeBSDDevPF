@@ -1,0 +1,5 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITH_BSD_CRTBEGIN 352394 2019-09-16 13:41:24Z andrew $
+Enable the BSD licensed
+.Pa crtbegin.o
+and
+.Pa crtend.o .

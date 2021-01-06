@@ -1,0 +1,44 @@
+# $FreeBSD: releng/12.1/sys/arm/conf/NOTES 350867 2019-08-11 20:50:41Z ian $
+
+options 	FDT
+
+# Undo options from sys/conf/NOTES that we do not want...
+
+nooptions	COMPAT_FREEBSD4
+nooptions	COMPAT_FREEBSD5
+nooptions	COMPAT_FREEBSD6
+nooptions	COMPAT_FREEBSD7
+nooptions	COMPAT_FREEBSD9
+nooptions	PPC_PROBE_CHIPSET
+nooptions	MAXCPU		# value is set in machine/param.h
+
+# Devices in sys/conf/NOTES for which no such hardware exists on arm,
+# or the drivers don't compile...
+
+nodevice	fdc
+nodevice	sym
+
+nodevice	sc
+nodevice	blank_saver
+nodevice	daemon_saver
+nodevice	dragon_saver
+nodevice	fade_saver
+nodevice	fire_saver
+nodevice	green_saver
+nodevice	logo_saver
+nodevice	rain_saver
+nodevice	snake_saver
+nodevice	star_saver
+nodevice	warp_saver
+
+nodevice	ccr
+nodevice	cxgbe
+nodevice	cxgbev
+nodevice	snd_cmi
+
+nodevice	mpr
+nodevice	mps
+
+# Add devices which are specific to various arm platforms...
+
+device		twsi		# i2c controller on Marvel and Allwinner

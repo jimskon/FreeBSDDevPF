@@ -1,0 +1,2 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITH_SSP 311136 2017-01-02 20:09:09Z ngie $
+Set to build world with propolice stack smashing protection.

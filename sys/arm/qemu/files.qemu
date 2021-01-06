@@ -1,0 +1,7 @@
+# $FreeBSD: releng/12.1/sys/arm/qemu/files.qemu 350603 2019-08-05 18:13:13Z manu $
+
+#
+# Standard qemu virt devices and support.
+#
+arm/qemu/virt_machdep.c			standard
+arm/qemu/virt_mp.c			optional	smp

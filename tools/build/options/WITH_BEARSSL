@@ -1,0 +1,11 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITH_BEARSSL 346145 2019-04-12 01:03:00Z sjg $
+Build the BearSSL library.
+.Pp
+BearSSL is a tiny SSL library suitable for embedded environments.
+For details see
+.Lk http://www.BearSSL.org/
+.Pp
+This library is currently only used to perform
+signature verification and related operations
+for Verified Exec and
+.Xr loader 8 .

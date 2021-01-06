@@ -1,0 +1,2 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_ZFS 345327 2019-03-20 15:34:40Z mmacy $
+Set to not build ZFS file system kernel module, libraries, and user commands.

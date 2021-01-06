@@ -1,0 +1,29 @@
+# $FreeBSD: releng/12.1/usr.bin/clang/llvm-pdbutil/Makefile 346168 2019-04-12 20:03:27Z dim $
+
+PROG_CXX=	llvm-pdbutil
+
+SRCDIR=		tools/llvm-pdbutil
+SRCS+=		BytesOutputStyle.cpp
+SRCS+=		DumpOutputStyle.cpp
+SRCS+=		ExplainOutputStyle.cpp
+SRCS+=		FormatUtil.cpp
+SRCS+=		InputFile.cpp
+SRCS+=		LinePrinter.cpp
+SRCS+=		MinimalSymbolDumper.cpp
+SRCS+=		MinimalTypeDumper.cpp
+SRCS+=		PdbYaml.cpp
+SRCS+=		PrettyBuiltinDumper.cpp
+SRCS+=		PrettyClassDefinitionDumper.cpp
+SRCS+=		PrettyClassLayoutGraphicalDumper.cpp
+SRCS+=		PrettyCompilandDumper.cpp
+SRCS+=		PrettyEnumDumper.cpp
+SRCS+=		PrettyExternalSymbolDumper.cpp
+SRCS+=		PrettyFunctionDumper.cpp
+SRCS+=		PrettyTypeDumper.cpp
+SRCS+=		PrettyTypedefDumper.cpp
+SRCS+=		PrettyVariableDumper.cpp
+SRCS+=		StreamUtil.cpp
+SRCS+=		YAMLOutputStyle.cpp
+SRCS+=		llvm-pdbutil.cpp
+
+.include "../llvm.prog.mk"

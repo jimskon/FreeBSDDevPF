@@ -1,0 +1,5 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_GOOGLETEST 348138 2019-05-23 01:09:10Z ngie $
+Set to neither build nor install
+.Lb libgmock ,
+.Lb libgtest ,
+and dependent tests.

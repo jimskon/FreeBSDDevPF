@@ -1,0 +1,7 @@
+.\" $FreeBSD: releng/12.1/tools/build/options/WITH_LOADER_VERIEXEC 346145 2019-04-12 01:03:00Z sjg $
+Enable building
+.Xr loader 8
+with support for verifcation similar to Verified Exec.
+.Pp
+It depends on
+.Va WITH_BEARSSL

@@ -1,0 +1,11 @@
+# $FreeBSD: releng/12.1/sys/arm/rockchip/files.rk30xx 350603 2019-08-05 18:13:13Z manu $
+
+arm/rockchip/rk30xx_machdep.c		standard
+arm/rockchip/rk30xx_pmu.c		standard
+arm/rockchip/rk30xx_grf.c		standard
+arm/rockchip/rk30xx_wdog.c		standard
+arm/rockchip/rk30xx_gpio.c		optional	gpio
+arm/rockchip/rk30xx_mp.c		optional	smp
+
+dev/mmc/host/dwmmc.c			optional	dwmmc
+dev/mmc/host/dwmmc_rockchip.c		optional	dwmmc
