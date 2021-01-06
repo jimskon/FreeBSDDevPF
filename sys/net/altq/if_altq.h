@@ -72,6 +72,9 @@ struct	ifaltq {
 
 	/* input traffic conditioner (doesn't belong to the output queue...) */
 	struct top_cdnr *altq_cdnr;
+
+        /* SKON: index of this queue structure */
+        uint8_t index;          
 };
 
 

@@ -206,7 +206,8 @@ static struct node_queue {
 	char			 parent[PF_QNAME_SIZE];
 	char			 ifname[IFNAMSIZ];
 	int			 scheduler;
-	struct node_queue	*next;
+        uint8_t                  index; // SKON - interface index
+        struct node_queue	*next;
 	struct node_queue	*tail;
 }	*queues = NULL;
 
@@ -2830,6 +2831,8 @@ if_item_not	: not if_item			{ $$ = $2; $$->not = $1; }
 
 if_item		: STRING			{
 			struct node_host	*n;
+                        // SKON: break off interface index if present                  
+                        char *ptr = strtok($1,".");
 
 			$$ = calloc(1, sizeof(struct node_if));
 			if ($$ == NULL)
@@ -2841,6 +2844,19 @@ if_item		: STRING			{
 				yyerror("interface name too long");
 				YYERROR;
 			}
+
+                        // SKON : get interface number                                  
+                        ptr = strtok(NULL, ".");
+                        if (ptr == NULL) {
+                          $$->index=0;
+                        } else {   // Need to fix for numbers with more then a single digit.
+			  
+                          $$->index=*ptr-48;
+                          if ($$->index < 1 || $$->index>8) {
+                            yyerror("Interface number must be between 1 and 8");
+                            YYERROR;
+                          }
+                        }
 
 			if ((n = ifa_exists($1)) != NULL)
 				$$->ifa_flags = n->ifa_flags;
@@ -5006,6 +5022,10 @@ expand_altq(struct pf_altq *a, struct node_if *interfaces,
 
 	LOOP_THROUGH(struct node_if, interface, interfaces,
 		memcpy(&pa, a, sizeof(struct pf_altq));
+
+                pa.index=interface->index; // SKON get interface index
+		a->index=interface->index;
+		     
 		if (strlcpy(pa.ifname, interface->ifname,
 		    sizeof(pa.ifname)) >= sizeof(pa.ifname))
 			errx(1, "expand_altq: strlcpy");
@@ -5039,6 +5059,30 @@ expand_altq(struct pf_altq *a, struct node_if *interfaces,
 			    pa.scheduler == ALTQT_HFSC) {
 				/* now create a root queue */
 				memset(&pb, 0, sizeof(struct pf_altq));
+
+                                pb.index=interface->index; // SKON get interface index                       
+                                if (strlcpy(qname, "root", sizeof(qname)) >=
+                                    sizeof(qname))
+                                        errx(1, "expand_altq: strlcpy");
+                                // Skon - add index                                                          
+                                char index[2];
+                                sprintf(index, "%d", interface->index);
+                                if (strlcat(qname, index,
+                                    sizeof(qname)) >= sizeof(qname))
+                                    errx(1, "expand_altq: strlcat 1");
+                                if (strlcat(qname, "_",
+                                    sizeof(qname)) >= sizeof(qname))
+                                        errx(1, "expand_altq: strlcat 2");
+                                if (strlcat(qname, interface->ifname,
+                                    sizeof(qname)) >= sizeof(qname))
+                                        errx(1, "expand_altq: strlcat 3");
+                                if (strlcpy(pb.qname, qname,
+                                    sizeof(pb.qname)) >= sizeof(pb.qname))
+                                        errx(1, "expand_altq: strlcpy");
+                                if (strlcpy(pb.ifname, interface->ifname,
+                                    sizeof(pb.ifname)) >= sizeof(pb.ifname))
+                                        errx(1, "expand_altq: strlcpy");
+				/*				
 				if (strlcpy(qname, "root_", sizeof(qname)) >=
 				    sizeof(qname))
 					errx(1, "expand_altq: strlcpy");
@@ -5050,7 +5094,7 @@ expand_altq(struct pf_altq *a, struct node_if *interfaces,
 					errx(1, "expand_altq: strlcpy");
 				if (strlcpy(pb.ifname, interface->ifname,
 				    sizeof(pb.ifname)) >= sizeof(pb.ifname))
-					errx(1, "expand_altq: strlcpy");
+				    errx(1, "expand_altq: strlcpy");*/
 				pb.qlimit = pa.qlimit;
 				pb.scheduler = pa.scheduler;
 				bw.bw_absolute = pa.ifbandwidth;
@@ -5081,6 +5125,8 @@ expand_altq(struct pf_altq *a, struct node_if *interfaces,
 				n->scheduler = pa.scheduler;
 				n->next = NULL;
 				n->tail = n;
+
+				n->index = interface->index;  // SKON -give queue interface index                              				     
 				if (queues == NULL)
 					queues = n;
 				else {
@@ -5165,6 +5211,7 @@ expand_queue(struct pf_altq *a, struct node_if *interfaces,
 				    sizeof(pa.parent)) >= sizeof(pa.parent))
 					errx(1, "expand_queue: strlcpy");
 
+                                pa.index=tqueue->index;  // SKON add interface index                         				
 				if (eval_pfqueue(pf, &pa, &bwspec, opts))
 					errs++;
 				else

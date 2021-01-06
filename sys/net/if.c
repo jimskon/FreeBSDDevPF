@@ -2487,6 +2487,22 @@ ifunit(const char *name)
 	return (ifp);
 }
 
+// Skon - special ifunit that uses queue struture index for lookups                                 
+struct ifnet *
+ifunit_indexed(const char *name, const uint8_t index)
+{
+        struct ifnet *ifp;
+
+        IFNET_RLOCK_NOSLEEP();
+        CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
+          if (strncmp(name, ifp->if_xname, IFNAMSIZ) == 0
+	      && ifp->if_snd.index==index)                                    
+                        break;
+        }
+        IFNET_RUNLOCK_NOSLEEP();
+        return (ifp);
+}
+
 void *
 ifr_buffer_get_buffer(void *data)
 {
