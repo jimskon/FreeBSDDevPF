@@ -1477,6 +1477,9 @@ pfctl_load_rule(struct pfctl *pf, char *path, struct pf_rule *r, int depth)
 int
 pfctl_add_altq(struct pfctl *pf, struct pf_altq *a)
 {
+  // Skon - pass index local_flags
+  printf("pfctl_add_altq: %s %s %d\n", a->ifname, a->qname, a->index);
+  a->local_flags=a->index;
 	if (altqsupport &&
 	    (loadopt & PFCTL_FLAG_ALTQ) != 0) {
 		memcpy(&pf->paltq->altq, a, sizeof(struct pf_altq));

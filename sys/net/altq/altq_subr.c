@@ -137,6 +137,21 @@ altq_lookup(name, type)
 
 	return NULL;
 }
+/* Skon: New lookup version using index */
+/* look up the queue state by the interface name and the queueing type. */
+void *
+altq_lookup_indexed(char *name, uint8_t index, int type)
+{
+	struct ifnet *ifp;
+
+	if ((ifp = ifunit_indexed(name,index)) != NULL) {
+		/* read if_snd unlocked */
+		if (type != ALTQT_NONE && ifp->if_snd.altq_type == type)
+			return (ifp->if_snd.altq_disc);
+	}
+
+	return NULL;
+}
 
 int
 altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
