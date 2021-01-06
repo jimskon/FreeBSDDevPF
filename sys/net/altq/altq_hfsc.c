@@ -185,7 +185,10 @@ hfsc_pfattach(struct pf_altq *a)
 int
 hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 {
-	struct hfsc_if *hif;
+        // Skon
+        printf("******* In hfsc_add_altq: Type:%d, %s, %d, %s, %p\n",a->scheduler,a->ifname,a->index,a->qname,(void *) a);
+
+        struct hfsc_if *hif;
 
 	if (ifp == NULL)
 		return (EINVAL);
@@ -201,7 +204,9 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 
 	/* keep the state in pf_altq */
 	a->altq_disc = hif;
-
+	printf("***** hfsc_add_altq, hfsc address: %p\n", (void *)hif);
+        // Skon - add the root index to the ifaltq                                                   
+        ifp->if_snd.index=a->index;
 	return (0);
 }
 
@@ -291,10 +296,12 @@ hfsc_getqstats(struct pf_altq *a, void *ubuf, int *nbytes, int version)
 	} stats;
 	size_t stats_size;
 	int error = 0;
-
-	if ((hif = altq_lookup(a->ifname, ALTQT_HFSC)) == NULL)
+	// Skon - add index
+        if ((hif = altq_lookup_indexed(a->ifname, a->index, ALTQT_HFSC)) == NULL)             
+	  //	if ((hif = altq_lookup(a->ifname, ALTQT_HFSC)) == NULL)
 		return (EBADF);
-
+	// Skon
+	printf("hfsc_getqstats: %s, %s, %d, %p\n",a->ifname,a->qname,a->index,hif);
 	if ((cl = clh_to_clp(hif, a->qid)) == NULL)
 		return (EINVAL);
 
@@ -519,8 +526,12 @@ hfsc_class_create(struct hfsc_if *hif, struct service_curve *rsc,
 	 * use the first free slot.
 	 */
 	i = qid % HFSC_MAX_CLASSES;
-	if (hif->hif_class_tbl[i] == NULL)
+	if (hif->hif_class_tbl[i] == NULL) {
 		hif->hif_class_tbl[i] = cl;
+		// SKon
+		printf("hfsc_class_create: id: %d handle: %d index: %d addr:%p parent: %p\n",cl->cl_id,cl->cl_handle,i,cl->cl_hif, parent);
+
+	}
 	else {
 		for (i = 0; i < HFSC_MAX_CLASSES; i++)
 			if (hif->hif_class_tbl[i] == NULL) {

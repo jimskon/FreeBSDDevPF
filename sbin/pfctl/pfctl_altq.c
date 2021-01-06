@@ -60,8 +60,12 @@ static struct hsearch_data queue_map;
 static struct hsearch_data if_map;
 static struct hsearch_data qid_map;
 
-static struct pfctl_altq *pfaltq_lookup(char *ifname);
-static struct pfctl_altq *qname_to_pfaltq(const char *, const char *);
+// Skon - add index                                         
+static struct pfctl_altq *pfaltq_lookup(char *ifname, uint8_t index);
+//static struct pfctl_altq *pfaltq_lookup(char *ifname);
+
+static struct pfctl_altq *qname_to_pfaltq(const char *, const char *, uint8_t index);
+//static struct pfctl_altq *qname_to_pfaltq(const char *, const char *);
 static u_int32_t	 qname_to_qid(char *);
 
 static int	eval_pfqueue_cbq(struct pfctl *, struct pf_altq *,
@@ -134,6 +138,8 @@ pfaltq_store(struct pf_altq *a)
 	ENTRY 			 item;
 	ENTRY			*ret_item;
 	size_t			 key_size;
+	// skon
+        printf("pfaltq_store: %s, %s, %d\n",a->ifname,a->qname,a->index);
 	
 	if ((altq = malloc(sizeof(*altq))) == NULL)
 		err(1, "queue malloc");
@@ -141,49 +147,76 @@ pfaltq_store(struct pf_altq *a)
 	memset(&altq->meta, 0, sizeof(altq->meta));
 
 	if (a->qname[0] == 0) {
-		item.key = altq->pa.ifname;
+                // Skon - include index with ifname                                     
+                key_size = sizeof(a->ifname);
+                if ((item.key = malloc(key_size)) == NULL)
+                        err(1, "if map key malloc");
+                snprintf(item.key, key_size, "%s:%d",altq->pa.ifname,altq->pa.index);
+                printf("pfaltq_store if key: %s\n",item.key);
+		
+	        //item.key = altq->pa.ifname;
 		item.data = altq;
 		if (hsearch_r(item, ENTER, &ret_item, &if_map) == 0)
 			err(1, "interface map insert");
 		STAILQ_INSERT_TAIL(&interfaces, altq, meta.link);
+		printf("pfaltq_store: adding %s\n",item.key);
 	} else {
-		key_size = sizeof(a->ifname) + sizeof(a->qname);
+	        // Skon - Add index to ifname 
+	        key_size = sizeof(a->ifname) + sizeof(a->qname)+2;
+		//	        key_size = sizeof(a->ifname) + sizeof(a->qname);
+
 		if ((item.key = malloc(key_size)) == NULL)
 			err(1, "queue map key malloc");
-		snprintf(item.key, key_size, "%s:%s", a->ifname, a->qname);
+		// Skon - new key with index
+		snprintf(item.key, key_size, "%s:%d:%s", a->ifname, a->index, a->qname);
+		//snprintf(item.key, key_size, "%s:%s", a->ifname, a->qname);
+
 		item.data = altq;
 		if (hsearch_r(item, ENTER, &ret_item, &queue_map) == 0)
 			err(1, "queue map insert");
 
-		item.key = altq->pa.qname;
+		//item.key = altq->pa.qname;
 		item.data = &altq->pa.qid;
 		if (hsearch_r(item, ENTER, &ret_item, &qid_map) == 0)
 			err(1, "qid map insert");
+		// Skon
+		printf("pfaltq_store: adding %s\n",item.key);
+
 	}
 }
 
+// SKon = add index
 static struct pfctl_altq *
-pfaltq_lookup(char *ifname)
+pfaltq_lookup(char *ifname, uint8_t index)
 {
 	ENTRY	 item;
 	ENTRY	*ret_item;
-
-	item.key = ifname;
+        // Skon - Include index in search key                                           
+        size_t    key_size=sizeof(ifname);
+        if ((item.key = malloc(key_size)) == NULL)
+                        err(1, "if map key malloc");
+        snprintf(item.key, key_size, "%s:%d",ifname,index);
+        printf("pfaltq_lookup: %s\n",item.key);
+	//item.key = ifname;
 	if (hsearch_r(item, FIND, &ret_item, &if_map) == 0)
 		return (NULL);
 
 	return (ret_item->data);
 }
 
+//  Skon - add index 
 static struct pfctl_altq *
-qname_to_pfaltq(const char *qname, const char *ifname)
+qname_to_pfaltq(const char *qname, const char *ifname, uint8_t index)
 {
 	ENTRY	 item;
 	ENTRY	*ret_item;
 	char	 key[IFNAMSIZ + PF_QNAME_SIZE];
 
 	item.key = key;
-	snprintf(item.key, sizeof(key), "%s:%s", ifname, qname);
+	// Skon add index
+	//snprintf(item.key, sizeof(key), "%s:%s", ifname, qname);
+        snprintf(item.key, sizeof(key), "%s:%d:%s", ifname, index, qname);
+        printf("qname_to_pfaltq: %s\n",item.key);
 	if (hsearch_r(item, FIND, &ret_item, &queue_map) == 0)
 		return (NULL);
 
@@ -222,7 +255,7 @@ print_altq(const struct pf_altq *a, unsigned int level,
 	if (a->local_flags & PFALTQ_FLAG_IF_REMOVED)
 		printf("INACTIVE ");
 #endif
-
+	// Skon
 	printf("altq on %s ", a->ifname);
 
 	switch (a->scheduler) {
@@ -401,15 +434,20 @@ eval_pfqueue(struct pfctl *pf, struct pf_altq *pa, struct node_queue_bw *bw,
 	struct pfctl_altq	*if_ppa, *parent;
 	int		 	 error = 0;
 
+	printf("Check %s, %s, %d\n",pa->ifname,pa->qname,pa->index);
+
 	/* find the corresponding interface and copy fields used by queues */
-	if ((if_ppa = pfaltq_lookup(pa->ifname)) == NULL) {
+	/* Skon - add index */
+       	//if ((if_ppa = pfaltq_lookup(pa->ifname)) == NULL) {
+	if ((if_ppa = pfaltq_lookup(pa->ifname,pa->index)) == NULL) {
 		fprintf(stderr, "altq not defined on %s\n", pa->ifname);
 		return (1);
 	}
 	pa->scheduler = if_ppa->pa.scheduler;
 	pa->ifbandwidth = if_ppa->pa.ifbandwidth;
-
-	if (qname_to_pfaltq(pa->qname, pa->ifname) != NULL) {
+	// Skon - include index in lookup 
+	//if (qname_to_pfaltq(pa->qname, pa->ifname) != NULL) {
+	if (qname_to_pfaltq(pa->qname, pa->ifname,pa->index) != NULL) {
 		fprintf(stderr, "queue %s already exists on interface %s\n",
 		    pa->qname, pa->ifname);
 		return (1);
@@ -418,7 +456,9 @@ eval_pfqueue(struct pfctl *pf, struct pf_altq *pa, struct node_queue_bw *bw,
 
 	parent = NULL;
 	if (pa->parent[0] != 0) {
-		parent = qname_to_pfaltq(pa->parent, pa->ifname);
+	       // Skon - include index in lookup   
+	  //parent = qname_to_pfaltq(pa->parent, pa->ifname);
+		parent = qname_to_pfaltq(pa->parent, pa->ifname,pa->index);
 		if (parent == NULL) {
 			fprintf(stderr, "parent %s not found for %s\n",
 			    pa->parent, pa->qname);

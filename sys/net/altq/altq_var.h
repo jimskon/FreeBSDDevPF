@@ -184,6 +184,8 @@ struct flowinfo;
 #endif
 
 void	*altq_lookup(char *, int);
+// Skon - new version with index
+void	*altq_lookup_indexed(char *,uint8_t, int);
 #ifdef ALTQ3_CLFIER_COMPAT
 int	altq_extractflow(struct mbuf *, int, struct flowinfo *, u_int32_t);
 int	acc_add_filter(struct acc_classifier *, struct flow_filter *,

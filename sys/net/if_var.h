@@ -656,6 +656,8 @@ void	if_up(struct ifnet *);
 int	ifioctl(struct socket *, u_long, caddr_t, struct thread *);
 int	ifpromisc(struct ifnet *, int);
 struct	ifnet *ifunit(const char *);
+// Skon - new version with index
+struct	ifnet *ifunit_indexed(const char *, const uint8_t);
 struct	ifnet *ifunit_ref(const char *);
 
 int	ifa_add_loopback_route(struct ifaddr *, struct sockaddr *);
