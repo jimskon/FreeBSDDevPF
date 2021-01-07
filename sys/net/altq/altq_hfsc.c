@@ -297,9 +297,11 @@ hfsc_getqstats(struct pf_altq *a, void *ubuf, int *nbytes, int version)
 	size_t stats_size;
 	int error = 0;
 	// Skon - add index
-        if ((hif = altq_lookup_indexed(a->ifname, a->index, ALTQT_HFSC)) == NULL)             
+        if ((hif = altq_lookup_indexed(a->ifname, a->index, ALTQT_HFSC)) == NULL) {
 	  //	if ((hif = altq_lookup(a->ifname, ALTQT_HFSC)) == NULL)
+	  printf("hfsc_getqstats: hif: %p\n",hif);
 		return (EBADF);
+	}
 	// Skon
 	printf("hfsc_getqstats: %s, %s, %d, %p\n",a->ifname,a->qname,a->index,hif);
 	if ((cl = clh_to_clp(hif, a->qid)) == NULL)
@@ -717,6 +719,8 @@ hfsc_enqueue(struct ifaltq *ifq, struct mbuf *m, struct altq_pktattr *pktattr)
 		m_freem(m);
 		return (ENOBUFS);
 	}
+        // Skon
+	//printf("E");
 	cl = NULL;
 	if ((t = pf_find_mtag(m)) != NULL)
 		cl = clh_to_clp(hif, t->qid);
@@ -773,7 +777,8 @@ hfsc_dequeue(struct ifaltq *ifq, int op)
 	u_int64_t cur_time;
 
 	IFQ_LOCK_ASSERT(ifq);
-
+	// Skon
+	//printf("D");
 	if (hif->hif_packets == 0)
 		/* no packet in the tree */
 		return (NULL);
@@ -2050,6 +2055,8 @@ hfscioctl(dev, cmd, addr, flag, p)
 	switch (cmd) {
 
 	case HFSC_IF_ATTACH:
+	  //skon
+	  printf("HFSC_IF_ATTACH, altq_hfsc.c/n")
 		error = hfsccmd_if_attach((struct hfsc_attach *)addr);
 		break;
 
