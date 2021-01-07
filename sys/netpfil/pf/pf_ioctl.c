@@ -2594,6 +2594,7 @@ DIOCGETSTATES_full:
 		}
 		nbytes = pq->nbytes;
 		altq = pf_altq_get_nth_active(pq->nr);
+
 		if (altq == NULL) {
 			PF_RULES_RUNLOCK();
 			error = EBUSY;
@@ -2610,7 +2611,9 @@ DIOCGETSTATES_full:
 			version = 0;  /* DIOCGETQSTATSV0 means stats struct v0 */
 		else
 			version = pq->version;
+
 		error = altq_getqstats(altq, pq->buf, &nbytes, version);
+		printf("DIOCGETQSTATS 2: %d./n",error); 
 		if (error == 0) {
 			pq->scheduler = altq->scheduler;
 			pq->nbytes = nbytes;

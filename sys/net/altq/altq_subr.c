@@ -169,7 +169,8 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
 		IFQ_UNLOCK(ifq);
 		return ENXIO;
 	}
-
+	// SKon
+	printf("altq_attach: %d\n",type);
 #ifdef ALTQ3_COMPAT
 	/*
 	 * pfaltq can override the existing discipline, but altq3 cannot.

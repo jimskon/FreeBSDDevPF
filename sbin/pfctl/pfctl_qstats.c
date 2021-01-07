@@ -146,7 +146,8 @@ pfctl_update_qstats(int dev, struct pf_altq_node **root)
 	u_int32_t		 mnr, nr;
 	struct queue_stats	 qstats;
 	static	u_int32_t	 last_ticket;
-
+	// skon
+	printf("In pfctl_update_qstats\n");
 	memset(&pa, 0, sizeof(pa));
 	memset(&pq, 0, sizeof(pq));
 	memset(&qstats, 0, sizeof(qstats));
@@ -155,6 +156,7 @@ pfctl_update_qstats(int dev, struct pf_altq_node **root)
 		warn("DIOCGETALTQS");
 		return (-1);
 	}
+	printf("In pfctl_update_qstats 2\n");
 
 	/* if a new set is found, start over */
 	if (pa.ticket != last_ticket && *root != NULL) {
@@ -165,6 +167,8 @@ pfctl_update_qstats(int dev, struct pf_altq_node **root)
 
 	mnr = pa.nr;
 	for (nr = 0; nr < mnr; ++nr) {
+	  printf("In pfctl_update_qstats 3\n");
+	  
 		pa.nr = nr;
 		if (ioctl(dev, DIOCGETALTQ, &pa)) {
 			warn("DIOCGETALTQ");
@@ -183,6 +187,8 @@ pfctl_update_qstats(int dev, struct pf_altq_node **root)
 			pq.version = altq_stats_version(pa.altq.scheduler);
 			if (ioctl(dev, DIOCGETQSTATS, &pq)) {
 				warn("DIOCGETQSTATS");
+				printf("In pfctl_update_qstats error\n");
+				
 				return (-1);
 			}
 			if ((node = pfctl_find_altq_node(*root, pa.altq.qname,
