@@ -2492,9 +2492,10 @@ struct ifnet *
 ifunit_indexed(const char *name, const uint8_t index)
 {
         struct ifnet *ifp;
-
+	printf("ifunit_indexed: %s, %d\n",name,index);
         IFNET_RLOCK_NOSLEEP();
         CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
+	  printf("ifunit_indexed: %s, %d\n",ifp->if_xname, ifp->if_snd.index);
           if (strncmp(name, ifp->if_xname, IFNAMSIZ) == 0
 	      && ifp->if_snd.index==index)                                    
                         break;
