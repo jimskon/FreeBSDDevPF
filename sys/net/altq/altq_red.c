@@ -835,7 +835,7 @@ redioctl(dev, cmd, addr, flag, p)
 			break;
 		}
 
-		rqp->rq_ifq = &ifp->if_snd;
+		rqp->rq_ifq = &ifp->if_snd[0];
 		qtail(rqp->rq_q) = NULL;
 		qlen(rqp->rq_q) = 0;
 		qlimit(rqp->rq_q) = RED_LIMIT;

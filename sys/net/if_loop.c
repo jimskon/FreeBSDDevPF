@@ -134,7 +134,7 @@ lo_clone_create(struct if_clone *ifc, int unit, caddr_t params)
 	ifp->if_flags = IFF_LOOPBACK | IFF_MULTICAST;
 	ifp->if_ioctl = loioctl;
 	ifp->if_output = looutput;
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
 	ifp->if_capabilities = ifp->if_capenable =
 	    IFCAP_HWCSUM | IFCAP_HWCSUM_IPV6 | IFCAP_LINKSTATE;
 	ifp->if_hwassist = LO_CSUM_FEATURES | LO_CSUM_FEATURES6;

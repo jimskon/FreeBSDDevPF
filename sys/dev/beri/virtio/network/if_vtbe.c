@@ -178,7 +178,7 @@ vtbe_txstart_locked(struct vtbe_softc *sc)
 			break;
 		}
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL) {
 			break;
 		}
@@ -619,9 +619,9 @@ vtbe_attach(device_t dev)
 	ifp->if_start = vtbe_txstart;
 	ifp->if_ioctl = vtbe_ioctl;
 	ifp->if_init = vtbe_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, DESC_COUNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = DESC_COUNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], DESC_COUNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = DESC_COUNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
 
 	/* All ready to run, attach the ethernet interface. */

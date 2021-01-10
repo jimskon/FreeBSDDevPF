@@ -748,14 +748,14 @@ pf_enable_altq(struct pf_altq *altq)
 	if ((ifp = ifunit(altq->ifname)) == NULL)
 		return (EINVAL);
 
-	if (ifp->if_snd.altq_type != ALTQT_NONE)
-		error = altq_enable(&ifp->if_snd);
+	if (ifp->if_snd[0].altq_type != ALTQT_NONE)
+		error = altq_enable(&ifp->if_snd[0]);
 
 	/* set tokenbucket regulator */
-	if (error == 0 && ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd)) {
+	if (error == 0 && ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
 		tb.rate = altq->ifbandwidth;
 		tb.depth = altq->tbrsize;
-		error = tbr_set(&ifp->if_snd, &tb);
+		error = tbr_set(&ifp->if_snd[0], &tb);
 	}
 
 	return (error);
@@ -775,15 +775,15 @@ pf_disable_altq(struct pf_altq *altq)
 	 * when the discipline is no longer referenced, it was overridden
 	 * by a new one.  if so, just return.
 	 */
-	if (altq->altq_disc != ifp->if_snd.altq_disc)
+	if (altq->altq_disc != ifp->if_snd[0].altq_disc)
 		return (0);
 
-	error = altq_disable(&ifp->if_snd);
+	error = altq_disable(&ifp->if_snd[0]);
 
 	if (error == 0) {
 		/* clear tokenbucket regulator */
 		tb.rate = 0;
-		error = tbr_set(&ifp->if_snd, &tb);
+		error = tbr_set(&ifp->if_snd[0], &tb);
 	}
 
 	return (error);
@@ -826,7 +826,7 @@ pf_altq_ifnet_event(struct ifnet *ifp, int remove)
 	 * that do not support ALTQ, as it's not possible for such
 	 * interfaces to be part of the configuration.
 	 */
-	if (!ALTQ_IS_READY(&ifp->if_snd))
+	if (!ALTQ_IS_READY(&ifp->if_snd[0]))
 		return;
 
 	/* Interrupt userland queue modifications */

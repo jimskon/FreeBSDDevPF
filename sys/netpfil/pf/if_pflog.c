@@ -129,7 +129,7 @@ pflog_clone_create(struct if_clone *ifc, int unit, caddr_t param)
 	ifp->if_ioctl = pflogioctl;
 	ifp->if_output = pflogoutput;
 	ifp->if_start = pflogstart;
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
 	ifp->if_hdrlen = PFLOG_HDRLEN;
 	if_attach(ifp);
 
@@ -163,9 +163,9 @@ pflogstart(struct ifnet *ifp)
 	struct mbuf *m;
 
 	for (;;) {
-		IF_LOCK(&ifp->if_snd);
-		_IF_DEQUEUE(&ifp->if_snd, m);
-		IF_UNLOCK(&ifp->if_snd);
+		IF_LOCK(&ifp->if_snd[0]);
+		_IF_DEQUEUE(&ifp->if_snd[0], m);
+		IF_UNLOCK(&ifp->if_snd[0]);
 
 		if (m == NULL)
 			return;

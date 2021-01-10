@@ -877,9 +877,9 @@ axe_attach_post_sub(struct usb_ether *ue)
 	ifp->if_start = uether_start;
 	ifp->if_ioctl = axe_ioctl;
 	ifp->if_init = uether_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if (AXE_IS_178_FAMILY(sc))
 		ifp->if_capabilities |= IFCAP_VLAN_MTU;
@@ -1182,8 +1182,8 @@ tr_setup:
 		}
 
 		for (nframes = 0; nframes < 16 &&
-		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd); nframes++) {
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); nframes++) {
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 			if (m == NULL)
 				break;
 			usbd_xfer_set_frame_offset(xfer, nframes * MCLBYTES,

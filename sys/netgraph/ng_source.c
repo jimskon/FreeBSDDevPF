@@ -631,10 +631,10 @@ ng_source_store_output_ifp(sc_p sc, char *ifname)
 	 * interface with small packets.
 	 * XXX we should restore the original value at stop or disconnect
 	 */
-	if (ifp->if_snd.ifq_maxlen < NG_SOURCE_DRIVER_IFQ_MAXLEN) {
+	if (ifp->if_snd[0].ifq_maxlen < NG_SOURCE_DRIVER_IFQ_MAXLEN) {
 		printf("ng_source: changing ifq_maxlen from %d to %d\n",
-		    ifp->if_snd.ifq_maxlen, NG_SOURCE_DRIVER_IFQ_MAXLEN);
-		ifp->if_snd.ifq_maxlen = NG_SOURCE_DRIVER_IFQ_MAXLEN;
+		    ifp->if_snd[0].ifq_maxlen, NG_SOURCE_DRIVER_IFQ_MAXLEN);
+		ifp->if_snd[0].ifq_maxlen = NG_SOURCE_DRIVER_IFQ_MAXLEN;
 	}
 #endif
 	return (0);
@@ -738,7 +738,7 @@ ng_source_intr(node_p node, hook_p hook, void *arg1, int arg2)
 	}
 
 	if (sc->output_ifp != NULL) {
-		ifq = (struct ifqueue *)&sc->output_ifp->if_snd;
+		ifq = (struct ifqueue *)&sc->output_ifp->if_snd[0];
 		packets = ifq->ifq_maxlen - ifq->ifq_len;
 	} else
 		packets = sc->snd_queue.ifq_len;

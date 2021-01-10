@@ -948,9 +948,9 @@ xae_attach(device_t dev)
 	ifp->if_qflush = xae_qflush;
 	ifp->if_ioctl = xae_ioctl;
 	ifp->if_init = xae_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, TX_DESC_COUNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = TX_DESC_COUNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TX_DESC_COUNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = TX_DESC_COUNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if (xae_get_phyaddr(node, &sc->phy_addr) != 0)
 		return (ENXIO);

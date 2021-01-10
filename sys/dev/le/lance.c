@@ -130,9 +130,9 @@ lance_config(struct lance_softc *sc, const char* name, int unit)
 	ifp->if_flags &= ~IFF_MULTICAST;
 #endif
 	ifp->if_baudrate = IF_Mbps(10);
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Initialize ifmedia structures. */
 	ifmedia_init(&sc->sc_media, 0, lance_mediachange, lance_mediastatus);
@@ -468,7 +468,7 @@ lance_mediachange(struct ifnet *ifp)
 		LE_LOCK(sc);
 		lance_stop(sc);
 		lance_init_locked(sc);
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			(*sc->sc_start_locked)(sc);
 		LE_UNLOCK(sc);
 	}

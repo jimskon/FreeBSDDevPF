@@ -167,6 +167,9 @@ typedef enum {
  *     hdata: L3 header may be altered if necessary
  */
 
+// Skon - maximum send queues
+#define MAXQ 4
+
 struct if_encap_req {
 	u_char		*buf;		/* Destination buffer (w) */
 	size_t		bufsize;	/* size of provided buffer (r) */
@@ -276,7 +279,7 @@ struct ifnet {
 	time_t		if_epoch;	/* uptime at attach or stat reset */
 	struct timeval	if_lastchange;	/* time of last administrative change */
 
-	struct  ifaltq if_snd;		/* output queue (includes altq) */
+	struct  ifaltq if_snd[MAXQ];		/* output queue (includes altq) */
 	struct	task if_linktask;	/* task for link change events */
 
 	/* Addresses of different protocol families assigned to this if. */

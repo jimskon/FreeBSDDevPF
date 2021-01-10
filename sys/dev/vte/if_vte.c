@@ -453,9 +453,9 @@ vte_attach(device_t dev)
 	ifp->if_start = vte_start;
 	ifp->if_init = vte_init;
 	ifp->if_get_counter = vte_get_counter;
-	ifp->if_snd.ifq_drv_maxlen = VTE_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = VTE_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Set up MII bus.
@@ -1123,13 +1123,13 @@ vte_start_locked(struct vte_softc *sc)
 	    IFF_DRV_RUNNING || (sc->vte_flags & VTE_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
 		/* Reserve one free TX descriptor. */
 		if (sc->vte_cdata.vte_tx_cnt >= VTE_TX_RING_CNT - 1) {
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1139,7 +1139,7 @@ vte_start_locked(struct vte_softc *sc)
 		 */
 		if ((txd = vte_encap(sc, &m_head)) == NULL) {
 			if (m_head != NULL)
-				IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			break;
 		}
 
@@ -1178,7 +1178,7 @@ vte_watchdog(struct vte_softc *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	vte_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		vte_start_locked(sc);
 }
 
@@ -1366,7 +1366,7 @@ vte_intr(void *arg)
 			vte_txeof(sc);
 		if ((status & MISR_EVENT_CNT_OFLOW) != 0)
 			vte_stats_update(sc);
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			vte_start_locked(sc);
 		if (--n > 0)
 			status = CSR_READ_2(sc, VTE_MISR);

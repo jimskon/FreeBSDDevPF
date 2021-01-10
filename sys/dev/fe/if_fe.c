@@ -759,7 +759,7 @@ fe_attach (device_t dev)
 	 * Set fixed interface flags.
 	 */
  	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 
 #if FE_SINGLE_TRANSMISSION
 	/* Override txb config to allocate minimum.  */
@@ -1269,7 +1269,7 @@ fe_start_locked (struct ifnet *ifp)
 		/*
 		 * Get the next mbuf chain for a packet to send.
 		 */
-		IF_DEQUEUE(&sc->ifp->if_snd, m);
+		IF_DEQUEUE(&sc->ifp->if_snd[0], m);
 		if (m == NULL) {
 			/* No more packets to send.  */
 			goto indicate_inactive;

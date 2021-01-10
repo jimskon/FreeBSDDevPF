@@ -1122,9 +1122,9 @@ vge_attach(device_t dev)
 	ifp->if_capabilities |= IFCAP_POLLING;
 #endif
 	ifp->if_init = vge_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, VGE_TX_DESC_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = VGE_TX_DESC_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], VGE_TX_DESC_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = VGE_TX_DESC_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Call MI attach routine.
@@ -1684,7 +1684,7 @@ vge_link_statchg(void *xsc)
 					CSR_WRITE_1(sc, VGE_CRS2,
 					    VGE_CR2_FDX_RXFLOWCTL_ENABLE);
 			}
-			if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+			if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 				vge_start_locked(ifp);
 		}
 	}
@@ -1709,7 +1709,7 @@ vge_poll (struct ifnet *ifp, enum poll_cmd cmd, int count)
 	rx_npkts = vge_rxeof(sc, count);
 	vge_txeof(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		vge_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) { /* also check status register */
@@ -1802,7 +1802,7 @@ done:
 		/* Re-enable interrupts */
 		CSR_WRITE_1(sc, VGE_CRS3, VGE_CR3_INT_GMSK);
 
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			vge_start_locked(ifp);
 	}
 	VGE_UNLOCK(sc);
@@ -1966,9 +1966,9 @@ vge_start_locked(struct ifnet *ifp)
 
 	idx = sc->vge_cdata.vge_tx_prodidx;
 	VGE_TX_DESC_DEC(idx);
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->vge_cdata.vge_tx_cnt < VGE_TX_DESC_CNT - 1; ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1979,7 +1979,7 @@ vge_start_locked(struct ifnet *ifp)
 		if (vge_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}

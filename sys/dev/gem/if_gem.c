@@ -170,9 +170,9 @@ gem_attach(struct gem_softc *sc)
 	ifp->if_start = gem_start;
 	ifp->if_ioctl = gem_ioctl;
 	ifp->if_init = gem_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, GEM_TXQUEUELEN);
-	ifp->if_snd.ifq_drv_maxlen = GEM_TXQUEUELEN;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], GEM_TXQUEUELEN);
+	ifp->if_snd[0].ifq_drv_maxlen = GEM_TXQUEUELEN;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	callout_init_mtx(&sc->sc_tick_ch, &sc->sc_mtx, 0);
 #ifdef GEM_RINT_TIMEOUT
@@ -1369,15 +1369,15 @@ gem_start_locked(struct ifnet *ifp)
 #endif
 	ntx = 0;
 	kicked = 0;
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) && sc->sc_txfree > 1;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) && sc->sc_txfree > 1;) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		if (gem_load_txmbuf(sc, &m) != 0) {
 			if (m == NULL)
 				break;
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		if ((sc->sc_txnext % 4) == 0) {

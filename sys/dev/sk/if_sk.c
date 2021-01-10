@@ -1373,9 +1373,9 @@ sk_attach(dev)
 	ifp->if_ioctl = sk_ioctl;
 	ifp->if_start = sk_start;
 	ifp->if_init = sk_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, SK_TX_RING_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = SK_TX_RING_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], SK_TX_RING_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = SK_TX_RING_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Get station address for this interface. Note that
@@ -2496,9 +2496,9 @@ sk_start_locked(ifp)
 
 	SK_IF_LOCK_ASSERT(sc_if);
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc_if->sk_cdata.sk_tx_cnt < SK_TX_RING_CNT - 1; ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -2510,7 +2510,7 @@ sk_start_locked(ifp)
 		if (sk_encap(sc_if, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -3169,9 +3169,9 @@ sk_intr(xsc)
 
 	CSR_WRITE_4(sc, SK_IMR, sc->sk_intrmask);
 
-	if (ifp0 != NULL && !IFQ_DRV_IS_EMPTY(&ifp0->if_snd))
+	if (ifp0 != NULL && !IFQ_DRV_IS_EMPTY(&ifp0->if_snd[0]))
 		sk_start_locked(ifp0);
-	if (ifp1 != NULL && !IFQ_DRV_IS_EMPTY(&ifp1->if_snd))
+	if (ifp1 != NULL && !IFQ_DRV_IS_EMPTY(&ifp1->if_snd[0]))
 		sk_start_locked(ifp1);
 
 done_locked:

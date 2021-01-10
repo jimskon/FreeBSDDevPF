@@ -1179,7 +1179,7 @@ tl_attach(dev)
 	ifp->if_ioctl = tl_ioctl;
 	ifp->if_start = tl_start;
 	ifp->if_init = tl_init;
-	ifp->if_snd.ifq_maxlen = TL_TX_LIST_CNT - 1;
+	ifp->if_snd[0].ifq_maxlen = TL_TX_LIST_CNT - 1;
 	ifp->if_capabilities |= IFCAP_VLAN_MTU;
 	ifp->if_capenable |= IFCAP_VLAN_MTU;
 	callout_init_mtx(&sc->tl_stat_callout, &sc->tl_mtx, 0);
@@ -1700,7 +1700,7 @@ tl_intr(xsc)
 		CMD_PUT(sc, TL_CMD_ACK | r | type);
 	}
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		tl_start_locked(ifp);
 
 	TL_UNLOCK(sc);
@@ -1901,7 +1901,7 @@ tl_start_locked(ifp)
 	start_tx = sc->tl_cdata.tl_tx_free;
 
 	while(sc->tl_cdata.tl_tx_free != NULL) {
-		IF_DEQUEUE(&ifp->if_snd, m_head);
+		IF_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 

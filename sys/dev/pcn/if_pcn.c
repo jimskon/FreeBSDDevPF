@@ -632,7 +632,7 @@ pcn_attach(dev)
 	ifp->if_ioctl = pcn_ioctl;
 	ifp->if_start = pcn_start;
 	ifp->if_init = pcn_init;
-	ifp->if_snd.ifq_maxlen = PCN_TX_LIST_CNT - 1;
+	ifp->if_snd[0].ifq_maxlen = PCN_TX_LIST_CNT - 1;
 
 	/*
 	 * Do MII setup.
@@ -979,7 +979,7 @@ pcn_tick(xsc)
 	if (!sc->pcn_link && mii->mii_media_status & IFM_ACTIVE &&
 	    IFM_SUBTYPE(mii->mii_media_active) != IFM_NONE) {
 		sc->pcn_link++;
-		if (ifp->if_snd.ifq_head != NULL)
+		if (ifp->if_snd[0].ifq_head != NULL)
 			pcn_start_locked(ifp);
 	}
 
@@ -1027,7 +1027,7 @@ pcn_intr(arg)
 		}
 	}
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		pcn_start_locked(ifp);
 
 	PCN_UNLOCK(sc);
@@ -1127,12 +1127,12 @@ pcn_start_locked(ifp)
 		return;
 
 	while(sc->pcn_cdata.pcn_tx_chain[idx] == NULL) {
-		IF_DEQUEUE(&ifp->if_snd, m_head);
+		IF_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
 		if (pcn_encap(sc, m_head, &idx)) {
-			IF_PREPEND(&ifp->if_snd, m_head);
+			IF_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1337,7 +1337,7 @@ pcn_ifmedia_upd(ifp)
 	pcn_stop(sc);
 	pcn_reset(sc);
 	pcn_init_locked(sc);
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		pcn_start_locked(ifp);
 
 	PCN_UNLOCK(sc);
@@ -1448,7 +1448,7 @@ pcn_watchdog(struct pcn_softc *sc)
 	pcn_reset(sc);
 	pcn_init_locked(sc);
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		pcn_start_locked(ifp);
 }
 

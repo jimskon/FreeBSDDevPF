@@ -299,11 +299,11 @@ nf10bmac_start_locked(struct ifnet *ifp)
 #endif
 
 	/* Send up to MAX_PKTS_PER_TX_LOOP packets. */
-	for (count = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (count = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    count < NF10BMAC_MAX_PKTS; count++) {
 		struct mbuf *m;
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		error = nf10bmac_tx_locked(sc, m);
@@ -589,7 +589,7 @@ nf10bmac_watchdog(struct nf10bmac_softc *sc)
 	sc->nf10bmac_ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	nf10bmac_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&sc->nf10bmac_ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&sc->nf10bmac_ifp->if_snd[0]))
 		nf10bmac_start_locked(sc->nf10bmac_ifp);
 }
 
@@ -644,7 +644,7 @@ nf10bmac_intr(void *arg)
 		/* Re-enable interrupts. */
 		NF10BMAC_RX_INTR_ENABLE(sc);
 
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			nf10bmac_start_locked(ifp);
 	}
 	NF10BMAC_UNLOCK(sc);
@@ -811,9 +811,9 @@ nf10bmac_attach(device_t dev)
 	ifp->if_ioctl = nf10bmac_ioctl;
 	ifp->if_start = nf10bmac_start;
 	ifp->if_init = nf10bmac_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, NF10BMAC_MAX_PKTS - 1);
-	ifp->if_snd.ifq_drv_maxlen = NF10BMAC_MAX_PKTS - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], NF10BMAC_MAX_PKTS - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = NF10BMAC_MAX_PKTS - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Call media-indepedent attach routine. */
 	ether_ifattach(ifp, sc->nf10bmac_eth_addr);

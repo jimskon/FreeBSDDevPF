@@ -258,7 +258,7 @@ xe_attach(device_t dev)
 	scp->ifp->if_ioctl = xe_ioctl;
 	scp->ifp->if_init = xe_init;
 	scp->ifp->if_baudrate = 100000000;
-	IFQ_SET_MAXLEN(&scp->ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&scp->ifp->if_snd[0], ifqmaxlen);
 
 	/* Initialise the ifmedia structure */
 	ifmedia_init(scp->ifm, 0, xe_media_change, xe_media_status);
@@ -484,7 +484,7 @@ xe_start_locked(struct ifnet *ifp)
 	 */
 	for (;;) {
 		/* Suck a packet off the send queue */
-		IF_DEQUEUE(&ifp->if_snd, mbp);
+		IF_DEQUEUE(&ifp->if_snd[0], mbp);
 
 		if (mbp == NULL) {
 			/*
@@ -502,7 +502,7 @@ xe_start_locked(struct ifnet *ifp)
 
 		if (xe_pio_write_packet(scp, mbp) != 0) {
 			/* Push the packet back onto the queue */
-			IF_PREPEND(&ifp->if_snd, mbp);
+			IF_PREPEND(&ifp->if_snd[0], mbp);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			return;
 		}

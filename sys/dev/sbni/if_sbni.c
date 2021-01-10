@@ -236,7 +236,7 @@ sbni_attach(struct sbni_softc *sc, int unit, struct sbni_flags flags)
 	ifp->if_init	= sbni_init;
 	ifp->if_start	= sbni_start;
 	ifp->if_ioctl	= sbni_ioctl;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 
 	/* report real baud rate */
 	csr0 = sbni_inb(sc, CSR0);
@@ -716,7 +716,7 @@ prepare_to_send(struct sbni_softc *sc)
 	sc->state &= ~(FL_WAIT_ACK | FL_NEED_RESEND);
 
 	for (;;) {
-		IF_DEQUEUE(&sc->ifp->if_snd, sc->tx_buf_p);
+		IF_DEQUEUE(&sc->ifp->if_snd[0], sc->tx_buf_p);
 		if (!sc->tx_buf_p) {
 			/* nothing to transmit... */
 			sc->pktlen     = 0;
@@ -759,7 +759,7 @@ drop_xmit_queue(struct sbni_softc *sc)
 	}
 
 	for (;;) {
-		IF_DEQUEUE(&sc->ifp->if_snd, m);
+		IF_DEQUEUE(&sc->ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		m_freem(m);

@@ -867,7 +867,7 @@ tr_setup:
 			 */
 			return;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 		if (m == NULL)
 			return;

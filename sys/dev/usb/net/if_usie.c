@@ -446,9 +446,9 @@ usie_attach(device_t self)
 	ifp->if_ioctl = usie_if_ioctl;
 	ifp->if_start = usie_if_start;
 	ifp->if_output = usie_if_output;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if_attach(ifp);
 	bpfattach(ifp, DLT_RAW, 0);
@@ -946,7 +946,7 @@ tr_setup:
 		if ((ifp->if_drv_flags & IFF_DRV_RUNNING) == 0)
 			break;
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 

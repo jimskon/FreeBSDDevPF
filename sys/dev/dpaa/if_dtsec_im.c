@@ -237,8 +237,8 @@ dtsec_im_if_start_locked(struct dtsec_softc *sc)
 	if ((sc->sc_ifnet->if_drv_flags & IFF_DRV_RUNNING) != IFF_DRV_RUNNING)
 		return;
 
-	while (!IFQ_DRV_IS_EMPTY(&sc->sc_ifnet->if_snd)) {
-		IFQ_DRV_DEQUEUE(&sc->sc_ifnet->if_snd, m);
+	while (!IFQ_DRV_IS_EMPTY(&sc->sc_ifnet->if_snd[0])) {
+		IFQ_DRV_DEQUEUE(&sc->sc_ifnet->if_snd[0], m);
 		if (m == NULL)
 			break;
 

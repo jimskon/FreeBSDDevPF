@@ -416,9 +416,9 @@ txp_attach(device_t dev)
 	ifp->if_start = txp_start;
 	ifp->if_init = txp_init;
 	ifp->if_get_counter = txp_get_counter;
-	ifp->if_snd.ifq_drv_maxlen = TX_ENTRIES - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = TX_ENTRIES - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	/*
 	 * It's possible to read firmware's offload capability but
 	 * we have not downloaded the firmware yet so announce
@@ -863,7 +863,7 @@ txp_int_task(void *arg, int pending)
 		bus_dmamap_sync(sc->sc_cdata.txp_hostvar_tag,
 		    sc->sc_cdata.txp_hostvar_map,
 		    BUS_DMASYNC_PREREAD | BUS_DMASYNC_PREWRITE);
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			txp_start_locked(sc->sc_ifp);
 		if (more != 0 || READ_REG(sc, TXP_ISR & TXP_INT_LATCH) != 0) {
 			taskqueue_enqueue(sc->sc_tq, &sc->sc_int_task);
@@ -2065,8 +2065,8 @@ txp_start_locked(struct ifnet *ifp)
 	   IFF_DRV_RUNNING || (sc->sc_flags & TXP_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -2078,7 +2078,7 @@ txp_start_locked(struct ifnet *ifp)
 		if (txp_encap(sc, &sc->sc_txhir, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}

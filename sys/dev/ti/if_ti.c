@@ -2506,9 +2506,9 @@ ti_attach(device_t dev)
 	ifp->if_init = ti_init;
 	ifp->if_get_counter = ti_get_counter;
 	ifp->if_baudrate = IF_Gbps(1UL);
-	ifp->if_snd.ifq_drv_maxlen = TI_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = TI_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Set up ifmedia support. */
 	if (sc->ti_copper) {
@@ -3009,7 +3009,7 @@ ti_intr(void *xsc)
 	if (ifp->if_drv_flags & IFF_DRV_RUNNING) {
 		/* Re-enable interrupts. */
 		CSR_WRITE_4(sc, TI_MB_HOSTINTR, 0);
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			ti_start_locked(ifp);
 	}
 
@@ -3169,9 +3169,9 @@ ti_start_locked(struct ifnet *ifp)
 
 	sc = ifp->if_softc;
 
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->ti_txcnt < (TI_TX_RING_CNT - 16);) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -3183,7 +3183,7 @@ ti_start_locked(struct ifnet *ifp)
 		if (ti_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}

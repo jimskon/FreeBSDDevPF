@@ -345,9 +345,9 @@ ae_attach(device_t dev)
 	ifp->if_init = ae_init;
 	ifp->if_capabilities = IFCAP_VLAN_MTU | IFCAP_VLAN_HWTAGGING;
 	ifp->if_hwassist = 0;
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	if (pci_find_cap(dev, PCIY_PMG, &pmc) == 0) {
 		ifp->if_capabilities |= IFCAP_WOL_MAGIC;
 		sc->flags |= AE_FLAG_PMG;
@@ -1545,15 +1545,15 @@ ae_start_locked(struct ifnet *ifp)
 		return;
 
 	count = 0;
-	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 		if (m0 == NULL)
 			break;	/* Nothing to do. */
 
 		error = ae_encap(sc, &m0);
 		if (error != 0) {
 			if (m0 != NULL) {
-				IFQ_DRV_PREPEND(&ifp->if_snd, m0);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m0);
 				ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 #ifdef AE_DEBUG
 				if_printf(ifp, "Setting OACTIVE.\n");
@@ -1797,7 +1797,7 @@ ae_int_task(void *arg, int pending)
 		AE_WRITE_4(sc, AE_ISR_REG, 0);
 
 		if ((sc->flags & AE_FLAG_TXAVAIL) != 0) {
-			if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+			if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 				ae_start_locked(ifp);
 		}
 	}
@@ -1996,7 +1996,7 @@ ae_watchdog(ae_softc_t *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	ae_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		ae_start_locked(ifp);
 }
 

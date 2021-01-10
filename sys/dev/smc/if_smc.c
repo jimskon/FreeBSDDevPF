@@ -382,8 +382,8 @@ smc_attach(device_t dev)
 	ifp->if_init = smc_init;
 	ifp->if_ioctl = smc_ioctl;
 	ifp->if_start = smc_start;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	ifp->if_capabilities = ifp->if_capenable = 0;
 
@@ -503,13 +503,13 @@ smc_start_locked(struct ifnet *ifp)
 
 	if (ifp->if_drv_flags & IFF_DRV_OACTIVE)
 		return;
-	if (IFQ_IS_EMPTY(&ifp->if_snd))
+	if (IFQ_IS_EMPTY(&ifp->if_snd[0]))
 		return;
 
 	/*
 	 * Grab the next packet.  If it's too big, drop it.
 	 */
-	IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 	len = m_length(m, NULL);
 	len += (len & 1);
 	if (len > ETHER_MAX_LEN - ETHER_CRC_LEN) {
@@ -599,7 +599,7 @@ smc_task_tx(void *context, int pending)
 	 * If the allocation failed, requeue the packet and retry.
 	 */
 	if (packet & ARR_FAILED) {
-		IFQ_DRV_PREPEND(&ifp->if_snd, m);
+		IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 		ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
 		smc_start_locked(ifp);

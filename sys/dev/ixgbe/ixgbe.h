@@ -544,7 +544,7 @@ static __inline int
 drbr_needs_enqueue(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		return (1);
 #endif
 	return (!buf_ring_empty(br));

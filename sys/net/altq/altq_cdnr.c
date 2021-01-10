@@ -139,11 +139,11 @@ altq_cdnr_input(m, af)
 	struct cdnr_pktinfo	pktinfo;
 
 	ifp = m->m_pkthdr.rcvif;
-	if (!ALTQ_IS_CNDTNING(&ifp->if_snd))
+	if (!ALTQ_IS_CNDTNING(&ifp->if_snd[0]))
 		/* traffic conditioner is not enabled on this interface */
 		return (1);
 
-	top = ifp->if_snd.altq_cdnr;
+	top = ifp->if_snd[0].altq_cdnr;
 
 	ip = mtod(m, struct ip *);
 #ifdef INET6
@@ -875,10 +875,10 @@ cdnrcmd_if_attach(ifname)
 	if ((ifp = ifunit(ifname)) == NULL)
 		return (EBADF);
 
-	if (ifp->if_snd.altq_cdnr != NULL)
+	if (ifp->if_snd[0].altq_cdnr != NULL)
 		return (EBUSY);
 
-	if ((top = top_create(&ifp->if_snd)) == NULL)
+	if ((top = top_create(&ifp->if_snd[0])) == NULL)
 		return (ENOMEM);
 	return (0);
 }

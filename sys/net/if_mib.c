@@ -104,8 +104,8 @@ sysctl_ifdata(SYSCTL_HANDLER_ARGS) /* XXX bad syntax! */
 		if_data_copy(ifp, &ifmd.ifmd_data);
 
 		ifmd.ifmd_flags = ifp->if_flags | ifp->if_drv_flags;
-		ifmd.ifmd_snd_len = ifp->if_snd.ifq_len;
-		ifmd.ifmd_snd_maxlen = ifp->if_snd.ifq_maxlen;
+		ifmd.ifmd_snd_len = ifp->if_snd[0].ifq_len;
+		ifmd.ifmd_snd_maxlen = ifp->if_snd[0].ifq_maxlen;
 		ifmd.ifmd_snd_drops =
 		    ifp->if_get_counter(ifp, IFCOUNTER_OQDROPS);
 

@@ -191,7 +191,7 @@ fwe_attach(device_t dev)
 	ifp->if_start = fwe_start;
 	ifp->if_ioctl = fwe_ioctl;
 	ifp->if_flags = (IFF_BROADCAST|IFF_SIMPLEX|IFF_MULTICAST);
-	ifp->if_snd.ifq_maxlen = TX_MAX_QUEUE;
+	ifp->if_snd[0].ifq_maxlen = TX_MAX_QUEUE;
 
 	s = splimp();
 	ether_ifattach(ifp, eaddr);
@@ -441,7 +441,7 @@ fwe_output_callback(struct fw_xfer *xfer)
 	splx(s);
 
 	/* for queue full */
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		fwe_start(ifp);
 }
 
@@ -460,7 +460,7 @@ fwe_start(struct ifnet *ifp)
 
 		s = splimp();
 		do {
-			IF_DEQUEUE(&ifp->if_snd, m);
+			IF_DEQUEUE(&ifp->if_snd[0], m);
 			if (m != NULL)
 				m_freem(m);
 			if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
@@ -473,7 +473,7 @@ fwe_start(struct ifnet *ifp)
 	s = splimp();
 	ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 
-	if (ifp->if_snd.ifq_len != 0)
+	if (ifp->if_snd[0].ifq_len != 0)
 		fwe_as_output(fwe, ifp);
 
 	ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
@@ -497,7 +497,7 @@ fwe_as_output(struct fwe_softc *fwe, struct ifnet *ifp)
 	xfer = NULL;
 	xferq = fwe->fd.fc->atq;
 	while ((xferq->queued < xferq->maxq - 1) &&
-			(ifp->if_snd.ifq_head != NULL)) {
+			(ifp->if_snd[0].ifq_head != NULL)) {
 		FWE_LOCK(fwe);
 		xfer = STAILQ_FIRST(&fwe->xferlist);
 		if (xfer == NULL) {
@@ -510,7 +510,7 @@ fwe_as_output(struct fwe_softc *fwe, struct ifnet *ifp)
 		STAILQ_REMOVE_HEAD(&fwe->xferlist, link);
 		FWE_UNLOCK(fwe);
 
-		IF_DEQUEUE(&ifp->if_snd, m);
+		IF_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL) {
 			FWE_LOCK(fwe);
 			STAILQ_INSERT_HEAD(&fwe->xferlist, xfer, link);

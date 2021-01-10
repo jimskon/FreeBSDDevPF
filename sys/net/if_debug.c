@@ -89,16 +89,16 @@ if_show_ifnet(struct ifnet *ifp)
 	IF_DB_PRINTF("0x%08x", if_drv_flags);
 	IF_DB_PRINTF("0x%08x", if_capabilities);
 	IF_DB_PRINTF("0x%08x", if_capenable);
-	IF_DB_PRINTF("%p", if_snd.ifq_head);
-	IF_DB_PRINTF("%p", if_snd.ifq_tail);
-	IF_DB_PRINTF("%d", if_snd.ifq_len);
-	IF_DB_PRINTF("%d", if_snd.ifq_maxlen);
-	IF_DB_PRINTF("%p", if_snd.ifq_drv_head);
-	IF_DB_PRINTF("%p", if_snd.ifq_drv_tail);
-	IF_DB_PRINTF("%d", if_snd.ifq_drv_len);
-	IF_DB_PRINTF("%d", if_snd.ifq_drv_maxlen);
-	IF_DB_PRINTF("%d", if_snd.altq_type);
-	IF_DB_PRINTF("%x", if_snd.altq_flags);
+	IF_DB_PRINTF("%p", if_snd[0].ifq_head);
+	IF_DB_PRINTF("%p", if_snd[0].ifq_tail);
+	IF_DB_PRINTF("%d", if_snd[0].ifq_len);
+	IF_DB_PRINTF("%d", if_snd[0].ifq_maxlen);
+	IF_DB_PRINTF("%p", if_snd[0].ifq_drv_head);
+	IF_DB_PRINTF("%p", if_snd[0].ifq_drv_tail);
+	IF_DB_PRINTF("%d", if_snd[0].ifq_drv_len);
+	IF_DB_PRINTF("%d", if_snd[0].ifq_drv_maxlen);
+	IF_DB_PRINTF("%d", if_snd[0].altq_type);
+	IF_DB_PRINTF("%x", if_snd[0].altq_flags);
 #undef IF_DB_PRINTF
 }
 

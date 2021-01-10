@@ -806,7 +806,7 @@ cdce_bulk_write_callback(struct usb_xfer *xfer, usb_error_t error)
 tr_setup:
 		for (x = 0; x != CDCE_FRAMES_MAX; x++) {
 
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 			if (m == NULL)
 				break;
@@ -1252,7 +1252,7 @@ cdce_ncm_fill_tx_frames(struct usb_xfer *xfer, uint8_t index)
 
 		rem = sc->sc_ncm.tx_max - offset;
 
-		IFQ_DRV_DEQUEUE(&(ifp->if_snd), m);
+		IFQ_DRV_DEQUEUE(&(ifp->if_snd[0]), m);
 
 		if (m == NULL) {
 			/* buffer not full */
@@ -1270,7 +1270,7 @@ cdce_ncm_fill_tx_frames(struct usb_xfer *xfer, uint8_t index)
 				continue;
 			}
 			/* Wait till next buffer becomes ready */
-			IFQ_DRV_PREPEND(&(ifp->if_snd), m);
+			IFQ_DRV_PREPEND(&(ifp->if_snd[0]), m);
 			break;
 		}
 		usbd_m_copy_in(pc, offset, m, 0, m->m_pkthdr.len);

@@ -475,9 +475,9 @@ bm_attach(device_t dev)
 	ifp->if_start = bm_start;
 	ifp->if_ioctl = bm_ioctl;
 	ifp->if_init = bm_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, BM_MAX_TX_PACKETS);
-	ifp->if_snd.ifq_drv_maxlen = BM_MAX_TX_PACKETS;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], BM_MAX_TX_PACKETS);
+	ifp->if_snd[0].ifq_drv_maxlen = BM_MAX_TX_PACKETS;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Attach the interface. */
 	ether_ifattach(ifp, sc->sc_enaddr);
@@ -558,7 +558,7 @@ bm_dummypacket(struct bm_softc *sc)
 	mtod(m, unsigned char *)[15] = 0;
 	mtod(m, unsigned char *)[16] = 0xE3;
 	m->m_len = m->m_pkthdr.len = sizeof(struct ether_header) + 3;
-	IF_ENQUEUE(&ifp->if_snd, m);
+	IF_ENQUEUE(&ifp->if_snd[0], m);
 	bm_start_locked(ifp);
 }
 
@@ -695,7 +695,7 @@ bm_txintr(void *xsc)
 		sc->sc_wdog_timer = STAILQ_EMPTY(&sc->sc_txdirtyq) ? 0 : 5;
 
 		if ((ifp->if_drv_flags & IFF_DRV_RUNNING) &&
-		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			bm_start_locked(ifp);
 	}
 
@@ -733,8 +733,8 @@ bm_start_locked(struct ifnet *ifp)
 	 * if not it will sail through the NOP.
 	 */
 
-	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, mb_head);
+	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], mb_head);
 
 		if (mb_head == NULL)
 			break;
@@ -744,7 +744,7 @@ bm_start_locked(struct ifnet *ifp)
 		if (bm_encap(sc, &mb_head)) {
 			/* Put the packet back and stop */
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, mb_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], mb_head);
 			break;
 		}
 

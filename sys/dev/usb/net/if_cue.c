@@ -514,7 +514,7 @@ cue_bulk_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		/* FALLTHROUGH */
 	case USB_ST_SETUP:
 tr_setup:
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 		if (m == NULL)
 			return;

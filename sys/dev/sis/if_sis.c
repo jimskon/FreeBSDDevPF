@@ -1063,9 +1063,9 @@ sis_attach(device_t dev)
 	ifp->if_ioctl = sis_ioctl;
 	ifp->if_start = sis_start;
 	ifp->if_init = sis_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, SIS_TX_LIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = SIS_TX_LIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], SIS_TX_LIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = SIS_TX_LIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if (pci_find_cap(sc->sis_dev, PCIY_PMG, &pmc) == 0) {
 		if (sc->sis_type == SIS_TYPE_83815)
@@ -1658,7 +1658,7 @@ sis_poll(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	sc->rxcycles = count;
 	rx_npkts = sis_rxeof(sc);
 	sis_txeof(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		sis_startl(ifp);
 
 	if (sc->rxcycles > 0 || cmd == POLL_AND_CHECK_STATUS) {
@@ -1744,7 +1744,7 @@ sis_intr(void *arg)
 		/* Re-enable interrupts. */
 		CSR_WRITE_4(sc, SIS_IER, 1);
 
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			sis_startl(ifp);
 	}
 
@@ -1888,16 +1888,16 @@ sis_startl(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->sis_flags & SIS_FLAG_LINK) == 0)
 		return;
 
-	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->sis_tx_cnt < SIS_TX_LIST_CNT - 4;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
 		if (sis_encap(sc, &m_head) != 0) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -2205,7 +2205,7 @@ sis_watchdog(struct sis_softc *sc)
 	sc->sis_ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	sis_initl(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&sc->sis_ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&sc->sis_ifp->if_snd[0]))
 		sis_startl(sc->sis_ifp);
 }
 

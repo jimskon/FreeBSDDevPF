@@ -84,7 +84,7 @@ codel_pfattach(struct pf_altq *a)
 	if ((ifp = ifunit(a->ifname)) == NULL || a->altq_disc == NULL)
 		return (EINVAL);
 
-	return (altq_attach(&ifp->if_snd, ALTQT_CODEL, a->altq_disc,
+	return (altq_attach(&ifp->if_snd[0], ALTQT_CODEL, a->altq_disc,
 	    codel_enqueue, codel_dequeue, codel_request, NULL, NULL));
 }
 
@@ -96,7 +96,7 @@ codel_add_altq(struct ifnet *ifp, struct pf_altq *a)
 
 	if (ifp == NULL)
 		return (EINVAL);
-	if (!ALTQ_IS_READY(&ifp->if_snd))
+	if (!ALTQ_IS_READY(&ifp->if_snd[0]))
 		return (ENODEV);
 
 	opts = &a->pq_u.codel_opts;
@@ -105,7 +105,7 @@ codel_add_altq(struct ifnet *ifp, struct pf_altq *a)
 	if (cif == NULL)
 		return (ENOMEM);
 	cif->cif_bandwidth = a->ifbandwidth;
-	cif->cif_ifq = &ifp->if_snd;
+	cif->cif_ifq = &ifp->if_snd[0];
 
 	cif->cl_q = malloc(sizeof(class_queue_t), M_DEVBUF, M_NOWAIT | M_ZERO);
 	if (cif->cl_q == NULL) {

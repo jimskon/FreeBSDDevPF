@@ -486,7 +486,7 @@ cs_attach(device_t dev)
 	ifp->if_start=cs_start;
 	ifp->if_ioctl=cs_ioctl;
 	ifp->if_init=cs_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 
 	ifp->if_flags=(IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST);
 
@@ -880,7 +880,7 @@ cs_start_locked(struct ifnet *ifp)
 		if (sc->buf_len)
 			length = sc->buf_len;
 		else {
-			IF_DEQUEUE( &ifp->if_snd, m );
+			IF_DEQUEUE( &ifp->if_snd[0], m );
 
 			if (m==NULL) {
 				return;

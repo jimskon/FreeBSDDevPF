@@ -239,7 +239,7 @@ ex_attach(device_t dev)
 	ifp->if_start = ex_start;
 	ifp->if_ioctl = ex_ioctl;
 	ifp->if_init = ex_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 
 	ifmedia_init(&sc->ifmedia, 0, ex_ifmedia_upd, ex_ifmedia_sts);
 	mtx_init(&sc->lock, device_get_nameunit(dev), MTX_NETWORK_LOCK,
@@ -431,7 +431,7 @@ ex_start_locked(struct ifnet *ifp)
 	 * Main loop: send outgoing packets to network card until there are no
 	 * more packets left, or the card cannot accept any more yet.
 	 */
-	while (((opkt = ifp->if_snd.ifq_head) != NULL) &&
+	while (((opkt = ifp->if_snd[0].ifq_head) != NULL) &&
 	       !(ifp->if_drv_flags & IFF_DRV_OACTIVE)) {
 
 		/*
@@ -465,7 +465,7 @@ ex_start_locked(struct ifnet *ifp)
 		DODEBUG(Sent_Pkts, printf("i=%d, avail=%d\n", i, avail););
 
 		if (avail >= len + XMT_HEADER_LEN) {
-			IF_DEQUEUE(&ifp->if_snd, opkt);
+			IF_DEQUEUE(&ifp->if_snd[0], opkt);
 
 #ifdef EX_PSA_INTR      
 			/*
@@ -652,7 +652,7 @@ ex_intr(void *arg)
 	 * If any packet has been transmitted, and there are queued packets to
 	 * be sent, attempt to send more packets to the network card.
 	 */
-	if (send_pkts && (ifp->if_snd.ifq_head != NULL))
+	if (send_pkts && (ifp->if_snd[0].ifq_head != NULL))
 		ex_start_locked(ifp);
 	EX_UNLOCK(sc);
 

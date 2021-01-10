@@ -879,9 +879,9 @@ sf_attach(device_t dev)
 	ifp->if_ioctl = sf_ioctl;
 	ifp->if_start = sf_start;
 	ifp->if_init = sf_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, SF_TX_DLIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = SF_TX_DLIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], SF_TX_DLIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = SF_TX_DLIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	/*
 	 * With the help of firmware, AIC-6915 supports
 	 * Tx/Rx TCP/UDP checksum offload.
@@ -1811,7 +1811,7 @@ sf_poll(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	sc->rxcycles = count;
 	rx_npkts = sf_rxeof(sc);
 	sf_txeof(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		sf_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) {
@@ -1917,7 +1917,7 @@ sf_intr(void *arg)
 #endif
 			}
 		}
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			sf_start_locked(ifp);
 		if (--cnt <= 0)
 			break;
@@ -2275,9 +2275,9 @@ sf_start_locked(struct ifnet *ifp)
 	 * limit available number of active Tx descriptor counter to be
 	 * higher than maximum number of DMA segments allowed in driver.
 	 */
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->sf_cdata.sf_tx_cnt < SF_TX_DLIST_CNT - SF_MAXTXSEGS; ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -2288,7 +2288,7 @@ sf_start_locked(struct ifnet *ifp)
 		if (sf_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -2567,7 +2567,7 @@ sf_watchdog(struct sf_softc *sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	sf_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		sf_start_locked(ifp);
 }
 

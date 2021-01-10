@@ -255,9 +255,9 @@ tsec_attach(struct tsec_softc *sc)
 	ifp->if_start = tsec_start;
 	ifp->if_ioctl = tsec_ioctl;
 
-	IFQ_SET_MAXLEN(&ifp->if_snd, TSEC_TX_NUM_DESC - 1);
-	ifp->if_snd.ifq_drv_maxlen = TSEC_TX_NUM_DESC - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TSEC_TX_NUM_DESC - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = TSEC_TX_NUM_DESC - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	ifp->if_capabilities = IFCAP_VLAN_MTU;
 	if (sc->is_etsec)
@@ -750,7 +750,7 @@ tsec_start_locked(struct ifnet *ifp)
 		}
 
 		/* Get packet from the queue */
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 		if (m0 == NULL)
 			break;
 
@@ -1268,7 +1268,7 @@ tsec_tick(void *arg)
 	mii_tick(sc->tsec_mii);
 
 	if (link == 0 && sc->tsec_link == 1 &&
-	    (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)))
+	    (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])))
 		tsec_start_locked(ifp);
 
 	/* Schedule another timeout one second from now. */

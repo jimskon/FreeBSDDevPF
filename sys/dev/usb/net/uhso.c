@@ -1594,9 +1594,9 @@ uhso_attach_ifnet(struct uhso_softc *sc, struct usb_interface *iface, int type)
 	ifp->if_output = uhso_if_output;
 	ifp->if_flags = IFF_BROADCAST | IFF_MULTICAST | IFF_NOARP;
 	ifp->if_softc = sc;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if_attach(ifp);
 	bpfattach(ifp, DLT_RAW, 0);
@@ -1807,7 +1807,7 @@ uhso_ifnet_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
 	case USB_ST_SETUP:
 tr_setup:
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 

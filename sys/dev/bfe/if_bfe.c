@@ -494,9 +494,9 @@ bfe_attach(device_t dev)
 	ifp->if_ioctl = bfe_ioctl;
 	ifp->if_start = bfe_start;
 	ifp->if_init = bfe_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, BFE_TX_QLEN);
-	ifp->if_snd.ifq_drv_maxlen = BFE_TX_QLEN;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], BFE_TX_QLEN);
+	ifp->if_snd[0].ifq_drv_maxlen = BFE_TX_QLEN;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	bfe_get_config(sc);
 
@@ -617,7 +617,7 @@ bfe_resume(device_t dev)
 	if (ifp->if_flags & IFF_UP) {
 		bfe_init_locked(sc);
 		if (ifp->if_drv_flags & IFF_DRV_RUNNING &&
-		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			bfe_start_locked(ifp);
 	}
 	BFE_UNLOCK(sc);
@@ -1500,7 +1500,7 @@ bfe_intr(void *xsc)
 	}
 
 	/* We have packets pending, fire them out */
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		bfe_start_locked(ifp);
 
 	BFE_UNLOCK(sc);
@@ -1626,9 +1626,9 @@ bfe_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->bfe_flags & BFE_FLAG_LINK) == 0)
 		return;
 
-	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->bfe_tx_cnt < BFE_TX_LIST_CNT - 1;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -1639,7 +1639,7 @@ bfe_start_locked(struct ifnet *ifp)
 		if (bfe_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1828,7 +1828,7 @@ bfe_watchdog(struct bfe_softc *sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	bfe_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		bfe_start_locked(ifp);
 }
 

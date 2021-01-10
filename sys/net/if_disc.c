@@ -111,7 +111,7 @@ disc_clone_create(struct if_clone *ifc, int unit, caddr_t params)
 	ifp->if_output = discoutput;
 	ifp->if_hdrlen = 0;
 	ifp->if_addrlen = 0;
-	ifp->if_snd.ifq_maxlen = 20;
+	ifp->if_snd[0].ifq_maxlen = 20;
 	if_attach(ifp);
 	bpfattach(ifp, DLT_NULL, sizeof(u_int32_t));
 
