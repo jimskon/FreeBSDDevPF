@@ -643,7 +643,7 @@ nm_os_vi_persist(const char *name, struct ifnet **ret)
 	ifp->if_ioctl = nm_vi_dummy;
 	ifp->if_start = nm_vi_start;
 	ifp->if_mtu = ETHERMTU;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 	ifp->if_capabilities |= IFCAP_LINKSTATE;
 	ifp->if_capenable |= IFCAP_LINKSTATE;
 

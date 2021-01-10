@@ -821,9 +821,9 @@ jme_attach(device_t dev)
 	ifp->if_ioctl = jme_ioctl;
 	ifp->if_start = jme_start;
 	ifp->if_init = jme_init;
-	ifp->if_snd.ifq_drv_maxlen = JME_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = JME_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	/* JMC250 supports Tx/Rx checksum offload as well as TSO. */
 	ifp->if_capabilities = IFCAP_HWCSUM | IFCAP_TSO4;
 	ifp->if_hwassist = JME_CSUM_FEATURES | CSUM_TSO;
@@ -1896,8 +1896,8 @@ jme_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->jme_flags & JME_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1908,7 +1908,7 @@ jme_start_locked(struct ifnet *ifp)
 		if (jme_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1957,7 +1957,7 @@ jme_watchdog(struct jme_softc *sc)
 	if (sc->jme_cdata.jme_tx_cnt == 0) {
 		if_printf(sc->jme_ifp,
 		    "watchdog timeout (missed Tx interrupts) -- recovering\n");
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			jme_start_locked(ifp);
 		return;
 	}
@@ -1966,7 +1966,7 @@ jme_watchdog(struct jme_softc *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	jme_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		jme_start_locked(ifp);
 }
 
@@ -2403,7 +2403,7 @@ jme_int_task(void *arg, int pending)
 			CSR_WRITE_4(sc, JME_RXCSR, sc->jme_rxcsr |
 			    RXCSR_RX_ENB | RXCSR_RXQ_START);
 		}
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			jme_start_locked(ifp);
 	}
 

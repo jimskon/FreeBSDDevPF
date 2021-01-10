@@ -658,9 +658,9 @@ vr_attach(device_t dev)
 	ifp->if_ioctl = vr_ioctl;
 	ifp->if_start = vr_start;
 	ifp->if_init = vr_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, VR_TX_RING_CNT - 1);
-	ifp->if_snd.ifq_maxlen = VR_TX_RING_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], VR_TX_RING_CNT - 1);
+	ifp->if_snd[0].ifq_maxlen = VR_TX_RING_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	TASK_INIT(&sc->vr_inttask, 0, vr_int_task, sc);
 
@@ -1598,7 +1598,7 @@ vr_poll_locked(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	sc->rxcycles = count;
 	rx_npkts = vr_rxeof(sc);
 	vr_txeof(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		vr_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) {
@@ -1727,7 +1727,7 @@ vr_int_task(void *arg, int npending)
 		}
 		vr_txeof(sc);
 
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			vr_start_locked(ifp);
 
 		status = CSR_READ_2(sc, VR_ISR);
@@ -1968,9 +1968,9 @@ vr_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->vr_flags & VR_F_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->vr_cdata.vr_tx_cnt < VR_TX_RING_CNT - 2; ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1981,7 +1981,7 @@ vr_start_locked(struct ifnet *ifp)
 		if (vr_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -2332,7 +2332,7 @@ vr_watchdog(struct vr_softc *sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	vr_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		vr_start_locked(ifp);
 }
 

@@ -2393,9 +2393,9 @@ dc_attach(device_t dev)
 	ifp->if_ioctl = dc_ioctl;
 	ifp->if_start = dc_start;
 	ifp->if_init = dc_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, DC_TX_LIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = DC_TX_LIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], DC_TX_LIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = DC_TX_LIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Do MII setup. If this is a 21143, check for a PHY on the
@@ -3152,7 +3152,7 @@ dc_tick(void *xsc)
 	 * that time, packets will stay in the send queue, and once the
 	 * link comes up, they will be flushed out to the wire.
 	 */
-	if (sc->dc_link != 0 && !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (sc->dc_link != 0 && !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		dc_start_locked(ifp);
 
 	if (sc->dc_flags & DC_21143_NWAY && !sc->dc_link)
@@ -3240,7 +3240,7 @@ dc_poll(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	sc->rxcycles = count;
 	rx_npkts = dc_rxeof(sc);
 	dc_txeof(sc);
-	if (!IFQ_IS_EMPTY(&ifp->if_snd) &&
+	if (!IFQ_IS_EMPTY(&ifp->if_snd[0]) &&
 	    !(ifp->if_drv_flags & IFF_DRV_OACTIVE))
 		dc_start_locked(ifp);
 
@@ -3349,7 +3349,7 @@ dc_intr(void *arg)
 			}
 		}
 
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			dc_start_locked(ifp);
 
 		if (status & DC_ISR_BUS_ERR) {
@@ -3540,7 +3540,7 @@ dc_start_locked(struct ifnet *ifp)
 
 	sc->dc_cdata.dc_tx_first = sc->dc_cdata.dc_tx_prod;
 
-	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
+	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
 		/*
 		 * If there's no way we can send any packets, return now.
 		 */
@@ -3548,14 +3548,14 @@ dc_start_locked(struct ifnet *ifp)
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
 		if (dc_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -3946,7 +3946,7 @@ dc_watchdog(void *xsc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	dc_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		dc_start_locked(ifp);
 }
 

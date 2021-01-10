@@ -201,9 +201,9 @@ cas_attach(struct cas_softc *sc)
 	ifp->if_start = cas_start;
 	ifp->if_ioctl = cas_ioctl;
 	ifp->if_init = cas_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, CAS_TXQUEUELEN);
-	ifp->if_snd.ifq_drv_maxlen = CAS_TXQUEUELEN;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], CAS_TXQUEUELEN);
+	ifp->if_snd[0].ifq_drv_maxlen = CAS_TXQUEUELEN;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	callout_init_mtx(&sc->sc_tick_ch, &sc->sc_mtx, 0);
 	callout_init_mtx(&sc->sc_rx_ch, &sc->sc_mtx, 0);
@@ -1463,15 +1463,15 @@ cas_start(struct ifnet *ifp)
 #endif
 	ntx = 0;
 	kicked = 0;
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) && sc->sc_txfree > 1;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) && sc->sc_txfree > 1;) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		if (cas_load_txmbuf(sc, &m) != 0) {
 			if (m == NULL)
 				break;
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		if ((sc->sc_txnext % 4) == 0) {
@@ -1941,7 +1941,7 @@ cas_eint(struct cas_softc *sc, u_int status)
 
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	cas_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		taskqueue_enqueue(sc->sc_tq, &sc->sc_tx_task);
 }
 
@@ -2060,7 +2060,7 @@ cas_intr_task(void *arg, int pending __unused)
 	if ((ifp->if_drv_flags & IFF_DRV_RUNNING) == 0) {
 		CAS_UNLOCK(sc);
 		return;
-	} else if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	} else if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		taskqueue_enqueue(sc->sc_tq, &sc->sc_tx_task);
 	CAS_UNLOCK(sc);
 
@@ -2116,7 +2116,7 @@ cas_watchdog(struct cas_softc *sc)
 	/* Try to get more packets going. */
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	cas_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		taskqueue_enqueue(sc->sc_tq, &sc->sc_tx_task);
 }
 

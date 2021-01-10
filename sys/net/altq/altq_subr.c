@@ -131,8 +131,8 @@ altq_lookup(name, type)
 
 	if ((ifp = ifunit(name)) != NULL) {
 		/* read if_snd unlocked */
-		if (type != ALTQT_NONE && ifp->if_snd.altq_type == type)
-			return (ifp->if_snd.altq_disc);
+		if (type != ALTQT_NONE && ifp->if_snd[0].altq_type == type)
+			return (ifp->if_snd[0].altq_disc);
 	}
 
 	return NULL;
@@ -146,8 +146,8 @@ altq_lookup_indexed(char *name, uint8_t index, int type)
 
 	if ((ifp = ifunit_indexed(name,index)) != NULL) {
 		/* read if_snd unlocked */
-		if (type != ALTQT_NONE && ifp->if_snd.altq_type == type)
-			return (ifp->if_snd.altq_disc);
+		if (type != ALTQT_NONE && ifp->if_snd[0].altq_type == type)
+			return (ifp->if_snd[0].altq_disc);
 	}
 
 	return NULL;
@@ -466,10 +466,10 @@ tbr_timeout(arg)
 		for (ifp = CK_STAILQ_FIRST(&V_ifnet); ifp;
 		    ifp = CK_STAILQ_NEXT(ifp, if_link)) {
 			/* read from if_snd unlocked */
-			if (!TBR_IS_ENABLED(&ifp->if_snd))
+			if (!TBR_IS_ENABLED(&ifp->if_snd[0]))
 				continue;
 			active++;
-			if (!IFQ_IS_EMPTY(&ifp->if_snd) &&
+			if (!IFQ_IS_EMPTY(&ifp->if_snd[0]) &&
 			    ifp->if_start != NULL)
 				(*ifp->if_start)(ifp);
 		}
@@ -546,15 +546,15 @@ altq_pfdetach(struct pf_altq *a)
 
 	/* if this discipline is no longer referenced, just return */
 	/* read unlocked from if_snd */
-	if (a->altq_disc == NULL || a->altq_disc != ifp->if_snd.altq_disc)
+	if (a->altq_disc == NULL || a->altq_disc != ifp->if_snd[0].altq_disc)
 		return (0);
 
 	s = splnet();
 	/* read unlocked from if_snd, _disable and _detach take care */
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
-		error = altq_disable(&ifp->if_snd);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
+		error = altq_disable(&ifp->if_snd[0]);
 	if (error == 0)
-		error = altq_detach(&ifp->if_snd);
+		error = altq_detach(&ifp->if_snd[0]);
 	splx(s);
 
 	return (error);

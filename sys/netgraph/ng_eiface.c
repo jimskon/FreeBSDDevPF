@@ -233,7 +233,7 @@ ng_eiface_start2(node_p node, hook_p hook, void *arg1, int arg2)
 		/*
 		 * Grab a packet to transmit.
 		 */
-		IF_DEQUEUE(&ifp->if_snd, m);
+		IF_DEQUEUE(&ifp->if_snd[0], m);
 
 		/* If there's nothing to send, break. */
 		if (m == NULL)
@@ -412,7 +412,7 @@ ng_eiface_constructor(node_p node)
 	ifp->if_output = ether_output;
 	ifp->if_start = ng_eiface_start;
 	ifp->if_ioctl = ng_eiface_ioctl;
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
 	ifp->if_flags = (IFF_SIMPLEX | IFF_BROADCAST | IFF_MULTICAST);
 	ifp->if_capabilities = IFCAP_VLAN_MTU | IFCAP_JUMBO_MTU;
 	ifp->if_capenable = IFCAP_VLAN_MTU | IFCAP_JUMBO_MTU;

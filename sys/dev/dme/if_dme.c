@@ -317,7 +317,7 @@ dme_prepare(struct dme_softc *sc)
 	    ("dme_prepare: called with txready set\n"));
 
 	ifp = sc->dme_ifp;
-	IFQ_DEQUEUE(&ifp->if_snd, m);
+	IFQ_DEQUEUE(&ifp->if_snd[0], m);
 	if (m == NULL) {
 		ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
 		DTR3("dme_prepare none, flags %#x busy %d ready %d",
@@ -904,7 +904,7 @@ dme_attach(device_t dev)
 	ifp->if_start = dme_start;
 	ifp->if_ioctl = dme_ioctl;
 	ifp->if_init = dme_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, IFQ_MAXLEN);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], IFQ_MAXLEN);
 
 	ether_ifattach(ifp, sc->dme_macaddr);
 

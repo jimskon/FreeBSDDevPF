@@ -176,7 +176,7 @@ hfsc_pfattach(struct pf_altq *a)
 	if ((ifp = ifunit(a->ifname)) == NULL || a->altq_disc == NULL)
 		return (EINVAL);
 	s = splnet();
-	error = altq_attach(&ifp->if_snd, ALTQT_HFSC, a->altq_disc,
+	error = altq_attach(&ifp->if_snd[0], ALTQT_HFSC, a->altq_disc,
 	    hfsc_enqueue, hfsc_dequeue, hfsc_request, NULL, NULL);
 	splx(s);
 	return (error);
@@ -192,7 +192,7 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 
 	if (ifp == NULL)
 		return (EINVAL);
-	if (!ALTQ_IS_READY(&ifp->if_snd))
+	if (!ALTQ_IS_READY(&ifp->if_snd[0]))
 		return (ENODEV);
 
 	hif = malloc(sizeof(struct hfsc_if), M_DEVBUF, M_NOWAIT | M_ZERO);
@@ -200,13 +200,13 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 		return (ENOMEM);
 
 	TAILQ_INIT(&hif->hif_eligible);
-	hif->hif_ifq = &ifp->if_snd;
+	hif->hif_ifq = &ifp->if_snd[0];
 
 	/* keep the state in pf_altq */
 	a->altq_disc = hif;
 	printf("***** hfsc_add_altq, hfsc address: %p\n", (void *)hif);
         // Skon - add the root index to the ifaltq                                                   
-        ifp->if_snd.index=a->index;
+        ifp->if_snd[0].index=a->index;
 	return (0);
 }
 
@@ -2139,13 +2139,13 @@ hfsccmd_if_attach(ap)
 	if ((ifp = ifunit(ap->iface.hfsc_ifname)) == NULL)
 		return (ENXIO);
 
-	if ((hif = hfsc_attach(&ifp->if_snd, ap->bandwidth)) == NULL)
+	if ((hif = hfsc_attach(&ifp->if_snd[0], ap->bandwidth)) == NULL)
 		return (ENOMEM);
 
 	/*
 	 * set HFSC to this ifnet structure.
 	 */
-	if ((error = altq_attach(&ifp->if_snd, ALTQT_HFSC, hif,
+	if ((error = altq_attach(&ifp->if_snd[0], ALTQT_HFSC, hif,
 				 hfsc_enqueue, hfsc_dequeue, hfsc_request,
 				 &hif->hif_classifier, acc_classify)) != 0)
 		(void)hfsc_detach(hif);

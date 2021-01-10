@@ -190,7 +190,7 @@ fwip_attach(device_t dev)
 	ifp->if_start = fwip_start;
 	ifp->if_ioctl = fwip_ioctl;
 	ifp->if_flags = (IFF_BROADCAST|IFF_SIMPLEX|IFF_MULTICAST);
-	ifp->if_snd.ifq_maxlen = TX_MAX_QUEUE;
+	ifp->if_snd[0].ifq_maxlen = TX_MAX_QUEUE;
 #ifdef DEVICE_POLLING
 	ifp->if_capabilities |= IFCAP_POLLING;
 #endif
@@ -488,7 +488,7 @@ fwip_output_callback(struct fw_xfer *xfer)
 	splx(s);
 
 	/* for queue full */
-	if (ifp->if_snd.ifq_head != NULL) {
+	if (ifp->if_snd[0].ifq_head != NULL) {
 		fwip_start(ifp);
 	}
 }
@@ -508,7 +508,7 @@ fwip_start(struct ifnet *ifp)
 
 		s = splimp();
 		do {
-			IF_DEQUEUE(&ifp->if_snd, m);
+			IF_DEQUEUE(&ifp->if_snd[0], m);
 			if (m != NULL)
 				m_freem(m);
 			if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
@@ -521,7 +521,7 @@ fwip_start(struct ifnet *ifp)
 	s = splimp();
 	ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 
-	if (ifp->if_snd.ifq_len != 0)
+	if (ifp->if_snd[0].ifq_len != 0)
 		fwip_async_output(fwip, ifp);
 
 	ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
@@ -546,7 +546,7 @@ fwip_async_output(struct fwip_softc *fwip, struct ifnet *ifp)
 	xfer = NULL;
 	xferq = fc->atq;
 	while ((xferq->queued < xferq->maxq - 1) &&
-			(ifp->if_snd.ifq_head != NULL)) {
+			(ifp->if_snd[0].ifq_head != NULL)) {
 		FWIP_LOCK(fwip);
 		xfer = STAILQ_FIRST(&fwip->xferlist);
 		if (xfer == NULL) {
@@ -559,7 +559,7 @@ fwip_async_output(struct fwip_softc *fwip, struct ifnet *ifp)
 		STAILQ_REMOVE_HEAD(&fwip->xferlist, link);
 		FWIP_UNLOCK(fwip);
 
-		IF_DEQUEUE(&ifp->if_snd, m);
+		IF_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL) {
 			FWIP_LOCK(fwip);
 			STAILQ_INSERT_HEAD(&fwip->xferlist, xfer, link);
@@ -674,7 +674,7 @@ fwip_async_output(struct fwip_softc *fwip, struct ifnet *ifp)
 			FWIP_LOCK(fwip);
 			STAILQ_INSERT_TAIL(&fwip->xferlist, xfer, link);
 			FWIP_UNLOCK(fwip);
-			IF_PREPEND(&ifp->if_snd, m);
+			IF_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		if (error) {

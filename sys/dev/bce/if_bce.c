@@ -1426,9 +1426,9 @@ bce_attach(device_t dev)
 	    (ETHER_MAX_LEN - ETHER_HDR_LEN - ETHER_CRC_LEN));
 
 	/* Recalculate our buffer allocation sizes. */
-	ifp->if_snd.ifq_drv_maxlen = USABLE_TX_BD_ALLOC;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = USABLE_TX_BD_ALLOC;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if (sc->bce_phy_flags & BCE_PHY_2_5G_CAPABLE_FLAG)
 		ifp->if_baudrate = IF_Mbps(2500ULL);
@@ -7592,7 +7592,7 @@ bce_start_locked(struct ifnet *ifp)
 		goto bce_start_locked_exit;
 	}
 
-	if (IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+	if (IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 		DBPRINT(sc, BCE_INFO_SEND, "%s(): Transmit queue empty.\n",
 		    __FUNCTION__);
 		goto bce_start_locked_exit;
@@ -7604,7 +7604,7 @@ bce_start_locked(struct ifnet *ifp)
 	while (sc->used_tx_bd < sc->max_tx_bd) {
 
 		/* Check for any frames to send. */
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 
 		/* Stop when the transmit queue is empty. */
 		if (m_head == NULL)
@@ -7618,7 +7618,7 @@ bce_start_locked(struct ifnet *ifp)
 		 */
 		if (bce_tx_encap(sc, &m_head)) {
 			if (m_head != NULL)
-				IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			DBPRINT(sc, BCE_INFO_SEND,
 			    "TX chain is closed for business! Total "
@@ -8049,7 +8049,7 @@ bce_intr(void *xsc)
 
 	/* Handle any frames that arrived while handling the interrupt. */
 	if (ifp->if_drv_flags & IFF_DRV_RUNNING &&
-	    !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		bce_start_locked(ifp);
 
 bce_intr_exit:
@@ -8519,7 +8519,7 @@ bce_tick(void *xsc)
 	}
 	if (sc->bce_link_up == TRUE) {
 		/* Now that link is up, handle any outstanding TX traffic. */
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 			DBPRINT(sc, BCE_VERBOSE_MISC, "%s(): Found "
 			    "pending TX traffic.\n", __FUNCTION__);
 			bce_start_locked(ifp);

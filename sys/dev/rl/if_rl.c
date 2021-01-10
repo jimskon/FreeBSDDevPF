@@ -834,9 +834,9 @@ rl_attach(device_t dev)
 #ifdef DEVICE_POLLING
 	ifp->if_capabilities |= IFCAP_POLLING;
 #endif
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Call MI attach routine.
@@ -1460,7 +1460,7 @@ rl_poll_locked(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	rx_npkts = rl_rxeof(sc);
 	rl_txeof(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		rl_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) {
@@ -1531,7 +1531,7 @@ rl_intr(void *arg)
 			break;
 	}
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		rl_start_locked(ifp);
 
 done_locked2:
@@ -1635,7 +1635,7 @@ rl_start_locked(struct ifnet *ifp)
 
 	while (RL_CUR_TXMBUF(sc) == NULL) {
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 
 		if (m_head == NULL)
 			break;
@@ -1643,7 +1643,7 @@ rl_start_locked(struct ifnet *ifp)
 		if (rl_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}

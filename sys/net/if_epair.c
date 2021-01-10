@@ -299,8 +299,8 @@ epair_nh_drainedcpu(u_int cpuid)
 		ifp->if_drv_flags &= ~IFF_DRV_OACTIVE;
 		epair_start_locked(ifp);
 
-		IFQ_LOCK(&ifp->if_snd);
-		if (IFQ_IS_EMPTY(&ifp->if_snd)) {
+		IFQ_LOCK(&ifp->if_snd[0]);
+		if (IFQ_IS_EMPTY(&ifp->if_snd[0])) {
 			struct epair_softc *sc __unused;
 
 			STAILQ_REMOVE(&epair_dpcpu->epair_ifp_drain_list,
@@ -313,7 +313,7 @@ epair_nh_drainedcpu(u_int cpuid)
 			    __func__, ifp, sc->refcount));
 			free(elm, M_EPAIR);
 		}
-		IFQ_UNLOCK(&ifp->if_snd);
+		IFQ_UNLOCK(&ifp->if_snd[0]);
 
 		if ((ifp->if_drv_flags & IFF_DRV_OACTIVE) != 0) {
 			/* Our "hw"q overflew again. */
@@ -416,7 +416,7 @@ epair_start_locked(struct ifnet *ifp)
 	oifp = sc->oifp;
 	sc = oifp->if_softc;
 	for (;;) {
-		IFQ_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		BPF_MTAP(ifp, m);
@@ -522,12 +522,12 @@ epair_transmit_locked(struct ifnet *ifp, struct mbuf *m)
 
 #ifdef ALTQ
 	/* Support ALTQ via the classic if_start() path. */
-	IF_LOCK(&ifp->if_snd);
-	if (ALTQ_IS_ENABLED(&ifp->if_snd)) {
-		ALTQ_ENQUEUE(&ifp->if_snd, m, NULL, error);
+	IF_LOCK(&ifp->if_snd[0]);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
+		ALTQ_ENQUEUE(&ifp->if_snd[0], m, NULL, error);
 		if (error)
 			if_inc_counter(ifp, IFCOUNTER_OQDROPS, 1);
-		IF_UNLOCK(&ifp->if_snd);
+		IF_UNLOCK(&ifp->if_snd[0]);
 		if (!error) {
 			if_inc_counter(ifp, IFCOUNTER_OBYTES, len);
 			if (mflags & (M_BCAST|M_MCAST))
@@ -540,7 +540,7 @@ epair_transmit_locked(struct ifnet *ifp, struct mbuf *m)
 		}
 		return (error);
 	}
-	IF_UNLOCK(&ifp->if_snd);
+	IF_UNLOCK(&ifp->if_snd[0]);
 #endif
 
 	if ((epair_dpcpu->epair_drv_flags & IFF_DRV_OACTIVE) != 0) {
@@ -549,7 +549,7 @@ epair_transmit_locked(struct ifnet *ifp, struct mbuf *m)
 		 * queuing to the ifq but do not call ifp->if_start.
 		 * Either we are lucky or the packet is gone.
 		 */
-		IFQ_ENQUEUE(&ifp->if_snd, m, error);
+		IFQ_ENQUEUE(&ifp->if_snd[0], m, error);
 		if (!error)
 			(void)epair_add_ifp_for_draining(ifp);
 		return (error);

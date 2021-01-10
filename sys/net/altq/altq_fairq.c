@@ -141,7 +141,7 @@ fairq_pfattach(struct pf_altq *a)
 	if ((ifp = ifunit(a->ifname)) == NULL || a->altq_disc == NULL)
 		return (EINVAL);
 
-	error = altq_attach(&ifp->if_snd, ALTQT_FAIRQ, a->altq_disc,
+	error = altq_attach(&ifp->if_snd[0], ALTQT_FAIRQ, a->altq_disc,
 	    fairq_enqueue, fairq_dequeue, fairq_request, NULL, NULL);
 
 	return (error);
@@ -154,7 +154,7 @@ fairq_add_altq(struct ifnet *ifp, struct pf_altq *a)
 
 	if (ifp == NULL)
 		return (EINVAL);
-	if (!ALTQ_IS_READY(&ifp->if_snd))
+	if (!ALTQ_IS_READY(&ifp->if_snd[0]))
 		return (ENODEV);
 
 
@@ -162,7 +162,7 @@ fairq_add_altq(struct ifnet *ifp, struct pf_altq *a)
 			M_DEVBUF, M_WAITOK | M_ZERO);
 	pif->pif_bandwidth = a->ifbandwidth;
 	pif->pif_maxpri = -1;
-	pif->pif_ifq = &ifp->if_snd;
+	pif->pif_ifq = &ifp->if_snd[0];
 
 	/* keep the state in pf_altq */
 	a->altq_disc = pif;

@@ -667,7 +667,7 @@ wb_attach(dev)
 	ifp->if_ioctl = wb_ioctl;
 	ifp->if_start = wb_start;
 	ifp->if_init = wb_init;
-	ifp->if_snd.ifq_maxlen = WB_TX_LIST_CNT - 1;
+	ifp->if_snd[0].ifq_maxlen = WB_TX_LIST_CNT - 1;
 
 	/*
 	 * Do MII setup.
@@ -1116,7 +1116,7 @@ wb_intr(arg)
 	/* Re-enable interrupts. */
 	CSR_WRITE_4(sc, WB_IMR, WB_INTRS);
 
-	if (ifp->if_snd.ifq_head != NULL) {
+	if (ifp->if_snd[0].ifq_head != NULL) {
 		wb_start_locked(ifp);
 	}
 
@@ -1274,7 +1274,7 @@ wb_start_locked(ifp)
 	start_tx = sc->wb_cdata.wb_tx_free;
 
 	while(sc->wb_cdata.wb_tx_free->wb_mbuf == NULL) {
-		IF_DEQUEUE(&ifp->if_snd, m_head);
+		IF_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -1565,7 +1565,7 @@ wb_watchdog(sc)
 	wb_reset(sc);
 	wb_init_locked(sc);
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		wb_start_locked(ifp);
 }
 

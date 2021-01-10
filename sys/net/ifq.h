@@ -249,7 +249,7 @@ do {									\
 									\
 	len = (m)->m_pkthdr.len;					\
 	mflags = (m)->m_flags;						\
-	IFQ_ENQUEUE(&(ifp)->if_snd, m, err);				\
+	IFQ_ENQUEUE(&(ifp)->if_snd[0], m, err);				\
 	if ((err) == 0) {						\
 		if_inc_counter((ifp), IFCOUNTER_OBYTES, len + (adj));	\
 		if (mflags & M_MCAST)					\
@@ -321,8 +321,8 @@ drbr_enqueue(struct ifnet *ifp, struct buf_ring *br, struct mbuf *m)
 	int error = 0;
 
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd)) {
-		IFQ_ENQUEUE(&ifp->if_snd, m, error);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
+		IFQ_ENQUEUE(&ifp->if_snd[0], m, error);
 		if (error)
 			if_inc_counter((ifp), IFCOUNTER_OQDROPS, 1);
 		return (error);
@@ -343,12 +343,12 @@ drbr_putback(struct ifnet *ifp, struct buf_ring *br, struct mbuf *new)
 	 * for this one.
 	 */
 #ifdef ALTQ
-	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd)) {
+	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
 		/* 
 		 * Peek in altq case dequeued it
 		 * so put it back.
 		 */
-		IFQ_DRV_PREPEND(&ifp->if_snd, new);
+		IFQ_DRV_PREPEND(&ifp->if_snd[0], new);
 		return;
 	}
 #endif
@@ -360,14 +360,14 @@ drbr_peek(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
 	struct mbuf *m;
-	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd)) {
+	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
 		/* 
 		 * Pull it off like a dequeue
 		 * since drbr_advance() does nothing
 		 * for altq and drbr_putback() will
 		 * use the old prepend function.
 		 */
-		IFQ_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DEQUEUE(&ifp->if_snd[0], m);
 		return (m);
 	}
 #endif
@@ -380,8 +380,8 @@ drbr_flush(struct ifnet *ifp, struct buf_ring *br)
 	struct mbuf *m;
 
 #ifdef ALTQ
-	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd))
-		IFQ_PURGE(&ifp->if_snd);
+	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0]))
+		IFQ_PURGE(&ifp->if_snd[0]);
 #endif	
 	while ((m = buf_ring_dequeue_sc(br)) != NULL)
 		m_freem(m);
@@ -401,8 +401,8 @@ drbr_dequeue(struct ifnet *ifp, struct buf_ring *br)
 #ifdef ALTQ
 	struct mbuf *m;
 
-	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd)) {	
-		IFQ_DEQUEUE(&ifp->if_snd, m);
+	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0])) {	
+		IFQ_DEQUEUE(&ifp->if_snd[0], m);
 		return (m);
 	}
 #endif
@@ -414,7 +414,7 @@ drbr_advance(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
 	/* Nothing to do here since peek dequeues in altq case */
-	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd))
+	if (ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		return;
 #endif
 	return (buf_ring_advance_sc(br));
@@ -427,15 +427,15 @@ drbr_dequeue_cond(struct ifnet *ifp, struct buf_ring *br,
 {
 	struct mbuf *m;
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd)) {
-		IFQ_LOCK(&ifp->if_snd);
-		IFQ_POLL_NOLOCK(&ifp->if_snd, m);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
+		IFQ_LOCK(&ifp->if_snd[0]);
+		IFQ_POLL_NOLOCK(&ifp->if_snd[0], m);
 		if (m != NULL && func(m, arg) == 0) {
-			IFQ_UNLOCK(&ifp->if_snd);
+			IFQ_UNLOCK(&ifp->if_snd[0]);
 			return (NULL);
 		}
-		IFQ_DEQUEUE_NOLOCK(&ifp->if_snd, m);
-		IFQ_UNLOCK(&ifp->if_snd);
+		IFQ_DEQUEUE_NOLOCK(&ifp->if_snd[0], m);
+		IFQ_UNLOCK(&ifp->if_snd[0]);
 		return (m);
 	}
 #endif
@@ -450,8 +450,8 @@ static __inline int
 drbr_empty(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
-		return (IFQ_IS_EMPTY(&ifp->if_snd));
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
+		return (IFQ_IS_EMPTY(&ifp->if_snd[0]));
 #endif
 	return (buf_ring_empty(br));
 }
@@ -460,7 +460,7 @@ static __inline int
 drbr_needs_enqueue(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		return (1);
 #endif
 	return (!buf_ring_empty(br));
@@ -470,8 +470,8 @@ static __inline int
 drbr_inuse(struct ifnet *ifp, struct buf_ring *br)
 {
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
-		return (ifp->if_snd.ifq_len);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
+		return (ifp->if_snd[0].ifq_len);
 #endif
 	return (buf_ring_count(br));
 }

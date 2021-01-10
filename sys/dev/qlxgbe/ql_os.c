@@ -884,9 +884,9 @@ qla_init_ifnet(device_t dev, qla_host_t *ha)
 	ifp->if_transmit = qla_transmit;
 	ifp->if_qflush = qla_qflush;
 
-	IFQ_SET_MAXLEN(&ifp->if_snd, qla_get_ifq_snd_maxlen(ha));
-	ifp->if_snd.ifq_drv_maxlen = qla_get_ifq_snd_maxlen(ha);
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], qla_get_ifq_snd_maxlen(ha));
+	ifp->if_snd[0].ifq_drv_maxlen = qla_get_ifq_snd_maxlen(ha);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	ha->max_frame_size = ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN;
 

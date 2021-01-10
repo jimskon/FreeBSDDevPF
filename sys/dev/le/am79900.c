@@ -518,7 +518,7 @@ am79900_intr(void *arg)
 	/* Enable interrupts again. */
 	(*sc->sc_wrcsr)(sc, LE_CSR0, LE_C0_INEA);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		am79900_start_locked(sc);
 
 	LE_UNLOCK(sc);
@@ -547,7 +547,7 @@ am79900_start_locked(struct lance_softc *sc)
 	enq = 0;
 
 	for (; sc->sc_no_td < sc->sc_ntbuf &&
-	    !IFQ_DRV_IS_EMPTY(&ifp->if_snd);) {
+	    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]);) {
 		rp = LE_TMDADDR(sc, bix);
 		(*sc->sc_copyfromdesc)(sc, &tmd, rp, sizeof(tmd));
 
@@ -558,7 +558,7 @@ am79900_start_locked(struct lance_softc *sc)
 			    sc->sc_no_td, sc->sc_last_td);
 		}
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 

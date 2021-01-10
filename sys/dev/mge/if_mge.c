@@ -877,9 +877,9 @@ mge_attach(device_t dev)
 	ifp->if_start = mge_start;
 	ifp->if_ioctl = mge_ioctl;
 
-	ifp->if_snd.ifq_drv_maxlen = MGE_TX_DESC_NUM - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = MGE_TX_DESC_NUM - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	mge_get_mac_address(sc, hwaddr);
 	ether_ifattach(ifp, hwaddr);
@@ -1773,7 +1773,7 @@ mge_start_locked(struct ifnet *ifp)
 
 	for (;;) {
 		/* Get packet from the queue */
-		IF_DEQUEUE(&ifp->if_snd, m0);
+		IF_DEQUEUE(&ifp->if_snd[0], m0);
 		if (m0 == NULL)
 			break;
 
@@ -1796,7 +1796,7 @@ mge_start_locked(struct ifnet *ifp)
 
 		/* Check for free descriptors */
 		if (sc->tx_desc_used_count + 1 >= MGE_TX_DESC_NUM) {
-			IF_PREPEND(&ifp->if_snd, m0);
+			IF_PREPEND(&ifp->if_snd[0], m0);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}

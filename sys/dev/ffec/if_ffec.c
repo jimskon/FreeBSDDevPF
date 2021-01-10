@@ -669,11 +669,11 @@ ffec_txstart_locked(struct ffec_softc *sc)
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		if (ffec_setup_txbuf(sc, sc->tx_idx_head, &m) != 0) {
-			IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		BPF_MTAP(ifp, m);
@@ -1742,9 +1742,9 @@ ffec_attach(device_t dev)
 	ifp->if_start = ffec_txstart;
 	ifp->if_ioctl = ffec_ioctl;
 	ifp->if_init = ffec_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, TX_DESC_COUNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = TX_DESC_COUNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TX_DESC_COUNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = TX_DESC_COUNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_hdrlen = sizeof(struct ether_vlan_header);
 
 #if 0 /* XXX The hardware keeps stats we could use for these. */
