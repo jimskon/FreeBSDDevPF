@@ -950,9 +950,9 @@ vtnet_setup_interface(struct vtnet_softc *sc)
 #else
 	struct virtqueue *vq = sc->vtnet_txqs[0].vtntx_vq;
 	ifp->if_start = vtnet_start;
-	IFQ_SET_MAXLEN(&ifp->if_snd, virtqueue_size(vq) - 1);
-	ifp->if_snd.ifq_drv_maxlen = virtqueue_size(vq) - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], virtqueue_size(vq) - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = virtqueue_size(vq) - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 #endif
 
 	ifmedia_init(&sc->vtnet_media, IFM_IMASK, vtnet_ifmedia_upd,
@@ -2271,17 +2271,17 @@ vtnet_start_locked(struct vtnet_txq *txq, struct ifnet *ifp)
 again:
 	enq = 0;
 
-	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 		if (virtqueue_full(vq))
 			break;
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 		if (m0 == NULL)
 			break;
 
 		if (vtnet_txq_encap(txq, &m0, M_NOWAIT) != 0) {
 			if (m0 != NULL)
-				IFQ_DRV_PREPEND(&ifp->if_snd, m0);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m0);
 			break;
 		}
 
@@ -2436,7 +2436,7 @@ vtnet_txq_start(struct vtnet_txq *txq)
 	ifp = sc->vtnet_ifp;
 
 #ifdef VTNET_LEGACY_TX
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		vtnet_start_locked(txq, ifp);
 #else
 	if (!drbr_empty(ifp, txq->vtntx_br))

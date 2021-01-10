@@ -2402,9 +2402,9 @@ qlnx_init_ifnet(device_t dev, qlnx_host_t *ha)
         ifp->if_transmit = qlnx_transmit;
         ifp->if_qflush = qlnx_qflush;
 
-        IFQ_SET_MAXLEN(&ifp->if_snd, qlnx_get_ifq_snd_maxlen(ha));
-        ifp->if_snd.ifq_drv_maxlen = qlnx_get_ifq_snd_maxlen(ha);
-        IFQ_SET_READY(&ifp->if_snd);
+        IFQ_SET_MAXLEN(&ifp->if_snd[0], qlnx_get_ifq_snd_maxlen(ha));
+        ifp->if_snd[0].ifq_drv_maxlen = qlnx_get_ifq_snd_maxlen(ha);
+        IFQ_SET_READY(&ifp->if_snd[0]);
 
 #if __FreeBSD_version >= 1100036
 	if_setgetcounterfn(ifp, qlnx_get_counter);

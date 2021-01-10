@@ -743,9 +743,9 @@ an_attach(struct an_softc *sc, int flags)
 	ifp->if_start = an_start;
 	ifp->if_init = an_init;
 	ifp->if_baudrate = 10000000;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	bzero(sc->an_config.an_nodename, sizeof(sc->an_config.an_nodename));
 	bcopy(AN_DEFAULT_NODENAME, sc->an_config.an_nodename,
@@ -1247,7 +1247,7 @@ an_intr(void *xsc)
 	/* Re-enable interrupts. */
 	CSR_WRITE_2(sc, AN_INT_EN(sc->mpi350), AN_INTRS(sc->mpi350));
 
-	if ((ifp->if_flags & IFF_UP) && !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if ((ifp->if_flags & IFF_UP) && !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		an_start_locked(ifp);
 
 	AN_UNLOCK(sc);
@@ -2751,7 +2751,7 @@ an_start_locked(struct ifnet *ifp)
 	/* We can't send in monitor mode so toss any attempts. */
 	if (sc->an_monitor && (ifp->if_flags & IFF_PROMISC)) {
 		for (;;) {
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 			if (m0 == NULL)
 				break;
 			m_freem(m0);
@@ -2765,7 +2765,7 @@ an_start_locked(struct ifnet *ifp)
 		bzero((char *)&tx_frame_802_3, sizeof(tx_frame_802_3));
 
 		while (sc->an_rdata.an_tx_ring[idx] == 0) {
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 			if (m0 == NULL)
 				break;
 
@@ -2826,7 +2826,7 @@ an_start_locked(struct ifnet *ifp)
 
 		while (sc->an_rdata.an_tx_empty ||
 		    idx != sc->an_rdata.an_tx_cons) {
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m0);
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m0);
 			if (m0 == NULL) {
 				break;
 			}

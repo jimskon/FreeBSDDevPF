@@ -397,7 +397,7 @@ qla_rcv(void *context, int pending)
 		if (sds_idx == 0) {
 			if (qla_le32_to_host(*(hw->tx_cons)) != hw->txr_comp) {
 				taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
-			} else if ((ifp->if_snd.ifq_head != NULL) &&
+			} else if ((ifp->if_snd[0].ifq_head != NULL) &&
 					QL_RUNNING(ifp)) {
 				taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
 			}

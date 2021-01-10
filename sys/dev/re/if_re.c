@@ -837,7 +837,7 @@ re_diag(struct rl_softc *sc)
 	CSR_WRITE_2(sc, RL_ISR, 0xFFFF);
 	RL_UNLOCK(sc);
 	/* XXX: re_diag must not be called when in ALTQ mode */
-	IF_HANDOFF(&ifp->if_snd, m0, ifp);
+	IF_HANDOFF(&ifp->if_snd[0], m0, ifp);
 	RL_LOCK(sc);
 	m0 = NULL;
 
@@ -1651,9 +1651,9 @@ re_attach(device_t dev)
 	ifp->if_hwassist |= CSUM_TSO;
 	ifp->if_capenable = ifp->if_capabilities;
 	ifp->if_init = re_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, RL_IFQ_MAXLEN);
-	ifp->if_snd.ifq_drv_maxlen = RL_IFQ_MAXLEN;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], RL_IFQ_MAXLEN);
+	ifp->if_snd[0].ifq_drv_maxlen = RL_IFQ_MAXLEN;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	TASK_INIT(&sc->rl_inttask, 0, re_int_task, sc);
 
@@ -2526,7 +2526,7 @@ re_poll_locked(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	re_rxeof(sc, &rx_npkts);
 	re_txeof(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		re_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) { /* also check status register */
@@ -2629,7 +2629,7 @@ re_int_task(void *arg, int npending)
 		re_init_locked(sc);
 	}
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		re_start_locked(ifp);
 
 	RL_UNLOCK(sc);
@@ -2716,7 +2716,7 @@ re_intr_msi(void *xsc)
 	}
 
 	if ((ifp->if_drv_flags & IFF_DRV_RUNNING) != 0) {
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			re_start_locked(ifp);
 		CSR_WRITE_2(sc, RL_IMR, intrs);
 	}
@@ -2958,16 +2958,16 @@ re_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->rl_flags & RL_FLAG_LINK) == 0)
 		return;
 
-	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->rl_ldata.rl_tx_free > 1;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
 		if (re_encap(sc, &m_head) != 0) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -3570,7 +3570,7 @@ re_watchdog(struct rl_softc *sc)
 	if (sc->rl_ldata.rl_tx_free == sc->rl_ldata.rl_tx_desc_cnt) {
 		if_printf(ifp, "watchdog timeout (missed Tx interrupts) "
 		    "-- recovering\n");
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			re_start_locked(ifp);
 		return;
 	}
@@ -3581,7 +3581,7 @@ re_watchdog(struct rl_softc *sc)
 	re_rxeof(sc, NULL);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	re_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		re_start_locked(ifp);
 }
 

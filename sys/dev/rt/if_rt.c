@@ -519,9 +519,9 @@ rt_attach(device_t dev)
 	ifp->if_start = rt_start;
 #define	RT_TX_QLEN	256
 
-	IFQ_SET_MAXLEN(&ifp->if_snd, RT_TX_QLEN);
-	ifp->if_snd.ifq_drv_maxlen = RT_TX_QLEN;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], RT_TX_QLEN);
+	ifp->if_snd[0].ifq_drv_maxlen = RT_TX_QLEN;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 #ifdef IF_RT_PHY_SUPPORT
 	error = mii_attach(dev, &sc->rt_miibus, ifp, rt_ifmedia_upd,
@@ -1184,7 +1184,7 @@ rt_start(struct ifnet *ifp)
 		return;
 
 	for (;;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 
@@ -1788,7 +1788,7 @@ rt_tx_done_task(void *context, int pending)
 
 	RT_SOFTC_UNLOCK(sc);
 
-	if (!IFQ_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_IS_EMPTY(&ifp->if_snd[0]))
 		rt_start(ifp);
 }
 

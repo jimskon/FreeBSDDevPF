@@ -543,7 +543,7 @@ lge_attach(dev)
 	ifp->if_ioctl = lge_ioctl;
 	ifp->if_start = lge_start;
 	ifp->if_init = lge_init;
-	ifp->if_snd.ifq_maxlen = LGE_TX_LIST_CNT - 1;
+	ifp->if_snd[0].ifq_maxlen = LGE_TX_LIST_CNT - 1;
 	ifp->if_capabilities = IFCAP_RXCSUM;
 	ifp->if_capenable = ifp->if_capabilities;
 
@@ -1051,7 +1051,7 @@ lge_tick(xsc)
 		  	    (IFM_SUBTYPE(mii->mii_media_active) == IFM_1000_SX||
 			    IFM_SUBTYPE(mii->mii_media_active) == IFM_1000_T))
 				device_printf(sc->lge_dev, "gigabit link up\n");
-			if (ifp->if_snd.ifq_head != NULL)
+			if (ifp->if_snd[0].ifq_head != NULL)
 				lge_start_locked(ifp);
 		}
 	}
@@ -1112,7 +1112,7 @@ lge_intr(arg)
 	/* Re-enable interrupts. */
 	CSR_WRITE_4(sc, LGE_IMR, LGE_IMR_SETRST_CTL0|LGE_IMR_INTR_ENB);
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		lge_start_locked(ifp);
 
 	LGE_UNLOCK(sc);
@@ -1208,12 +1208,12 @@ lge_start_locked(ifp)
 		if (CSR_READ_1(sc, LGE_TXCMDFREE_8BIT) == 0)
 			break;
 
-		IF_DEQUEUE(&ifp->if_snd, m_head);
+		IF_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
 		if (lge_encap(sc, m_head, &idx)) {
-			IF_PREPEND(&ifp->if_snd, m_head);
+			IF_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1513,7 +1513,7 @@ lge_watchdog(sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	lge_init_locked(sc);
 
-	if (ifp->if_snd.ifq_head != NULL)
+	if (ifp->if_snd[0].ifq_head != NULL)
 		lge_start_locked(ifp);
 }
 

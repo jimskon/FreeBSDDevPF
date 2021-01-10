@@ -191,7 +191,7 @@ vx_attach(device_t dev)
 		eaddr[(i << 1) + 1] = x;
 	}
 
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
 	ifp->if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
 	ifp->if_start = vx_start;
 	ifp->if_ioctl = vx_ioctl;
@@ -450,7 +450,7 @@ vx_start_locked(struct ifnet *ifp)
 
 startagain:
 	/* Sneak a peek at the next packet */
-	m = ifp->if_snd.ifq_head;
+	m = ifp->if_snd[0].ifq_head;
 	if (m == NULL) {
 		return;
 	}
@@ -468,7 +468,7 @@ startagain:
 	if (len + pad > ETHER_MAX_LEN) {
 		/* packet is obviously too large: toss it */
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
-		IF_DEQUEUE(&ifp->if_snd, m);
+		IF_DEQUEUE(&ifp->if_snd[0], m);
 		m_freem(m);
 		goto readcheck;
 	}
@@ -484,7 +484,7 @@ startagain:
 		}
 	}
 	CSR_WRITE_2(sc, VX_COMMAND, SET_TX_AVAIL_THRESH | (8188 >> 2));
-	IF_DEQUEUE(&ifp->if_snd, m);
+	IF_DEQUEUE(&ifp->if_snd[0], m);
 	if (m == NULL)		/* not really needed */
 		return;
 

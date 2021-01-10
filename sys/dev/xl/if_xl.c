@@ -1362,9 +1362,9 @@ xl_attach(device_t dev)
 #endif
 	ifp->if_start = xl_start;
 	ifp->if_init = xl_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, XL_TX_LIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = XL_TX_LIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], XL_TX_LIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = XL_TX_LIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/*
 	 * Now we have to see what sort of media we have.
@@ -2204,7 +2204,7 @@ xl_intr(void *arg)
 			xl_stats_update(sc);
 	}
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    ifp->if_drv_flags & IFF_DRV_RUNNING) {
 		if (sc->xl_type == XL_TYPE_905B)
 			xl_start_90xB_locked(ifp);
@@ -2244,7 +2244,7 @@ xl_poll_locked(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	else
 		xl_txeof(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 		if (sc->xl_type == XL_TYPE_905B)
 			xl_start_90xB_locked(ifp);
 		else
@@ -2478,9 +2478,9 @@ xl_start_locked(struct ifnet *ifp)
 
 	start_tx = sc->xl_cdata.xl_tx_free;
 
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->xl_cdata.xl_tx_free != NULL;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -2495,7 +2495,7 @@ xl_start_locked(struct ifnet *ifp)
 			if (m_head == NULL)
 				break;
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			break;
 		}
 
@@ -2599,14 +2599,14 @@ xl_start_90xB_locked(struct ifnet *ifp)
 	idx = sc->xl_cdata.xl_tx_prod;
 	start_tx = &sc->xl_cdata.xl_tx_chain[idx];
 
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->xl_cdata.xl_tx_chain[idx].xl_mbuf == NULL;) {
 		if ((XL_TX_LIST_CNT - sc->xl_cdata.xl_tx_cnt) < 3) {
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -2620,7 +2620,7 @@ xl_start_90xB_locked(struct ifnet *ifp)
 			if (m_head == NULL)
 				break;
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			break;
 		}
 
@@ -3140,7 +3140,7 @@ xl_watchdog(struct xl_softc *sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	xl_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 		if (sc->xl_type == XL_TYPE_905B)
 			xl_start_90xB_locked(ifp);
 		else

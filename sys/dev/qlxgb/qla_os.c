@@ -222,7 +222,7 @@ qla_watchdog(void *arg)
 	if (!ha->flags.qla_watchdog_pause) {
 		if (qla_le32_to_host(*(hw->tx_cons)) != hw->txr_comp) {
 			taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
-		} else if ((ifp->if_snd.ifq_head != NULL) && QL_RUNNING(ifp)) {
+		} else if ((ifp->if_snd[0].ifq_head != NULL) && QL_RUNNING(ifp)) {
 			taskqueue_enqueue(ha->tx_tq, &ha->tx_task);
 		}
 	}
@@ -680,9 +680,9 @@ qla_init_ifnet(device_t dev, qla_host_t *ha)
 	ifp->if_ioctl = qla_ioctl;
 	ifp->if_start = qla_start;
 
-	IFQ_SET_MAXLEN(&ifp->if_snd, qla_get_ifq_snd_maxlen(ha));
-	ifp->if_snd.ifq_drv_maxlen = qla_get_ifq_snd_maxlen(ha);
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], qla_get_ifq_snd_maxlen(ha));
+	ifp->if_snd[0].ifq_drv_maxlen = qla_get_ifq_snd_maxlen(ha);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	ha->max_frame_size = ifp->if_mtu + ETHER_HDR_LEN + ETHER_CRC_LEN;
 
@@ -1019,8 +1019,8 @@ qla_start(struct ifnet *ifp)
 		return;
 	}
 
-	while (ifp->if_snd.ifq_head != NULL) {
-		IF_DEQUEUE(&ifp->if_snd, m_head);
+	while (ifp->if_snd[0].ifq_head != NULL) {
+		IF_DEQUEUE(&ifp->if_snd[0], m_head);
 
 		if (m_head == NULL) {
 			QL_DPRINT8((ha->pci_dev, "%s: m_head == NULL\n",
@@ -1033,7 +1033,7 @@ qla_start(struct ifnet *ifp)
 				break;
 			QL_DPRINT8((ha->pci_dev, "%s: PREPEND\n", __func__));
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IF_PREPEND(&ifp->if_snd, m_head);
+			IF_PREPEND(&ifp->if_snd[0], m_head);
 			break;
 		}
 		/* Send a copy of the frame to the BPF listener */

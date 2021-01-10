@@ -558,7 +558,7 @@ dtsec_rm_if_start_locked(struct dtsec_softc *sc)
 	if ((sc->sc_ifnet->if_drv_flags & IFF_DRV_RUNNING) != IFF_DRV_RUNNING)
 		return;
 
-	while (!IFQ_DRV_IS_EMPTY(&sc->sc_ifnet->if_snd)) {
+	while (!IFQ_DRV_IS_EMPTY(&sc->sc_ifnet->if_snd[0])) {
 		/* Check length of the TX queue */
 		qlen = qman_fqr_get_counter(sc->sc_tx_fqr, 0,
 		    e_QM_FQR_COUNTERS_FRAME);
@@ -572,7 +572,7 @@ dtsec_rm_if_start_locked(struct dtsec_softc *sc)
 		if (fi == NULL)
 			return;
 
-		IFQ_DRV_DEQUEUE(&sc->sc_ifnet->if_snd, m0);
+		IFQ_DRV_DEQUEUE(&sc->sc_ifnet->if_snd[0], m0);
 		if (m0 == NULL) {
 			dtsec_rm_fi_free(sc, fi);
 			return;

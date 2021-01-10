@@ -4301,13 +4301,13 @@ tulip_start_locked(tulip_softc_t * const sc)
 	tulip_txput_setup(sc);
 
     CTR1(KTR_TULIP, "tulip_start_locked: %d tx packets pending",
-	sc->tulip_ifp->if_snd.ifq_len);
-    while (!IFQ_DRV_IS_EMPTY(&sc->tulip_ifp->if_snd)) {
-	IFQ_DRV_DEQUEUE(&sc->tulip_ifp->if_snd, m);
+	sc->tulip_ifp->if_snd[0].ifq_len);
+    while (!IFQ_DRV_IS_EMPTY(&sc->tulip_ifp->if_snd[0])) {
+	IFQ_DRV_DEQUEUE(&sc->tulip_ifp->if_snd[0], m);
 	if(m == NULL)
 	    break;
 	if ((m = tulip_txput(sc, m)) != NULL) {
-	    IFQ_DRV_PREPEND(&sc->tulip_ifp->if_snd, m);
+	    IFQ_DRV_PREPEND(&sc->tulip_ifp->if_snd[0], m);
 	    break;
 	}
     }
@@ -4405,9 +4405,9 @@ tulip_attach(tulip_softc_t * const sc)
     ifp->if_ioctl = tulip_ifioctl;
     ifp->if_start = tulip_start;
     ifp->if_init = tulip_init;
-    IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-    ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-    IFQ_SET_READY(&ifp->if_snd);
+    IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+    ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+    IFQ_SET_READY(&ifp->if_snd[0]);
   
     device_printf(sc->tulip_dev, "%s%s pass %d.%d%s\n",
 	   sc->tulip_boardid,

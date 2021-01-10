@@ -624,9 +624,9 @@ mvneta_attach(device_t self)
 	ifp->if_qflush = mvneta_qflush;
 #else /* !MVNETA_MULTIQUEUE */
 	ifp->if_start = mvneta_start;
-	ifp->if_snd.ifq_drv_maxlen = MVNETA_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = MVNETA_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 #endif
 	ifp->if_init = mvneta_init;
 	ifp->if_ioctl = mvneta_ioctl;
@@ -2025,15 +2025,15 @@ mvneta_xmit_locked(struct mvneta_softc *sc, int q)
 	tx = MVNETA_TX_RING(sc, 0);
 	error = 0;
 
-	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 
 		error = mvneta_xmitfast_locked(sc, q, &m);
 		if (__predict_false(error != 0)) {
 			if (m != NULL)
-				IFQ_DRV_PREPEND(&ifp->if_snd, m);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 	}

@@ -1295,7 +1295,7 @@ oce_tx_restart(POCE_SOFTC sc, struct oce_wq *wq)
 #if __FreeBSD_version >= 800000
 	if (!drbr_empty(sc->ifp, wq->br))
 #else
-	if (!IFQ_DRV_IS_EMPTY(&sc->ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&sc->ifp->if_snd[0]))
 #endif
 		taskqueue_enqueue(taskqueue_swi, &wq->txtask);
 
@@ -1410,7 +1410,7 @@ oce_start(struct ifnet *ifp)
 		return;
 	
 	do {
-		IF_DEQUEUE(&sc->ifp->if_snd, m);
+		IF_DEQUEUE(&sc->ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 
@@ -1421,7 +1421,7 @@ oce_start(struct ifnet *ifp)
 			if (m != NULL) {
 				sc->wq[def_q]->tx_stats.tx_stops ++;
 				ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-				IFQ_DRV_PREPEND(&ifp->if_snd, m);
+				IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 				m = NULL;
 			}
 			break;
@@ -2191,9 +2191,9 @@ oce_attach_ifp(POCE_SOFTC sc)
 	if_initname(sc->ifp,
 		    device_get_name(sc->dev), device_get_unit(sc->dev));
 
-	sc->ifp->if_snd.ifq_drv_maxlen = OCE_MAX_TX_DESC - 1;
-	IFQ_SET_MAXLEN(&sc->ifp->if_snd, sc->ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&sc->ifp->if_snd);
+	sc->ifp->if_snd[0].ifq_drv_maxlen = OCE_MAX_TX_DESC - 1;
+	IFQ_SET_MAXLEN(&sc->ifp->if_snd[0], sc->ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&sc->ifp->if_snd[0]);
 
 	sc->ifp->if_hwassist = OCE_IF_HWASSIST;
 	sc->ifp->if_hwassist |= CSUM_TSO;

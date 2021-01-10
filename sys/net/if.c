@@ -570,7 +570,7 @@ if_alloc(u_char type)
 #ifdef MAC
 	mac_ifnet_init(ifp);
 #endif
-	ifq_init(&ifp->if_snd, ifp);
+	ifq_init(&ifp->if_snd[0], ifp);
 
 	refcount_init(&ifp->if_refcount, 1);	/* Index reference. */
 	for (int i = 0; i < IFCOUNTERS; i++)
@@ -602,7 +602,7 @@ if_free_internal(struct ifnet *ifp)
 #endif /* MAC */
 	IF_AFDATA_DESTROY(ifp);
 	IF_ADDR_LOCK_DESTROY(ifp);
-	ifq_delete(&ifp->if_snd);
+	ifq_delete(&ifp->if_snd[0]);
 
 	for (int i = 0; i < IFCOUNTERS; i++)
 		counter_u64_free(ifp->if_counters[i]);
@@ -1160,10 +1160,10 @@ if_detach_internal(struct ifnet *ifp, int vmove, struct if_clone **ifcp)
 	 * Remove routes and flush queues.
 	 */
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
-		altq_disable(&ifp->if_snd);
-	if (ALTQ_IS_ATTACHED(&ifp->if_snd))
-		altq_detach(&ifp->if_snd);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
+		altq_disable(&ifp->if_snd[0]);
+	if (ALTQ_IS_ATTACHED(&ifp->if_snd[0]))
+		altq_detach(&ifp->if_snd[0]);
 #endif
 
 	if_purgeaddrs(ifp);
@@ -2435,7 +2435,7 @@ if_qflush(struct ifnet *ifp)
 	struct mbuf *m, *n;
 	struct ifaltq *ifq;
 	
-	ifq = &ifp->if_snd;
+	ifq = &ifp->if_snd[0];
 	IFQ_LOCK(ifq);
 #ifdef ALTQ
 	if (ALTQ_IS_ENABLED(ifq))
@@ -2495,9 +2495,9 @@ ifunit_indexed(const char *name, const uint8_t index)
 	printf("ifunit_indexed: %s, %d\n",name,index);
         IFNET_RLOCK_NOSLEEP();
         CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
-	  printf("ifunit_indexed: %s, %d\n",ifp->if_xname, ifp->if_snd.index);
+	  printf("ifunit_indexed: %s, %d\n",ifp->if_xname, ifp->if_snd[0].index);
           if (strncmp(name, ifp->if_xname, IFNAMSIZ) == 0
-	      && ifp->if_snd.index==index)                                    
+	      && ifp->if_snd[0].index==index)                                    
                         break;
         }
         IFNET_RUNLOCK_NOSLEEP();
@@ -4416,7 +4416,7 @@ if_getvtag(struct mbuf *m)
 int
 if_sendq_empty(if_t ifp)
 {
-	return IFQ_DRV_IS_EMPTY(&((struct ifnet *)ifp)->if_snd);
+	return IFQ_DRV_IS_EMPTY(&((struct ifnet *)ifp)->if_snd[0]);
 }
 
 struct ifaddr *
@@ -4435,15 +4435,15 @@ if_getamcount(if_t ifp)
 int
 if_setsendqready(if_t ifp)
 {
-	IFQ_SET_READY(&((struct ifnet *)ifp)->if_snd);
+	IFQ_SET_READY(&((struct ifnet *)ifp)->if_snd[0]);
 	return (0);
 }
 
 int
 if_setsendqlen(if_t ifp, int tx_desc_count)
 {
-	IFQ_SET_MAXLEN(&((struct ifnet *)ifp)->if_snd, tx_desc_count);
-	((struct ifnet *)ifp)->if_snd.ifq_drv_maxlen = tx_desc_count;
+	IFQ_SET_MAXLEN(&((struct ifnet *)ifp)->if_snd[0], tx_desc_count);
+	((struct ifnet *)ifp)->if_snd[0].ifq_drv_maxlen = tx_desc_count;
 
 	return (0);
 }
@@ -4537,7 +4537,7 @@ struct mbuf *
 if_dequeue(if_t ifp)
 {
 	struct mbuf *m;
-	IFQ_DRV_DEQUEUE(&((struct ifnet *)ifp)->if_snd, m);
+	IFQ_DRV_DEQUEUE(&((struct ifnet *)ifp)->if_snd[0], m);
 
 	return (m);
 }
@@ -4545,7 +4545,7 @@ if_dequeue(if_t ifp)
 int
 if_sendq_prepend(if_t ifp, struct mbuf *m)
 {
-	IFQ_DRV_PREPEND(&((struct ifnet *)ifp)->if_snd, m);
+	IFQ_DRV_PREPEND(&((struct ifnet *)ifp)->if_snd[0], m);
 	return (0);
 }
 

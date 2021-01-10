@@ -1576,9 +1576,9 @@ alc_attach(device_t dev)
 	ifp->if_ioctl = alc_ioctl;
 	ifp->if_start = alc_start;
 	ifp->if_init = alc_init;
-	ifp->if_snd.ifq_drv_maxlen = ALC_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = ALC_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_capabilities = IFCAP_TXCSUM | IFCAP_TSO4;
 	ifp->if_hwassist = ALC_CSUM_FEATURES | CSUM_TSO;
 	if (pci_find_cap(dev, PCIY_PMG, &base) == 0) {
@@ -2958,8 +2958,8 @@ alc_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->alc_flags & ALC_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -2970,7 +2970,7 @@ alc_start_locked(struct ifnet *ifp)
 		if (alc_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -3029,7 +3029,7 @@ alc_watchdog(struct alc_softc *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	alc_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		alc_start_locked(ifp);
 }
 
@@ -3402,7 +3402,7 @@ alc_int_task(void *arg, int pending)
 			return;
 		}
 		if ((ifp->if_drv_flags & IFF_DRV_RUNNING) != 0 &&
-		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			alc_start_locked(ifp);
 	}
 

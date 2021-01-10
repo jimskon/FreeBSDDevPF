@@ -1235,7 +1235,7 @@ create_netdev(device_t dev)
 		ifp->if_start = xnb_start;
 		ifp->if_init = xnb_ifinit;
 		ifp->if_mtu = ETHERMTU;
-		ifp->if_snd.ifq_maxlen = NET_RX_RING_SIZE - 1;
+		ifp->if_snd[0].ifq_maxlen = NET_RX_RING_SIZE - 1;
 
 		ifp->if_hwassist = XNB_CSUM_FEATURES;
 		ifp->if_capabilities = IFCAP_HWCSUM;
@@ -2336,7 +2336,7 @@ xnb_start_locked(struct ifnet *ifp)
 		for (;;) {
 			int error;
 
-			IF_DEQUEUE(&ifp->if_snd, mbufc);
+			IF_DEQUEUE(&ifp->if_snd[0], mbufc);
 			if (mbufc == NULL)
 				break;
 			error = xnb_send(rxb, xnb->otherend_id, mbufc,
@@ -2348,7 +2348,7 @@ xnb_start_locked(struct ifnet *ifp)
 					 * Requeue pkt and send when space is
 					 * available.
 					 */
-					IF_PREPEND(&ifp->if_snd, mbufc);
+					IF_PREPEND(&ifp->if_snd[0], mbufc);
 					/*
 					 * Perhaps the frontend missed an IRQ
 					 * and went to sleep.  Notify it to wake

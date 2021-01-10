@@ -1654,9 +1654,9 @@ msk_attach(device_t dev)
 	ifp->if_ioctl = msk_ioctl;
 	ifp->if_start = msk_start;
 	ifp->if_init = msk_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, MSK_TX_RING_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = MSK_TX_RING_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], MSK_TX_RING_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = MSK_TX_RING_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	/*
 	 * Get station address for this interface. Note that
 	 * dual port cards actually come with three station
@@ -2921,10 +2921,10 @@ msk_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc_if->msk_flags & MSK_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc_if->msk_cdata.msk_tx_cnt <
 	    (MSK_TX_RING_CNT - MSK_RESERVED_TX_DESC_CNT); ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -2935,7 +2935,7 @@ msk_start_locked(struct ifnet *ifp)
 		if (msk_encap(sc_if, &m_head) != 0) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -2983,7 +2983,7 @@ msk_watchdog(struct msk_if_softc *sc_if)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	msk_init_locked(sc_if);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		msk_start_locked(ifp);
 }
 
@@ -3737,10 +3737,10 @@ msk_intr(void *xsc)
 	CSR_WRITE_4(sc, B0_Y2_SP_ICR, 2);
 
 	if (ifp0 != NULL && (ifp0->if_drv_flags & IFF_DRV_RUNNING) != 0 &&
-	    !IFQ_DRV_IS_EMPTY(&ifp0->if_snd))
+	    !IFQ_DRV_IS_EMPTY(&ifp0->if_snd[0]))
 		msk_start_locked(ifp0);
 	if (ifp1 != NULL && (ifp1->if_drv_flags & IFF_DRV_RUNNING) != 0 &&
-	    !IFQ_DRV_IS_EMPTY(&ifp1->if_snd))
+	    !IFQ_DRV_IS_EMPTY(&ifp1->if_snd[0]))
 		msk_start_locked(ifp1);
 
 	MSK_UNLOCK(sc);

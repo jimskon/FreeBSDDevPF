@@ -659,7 +659,7 @@ cdceem_send_data(struct usb_xfer *xfer, int *offp)
 	ifp = uether_getifp(&sc->sc_ue);
 	maxlen = usbd_xfer_max_len(xfer);
 
-	IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 	if (m == NULL) {
 		CDCEEM_DEBUG(sc, "no Data packets to send");
 		return;

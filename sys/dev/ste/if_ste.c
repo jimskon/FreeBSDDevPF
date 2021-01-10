@@ -482,7 +482,7 @@ ste_poll_locked(struct ifnet *ifp, enum poll_cmd cmd, int count)
 	rx_npkts = ste_rxeof(sc, count);
 	ste_txeof(sc);
 	ste_txeoc(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		ste_start_locked(ifp);
 
 	if (cmd == POLL_AND_CHECK_STATUS) {
@@ -574,7 +574,7 @@ ste_intr(void *xsc)
 			STE_UNLOCK(sc);
 			return;
 		}
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			ste_start_locked(ifp);
 done:
 		/* Re-enable interrupts */
@@ -1012,9 +1012,9 @@ ste_attach(device_t dev)
 	ifp->if_ioctl = ste_ioctl;
 	ifp->if_start = ste_start;
 	ifp->if_init = ste_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, STE_TX_LIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = STE_TX_LIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], STE_TX_LIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = STE_TX_LIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	sc->ste_tx_thresh = STE_TXSTART_THRESH;
 
@@ -1899,7 +1899,7 @@ ste_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->ste_flags & STE_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd);) {
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]);) {
 		if (sc->ste_cdata.ste_tx_cnt == STE_TX_LIST_CNT - 1) {
 			/*
 			 * Controller may have cached copy of the last used
@@ -1909,14 +1909,14 @@ ste_start_locked(struct ifnet *ifp)
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		cur_tx = &sc->ste_cdata.ste_tx_chain[sc->ste_cdata.ste_tx_prod];
 		if (ste_encap(sc, &m_head, cur_tx) != 0) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			break;
 		}
 		if (sc->ste_cdata.ste_last_tx == NULL) {
@@ -1971,7 +1971,7 @@ ste_watchdog(struct ste_softc *sc)
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	ste_init_locked(sc);
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		ste_start_locked(ifp);
 }
 

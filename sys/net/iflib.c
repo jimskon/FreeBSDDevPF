@@ -3816,7 +3816,7 @@ _task_fn_tx(void *context)
 		goto skip_ifmp;
 #endif
 #ifdef ALTQ
-	if (ALTQ_IS_ENABLED(&ifp->if_snd))
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		iflib_altq_if_start(ifp);
 #endif
 	if (txq->ift_db_pending)
@@ -4013,7 +4013,7 @@ iflib_if_transmit(if_t ifp, struct mbuf *m)
 	MPASS(m->m_nextpkt == NULL);
 	/* ALTQ-enabled interfaces always use queue 0. */
 	qidx = 0;
-	if ((NTXQSETS(ctx) > 1) && M_HASHTYPE_GET(m) && !ALTQ_IS_ENABLED(&ifp->if_snd))
+	if ((NTXQSETS(ctx) > 1) && M_HASHTYPE_GET(m) && !ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		qidx = QIDX(ctx, m);
 	/*
 	 * XXX calculate buf_ring based on flowid (divvy up bits?)
@@ -4100,7 +4100,7 @@ iflib_if_transmit(if_t ifp, struct mbuf *m)
 static void
 iflib_altq_if_start(if_t ifp)
 {
-	struct ifaltq *ifq = &ifp->if_snd;
+	struct ifaltq *ifq = &ifp->if_snd[0];
 	struct mbuf *m;
 	
 	IFQ_LOCK(ifq);
@@ -4117,8 +4117,8 @@ iflib_altq_if_transmit(if_t ifp, struct mbuf *m)
 {
 	int err;
 
-	if (ALTQ_IS_ENABLED(&ifp->if_snd)) {
-		IFQ_ENQUEUE(&ifp->if_snd, m, err);
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
+		IFQ_ENQUEUE(&ifp->if_snd[0], m, err);
 		if (err == 0)
 			iflib_altq_if_start(ifp);
 	} else

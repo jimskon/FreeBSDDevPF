@@ -2370,9 +2370,9 @@ hn_attach(device_t dev)
 		int qdepth = hn_get_txswq_depth(&sc->hn_tx_ring[0]);
 
 		ifp->if_start = hn_start;
-		IFQ_SET_MAXLEN(&ifp->if_snd, qdepth);
-		ifp->if_snd.ifq_drv_maxlen = qdepth - 1;
-		IFQ_SET_READY(&ifp->if_snd);
+		IFQ_SET_MAXLEN(&ifp->if_snd[0], qdepth);
+		ifp->if_snd[0].ifq_drv_maxlen = qdepth - 1;
+		IFQ_SET_READY(&ifp->if_snd[0]);
 	} else
 #endif
 	{
@@ -5679,12 +5679,12 @@ hn_start_locked(struct hn_tx_ring *txr, int len)
 	    IFF_DRV_RUNNING)
 		return (0);
 
-	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd)) {
+	while (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0])) {
 		struct hn_txdesc *txd;
 		struct mbuf *m_head;
 		int error;
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -5694,7 +5694,7 @@ hn_start_locked(struct hn_tx_ring *txr, int len)
 			 * dispatch this packet sending (and sending of any
 			 * following up packets) to tx taskqueue.
 			 */
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			sched = 1;
 			break;
 		}
@@ -5719,7 +5719,7 @@ hn_start_locked(struct hn_tx_ring *txr, int len)
 		txd = hn_txdesc_get(txr);
 		if (txd == NULL) {
 			txr->hn_no_txdescs++;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			atomic_set_int(&ifp->if_drv_flags, IFF_DRV_OACTIVE);
 			break;
 		}
@@ -5747,7 +5747,7 @@ hn_start_locked(struct hn_tx_ring *txr, int len)
 				error = hn_txpkt(ifp, txr, txd);
 				if (__predict_false(error)) {
 					/* txd is freed, but m_head is not */
-					IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+					IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 					atomic_set_int(&ifp->if_drv_flags,
 					    IFF_DRV_OACTIVE);
 					break;

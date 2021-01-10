@@ -616,9 +616,9 @@ sge_attach(device_t dev)
 	ifp->if_ioctl = sge_ioctl;
 	ifp->if_start = sge_start;
 	ifp->if_init = sge_init;
-	ifp->if_snd.ifq_drv_maxlen = SGE_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = SGE_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_capabilities = IFCAP_TXCSUM | IFCAP_RXCSUM | IFCAP_TSO4;
 	ifp->if_hwassist = SGE_CSUM_FEATURES | CSUM_TSO;
 	ifp->if_capenable = ifp->if_capabilities;
@@ -1313,7 +1313,7 @@ sge_tick(void *arg)
 	if ((sc->sge_flags & SGE_FLAG_LINK) == 0) {
 		sge_miibus_statchg(sc->sge_dev);
 		if ((sc->sge_flags & SGE_FLAG_LINK) != 0 &&
-		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		    !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			sge_start_locked(ifp);
 	}
 	/*
@@ -1377,7 +1377,7 @@ sge_intr(void *arg)
 	if ((ifp->if_drv_flags & IFF_DRV_RUNNING) != 0) {
 		/* Re-enable interrupts */
 		CSR_WRITE_4(sc, IntrMask, SGE_INTRS);
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			sge_start_locked(ifp);
 	}
 	SGE_UNLOCK(sc);
@@ -1576,19 +1576,19 @@ sge_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING)
 		return;
 
-	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
+	for (queued = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
 		if (sc->sge_cdata.sge_tx_cnt > (SGE_TX_RING_CNT -
 		    SGE_MAXTXSEGS)) {
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		if (sge_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1867,7 +1867,7 @@ sge_watchdog(struct sge_softc *sc)
 
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	sge_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&sc->sge_ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&sc->sge_ifp->if_snd[0]))
 		sge_start_locked(ifp);
 }
 

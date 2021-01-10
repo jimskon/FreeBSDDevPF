@@ -975,7 +975,7 @@ tr_setup:
 			usbd_xfer_set_frame_offset(xfer, x * RNDIS_TX_MAXLEN, x);
 
 next_pkt:
-			IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+			IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 			if (m == NULL)
 				break;

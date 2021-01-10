@@ -575,9 +575,9 @@ stge_attach(device_t dev)
 	ifp->if_ioctl = stge_ioctl;
 	ifp->if_start = stge_start;
 	ifp->if_init = stge_init;
-	ifp->if_snd.ifq_drv_maxlen = STGE_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = STGE_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	/* Revision B3 and earlier chips have checksum bug. */
 	if (sc->sc_rev >= 0x0c) {
 		ifp->if_hwassist = STGE_CSUM_FEATURES;
@@ -1181,13 +1181,13 @@ stge_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || sc->sc_link == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
 		if (sc->sc_cdata.stge_tx_cnt >= STGE_TX_HIWAT) {
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1198,7 +1198,7 @@ stge_start_locked(struct ifnet *ifp)
 		if (stge_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1240,7 +1240,7 @@ stge_watchdog(struct stge_softc *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	stge_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		stge_start_locked(ifp);
 }
 
@@ -1513,7 +1513,7 @@ force_init:
 	CSR_WRITE_2(sc, STGE_IntEnable, sc->sc_IntEnable);
 
 	/* Try to get more packets going. */
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		stge_start_locked(ifp);
 
 done_locked:
@@ -1816,7 +1816,7 @@ stge_poll(struct ifnet *ifp, enum poll_cmd cmd, int count)
 
 	}
 
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		stge_start_locked(ifp);
 
 	STGE_UNLOCK(sc);

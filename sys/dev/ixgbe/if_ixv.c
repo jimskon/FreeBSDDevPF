@@ -1157,7 +1157,7 @@ ixv_setup_interface(if_ctx_t ctx)
 	INIT_DEBUGOUT("ixv_setup_interface: begin");
 
 	if_setbaudrate(ifp, IF_Gbps(10));
-	ifp->if_snd.ifq_maxlen = scctx->isc_ntxd[0] - 2;
+	ifp->if_snd[0].ifq_maxlen = scctx->isc_ntxd[0] - 2;
 
 
 	adapter->max_frame_size = ifp->if_mtu + IXGBE_MTU_HDR;

@@ -610,9 +610,9 @@ age_attach(device_t dev)
 	ifp->if_ioctl = age_ioctl;
 	ifp->if_start = age_start;
 	ifp->if_init = age_init;
-	ifp->if_snd.ifq_drv_maxlen = AGE_TX_RING_CNT - 1;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifp->if_snd.ifq_drv_maxlen);
-	IFQ_SET_READY(&ifp->if_snd);
+	ifp->if_snd[0].ifq_drv_maxlen = AGE_TX_RING_CNT - 1;
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifp->if_snd[0].ifq_drv_maxlen);
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_capabilities = IFCAP_HWCSUM | IFCAP_TSO4;
 	ifp->if_hwassist = AGE_CSUM_FEATURES | CSUM_TSO;
 	if (pci_find_cap(dev, PCIY_PMG, &pmc) == 0) {
@@ -1749,8 +1749,8 @@ age_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->age_flags & AGE_FLAG_LINK) == 0)
 		return;
 
-	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd); ) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+	for (enq = 0; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]); ) {
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 		/*
@@ -1761,7 +1761,7 @@ age_start_locked(struct ifnet *ifp)
 		if (age_encap(sc, &m_head)) {
 			if (m_head == NULL)
 				break;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m_head);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m_head);
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 			break;
 		}
@@ -1803,7 +1803,7 @@ age_watchdog(struct age_softc *sc)
 	if (sc->age_cdata.age_tx_cnt == 0) {
 		if_printf(sc->age_ifp,
 		    "watchdog timeout (missed Tx interrupts) -- recovering\n");
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			age_start_locked(ifp);
 		return;
 	}
@@ -1811,7 +1811,7 @@ age_watchdog(struct age_softc *sc)
 	if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
 	ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 	age_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		age_start_locked(ifp);
 }
 
@@ -2182,7 +2182,7 @@ age_int_task(void *arg, int pending)
 			ifp->if_drv_flags &= ~IFF_DRV_RUNNING;
 			age_init_locked(sc);
 		}
-		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+		if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 			age_start_locked(ifp);
 		if ((status & INTR_SMB) != 0)
 			age_stats_update(sc);

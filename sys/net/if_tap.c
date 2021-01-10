@@ -459,7 +459,7 @@ tapcreate(struct cdev *dev)
 	ifp->if_ioctl = tapifioctl;
 	ifp->if_mtu = ETHERMTU;
 	ifp->if_flags = (IFF_BROADCAST|IFF_SIMPLEX|IFF_MULTICAST);
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
 	ifp->if_capabilities |= IFCAP_LINKSTATE;
 	ifp->if_capenable |= IFCAP_LINKSTATE;
 
@@ -541,7 +541,7 @@ tapclose(struct cdev *dev, int foo, int bar, struct thread *td)
 	/* junk all pending output */
 	mtx_lock(&tp->tap_mtx);
 	CURVNET_SET(ifp->if_vnet);
-	IF_DRAIN(&ifp->if_snd);
+	IF_DRAIN(&ifp->if_snd[0]);
 
 	/*
 	 * Do not bring the interface down, and do not anything with
@@ -699,7 +699,7 @@ tapifstart(struct ifnet *ifp)
 		    tp->tap_flags);
 
 		for (;;) {
-			IF_DEQUEUE(&ifp->if_snd, m);
+			IF_DEQUEUE(&ifp->if_snd[0], m);
 			if (m != NULL) {
 				m_freem(m);
 				if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
@@ -713,7 +713,7 @@ tapifstart(struct ifnet *ifp)
 
 	ifp->if_drv_flags |= IFF_DRV_OACTIVE;
 
-	if (!IFQ_IS_EMPTY(&ifp->if_snd)) {
+	if (!IFQ_IS_EMPTY(&ifp->if_snd[0])) {
 		if (tp->tap_flags & TAP_RWAIT) {
 			tp->tap_flags &= ~TAP_RWAIT;
 			wakeup(tp);
@@ -812,15 +812,15 @@ tapioctl(struct cdev *dev, u_long cmd, caddr_t data, int flag, struct thread *td
 			break;
 
 		case FIONREAD:
-			if (!IFQ_IS_EMPTY(&ifp->if_snd)) {
+			if (!IFQ_IS_EMPTY(&ifp->if_snd[0])) {
 				struct mbuf *mb;
 
-				IFQ_LOCK(&ifp->if_snd);
-				IFQ_POLL_NOLOCK(&ifp->if_snd, mb);
+				IFQ_LOCK(&ifp->if_snd[0]);
+				IFQ_POLL_NOLOCK(&ifp->if_snd[0], mb);
 				for (*(int *)data = 0; mb != NULL;
 				     mb = mb->m_next)
 					*(int *)data += mb->m_len;
-				IFQ_UNLOCK(&ifp->if_snd);
+				IFQ_UNLOCK(&ifp->if_snd[0]);
 			} else
 				*(int *)data = 0;
 			break;
@@ -911,7 +911,7 @@ tapread(struct cdev *dev, struct uio *uio, int flag)
 
 	/* sleep until we get a packet */
 	do {
-		IF_DEQUEUE(&ifp->if_snd, m);
+		IF_DEQUEUE(&ifp->if_snd[0], m);
 
 		if (m == NULL) {
 			if (flag & O_NONBLOCK) {
@@ -1032,11 +1032,11 @@ tappoll(struct cdev *dev, int events, struct thread *td)
 		ifp->if_xname, dev2unit(dev));
 
 	if (events & (POLLIN | POLLRDNORM)) {
-		IFQ_LOCK(&ifp->if_snd);
-		if (!IFQ_IS_EMPTY(&ifp->if_snd)) {
+		IFQ_LOCK(&ifp->if_snd[0]);
+		if (!IFQ_IS_EMPTY(&ifp->if_snd[0])) {
 			TAPDEBUG("%s have data in queue. len = %d, " \
 				"minor = %#x\n", ifp->if_xname,
-				ifp->if_snd.ifq_len, dev2unit(dev));
+				ifp->if_snd[0].ifq_len, dev2unit(dev));
 
 			revents |= (events & (POLLIN | POLLRDNORM));
 		} else {
@@ -1045,7 +1045,7 @@ tappoll(struct cdev *dev, int events, struct thread *td)
 
 			selrecord(td, &tp->tap_rsel);
 		}
-		IFQ_UNLOCK(&ifp->if_snd);
+		IFQ_UNLOCK(&ifp->if_snd[0]);
 	}
 
 	if (events & (POLLOUT | POLLWRNORM))
@@ -1106,9 +1106,9 @@ tapkqread(struct knote *kn, long hint)
 	struct cdev		*dev = tp->tap_dev;
 	struct ifnet		*ifp = tp->tap_ifp;
 
-	if ((kn->kn_data = ifp->if_snd.ifq_len) > 0) {
+	if ((kn->kn_data = ifp->if_snd[0].ifq_len) > 0) {
 		TAPDEBUG("%s have data in queue. len = %d, minor = %#x\n",
-			ifp->if_xname, ifp->if_snd.ifq_len, dev2unit(dev));
+			ifp->if_xname, ifp->if_snd[0].ifq_len, dev2unit(dev));
 		ret = 1;
 	} else {
 		TAPDEBUG("%s waiting for data, minor = %#x\n",

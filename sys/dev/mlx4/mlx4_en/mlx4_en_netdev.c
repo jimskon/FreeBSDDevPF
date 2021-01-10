@@ -2161,7 +2161,7 @@ int mlx4_en_init_netdev(struct mlx4_en_dev *mdev, int port,
 	dev->if_ioctl = mlx4_en_ioctl;
 	dev->if_transmit = mlx4_en_transmit;
 	dev->if_qflush = mlx4_en_qflush;
-	dev->if_snd.ifq_maxlen = prof->tx_ring_size;
+	dev->if_snd[0].ifq_maxlen = prof->tx_ring_size;
 
 	/*
 	 * Initialize driver private data

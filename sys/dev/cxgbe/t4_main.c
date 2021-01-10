@@ -1683,10 +1683,10 @@ cxgbe_vi_attach(device_t dev, struct vi_info *vi)
 	ifp->if_qflush = cxgbe_qflush;
 	ifp->if_get_counter = cxgbe_get_counter;
 #ifdef RATELIMIT
-	ifp->if_snd_tag_alloc = cxgbe_snd_tag_alloc;
-	ifp->if_snd_tag_modify = cxgbe_snd_tag_modify;
-	ifp->if_snd_tag_query = cxgbe_snd_tag_query;
-	ifp->if_snd_tag_free = cxgbe_snd_tag_free;
+	ifp->if_snd[0]_tag_alloc = cxgbe_snd_tag_alloc;
+	ifp->if_snd[0]_tag_modify = cxgbe_snd_tag_modify;
+	ifp->if_snd[0]_tag_query = cxgbe_snd_tag_query;
+	ifp->if_snd[0]_tag_free = cxgbe_snd_tag_free;
 #endif
 
 	ifp->if_capabilities = T4_CAP;

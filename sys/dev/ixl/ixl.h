@@ -296,7 +296,7 @@
 #define IXL_SET_IMCASTS(vsi, count)	(vsi)->ifp->if_imcasts = (count)
 #define IXL_SET_OMCASTS(vsi, count)	(vsi)->ifp->if_omcasts = (count)
 #define IXL_SET_IQDROPS(vsi, count)	(vsi)->ifp->if_iqdrops = (count)
-#define IXL_SET_OQDROPS(vsi, odrops)	(vsi)->ifp->if_snd.ifq_drops = (odrops)
+#define IXL_SET_OQDROPS(vsi, odrops)	(vsi)->ifp->if_snd[0].ifq_drops = (odrops)
 #define IXL_SET_NOPROTO(vsi, count)	(vsi)->noproto = (count)
 #endif
 

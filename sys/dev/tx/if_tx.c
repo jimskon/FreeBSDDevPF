@@ -249,7 +249,7 @@ epic_attach(device_t dev)
 	ifp->if_ioctl = epic_ifioctl;
 	ifp->if_start = epic_ifstart;
 	ifp->if_init = epic_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, TX_RING_SIZE - 1);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TX_RING_SIZE - 1);
 
 	/* Enable busmastering. */
 	pci_enable_busmaster(dev);
@@ -665,7 +665,7 @@ epic_ifstart_locked(struct ifnet * ifp)
 		flist = sc->tx_flist + sc->cur_tx;
 
 		/* Get next packet to send. */
-		IF_DEQUEUE(&ifp->if_snd, m0);
+		IF_DEQUEUE(&ifp->if_snd[0], m0);
 
 		/* If nothing to send, return. */
 		if (m0 == NULL)
@@ -892,7 +892,7 @@ epic_intr(void *arg)
 
 	if (status & (INTSTAT_TXC|INTSTAT_TCC|INTSTAT_TQE)) {
 	    epic_tx_done(sc);
-	    if (sc->ifp->if_snd.ifq_head != NULL)
+	    if (sc->ifp->if_snd[0].ifq_head != NULL)
 		    epic_ifstart_locked(sc->ifp);
 	}
 
@@ -997,7 +997,7 @@ epic_timer(void *arg)
 			    "seems we can continue normaly\n");
 
 		/* Start output. */
-		if (ifp->if_snd.ifq_head)
+		if (ifp->if_snd[0].ifq_head)
 			epic_ifstart_locked(ifp);
 	}
 

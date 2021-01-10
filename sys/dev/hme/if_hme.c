@@ -312,9 +312,9 @@ hme_config(struct hme_softc *sc)
 	ifp->if_start = hme_start;
 	ifp->if_ioctl = hme_ioctl;
 	ifp->if_init = hme_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, HME_NTXQ);
-	ifp->if_snd.ifq_drv_maxlen = HME_NTXQ;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], HME_NTXQ);
+	ifp->if_snd[0].ifq_drv_maxlen = HME_NTXQ;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	hme_mifinit(sc);
 
@@ -1130,9 +1130,9 @@ hme_start_locked(struct ifnet *ifp)
 	    IFF_DRV_RUNNING || (sc->sc_flags & HME_LINK) == 0)
 		return;
 
-	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd) &&
+	for (; !IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]) &&
 	    sc->sc_rb.rb_td_nbusy < HME_NTXDESC - 1;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 
@@ -1141,7 +1141,7 @@ hme_start_locked(struct ifnet *ifp)
 			if (m == NULL)
 				break;
 			ifp->if_drv_flags |= IFF_DRV_OACTIVE;
-			IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		enq++;

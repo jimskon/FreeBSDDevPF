@@ -210,9 +210,9 @@ sn_attach(device_t dev)
 	ifp->if_ioctl = snioctl;
 	ifp->if_init = sninit;
 	ifp->if_baudrate = 10000000;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	ether_ifattach(ifp, eaddr);
 
@@ -397,7 +397,7 @@ startagain:
 	/*
 	 * Sneak a peek at the next packet
 	 */
-	m = ifp->if_snd.ifq_head;
+	m = ifp->if_snd[0].ifq_head;
 	if (m == NULL)
 		return;
 	/*
@@ -416,7 +416,7 @@ startagain:
 	if (len + pad > ETHER_MAX_LEN - ETHER_CRC_LEN) {
 		if_printf(ifp, "large packet discarded (A)\n");
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		m_freem(m);
 		goto readcheck;
 	}
@@ -509,7 +509,7 @@ startagain:
 	 * Get the packet from the kernel.  This will include the Ethernet
 	 * frame header, MAC Addresses etc.
 	 */
-	IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 	/*
 	 * Push out the data to the card.
@@ -611,7 +611,7 @@ snresume(struct ifnet *ifp)
 	/*
 	 * Sneak a peek at the next packet
 	 */
-	m = ifp->if_snd.ifq_head;
+	m = ifp->if_snd[0].ifq_head;
 	if (m == NULL) {
 		if_printf(ifp, "snresume() with nothing to send\n");
 		return;
@@ -632,7 +632,7 @@ snresume(struct ifnet *ifp)
 	if (len + pad > ETHER_MAX_LEN - ETHER_CRC_LEN) {
 		if_printf(ifp, "large packet discarded (B)\n");
 		if_inc_counter(ifp, IFCOUNTER_OERRORS, 1);
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		m_freem(m);
 		return;
 	}
@@ -708,7 +708,7 @@ snresume(struct ifnet *ifp)
 	 * Get the packet from the kernel.  This will include the Ethernet
 	 * frame header, MAC Addresses etc.
 	 */
-	IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+	IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 
 	/*
 	 * Push out the data to the card.

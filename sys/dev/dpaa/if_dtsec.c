@@ -692,7 +692,7 @@ dtsec_attach(device_t dev)
 	ifp->if_init = dtsec_if_init;
 	ifp->if_start = dtsec_if_start;
 	ifp->if_ioctl = dtsec_if_ioctl;
-	ifp->if_snd.ifq_maxlen = IFQ_MAXLEN;
+	ifp->if_snd[0].ifq_maxlen = IFQ_MAXLEN;
 
 	if (sc->sc_phy_addr >= 0)
 		if_initname(ifp, device_get_name(sc->sc_dev),
@@ -702,9 +702,9 @@ dtsec_attach(device_t dev)
 
 	/* TODO */
 #if 0
-	IFQ_SET_MAXLEN(&ifp->if_snd, TSEC_TX_NUM_DESC - 1);
-	ifp->if_snd.ifq_drv_maxlen = TSEC_TX_NUM_DESC - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TSEC_TX_NUM_DESC - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = TSEC_TX_NUM_DESC - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 #endif
 	ifp->if_capabilities = IFCAP_JUMBO_MTU; /* TODO: HWCSUM */
 	ifp->if_capenable = ifp->if_capabilities;

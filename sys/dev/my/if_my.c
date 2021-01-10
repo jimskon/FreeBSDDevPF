@@ -898,9 +898,9 @@ my_attach(device_t dev)
 	ifp->if_start = my_start;
 	ifp->if_init = my_init;
 	ifp->if_baudrate = 10000000;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	if (sc->my_info->my_did == MTD803ID)
 		sc->my_pinfo = my_phys;
@@ -1321,7 +1321,7 @@ my_intr(void *arg)
 
 	/* Re-enable interrupts. */
 	CSR_WRITE_4(sc, MY_IMR, MY_INTRS);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		my_start_locked(ifp);
 	MY_UNLOCK(sc);
 	return;
@@ -1420,7 +1420,7 @@ my_start_locked(struct ifnet * ifp)
 	}
 	start_tx = sc->my_cdata.my_tx_free;
 	while (sc->my_cdata.my_tx_free->my_mbuf == NULL) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m_head);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m_head);
 		if (m_head == NULL)
 			break;
 
@@ -1710,7 +1710,7 @@ my_watchdog(void *arg)
 	my_stop(sc);
 	my_reset(sc);
 	my_init_locked(sc);
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		my_start_locked(ifp);
 }
 

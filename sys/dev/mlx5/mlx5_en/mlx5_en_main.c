@@ -1008,7 +1008,7 @@ mlx5e_update_stats_locked(struct mlx5e_priv *priv)
 	ifp->if_iqdrops = s->rx_out_of_buffer;
 	ifp->if_opackets = s->tx_packets;
 	ifp->if_oerrors = priv->stats.port_stats_debug.out_discards;
-	ifp->if_snd.ifq_drops = s->tx_queue_dropped;
+	ifp->if_snd[0].ifq_drops = s->tx_queue_dropped;
 	ifp->if_ibytes = s->rx_bytes;
 	ifp->if_obytes = s->tx_bytes;
 	ifp->if_collisions =
@@ -4184,7 +4184,7 @@ mlx5e_create_ifp(struct mlx5_core_dev *mdev)
 #if (__FreeBSD_version >= 1100000)
 	ifp->if_get_counter = mlx5e_get_counter;
 #endif
-	ifp->if_snd.ifq_maxlen = ifqmaxlen;
+	ifp->if_snd[0].ifq_maxlen = ifqmaxlen;
 	/*
          * Set driver features
          */

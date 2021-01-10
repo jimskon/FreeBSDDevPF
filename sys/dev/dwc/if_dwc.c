@@ -324,11 +324,11 @@ dwc_txstart_locked(struct dwc_softc *sc)
 			break;
 		}
 
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		if (dwc_setup_txbuf(sc, sc->tx_idx_head, &m) != 0) {
-			 IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			 IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			break;
 		}
 		BPF_MTAP(ifp, m);
@@ -1368,9 +1368,9 @@ dwc_attach(device_t dev)
 	ifp->if_start = dwc_txstart;
 	ifp->if_ioctl = dwc_ioctl;
 	ifp->if_init = dwc_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, TX_DESC_COUNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = TX_DESC_COUNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], TX_DESC_COUNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = TX_DESC_COUNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Attach the mii driver. */
 	error = mii_attach(dev, &sc->miibus, ifp, dwc_media_change,

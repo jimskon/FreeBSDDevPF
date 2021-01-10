@@ -377,7 +377,7 @@ ng_iface_output(struct ifnet *ifp, struct mbuf *m,
 	/* Berkeley packet filter */
 	ng_iface_bpftap(ifp, m, af);
 
-	if (ALTQ_IS_ENABLED(&ifp->if_snd)) {
+	if (ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
 		M_PREPEND(m, sizeof(sa_family_t), M_NOWAIT);
 		if (m == NULL) {
 			if_inc_counter(ifp, IFCOUNTER_OQDROPS, 1);
@@ -400,10 +400,10 @@ ng_iface_start(struct ifnet *ifp)
 	struct mbuf *m;
 	sa_family_t sa;
 
-	KASSERT(ALTQ_IS_ENABLED(&ifp->if_snd), ("%s without ALTQ", __func__));
+	KASSERT(ALTQ_IS_ENABLED(&ifp->if_snd[0]), ("%s without ALTQ", __func__));
 
 	for(;;) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 		sa = *mtod(m, sa_family_t *);
@@ -555,9 +555,9 @@ ng_iface_constructor(node_p node)
 	ifp->if_addrlen = 0;			/* XXX */
 	ifp->if_hdrlen = 0;			/* XXX */
 	ifp->if_baudrate = 64000;		/* XXX */
-	IFQ_SET_MAXLEN(&ifp->if_snd, ifqmaxlen);
-	ifp->if_snd.ifq_drv_maxlen = ifqmaxlen;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ifqmaxlen);
+	ifp->if_snd[0].ifq_drv_maxlen = ifqmaxlen;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* Give this node the same name as the interface (if possible) */
 	if (ng_name_node(node, ifp->if_xname) != 0)

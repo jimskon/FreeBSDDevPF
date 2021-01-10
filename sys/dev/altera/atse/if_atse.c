@@ -1393,9 +1393,9 @@ atse_attach(device_t dev)
 	ifp->if_transmit = atse_transmit;
 	ifp->if_qflush = atse_qflush;
 	ifp->if_init = atse_init;
-	IFQ_SET_MAXLEN(&ifp->if_snd, ATSE_TX_LIST_CNT - 1);
-	ifp->if_snd.ifq_drv_maxlen = ATSE_TX_LIST_CNT - 1;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], ATSE_TX_LIST_CNT - 1);
+	ifp->if_snd[0].ifq_drv_maxlen = ATSE_TX_LIST_CNT - 1;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 
 	/* MII setup. */
 	error = mii_attach(dev, &sc->atse_miibus, ifp, atse_ifmedia_upd,

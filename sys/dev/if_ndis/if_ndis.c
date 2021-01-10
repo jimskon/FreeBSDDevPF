@@ -966,9 +966,9 @@ ndis_ifattach(struct ndis_softc *sc)
 	ifp->if_start = ndis_ifstart;
 	ifp->if_init = ndis_init;
 	ifp->if_baudrate = 10000000;
-	IFQ_SET_MAXLEN(&ifp->if_snd, 50);
-	ifp->if_snd.ifq_drv_maxlen = 25;
-	IFQ_SET_READY(&ifp->if_snd);
+	IFQ_SET_MAXLEN(&ifp->if_snd[0], 50);
+	ifp->if_snd[0].ifq_drv_maxlen = 25;
+	IFQ_SET_READY(&ifp->if_snd[0]);
 	ifp->if_capenable = ifp->if_capabilities;
 	ifp->if_hwassist = sc->ndis_hwassist;
 
@@ -1804,7 +1804,7 @@ ndis_ifstarttask(device_object *d, void *arg)
 		return;
 
 	struct ifnet		*ifp = sc->ifp;
-	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd))
+	if (!IFQ_DRV_IS_EMPTY(&ifp->if_snd[0]))
 		ndis_ifstart(ifp);
 }
 
@@ -1840,7 +1840,7 @@ ndis_ifstart(struct ifnet *ifp)
 	p0 = &sc->ndis_txarray[sc->ndis_txidx];
 
 	while(sc->ndis_txpending) {
-		IFQ_DRV_DEQUEUE(&ifp->if_snd, m);
+		IFQ_DRV_DEQUEUE(&ifp->if_snd[0], m);
 		if (m == NULL)
 			break;
 
@@ -1851,7 +1851,7 @@ ndis_ifstart(struct ifnet *ifp)
 			break;
 
 		if (ndis_mtop(m, &sc->ndis_txarray[sc->ndis_txidx])) {
-			IFQ_DRV_PREPEND(&ifp->if_snd, m);
+			IFQ_DRV_PREPEND(&ifp->if_snd[0], m);
 			NDIS_UNLOCK(sc);
 			return;
 		}
