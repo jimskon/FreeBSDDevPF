@@ -2507,13 +2507,13 @@ DIOCGETSTATES_full:
 			altq->altq_disc = NULL;
 			TAILQ_FOREACH(a, V_pf_altq_ifs_inactive, entries) {
 			  // Skon: change to look at BOTH interface and index
+			  //printf("pf_ioctl.c: DIOCADDALTQV1 %s %d %s, %p\n",a->ifname,a->index,a->qname,a->altq_disc);
 			  if (strncmp(a->ifname, altq->ifname, IFNAMSIZ) == 0 &&
                               a->index == altq->index) {			  
 			    //if (strncmp(a->ifname, altq->ifname,
 			    //  IFNAMSIZ) == 0) {
 					altq->altq_disc = a->altq_disc;
-					printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq\
-->qname,altq->index);
+					//printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq->qname,altq->index);
 					break;
 				}
 			}
@@ -2618,7 +2618,7 @@ DIOCGETSTATES_full:
 			version = pq->version;
 
 		error = altq_getqstats(altq, pq->buf, &nbytes, version);
-		printf("DIOCGETQSTATS 2: %d./n",error); 
+		printf("DIOCGETQSTATS 2: %d.\n",error); 
 		if (error == 0) {
 			pq->scheduler = altq->scheduler;
 			pq->nbytes = nbytes;

@@ -4009,10 +4009,22 @@ iflib_if_transmit(if_t ifp, struct mbuf *m)
 		m_freem(m);
 		return (ENETDOWN);
 	}
-
+	// Skon - test
+	qidx = 0;
+	//int max=0;
+	//printf("T%d ",NTXQSETS(ctx));
+	for (int i=1; i<MAXQ ; i++) {
+	  //printf("%d,%d ",ifp->if_snd[i].index,ifp->if_snd[i].ifq_len);
+	  if (ifp->if_snd[i].ifq_len>0) {
+	      printf("T%d,%d\n",ifp->if_snd[i].index,ifp->if_snd[i].ifq_len);
+	  }
+	    //qidx = i;
+	    //max=ifp->if_snd[i].ifq_len;
+	}
 	MPASS(m->m_nextpkt == NULL);
 	/* ALTQ-enabled interfaces always use queue 0. */
-	qidx = 0;
+	/* Skon - new version, more than one queue */
+
 	if ((NTXQSETS(ctx) > 1) && M_HASHTYPE_GET(m) && !ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		qidx = QIDX(ctx, m);
 	/*
@@ -5401,6 +5413,7 @@ iflib_register(if_ctx_t ctx)
 	u_char type;
 	int iflags;
 
+	printf("iflib_register: \n");
 	if ((sctx->isc_flags & IFLIB_PSEUDO) == 0)
 		_iflib_assert(sctx);
 
