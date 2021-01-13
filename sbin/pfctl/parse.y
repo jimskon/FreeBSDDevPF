@@ -2852,8 +2852,8 @@ if_item		: STRING			{
                         } else {   // Need to fix for numbers with more then a single digit.
 			  
                           $$->index=*ptr-48;
-                          if ($$->index < 1 || $$->index>8) {
-                            yyerror("Interface number must be between 1 and 8");
+                          if ($$->index < 0 || $$->index>3) {
+                            yyerror("Interface number must be between 0 and 3");
                             YYERROR;
                           }
                         }

@@ -154,7 +154,7 @@ altq_lookup_indexed(char *name, uint8_t index, int type)
 }
 
 int
-altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
+altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify, index)
 	struct ifaltq *ifq;
 	int type;
 	void *discipline;
@@ -163,14 +163,15 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
 	int (*request)(struct ifaltq *, int, void *);
 	void *clfier;
 	void *(*classify)(void *, struct mbuf *, int);
+	int index;
 {
 	IFQ_LOCK(ifq);
 	if (!ALTQ_IS_READY(ifq)) {
 		IFQ_UNLOCK(ifq);
 		return ENXIO;
 	}
-	// SKon
-	printf("altq_attach: %d\n",type);
+	// Skon
+	printf("altq_attach: %d, %d, %p\n",type,index,ifq);
 #ifdef ALTQ3_COMPAT
 	/*
 	 * pfaltq can override the existing discipline, but altq3 cannot.
@@ -195,6 +196,7 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify)
 	ifq->altq_clfier   = clfier;
 	ifq->altq_classify = classify;
 	ifq->altq_flags &= (ALTQF_CANTCHANGE|ALTQF_ENABLED);
+	ifq->index = index;
 #ifdef ALTQ3_COMPAT
 #ifdef ALTQ_KLD
 	altq_module_incref(type);

@@ -74,7 +74,10 @@ struct	ifaltq {
 	struct top_cdnr *altq_cdnr;
 
         /* SKON: index of this queue structure */
-        uint8_t index;          
+        uint8_t index;
+        /* SKON: flag if this queue instance is in use */
+        uint8_t altq_inuse;
+  
 };
 
 
@@ -175,7 +178,7 @@ extern int altq_attach(struct ifaltq *, int, void *,
 		       struct mbuf *(*)(struct ifaltq *, int),
 		       int (*)(struct ifaltq *, int, void *),
 		       void *,
-		       void *(*)(void *, struct mbuf *, int));
+		       void *(*)(void *, struct mbuf *, int), int);
 extern int altq_detach(struct ifaltq *);
 extern int altq_enable(struct ifaltq *);
 extern int altq_disable(struct ifaltq *);
