@@ -270,7 +270,8 @@ hfsc_add_queue(struct pf_altq *a)
 	    parent, a->qlimit, opts->flags, a->qid);
 	if (cl == NULL)
 		return (ENOMEM);
-
+	// Skon
+	printf("hfsc_add_queue: %s %d %s %s a: %p p: %p hif:%p\n",a->ifname,a->index,a->qname,a->parent,cl,parent,hif);
 	return (0);
 }
 
@@ -704,40 +705,64 @@ hfsc_nextclass(struct hfsc_class *cl)
 /*
  * hfsc_enqueue is an enqueue function to be registered to
  * (*altq_enqueue) in struct ifaltq.
+ * Skon - assume ifq is actually an arrray of ifalt's to search for a matching class
  */
 static int
 hfsc_enqueue(struct ifaltq *ifq, struct mbuf *m, struct altq_pktattr *pktattr)
 {
-	struct hfsc_if	*hif = (struct hfsc_if *)ifq->altq_disc;
-	struct hfsc_class *cl;
+	//struct hfsc_if	*hif = (struct hfsc_if *)ifq->altq_disc;
+  struct hfsc_class *cl=NULL, *cl_d=NULL;
 	struct pf_mtag *t;
 	int len;
+	int i=0;
+	// Skon - Loop through ifaltq's, trying to find the best place to send the packet.
+	struct hfsc_if	*hif = (struct hfsc_if *)ifq[0].altq_disc;
+	int q_idx=0,dq_idx=0;
+	while (cl == NULL && i < MAXQ) {
+	  if (ifq[i].altq_inuse) {
+	    hif = (struct hfsc_if *)ifq[i].altq_disc;
+	    IFQ_LOCK_ASSERT(ifq[i]);
 
-	IFQ_LOCK_ASSERT(ifq);
-
-	/* grab class set by classifier */
-	if ((m->m_flags & M_PKTHDR) == 0) {
-		/* should not happen */
-		printf("altq: packet for %s does not have pkthdr\n",
-		    ifq->altq_ifp->if_xname);
-		m_freem(m);
-		return (ENOBUFS);
-	}
-        // Skon
-	printf("E%d",ifq->index);
-	cl = NULL;
-	if ((t = pf_find_mtag(m)) != NULL)
-		cl = clh_to_clp(hif, t->qid);
+	    /* grab class set by classifier */
+	    if ((m->m_flags & M_PKTHDR) == 0) {
+	      /* should not happen */
+	      printf("altq: packet for %s does not have pkthdr\n",
+		     ifq[i].altq_ifp->if_xname);
+	      m_freem(m);
+	      return (ENOBUFS);
+	    }
+	    // Skon
+	    //printf("E%d",ifq->index);
+	    cl = NULL;
+	    if ((t = pf_find_mtag(m)) != NULL)
+	      cl = clh_to_clp(hif, t->qid);
 #ifdef ALTQ3_COMPAT
-	else if ((ifq->altq_flags & ALTQF_CLASSIFY) && pktattr != NULL)
-		cl = pktattr->pattr_class;
+	    else if ((ifq[i].altq_flags & ALTQF_CLASSIFY) && pktattr != NULL)
+	      cl = pktattr->pattr_class;
 #endif
-	if (cl == NULL || is_a_parent_class(cl)) {
-		cl = hif->hif_defaultclass;
-		if (cl == NULL) {
-			m_freem(m);
-			return (ENOBUFS);
-		}
+	    if (cl != NULL) {
+	      //printf("E%d:%d ",i,ifq[i].ifq_len);
+	      q_idx=i;
+	    }
+	    if (cl_d==NULL) {
+	      if (cl == NULL || is_a_parent_class(cl)) {
+		cl_d = hif->hif_defaultclass;
+		dq_idx=i;
+		//printf("ED%d:%d ",i,ifq[i].ifq_len);
+	      }
+	    }
+	  }
+	  i++;
+	}
+	if (cl==NULL && cl_d!=NULL) {
+	  cl=cl_d;
+	  q_idx=dq_idx;
+	}
+	
+	
+	if (cl == NULL) {
+	  m_freem(m);
+	  return (ENOBUFS);
 	}
 #ifdef ALTQ3_COMPAT
 	if (pktattr != NULL)
@@ -747,11 +772,12 @@ hfsc_enqueue(struct ifaltq *ifq, struct mbuf *m, struct altq_pktattr *pktattr)
 		cl->cl_pktattr = NULL;
 	len = m_pktlen(m);
 	if (hfsc_addq(cl, m) != 0) {
-		/* drop occurred.  mbuf was freed in hfsc_addq. */
+	  printf("Drop%d ",q_idx);
+	  /* drop occurred.  mbuf was freed in hfsc_addq. */
 		PKTCNTR_ADD(&cl->cl_stats.drop_cnt, len);
 		return (ENOBUFS);
 	}
-	IFQ_INC_LEN(ifq);
+	IFQ_INC_LEN(&ifq[q_idx]);
 	cl->cl_hif->hif_packets++;
 
 	/* successfully queued. */
@@ -782,7 +808,7 @@ hfsc_dequeue(struct ifaltq *ifq, int op)
 
 	IFQ_LOCK_ASSERT(ifq);
 	// Skon
-	printf("D%d ",ifq->index);
+	//printf("D%d,%d ",ifq->index,ifq->ifq_len);
 	if (hif->hif_packets == 0)
 		/* no packet in the tree */
 		return (NULL);
