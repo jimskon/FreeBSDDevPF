@@ -196,7 +196,10 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify, 
 	ifq->altq_clfier   = clfier;
 	ifq->altq_classify = classify;
 	ifq->altq_flags &= (ALTQF_CANTCHANGE|ALTQF_ENABLED);
+	// Skon - for use with multiple queue
 	ifq->index = index;
+	ifq->altq_inuse = 1;
+	
 #ifdef ALTQ3_COMPAT
 #ifdef ALTQ_KLD
 	altq_module_incref(type);
@@ -243,33 +246,39 @@ altq_detach(ifq)
 	return 0;
 }
 
+// Skon - modify for indexed queues
 int
 altq_enable(ifq)
 	struct ifaltq *ifq;
 {
+  for (int i=0; i<MAXQ ; i++) {
+    if (ifq[i].altq_inuse) {
+      printf("altq_enable:%d\n",ifq[i].index);
 	int s;
 
-	IFQ_LOCK(ifq);
+	IFQ_LOCK(&ifq[i]);
 
-	if (!ALTQ_IS_READY(ifq)) {
-		IFQ_UNLOCK(ifq);
+	if (!ALTQ_IS_READY(&ifq[i])) {
+		IFQ_UNLOCK(&ifq[i]);
 		return ENXIO;
 	}
-	if (ALTQ_IS_ENABLED(ifq)) {
-		IFQ_UNLOCK(ifq);
+	if (ALTQ_IS_ENABLED(&ifq[i])) {
+		IFQ_UNLOCK(&ifq[i]);
 		return 0;
 	}
 
 	s = splnet();
-	IFQ_PURGE_NOLOCK(ifq);
-	ASSERT(ifq->ifq_len == 0);
-	ifq->ifq_drv_maxlen = 0;		/* disable bulk dequeue */
-	ifq->altq_flags |= ALTQF_ENABLED;
-	if (ifq->altq_clfier != NULL)
-		ifq->altq_flags |= ALTQF_CLASSIFY;
+	IFQ_PURGE_NOLOCK(&ifq[i]);
+	ASSERT(ifq[i].ifq_len == 0);
+	ifq[i].ifq_drv_maxlen = 0;		/* disable bulk dequeue */
+	ifq[i].altq_flags |= ALTQF_ENABLED;
+	if (ifq[i].altq_clfier != NULL)
+		ifq[i].altq_flags |= ALTQF_CLASSIFY;
 	splx(s);
 
-	IFQ_UNLOCK(ifq);
+	IFQ_UNLOCK(&ifq[i]);
+    }
+  }
 	return 0;
 }
 
