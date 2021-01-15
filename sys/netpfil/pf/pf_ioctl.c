@@ -2478,11 +2478,11 @@ DIOCGETSTATES_full:
 		altq = malloc(sizeof(*altq), M_PFALTQ, M_WAITOK | M_ZERO);
 		error = pf_import_kaltq(pa, altq, IOCPARM_LEN(cmd));
 		// SKON - use local_flags to carry index
-                altq->index=pa->altq.local_flags;
+                altq->altq_index=pa->altq.local_flags;
 
 		if (error)
 			break;
-		printf("DIOCADDALTQV1: %d\n",altq->index);
+		printf("DIOCADDALTQV1: %d\n",altq->altq_index);
 		altq->local_flags = 0;
 
 		PF_RULES_WLOCK();
@@ -2507,13 +2507,13 @@ DIOCGETSTATES_full:
 			altq->altq_disc = NULL;
 			TAILQ_FOREACH(a, V_pf_altq_ifs_inactive, entries) {
 			  // Skon: change to look at BOTH interface and index
-			  //printf("pf_ioctl.c: DIOCADDALTQV1 %s %d %s, %p\n",a->ifname,a->index,a->qname,a->altq_disc);
+			  //printf("pf_ioctl.c: DIOCADDALTQV1 %s %d %s, %p\n",a->ifname,a->altq_index,a->qname,a->altq_disc);
 			  if (strncmp(a->ifname, altq->ifname, IFNAMSIZ) == 0 &&
-                              a->index == altq->index) {			  
+                              a->altq_index == altq->altq_index) {			  
 			    //if (strncmp(a->ifname, altq->ifname,
 			    //  IFNAMSIZ) == 0) {
 					altq->altq_disc = a->altq_disc;
-					//printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq->qname,altq->index);
+					//printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq->qname,altq->altq_index);
 					break;
 				}
 			}

@@ -197,7 +197,7 @@ altq_attach(ifq, type, discipline, enqueue, dequeue, request, clfier, classify, 
 	ifq->altq_classify = classify;
 	ifq->altq_flags &= (ALTQF_CANTCHANGE|ALTQF_ENABLED);
 	// Skon - for use with multiple queue
-	ifq->index = index;
+	ifq->altq_index = index;
 	ifq->altq_inuse = 1;
 	
 #ifdef ALTQ3_COMPAT
@@ -253,7 +253,7 @@ altq_enable(ifq)
 {
   for (int i=0; i<MAXQ ; i++) {
     if (ifq[i].altq_inuse) {
-      printf("altq_enable:%d\n",ifq[i].index);
+      printf("altq_enable:%d\n",ifq[i].altq_index);
 	int s;
 
 	IFQ_LOCK(&ifq[i]);

@@ -1478,8 +1478,8 @@ int
 pfctl_add_altq(struct pfctl *pf, struct pf_altq *a)
 {
   // Skon - pass index local_flags
-  printf("pfctl_add_altq: %s %s %d\n", a->ifname, a->qname, a->index);
-  a->local_flags=a->index;
+  printf("pfctl_add_altq: %s %s %d\n", a->ifname, a->qname, a->altq_index);
+  a->local_flags=a->altq_index;
 	if (altqsupport &&
 	    (loadopt & PFCTL_FLAG_ALTQ) != 0) {
 		memcpy(&pf->paltq->altq, a, sizeof(struct pf_altq));

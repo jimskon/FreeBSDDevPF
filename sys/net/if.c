@@ -2510,9 +2510,9 @@ ifunit_indexed(const char *name, const uint8_t index)
 	printf("ifunit_indexed: %s, %d\n",name,index);
         IFNET_RLOCK_NOSLEEP();
         CK_STAILQ_FOREACH(ifp, &V_ifnet, if_link) {
-	  printf("ifunit_indexed: %s, %d\n",ifp->if_xname, ifp->if_snd[0].index);
+	  printf("ifunit_indexed: %s, %d\n",ifp->if_xname, ifp->if_snd[0].altq_index);
           if (strncmp(name, ifp->if_xname, IFNAMSIZ) == 0
-	      && ifp->if_snd[0].index==index)                                    
+	      && ifp->if_snd[0].altq_index==index)                                    
                         break;
         }
         IFNET_RUNLOCK_NOSLEEP();
