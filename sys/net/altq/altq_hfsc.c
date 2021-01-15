@@ -173,12 +173,12 @@ hfsc_pfattach(struct pf_altq *a)
 	struct ifnet *ifp;
 	int s, error;
 
-	printf("hfsc_pfattach: index: %d\n",a->index);
+	printf("hfsc_pfattach: index: %d\n",a->altq_index);
 	if ((ifp = ifunit(a->ifname)) == NULL || a->altq_disc == NULL)
 		return (EINVAL);
 	s = splnet();
-	error = altq_attach(&ifp->if_snd[a->index], ALTQT_HFSC, a->altq_disc,
-			    hfsc_enqueue, hfsc_dequeue, hfsc_request, NULL, NULL,a->index);
+	error = altq_attach(&ifp->if_snd[a->altq_index], ALTQT_HFSC, a->altq_disc,
+			    hfsc_enqueue, hfsc_dequeue, hfsc_request, NULL, NULL,a->altq_index);
 	splx(s);
 	return (error);
 }
@@ -193,7 +193,7 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 	  return (EINVAL);
 	}
 
-	  if (!ALTQ_IS_READY(&ifp->if_snd[a->index])) {
+	  if (!ALTQ_IS_READY(&ifp->if_snd[a->altq_index])) {
 	    printf("ENODEV\n");
 	    return (ENODEV);
 	  }
@@ -208,9 +208,9 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 	/* keep the state in pf_altq */
 	a->altq_disc = hif;
 	// Skon
-	printf("Add hfsc_if Intf: %s, idx: %d, qn: %s hfsc addr: %p\n", a->ifname, a->index, a->qname, (void *)hif);
+	printf("Add hfsc_if Intf: %s, idx: %d, qn: %s hfsc addr: %p\n", a->ifname, a->altq_index, a->qname, (void *)hif);
         // Skon - add the root index to the ifaltq                                                   
-        ifp->if_snd[0].index=a->index;
+        ifp->if_snd[0].altq_index=a->altq_index;
 	return (0);
 }
 
@@ -271,7 +271,7 @@ hfsc_add_queue(struct pf_altq *a)
 	if (cl == NULL)
 		return (ENOMEM);
 	// Skon
-	printf("hfsc_add_queue: %s %d %s %s a: %p p: %p hif:%p\n",a->ifname,a->index,a->qname,a->parent,cl,parent,hif);
+	printf("hfsc_add_queue: %s %d %s %s a: %p p: %p hif:%p\n",a->ifname,a->altq_index,a->qname,a->parent,cl,parent,hif);
 	return (0);
 }
 
@@ -302,13 +302,13 @@ hfsc_getqstats(struct pf_altq *a, void *ubuf, int *nbytes, int version)
 	size_t stats_size;
 	int error = 0;
 	// Skon - add index
-        if ((hif = altq_lookup_indexed(a->ifname, a->index, ALTQT_HFSC)) == NULL) {
+        if ((hif = altq_lookup_indexed(a->ifname, a->altq_index, ALTQT_HFSC)) == NULL) {
 	  //	if ((hif = altq_lookup(a->ifname, ALTQT_HFSC)) == NULL)
 	  printf("hfsc_getqstats: hif: %p\n",hif);
 		return (EBADF);
 	}
 	// Skon
-	printf("hfsc_getqstats: %s, %s, %d, %p\n",a->ifname,a->qname,a->index,hif);
+	printf("hfsc_getqstats: %s, %s, %d, %p\n",a->ifname,a->qname,a->altq_index,hif);
 	if ((cl = clh_to_clp(hif, a->qid)) == NULL)
 		return (EINVAL);
 
@@ -732,7 +732,7 @@ hfsc_enqueue(struct ifaltq *ifq, struct mbuf *m, struct altq_pktattr *pktattr)
 	      return (ENOBUFS);
 	    }
 	    // Skon
-	    //printf("E%d",ifq->index);
+	    //printf("E%d",ifq->altq_index);
 	    cl = NULL;
 	    if ((t = pf_find_mtag(m)) != NULL)
 	      cl = clh_to_clp(hif, t->qid);
@@ -808,7 +808,7 @@ hfsc_dequeue(struct ifaltq *ifq, int op)
 
 	IFQ_LOCK_ASSERT(ifq);
 	// Skon
-	//printf("D%d,%d ",ifq->index,ifq->ifq_len);
+	//printf("D%d,%d ",ifq->altq_index,ifq->ifq_len);
 	if (hif->hif_packets == 0)
 		/* no packet in the tree */
 		return (NULL);

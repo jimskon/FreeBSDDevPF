@@ -74,7 +74,7 @@ struct	ifaltq {
 	struct top_cdnr *altq_cdnr;
 
         /* SKON: index of this queue structure */
-        uint8_t index;
+        uint8_t altq_index;
         /* SKON: flag if this queue instance is in use */
         uint8_t altq_inuse;
   
