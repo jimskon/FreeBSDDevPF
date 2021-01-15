@@ -129,7 +129,6 @@ struct pf_altq_v0 {
 	void			*unused1;
 	TAILQ_ENTRY(pf_altq_v0)	 entries;
 
-        uint8_t                 index;           /* SKON: add an index for multiple queue sets */
   
 	/* scheduler spec */
 	uint8_t			 scheduler;	/* scheduler type */
@@ -163,7 +162,7 @@ struct pf_altq_v1 {
 
 	TAILQ_ENTRY(pf_altq_v1)	 entries;
 
-        uint8_t                 index;           /* SKON: add an index for multiple queue sets */
+        uint8_t                 altq_index;           /* SKON: add an index for multiple queue sets */
 
         /* scheduler spec */
 	uint8_t			 scheduler;	/* scheduler type */
@@ -201,7 +200,7 @@ struct pf_kaltq {
 	void			*altq_disc;	/* discipline-specific state */
 	TAILQ_ENTRY(pf_kaltq)	 entries;
 
-        uint8_t                 index;           /* SKON: add an index for multiple queue sets */
+        uint8_t                 altq_index;           /* SKON: add an index for multiple queue sets */
  
 	/* scheduler spec */
 	uint8_t			 scheduler;	/* scheduler type */
