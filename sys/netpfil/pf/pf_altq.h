@@ -162,8 +162,6 @@ struct pf_altq_v1 {
 
 	TAILQ_ENTRY(pf_altq_v1)	 entries;
 
-        uint8_t                 altq_index;           /* SKON: add an index for multiple queue sets */
-
         /* scheduler spec */
 	uint8_t			 scheduler;	/* scheduler type */
 	uint32_t		 tbrsize;	/* tokenbucket regulator size */
@@ -188,6 +186,9 @@ struct pf_altq_v1 {
 	} pq_u;
 
 	uint32_t		 qid;		/* return value */
+
+        uint8_t                 altq_index;     /* SKON: add an index for multiple queue sets */
+
 };
 
 /* Latest version of struct pf_altq_vX */
@@ -200,8 +201,6 @@ struct pf_kaltq {
 	void			*altq_disc;	/* discipline-specific state */
 	TAILQ_ENTRY(pf_kaltq)	 entries;
 
-        uint8_t                 altq_index;           /* SKON: add an index for multiple queue sets */
- 
 	/* scheduler spec */
 	uint8_t			 scheduler;	/* scheduler type */
 	uint32_t		 tbrsize;	/* tokenbucket regulator size */
@@ -226,6 +225,9 @@ struct pf_kaltq {
 	} pq_u;
 
 	uint32_t		 qid;		/* return value */
+  
+        uint8_t                 altq_index;     /* SKON: add an index for multiple queue sets */
+ 
 };
 #endif /* _KERNEL */
 
