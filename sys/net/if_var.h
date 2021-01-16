@@ -168,7 +168,7 @@ typedef enum {
  */
 
 // Skon - maximum send queues
-#define MAXQ 4
+#define MAXQ 8
 
 struct if_encap_req {
 	u_char		*buf;		/* Destination buffer (w) */
