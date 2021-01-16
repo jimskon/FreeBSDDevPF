@@ -4009,13 +4009,10 @@ iflib_if_transmit(if_t ifp, struct mbuf *m)
 		m_freem(m);
 		return (ENETDOWN);
 	}
-	// Skon - must pick queue for altq
 	qidx = 0;
 
 	MPASS(m->m_nextpkt == NULL);
 	/* ALTQ-enabled interfaces always use queue 0. */
-	/* Skon - new version, more than one queue */
-
 	if ((NTXQSETS(ctx) > 1) && M_HASHTYPE_GET(m) && !ALTQ_IS_ENABLED(&ifp->if_snd[0]))
 		qidx = QIDX(ctx, m);
 	/*
@@ -4094,10 +4091,7 @@ iflib_if_transmit_altq(if_t ifp, struct mbuf *m, int index)
 		return (ENETDOWN);
 	}
 	// Skon - must pick queue for altq
-	if (NTXQSETS(ctx)>=MAXQ)
-	  qidx = index;
-	else
-	  qidx = 0;
+	qidx=index%NTXQSETS(ctx);
 
 	MPASS(m->m_nextpkt == NULL);
 	/* ALTQ-enabled interfaces always use queue 0. */
@@ -4108,6 +4102,7 @@ iflib_if_transmit_altq(if_t ifp, struct mbuf *m, int index)
 	/*
 	 * XXX calculate buf_ring based on flowid (divvy up bits?)
 	 */
+	printf("%d",qidx);
 	txq = &ctx->ifc_txqs[qidx];
 
 #ifdef DRIVER_BACKPRESSURE

@@ -2850,10 +2850,11 @@ if_item		: STRING			{
                         if (ptr == NULL) {
                           $$->altq_index=0;
                         } else {   // Need to fix for numbers with more then a single digit.
-			  
-                          $$->altq_index=*ptr-48;
-                          if ($$->altq_index < 0 || $$->altq_index>3) {
-                            yyerror("Interface number must be between 0 and 3");
+			  int idx = atoi(ptr);
+			  printf("INDEX: %d\n",idx);
+                          $$->altq_index=idx;;
+                          if ($$->altq_index < 0 || $$->altq_index>7 {
+                            yyerror("Interface number must be between 0 and 7");
                             YYERROR;
                           }
                         }
@@ -5065,7 +5066,7 @@ expand_altq(struct pf_altq *a, struct node_if *interfaces,
                                     sizeof(qname))
                                         errx(1, "expand_altq: strlcpy");
                                 // Skon - add index                                                          
-                                char altq_index[2];
+                                char altq_index[3];
                                 sprintf(altq_index, "%d", interface->altq_index);
                                 if (strlcat(qname, altq_index,
                                     sizeof(qname)) >= sizeof(qname))

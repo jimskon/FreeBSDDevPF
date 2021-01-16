@@ -2507,18 +2507,17 @@ DIOCGETSTATES_full:
 			altq->altq_disc = NULL;
 			TAILQ_FOREACH(a, V_pf_altq_ifs_inactive, entries) {
 			  // Skon: change to look at BOTH interface and index
-			  //printf("pf_ioctl.c: DIOCADDALTQV1 %s %d %s, %p\n",a->ifname,a->altq_index,a->qname,a->altq_disc);
+			  printf("pf_ioctl.c: DIOCADDALTQV1 %s %d %s, %p\n",a->ifname,a->altq_index,a->qname,a->altq_disc);
 			  if (strncmp(a->ifname, altq->ifname, IFNAMSIZ) == 0 &&
                               a->altq_index == altq->altq_index) {			  
 			    //if (strncmp(a->ifname, altq->ifname,
 			    //  IFNAMSIZ) == 0) {
 					altq->altq_disc = a->altq_disc;
-					//printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq->qname,altq->altq_index);
+					printf("Found Interface: %p, %s, %d\n",altq->altq_disc,altq->qname,altq->altq_index);
 					break;
 				}
 			}
 		}
-
 		if ((ifp = ifunit(altq->ifname)) == NULL)
 			altq->local_flags |= PFALTQ_FLAG_IF_REMOVED;
 		else
