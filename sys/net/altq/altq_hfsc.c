@@ -203,14 +203,14 @@ hfsc_add_altq(struct ifnet *ifp, struct pf_altq *a)
 		return (ENOMEM);
 
 	TAILQ_INIT(&hif->hif_eligible);
-	hif->hif_ifq = &ifp->if_snd[0];
+	hif->hif_ifq = &ifp->if_snd[a->altq_index];
 
 	/* keep the state in pf_altq */
 	a->altq_disc = hif;
 	// Skon
 	printf("Add hfsc_if Intf: %s, idx: %d, qn: %s hfsc addr: %p\n", a->ifname, a->altq_index, a->qname, (void *)hif);
         // Skon - add the root index to the ifaltq                                                   
-        ifp->if_snd[0].altq_index=a->altq_index;
+        ifp->if_snd[a->altq_index].altq_index=a->altq_index;
 	return (0);
 }
 
@@ -2114,6 +2114,8 @@ hfscioctl(dev, cmd, addr, flag, p)
 				error = EINVAL;
 				break;
 			}
+			// Skon
+			printf("HFSC_ENABLE: %d\n",hif->hif_ifq->altq_index);
 			error = altq_enable(hif->hif_ifq);
 			break;
 
@@ -2165,7 +2167,8 @@ hfsccmd_if_attach(ap)
 	struct hfsc_if *hif;
 	struct ifnet *ifp;
 	int error;
-
+	//Skon
+	printf("hfsccmd_if_attach: \n");
 	if ((ifp = ifunit(ap->iface.hfsc_ifname)) == NULL)
 		return (ENXIO);
 
