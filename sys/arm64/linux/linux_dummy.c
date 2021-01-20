@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/linux/linux_dummy.c 342998 2019-01-13 12:12:50Z fsu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_compat.h"
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libbe/tests/target_prog.c 346546 2019-04-22 13:45:08Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <be.h>
 

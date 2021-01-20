@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/skel/dot.profile 337497 2018-08-08 19:24:20Z asomers $
+# $FreeBSD$
 #
 # .profile - Bourne Shell startup script for login shells
 #

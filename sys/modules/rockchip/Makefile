@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/rockchip/Makefile 350686 2019-08-07 18:16:28Z manu $
+# $FreeBSD$
 # Build modules specific to RockChip.
 
 SUBDIR = \

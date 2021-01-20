@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.1/sys/modules/i2c/controllers/ichiic/Makefile 352390 2019-09-16 12:54:44Z emaste $
+#$FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/ichiic
 KMOD		= ig4

@@ -33,7 +33,7 @@ static const char sccsid[] = "@(#)authenc.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/contrib/telnet/telnet/authenc.c 351431 2019-08-23 17:39:59Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #ifdef	AUTHENTICATION
 #ifdef	ENCRYPTION

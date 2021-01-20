@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/xmsr.c 349958 2019-07-12 22:31:12Z jhb $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/xmsr.c 349958 2019-07-12 22:31:12Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

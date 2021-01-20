@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/powerpc/platform.c 330305 2018-03-03 02:04:40Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Dispatch platform calls to the appropriate platform implementation

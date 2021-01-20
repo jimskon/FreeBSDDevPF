@@ -26,7 +26,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_read_format_raw.c 348605 2019-06-04 10:20:56Z mm $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_read_format_raw)
 {

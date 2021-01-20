@@ -35,7 +35,7 @@
  *
  *	@(#)proc.h	8.1 (Berkeley) 6/10/93
  *	JNPR: proc.h,v 1.7.2.1 2007/09/10 06:25:24 girish
- * $FreeBSD: releng/12.1/sys/mips/include/proc.h 351793 2019-09-03 20:23:58Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PROC_H_

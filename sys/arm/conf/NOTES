@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/conf/NOTES 350867 2019-08-11 20:50:41Z ian $
+# $FreeBSD$
 
 options 	FDT
 

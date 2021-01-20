@@ -29,7 +29,7 @@
 /* Driver for VirtIO SCSI devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/virtio/scsi/virtio_scsi.c 349691 2019-07-03 19:52:24Z vangyzen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.2 (Berkeley) 2/3/94
-# $FreeBSD: releng/12.1/lib/libc/Makefile 350352 2019-07-26 10:13:48Z kib $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SHLIBDIR?= /lib

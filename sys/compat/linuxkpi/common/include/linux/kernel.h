@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/kernel.h 348086 2019-05-22 04:00:13Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_KERNEL_H_
 #define	_LINUX_KERNEL_H_

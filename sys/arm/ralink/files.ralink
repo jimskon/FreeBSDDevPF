@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/ralink/files.ralink 350603 2019-08-05 18:13:13Z manu $
+# $FreeBSD$
 arm/ralink/rt1310_machdep.c		standard
 arm/ralink/rt1310_intc.c		standard
 arm/ralink/rt1310_gpio.c		optional	rt1310gpio

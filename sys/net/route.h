@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)route.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.1/sys/net/route.h 341238 2018-11-29 15:42:32Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _NET_ROUTE_H_

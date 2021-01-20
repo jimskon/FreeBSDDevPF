@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_errno.inc 332893 2018-04-23 18:33:26Z emaste $
+ * $FreeBSD$
  */
 
 /*

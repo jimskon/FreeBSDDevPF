@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/ping/utils.h 352357 2019-09-15 16:53:02Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef UTILS_H

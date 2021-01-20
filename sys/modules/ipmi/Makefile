@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ipmi/Makefile 337913 2018-08-16 15:59:02Z ambrisko $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/ipmi
 

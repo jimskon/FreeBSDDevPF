@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/linuxkpi/common/src/linux_compat.c 352388 2019-09-16 12:51:28Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_stack.h"
 

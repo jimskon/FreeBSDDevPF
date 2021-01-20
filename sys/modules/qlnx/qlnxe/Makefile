@@ -29,7 +29,7 @@
 # * Author : David C Somayajulu, Cavium, Inc., San Jose, CA 95131.
 # */
 #
-# $FreeBSD: releng/12.1/sys/modules/qlnx/qlnxe/Makefile 336695 2018-07-25 02:36:55Z davidcs $
+# $FreeBSD$
 #
 
 .PATH: ${SRCTOP}/sys/dev/qlnx/qlnxe

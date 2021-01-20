@@ -37,7 +37,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/security/mac_bsdextended/mac_bsdextended.c 319890 2017-06-13 01:17:58Z emaste $
+ * $FreeBSD$
  */
 
 /*

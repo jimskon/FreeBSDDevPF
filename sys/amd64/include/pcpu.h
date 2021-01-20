@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/pcpu.h 347567 2019-05-14 17:04:00Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PCPU_H_

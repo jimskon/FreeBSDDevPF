@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/rwlock.h 343419 2019-01-25 10:58:34Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_RWLOCK_H_

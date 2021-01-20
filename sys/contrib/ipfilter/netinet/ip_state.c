@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_state.c 351479 2019-08-25 13:36:20Z cy $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (C) 2012 by Darren Reed.

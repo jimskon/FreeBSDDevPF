@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/preempt.h 348244 2019-05-24 17:06:10Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_PREEMPT_H_

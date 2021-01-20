@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.1/sbin/recoverdisk/recoverdisk.c 344091 2019-02-13 09:28:48Z avos $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/queue.h>

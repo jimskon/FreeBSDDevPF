@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/pwm/pwmc/Makefile 349094 2019-06-16 00:53:09Z ian $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/pwm
 KMOD=	pwmc

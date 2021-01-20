@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/amdsmb/Makefile 336068 2018-07-07 15:55:52Z imp $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/amdsmb
 

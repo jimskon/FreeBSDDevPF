@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/contrib/llvm/FREEBSD-Xlist 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 .arcconfig
 .clang-format
 .clang-tidy

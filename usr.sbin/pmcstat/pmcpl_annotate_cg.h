@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/pmcstat/pmcpl_annotate_cg.h 351913 2019-09-05 23:27:59Z imp $
+ * $FreeBSD$
  */
 
 #ifndef	_PMCSTAT_PL_ANNOTATE_CG_H_

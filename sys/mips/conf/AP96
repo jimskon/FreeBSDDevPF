@@ -11,7 +11,7 @@
 # + 64mb RAM
 # + uboot environment
 
-# $FreeBSD: releng/12.1/sys/mips/conf/AP96 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

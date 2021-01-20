@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/tests/regex/multibyte.sh 341745 2018-12-08 19:45:05Z yuripv $
+# $FreeBSD$
 
 atf_test_case multibyte
 multibyte_head()

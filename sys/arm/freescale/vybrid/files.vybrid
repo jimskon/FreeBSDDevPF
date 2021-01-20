@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/freescale/vybrid/files.vybrid 350603 2019-08-05 18:13:13Z manu $
+# $FreeBSD$
 
 arm/freescale/vybrid/vf_machdep.c		standard
 arm/freescale/vybrid/vf_ccm.c			standard

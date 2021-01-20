@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/wpa/hostapd/Makefile 346980 2019-05-01 01:42:38Z cy $
+# $FreeBSD$
 
 .include <src.opts.mk>
 .include "../Makefile.inc"

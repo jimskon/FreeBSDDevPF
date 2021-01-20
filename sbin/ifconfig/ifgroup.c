@@ -27,7 +27,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/sbin/ifconfig/ifgroup.c 345357 2019-03-21 00:17:43Z asomers $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>

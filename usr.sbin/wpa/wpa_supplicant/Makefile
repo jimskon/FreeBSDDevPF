@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/wpa/wpa_supplicant/Makefile 346980 2019-05-01 01:42:38Z cy $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

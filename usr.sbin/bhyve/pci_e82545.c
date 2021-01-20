@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/pci_e82545.c 350619 2019-08-05 22:04:16Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifndef WITHOUT_CAPSICUM

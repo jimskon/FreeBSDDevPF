@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/fdt/simplebus.h 350600 2019-08-05 17:43:44Z manu $
+ * $FreeBSD$
  */
 
 #ifndef	_FDT_SIMPLEBUS_H

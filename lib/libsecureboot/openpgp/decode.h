@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * $FreeBSD: releng/12.1/lib/libsecureboot/openpgp/decode.h 344565 2019-02-26 06:09:10Z sjg $
+ * $FreeBSD$
  */
 
 #ifdef USE_BEARSSL

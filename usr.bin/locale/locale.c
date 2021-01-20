@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/locale/locale.c 352416 2019-09-16 16:17:29Z yuripv $
+ * $FreeBSD$
  */
 
 /*

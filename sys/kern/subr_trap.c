@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_trap.c 351808 2019-09-04 09:54:05Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 #include "opt_ktrace.h"

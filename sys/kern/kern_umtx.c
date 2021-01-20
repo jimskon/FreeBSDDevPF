@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_umtx.c 351790 2019-09-03 20:06:36Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_umtx_profiling.h"
 

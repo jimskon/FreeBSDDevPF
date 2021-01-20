@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.c,v 1.43 2014/11/18 17:03:35 tobias Exp $
- * $FreeBSD: releng/12.1/usr.bin/patch/pch.c 345878 2019-04-04 17:21:30Z kevans $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

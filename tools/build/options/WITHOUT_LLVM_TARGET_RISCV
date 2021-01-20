@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_LLVM_TARGET_RISCV 346892 2019-04-29 16:16:00Z mhorne $
+.\" $FreeBSD$
 Set to not build LLVM target support for RISC-V.
 The
 .Va LLVM_TARGET_ALL

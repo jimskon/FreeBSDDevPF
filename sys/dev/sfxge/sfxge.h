@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/12.1/sys/dev/sfxge/sfxge.h 342352 2018-12-21 17:26:22Z arybchik $
+ * $FreeBSD$
  */
 
 #ifndef _SFXGE_H

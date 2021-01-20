@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/diff/diffreg.c 338040 2018-08-19 04:15:38Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/stat.h>

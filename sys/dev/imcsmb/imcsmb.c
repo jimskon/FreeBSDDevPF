@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/imcsmb/imcsmb.c 330304 2018-03-03 01:53:51Z rpokala $
+ * $FreeBSD$
  */
 
 /* A detailed description of this device is present in imcsmb_pci.c */

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/sfxge/common/efx_tx.c 350405 2019-07-29 09:25:16Z arybchik $");
+__FBSDID("$FreeBSD$");
 
 #include "efx.h"
 #include "efx_impl.h"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/drm2/radeonkms/Makefile 342689 2019-01-02 16:11:02Z markj $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/drm2/radeon
 

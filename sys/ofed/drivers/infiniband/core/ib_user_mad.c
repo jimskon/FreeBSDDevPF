@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ofed/drivers/infiniband/core/ib_user_mad.c 341869 2018-12-12 10:32:59Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #define pr_fmt(fmt) "user_mad: " fmt
 

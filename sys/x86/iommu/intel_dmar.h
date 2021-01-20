@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/iommu/intel_dmar.h 346663 2019-04-25 08:28:54Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __X86_IOMMU_INTEL_DMAR_H

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/mips/mips/tlb.c 343709 2019-02-03 08:53:03Z gonzo $
+ * $FreeBSD$
  */
 
 #include "opt_ddb.h"

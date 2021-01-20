@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/net/gai_strerror.c 343519 2019-01-28 02:26:05Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <netdb.h>

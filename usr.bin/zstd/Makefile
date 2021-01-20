@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/zstd/Makefile 332993 2018-04-25 13:23:58Z bapt $
+# $FreeBSD$
 
 PROG=	zstd
 SRCS=	bench.c \

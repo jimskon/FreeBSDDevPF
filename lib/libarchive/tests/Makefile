@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libarchive/tests/Makefile 351339 2019-08-21 16:17:54Z markj $
+# $FreeBSD$
 
 PACKAGE=	tests
 

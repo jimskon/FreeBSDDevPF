@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_emul.h 347520 2019-05-13 10:43:18Z dchagin $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_EMUL_H_

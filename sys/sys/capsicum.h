@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/capsicum.h 346059 2019-04-09 16:35:23Z ngie $
+ * $FreeBSD$
  */
 
 /*

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/x86/sys/pkru.c 344850 2019-03-06 17:40:30Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <machine/cpufunc.h>

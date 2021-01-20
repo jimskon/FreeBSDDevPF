@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/iir/iir_pci.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
  *  iir_pci.c:  PCI Bus Attachment for Intel Integrated RAID Controller driver

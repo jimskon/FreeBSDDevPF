@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/scatterlist.h 345940 2019-04-05 11:33:11Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_SCATTERLIST_H_
 #define	_LINUX_SCATTERLIST_H_

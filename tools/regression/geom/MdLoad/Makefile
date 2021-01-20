@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/regression/geom/MdLoad/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD$
 
 PROG=	MdLoad
 LIBADD=	sbuf bsdxml

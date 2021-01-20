@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/Makefile 348458 2019-05-31 15:05:54Z markj $
+# $FreeBSD$
 #
 # The user-driven targets are:
 #

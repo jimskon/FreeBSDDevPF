@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/secure/lib/libcrypto/amd64/x86_64-mont5.S 344603 2019-02-26 19:34:42Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from x86_64-mont5.pl. */
 .text	
 

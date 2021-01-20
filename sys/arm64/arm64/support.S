@@ -30,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/support.S 351789 2019-09-03 20:04:44Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/setjmp.h>
 #include <machine/param.h>

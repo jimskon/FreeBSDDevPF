@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/usb_generic.c 348856 2019-06-10 13:36:53Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libprocstat/libprocstat_compat.c 318969 2017-05-26 22:17:44Z cem $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libprocstat/libprocstat_compat.c 318969 2017-05-26 22:17:44Z cem $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/user.h>

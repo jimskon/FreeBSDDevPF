@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/12.1/tools/tools/crypto/Makefile 342748 2019-01-03 22:51:14Z jhb $
+#	$FreeBSD$
 #
 # Copyright (c) 2018		Conrad Meyer <cem@FreeBSD.org>
 # Copyright (c) 2002, 2003	Sam Leffler, Errno Consulting

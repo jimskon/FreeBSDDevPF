@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)errno.h	8.5 (Berkeley) 1/21/94
- * $FreeBSD: releng/12.1/sys/sys/errno.h 326443 2017-12-02 00:07:09Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_ERRNO_H_

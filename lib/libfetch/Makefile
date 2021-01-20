@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libfetch/Makefile 352042 2019-09-08 20:41:00Z markj $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

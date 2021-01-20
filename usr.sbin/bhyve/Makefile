@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/usr.sbin/bhyve/Makefile 350196 2019-07-21 11:28:40Z vmaffione $
+# $FreeBSD$
 #
 
 .include <src.opts.mk>

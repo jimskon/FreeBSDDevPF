@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD: releng/12.1/sys/crypto/aesni/aesni_ccm.c 352235 2019-09-11 23:45:58Z mav $
+ *	$FreeBSD$
  *
  * This file implements AES-CCM+CBC-MAC, as described
  * at https://tools.ietf.org/html/rfc3610, using Intel's

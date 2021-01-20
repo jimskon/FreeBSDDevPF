@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/spibus/spi.h 349314 2019-06-23 16:16:55Z ian $
+ * $FreeBSD$
  */
 
 struct spi_command {

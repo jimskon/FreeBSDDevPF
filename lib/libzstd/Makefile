@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libzstd/Makefile 331115 2018-03-18 03:42:57Z cem $
+# $FreeBSD$
 
 LIB=	zstd
 SRCS=	entropy_common.c \

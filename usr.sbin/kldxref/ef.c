@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/kldxref/ef.c 340790 2018-11-23 01:05:42Z emaste $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

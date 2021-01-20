@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/rculist.h 350083 2019-07-17 16:34:32Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_RCULIST_H_

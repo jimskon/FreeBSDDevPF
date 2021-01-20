@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/clang/libllvmminimal/Makefile 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 
 .include "../llvm.pre.mk"
 

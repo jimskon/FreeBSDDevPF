@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/tests/tvo.c 348129 2019-05-22 23:19:20Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include "../libsecureboot-priv.h"
 

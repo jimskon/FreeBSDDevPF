@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/buslogic/bt.c 328523 2018-01-29 00:14:46Z imp $");
+__FBSDID("$FreeBSD$");
 
  /*
   * Special thanks to Leonard N. Zubkoff for writing such a complete and

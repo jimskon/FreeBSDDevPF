@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libbsnmp/Makefile 143601 2005-03-14 17:32:16Z harti $
+# $FreeBSD$
 
 SUBDIR=	libbsnmp
 

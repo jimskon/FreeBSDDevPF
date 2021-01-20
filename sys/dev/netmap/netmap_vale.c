@@ -29,7 +29,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/netmap/netmap_vale.c 344046 2019-02-12 09:07:46Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/errno.h>

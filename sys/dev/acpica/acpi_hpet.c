@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/acpica/acpi_hpet.c 342147 2018-12-16 02:44:57Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 

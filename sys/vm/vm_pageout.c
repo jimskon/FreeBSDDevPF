@@ -75,7 +75,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_pageout.c 351776 2019-09-03 19:27:59Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

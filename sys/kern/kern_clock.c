@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_clock.c 349819 2019-07-07 18:38:40Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kdb.h"
 #include "opt_device_polling.h"

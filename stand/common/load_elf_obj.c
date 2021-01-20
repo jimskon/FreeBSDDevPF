@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/load_elf_obj.c 346145 2019-04-12 01:03:00Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/exec.h>

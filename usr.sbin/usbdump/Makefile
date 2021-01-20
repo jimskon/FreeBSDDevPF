@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/usbdump/Makefile 220316 2011-04-04 03:43:13Z thompsa $
+# $FreeBSD$
 
 PROG=	usbdump
 SRCS=	usbdump.c

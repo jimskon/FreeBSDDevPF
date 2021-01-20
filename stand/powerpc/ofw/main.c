@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/powerpc/ofw/main.c 335117 2018-06-14 06:41:33Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include "openfirm.h"

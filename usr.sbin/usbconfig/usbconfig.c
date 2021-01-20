@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/usbconfig/usbconfig.c 351842 2019-09-05 09:32:00Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

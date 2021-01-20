@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/vfs_subr.c 351957 2019-09-06 19:22:33Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_watchdog.h"

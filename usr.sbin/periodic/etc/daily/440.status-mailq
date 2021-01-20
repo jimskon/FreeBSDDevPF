@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/usr.sbin/periodic/etc/daily/440.status-mailq 341092 2018-11-27 19:45:24Z vangyzen $
+# $FreeBSD$
 #
 
 # If there is a global system configuration file, suck it in.

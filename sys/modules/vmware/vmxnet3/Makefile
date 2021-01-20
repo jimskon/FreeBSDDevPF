@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/vmware/vmxnet3/Makefile 344027 2019-02-11 23:24:39Z pkelsey $
+# $FreeBSD$
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions

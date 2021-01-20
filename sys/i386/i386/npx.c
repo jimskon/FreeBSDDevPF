@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/npx.c 346597 2019-04-23 12:29:19Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_cpu.h"
 #include "opt_isa.h"

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/ktime.h 348088 2019-05-22 04:08:45Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_KTIME_H

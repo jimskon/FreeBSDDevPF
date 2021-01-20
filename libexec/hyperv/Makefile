@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/libexec/hyperv/Makefile 321762 2017-07-31 07:18:15Z sephe $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/contrib/hyperv/tools/scripts
 

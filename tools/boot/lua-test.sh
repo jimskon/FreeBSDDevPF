@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tools/boot/lua-test.sh 340752 2018-11-22 03:04:13Z kevans $
+# $FreeBSD$
 
 # Will image the test directory (default /tmp/loadertest) if it doesn't exist
 

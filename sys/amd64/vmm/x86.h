@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/x86.h 349958 2019-07-12 22:31:12Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _X86_H_

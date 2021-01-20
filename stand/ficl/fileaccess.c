@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/ficl/fileaccess.c 346145 2019-04-12 01:03:00Z sjg $ */
+/* $FreeBSD$ */
 
 #include <errno.h>
 #include <stdlib.h>

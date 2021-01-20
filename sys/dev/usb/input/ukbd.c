@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/input/ukbd.c 340518 2018-11-17 20:18:15Z wulf $");
+__FBSDID("$FreeBSD$");
 
 
 /*-

@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: releng/12.1/sys/conf/files.powerpc 347495 2019-05-11 18:25:15Z jhibbits $
+# $FreeBSD$
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and

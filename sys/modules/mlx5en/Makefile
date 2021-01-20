@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/mlx5en/Makefile 353272 2019-10-07 13:13:06Z hselasky $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/dev/mlx5/mlx5_en
 
 KMOD=mlx5en

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/mm_types.h 348034 2019-05-21 02:36:12Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_MM_TYPES_H_

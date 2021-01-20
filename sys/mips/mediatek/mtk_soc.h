@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/mips/mediatek/mtk_soc.h 317873 2017-05-06 06:20:34Z adrian $
+ * $FreeBSD$
  */
 
 #ifndef _MTK_SOC_H_

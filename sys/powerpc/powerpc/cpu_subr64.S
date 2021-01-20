@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/powerpc/cpu_subr64.S 348685 2019-06-05 12:43:45Z luporl $
+ * $FreeBSD$
  */
 
 #include "assym.inc"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/mips/conf/std.XLP 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 
 include		"../nlm/std.xlp"
 makeoptions	MODULES_OVERRIDE=""

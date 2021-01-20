@@ -80,7 +80,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/syscall.c 319873 2017-06-12 21:03:23Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

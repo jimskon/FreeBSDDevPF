@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_core/mlx5_vport.c 341971 2018-12-12 12:59:57Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/etherdevice.h>

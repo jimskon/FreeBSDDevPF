@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_pagequeue.h 351570 2019-08-28 16:16:14Z markj $
+ * $FreeBSD$
  */
 
 #ifndef	_VM_PAGEQUEUE_

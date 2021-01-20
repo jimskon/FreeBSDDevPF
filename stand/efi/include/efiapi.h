@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/efi/include/efiapi.h 328411 2018-01-25 20:09:51Z emaste $ */
+/* $FreeBSD$ */
 #ifndef _EFI_API_H
 #define _EFI_API_H
 

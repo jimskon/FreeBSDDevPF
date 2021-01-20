@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/i386/linux/linux_syscall.h 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #define	LINUX_SYS_linux_exit	1

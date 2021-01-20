@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_mib.c 347629 2019-05-15 18:56:42Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_posix.h"
 #include "opt_config.h"

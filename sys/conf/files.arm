@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/files.arm 350867 2019-08-11 20:50:41Z ian $
+# $FreeBSD$
 
 kern/kern_clocksource.c			standard
 

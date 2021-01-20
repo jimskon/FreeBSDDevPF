@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/kgssapi/krb5/kcrypto.h 351358 2019-08-21 22:42:08Z jhb $
+ * $FreeBSD$
  */
 
 #include <sys/_iovec.h>

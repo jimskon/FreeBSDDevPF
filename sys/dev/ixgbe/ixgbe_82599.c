@@ -31,7 +31,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.1/sys/dev/ixgbe/ixgbe_82599.c 344094 2019-02-13 14:27:59Z marius $*/
+/*$FreeBSD$*/
 
 #include "ixgbe_type.h"
 #include "ixgbe_82599.h"

@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/*$FreeBSD: releng/12.1/sys/dev/e1000/if_em.h 344098 2019-02-13 14:39:16Z marius $*/
+/*$FreeBSD$*/
 #include "opt_ddb.h"
 #include "opt_inet.h"
 #include "opt_inet6.h"

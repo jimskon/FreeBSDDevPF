@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/nat.sh 344966 2019-03-09 10:34:42Z kp $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/utils.subr
 

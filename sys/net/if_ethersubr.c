@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if_ethersubr.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/net/if_ethersubr.c 346783 2019-04-27 04:39:41Z kevans $
+ * $FreeBSD$
  */
 
 #include "opt_inet.h"

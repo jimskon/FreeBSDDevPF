@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/sf/starfire_rx.h 175524 2008-01-21 05:02:44Z yongari $ */
+/* $FreeBSD$ */
 /*
  *   MODULE: GFP_RX.H
  *

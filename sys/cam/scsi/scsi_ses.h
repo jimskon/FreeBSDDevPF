@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/cam/scsi/scsi_ses.h 349832 2019-07-08 10:21:38Z mav $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: (BSD-2-Clause-FreeBSD OR GPL-2.0)
  *

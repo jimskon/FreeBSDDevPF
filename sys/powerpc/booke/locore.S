@@ -23,7 +23,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/booke/locore.S 348691 2019-06-05 14:23:10Z luporl $
+ * $FreeBSD$
  */
 
 #include "assym.inc"

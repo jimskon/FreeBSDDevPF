@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/efi/include/efilib.h 353543 2019-10-15 06:19:33Z tsoome $
+ * $FreeBSD$
  */
 
 #ifndef _LOADER_EFILIB_H

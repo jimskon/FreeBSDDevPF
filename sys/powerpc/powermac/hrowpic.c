@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/powermac/hrowpic.c 326261 2017-11-27 15:09:59Z pfg $
+ * $FreeBSD$
  */
 
 /*

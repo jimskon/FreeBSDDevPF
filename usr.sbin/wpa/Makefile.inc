@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/wpa/Makefile.inc 346980 2019-05-01 01:42:38Z cy $
+# $FreeBSD$
 
 BINDIR?=	/usr/sbin
 

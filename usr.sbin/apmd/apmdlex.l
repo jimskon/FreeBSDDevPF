@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/apmd/apmdlex.l 352276 2019-09-13 07:08:43Z bapt $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

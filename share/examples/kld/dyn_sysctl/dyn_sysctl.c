@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *     $FreeBSD: releng/12.1/share/examples/kld/dyn_sysctl/dyn_sysctl.c 345463 2019-03-23 23:44:40Z gonzo $
+ *     $FreeBSD$
  */
 
 #include <sys/types.h>

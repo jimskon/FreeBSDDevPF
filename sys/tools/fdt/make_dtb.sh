@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/sys/tools/fdt/make_dtb.sh 340362 2018-11-12 15:18:09Z kevans $
+# $FreeBSD$
 
 # Script generates dtb file ($3) from dts source ($2) in build tree S ($1)
 S=$1

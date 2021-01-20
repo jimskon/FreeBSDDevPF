@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_sem.c 336914 2018-07-30 15:46:40Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_posix.h"
 

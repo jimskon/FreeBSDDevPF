@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/etc/mtree/BSD.tests.dist 352416 2019-09-16 16:17:29Z yuripv $
+# $FreeBSD$
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #

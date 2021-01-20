@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/net/if_gif.h 340535 2018-11-18 00:17:06Z ae $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: if_gif.h,v 1.17 2000/09/11 11:36:41 sumikawa Exp $	*/
 
 /*-

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_kdb.c 335441 2018-06-20 11:42:06Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kdb.h"
 #include "opt_stack.h"

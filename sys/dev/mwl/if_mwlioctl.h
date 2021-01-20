@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/mwl/if_mwlioctl.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 /*

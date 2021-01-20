@@ -13,7 +13,7 @@
  *
  * in-kernel ipfw tables support.
  *
- * $FreeBSD: releng/12.1/sbin/ipfw/tables.c 348773 2019-06-07 08:21:01Z ae $
+ * $FreeBSD$
  */
 
 

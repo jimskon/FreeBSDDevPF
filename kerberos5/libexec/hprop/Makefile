@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/kerberos5/libexec/hprop/Makefile 344199 2019-02-16 03:18:09Z nyan $
+# $FreeBSD$
 
 PROG=	hprop
 MAN=	hprop.8

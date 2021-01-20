@@ -22,7 +22,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/csu/powerpc/crtsavres.S 352394 2019-09-16 13:41:24Z andrew $");
+__FBSDID("$FreeBSD$");
 
 .text
 

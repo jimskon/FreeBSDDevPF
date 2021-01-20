@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/csu/amd64/reloc.c 339351 2018-10-13 23:52:55Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/specialreg.h>
 #include <machine/cpufunc.h>

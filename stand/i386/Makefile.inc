@@ -1,6 +1,6 @@
 # Common defines for all of stand/i386/
 #
-# $FreeBSD: releng/12.1/stand/i386/Makefile.inc 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 
 LOADER_ADDRESS?=0x200000
 LDFLAGS+=	-nostdlib

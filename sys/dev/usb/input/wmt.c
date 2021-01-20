@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/input/wmt.c 343155 2019-01-18 20:59:06Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MS Windows 7/8/10 compatible USB HID Multi-touch Device driver.

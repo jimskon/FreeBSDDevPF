@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libbearssl/Makefile 344564 2019-02-26 05:59:22Z sjg $
+# $FreeBSD$
 
 # This is a reach over build of BearSSL (www.BearSSL.org)
 

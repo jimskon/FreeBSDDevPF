@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/SERVERS 298844 2016-04-30 09:50:08Z ngie $
+# $FreeBSD$
 #
 
 # PROVIDE: SERVERS

@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: releng/12.1/lib/libc/gen/Makefile.inc 350632 2019-08-06 14:38:16Z markj $
+# $FreeBSD$
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen

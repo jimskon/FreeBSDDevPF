@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/udf/udf_vnops.c 340970 2018-11-26 14:01:05Z markj $
+ * $FreeBSD$
  */
 
 /* udf_vnops.c */

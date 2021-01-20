@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/hwpmc/hwpmc_amd.c 340718 2018-11-21 01:24:27Z mmacy $");
+__FBSDID("$FreeBSD$");
 
 /* Support for the AMD K7 and later processors */
 

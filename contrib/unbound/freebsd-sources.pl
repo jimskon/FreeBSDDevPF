@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/contrib/unbound/freebsd-sources.pl 276599 2015-01-03 00:31:52Z des $
+# $FreeBSD$
 #
 
 use strict;

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mii/tiphy.h 348624 2019-06-04 15:37:36Z br $
+ * $FreeBSD$
  */
 
 /*

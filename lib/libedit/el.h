@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)el.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: releng/12.1/lib/libedit/el.h 343090 2019-01-16 12:04:24Z bapt $
+ * $FreeBSD$
  */
 
 /*

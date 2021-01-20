@@ -1,6 +1,6 @@
 # Makefile for syscall tables
 #
-# $FreeBSD: releng/12.1/sys/arm64/linux/Makefile 351567 2019-08-28 08:05:16Z brooks $
+# $FreeBSD$
 
 # Don't use an OBJDIR
 .OBJDIR: ${.CURDIR}

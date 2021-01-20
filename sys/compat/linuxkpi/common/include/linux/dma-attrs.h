@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/dma-attrs.h 345912 2019-04-05 11:08:50Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_DMA_ATTR_H_
 #define	_LINUX_DMA_ATTR_H_

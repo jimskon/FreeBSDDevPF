@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/uboot/lib/libuboot.h 346496 2019-04-21 20:40:49Z ian $
+ * $FreeBSD$
  */
 
 #include <disk.h>

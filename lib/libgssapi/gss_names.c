@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/lib/libgssapi/gss_names.c 350473 2019-07-31 17:56:07Z brooks $
+ *	$FreeBSD$
  */
 
 #include <gssapi/gssapi.h>

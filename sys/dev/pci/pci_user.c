@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/pci/pci_user.c 349670 2019-07-03 18:29:18Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"	/* XXX trim includes */
 

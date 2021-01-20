@@ -36,7 +36,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/asmacros.h 350977 2019-08-13 13:47:03Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ASMACROS_H_

@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/bhnd/cores/pmu/bhnd_pmu_subr.c 343740 2019-02-04 10:24:57Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

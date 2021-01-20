@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libkvm/kvm_i386.h 325728 2017-11-11 23:30:58Z will $
+ * $FreeBSD$
  */
 
 #ifndef __KVM_I386_H__

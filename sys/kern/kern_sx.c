@@ -43,7 +43,7 @@
 #include "opt_no_adaptive_sx.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_sx.c 341099 2018-11-27 22:32:34Z vangyzen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

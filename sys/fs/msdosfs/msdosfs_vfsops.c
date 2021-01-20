@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/fs/msdosfs/msdosfs_vfsops.c 336966 2018-07-31 12:44:28Z emaste $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_vfsops.c,v 1.51 1997/11/17 15:36:58 ws Exp $	*/
 
 /*-

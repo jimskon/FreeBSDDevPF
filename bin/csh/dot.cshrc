@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/csh/dot.cshrc 338374 2018-08-29 16:59:19Z brd $
+# $FreeBSD$
 #
 # .cshrc - csh resource script, read at beginning of execution by each shell
 #

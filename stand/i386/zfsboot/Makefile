@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/i386/zfsboot/Makefile 351384 2019-08-22 07:37:34Z tsoome $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

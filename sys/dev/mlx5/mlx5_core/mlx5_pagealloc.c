@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_core/mlx5_pagealloc.c 341925 2018-12-12 12:06:20Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/kernel.h>

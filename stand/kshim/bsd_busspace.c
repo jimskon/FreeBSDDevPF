@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/kshim/bsd_busspace.c 291400 2015-11-27 18:14:45Z zbb $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2013 Hans Petter Selasky. All rights reserved.
  *

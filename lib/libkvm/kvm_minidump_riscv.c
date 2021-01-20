@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libkvm/kvm_minidump_riscv.c 349463 2019-06-27 16:48:24Z markj $");
+__FBSDID("$FreeBSD$");
 
 /*
  * RISC-V machine dependent routines for kvm and minidumps.

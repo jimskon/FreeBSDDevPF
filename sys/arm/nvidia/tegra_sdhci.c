@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/nvidia/tegra_sdhci.c 350820 2019-08-09 10:31:53Z mmel $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SDHCI driver glue for NVIDIA Tegra family

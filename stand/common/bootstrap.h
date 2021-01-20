@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/common/bootstrap.h 346145 2019-04-12 01:03:00Z sjg $
+ * $FreeBSD$
  */
 
 #ifndef _BOOTSTRAP_H_

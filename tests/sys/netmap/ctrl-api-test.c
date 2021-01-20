@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/netmap/ctrl-api-test.c 348516 2019-06-02 18:46:21Z vmaffione $
+ * $FreeBSD$
  */
 
 #include <sys/ioctl.h>

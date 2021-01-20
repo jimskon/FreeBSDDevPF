@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/allwinner/aw_rtc/Makefile 346694 2019-04-25 18:41:05Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/allwinner
 

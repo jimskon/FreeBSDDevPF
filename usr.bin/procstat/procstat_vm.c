@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/procstat/procstat_vm.c 345502 2019-03-25 14:08:49Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

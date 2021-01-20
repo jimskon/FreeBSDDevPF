@@ -22,7 +22,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/procstat/tests/procstat_test.sh 346918 2019-04-29 19:34:09Z ngie $
+# $FreeBSD$
 #
 
 MAX_TRIES=20

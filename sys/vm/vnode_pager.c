@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vnode_pager.c 348991 2019-06-12 11:48:04Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

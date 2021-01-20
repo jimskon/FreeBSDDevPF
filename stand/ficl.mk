@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/ficl.mk 348449 2019-05-30 23:43:54Z sjg $
+# $FreeBSD$
 
 # Common flags to build FICL related files
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/physmem.c 352442 2019-09-17 11:20:53Z ray $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_ddb.h"

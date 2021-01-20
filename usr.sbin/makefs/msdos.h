@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/usr.sbin/makefs/msdos.h 352079 2019-09-09 17:32:40Z emaste $ */
+/*	$FreeBSD$ */
 /*	$NetBSD: msdos.h,v 1.3 2015/10/16 16:40:02 christos Exp $	*/
 
 /*-

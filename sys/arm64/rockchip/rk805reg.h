@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/rockchip/rk805reg.h 350687 2019-08-07 18:26:32Z manu $
+ * $FreeBSD$
  */
 
 

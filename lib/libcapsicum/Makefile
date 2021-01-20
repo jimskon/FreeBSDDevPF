@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libcapsicum/Makefile 349425 2019-06-26 16:38:46Z ian $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 

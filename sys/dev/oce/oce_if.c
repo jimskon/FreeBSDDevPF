@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/oce/oce_if.c 351143 2019-08-16 21:03:55Z kevans $ */
+/* $FreeBSD$ */
 
 #include "opt_inet6.h"
 #include "opt_inet.h"

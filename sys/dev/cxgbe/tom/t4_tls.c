@@ -30,7 +30,7 @@
 #include "opt_inet.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/tom/t4_tls.c 352271 2019-09-13 01:12:17Z np $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sglist.h>

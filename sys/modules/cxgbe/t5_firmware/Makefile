@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/cxgbe/t5_firmware/Makefile 345621 2019-03-27 22:42:18Z np $
+# $FreeBSD$
 #
 
 T5FW=	${SRCTOP}/sys/dev/cxgbe/firmware

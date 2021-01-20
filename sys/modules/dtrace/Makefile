@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/dtrace/Makefile 345247 2019-03-17 20:30:27Z markj $
+# $FreeBSD$
 
 .include "Makefile.inc"
 

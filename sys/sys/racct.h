@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/racct.h 338743 2018-09-18 01:24:30Z mjg $
+ * $FreeBSD$
  */
 
 /*

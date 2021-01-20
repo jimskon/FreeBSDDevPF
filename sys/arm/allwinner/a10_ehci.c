@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/a10_ehci.c 350592 2019-08-05 16:36:11Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"
 

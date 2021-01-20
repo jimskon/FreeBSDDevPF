@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/csu/tests/dynamiclib/Makefile 339908 2018-10-30 09:43:26Z andrew $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}
 CFLAGS+=	-DDSO_BASE

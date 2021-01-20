@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/csh/csh.login 337849 2018-08-15 14:41:24Z brd $
+# $FreeBSD$
 #
 # System-wide .login file for csh(1).
 # Uncomment this to give you the default 4.2 behavior, where disk

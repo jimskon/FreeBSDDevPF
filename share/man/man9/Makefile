@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/man/man9/Makefile 351358 2019-08-21 22:42:08Z jhb $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

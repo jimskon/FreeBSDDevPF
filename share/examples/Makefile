@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/examples/Makefile 335386 2018-06-19 21:07:25Z sbruno $
+# $FreeBSD$
 #
 # Doing a make install builds /usr/share/examples
 

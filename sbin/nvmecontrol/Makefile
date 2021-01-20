@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/nvmecontrol/Makefile 350954 2019-08-12 19:44:57Z mav $
+# $FreeBSD$
 
 PACKAGE=runtime
 PROG=	nvmecontrol

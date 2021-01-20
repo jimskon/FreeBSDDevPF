@@ -22,7 +22,7 @@
  * Portions Copyright 2006-2008 John Birrell jb@freebsd.org
  * Portions Copyright 2018 Devin Teske dteske@freebsd.org
  *
- * $FreeBSD: releng/12.1/cddl/lib/libdtrace/errno.d 329353 2018-02-16 04:22:29Z dteske $
+ * $FreeBSD$
  */
 /*
  * Copyright 2004 Sun Microsystems, Inc.  All rights reserved.

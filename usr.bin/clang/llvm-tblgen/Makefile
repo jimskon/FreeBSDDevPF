@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-tblgen/Makefile 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-tblgen
 

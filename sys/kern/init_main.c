@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/init_main.c 351021 2019-08-14 09:49:28Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_init_path.h"

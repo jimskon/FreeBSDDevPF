@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/geom/geom_uzip/Makefile 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/uzip ${SRCTOP}/sys/net
 

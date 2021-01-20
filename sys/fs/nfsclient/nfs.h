@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfsclient/nfs.h 349305 2019-06-23 13:35:01Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef _NFSCLIENT_NFS_H_

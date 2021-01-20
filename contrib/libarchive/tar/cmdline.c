@@ -28,7 +28,7 @@
  */
 
 #include "bsdtar_platform.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/tar/cmdline.c 348605 2019-06-04 10:20:56Z mm $");
+__FBSDID("$FreeBSD$");
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

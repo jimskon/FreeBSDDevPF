@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/clang/include/clang/Basic/Version.inc 350256 2019-07-23 18:40:32Z dim $ */
+/* $FreeBSD$ */
 
 #define	CLANG_VERSION			8.0.1
 #define	CLANG_VERSION_STRING		"8.0.1"

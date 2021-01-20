@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_cons.c 334340 2018-05-29 16:16:24Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_syscons.h"

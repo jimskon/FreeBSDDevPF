@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_phys.c 343424 2019-01-25 11:14:20Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"

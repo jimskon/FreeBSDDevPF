@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/include/errlst.h 342915 2019-01-10 10:37:19Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __ERRLST_H__

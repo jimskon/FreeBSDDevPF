@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/tools/regression/priv/Makefile 291738 2015-12-04 03:17:47Z bdrewery $
+# $FreeBSD$
 #
 
 .include <src.opts.mk>

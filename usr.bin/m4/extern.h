@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.1/usr.bin/m4/extern.h 352277 2019-09-13 07:10:50Z bapt $
+ * $FreeBSD$
  */
 
 /* eval.c */

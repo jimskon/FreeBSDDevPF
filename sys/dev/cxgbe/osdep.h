@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/osdep.h 345614 2019-03-27 21:55:36Z np $
+ * $FreeBSD$
  *
  */
 

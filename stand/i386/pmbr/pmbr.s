@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/stand/i386/pmbr/pmbr.s 239060 2012-08-05 12:57:38Z ae $
+# $FreeBSD$
 #
 # Partly from: src/sys/boot/i386/mbr/mbr.s 1.7
 

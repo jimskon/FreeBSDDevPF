@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwnvar.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 #ifndef IF_RTWNVAR_H

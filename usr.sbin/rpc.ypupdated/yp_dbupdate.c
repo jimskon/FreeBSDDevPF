@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/rpc.ypupdated/yp_dbupdate.c 351691 2019-09-02 08:20:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/fcntl.h>
 

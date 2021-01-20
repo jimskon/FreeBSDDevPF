@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/misc/committers-ports.dot 339249 2018-10-09 07:22:14Z egypcio $
+# $FreeBSD$
 
 # This file is meant to list all FreeBSD ports committers and describe the
 # mentor-mentee relationships between them.

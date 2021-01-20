@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet6/raw_ip6.c 347125 2019-05-04 13:55:51Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ipsec.h"
 #include "opt_inet6.h"

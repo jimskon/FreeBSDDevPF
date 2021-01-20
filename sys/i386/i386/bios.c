@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/bios.c 332489 2018-04-13 20:30:49Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Code for dealing with the BIOS in x86 PC systems.

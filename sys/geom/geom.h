@@ -34,7 +34,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/geom/geom.h 347378 2019-05-09 03:51:34Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _GEOM_GEOM_H_

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/ipsec 347518 2019-05-13 08:29:28Z ae $
+# $FreeBSD$
 #
 
 # PROVIDE: ipsec

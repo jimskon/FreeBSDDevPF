@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/common/t4_tcb.h 329788 2018-02-22 02:02:31Z jhb $
+ * $FreeBSD$
  *
  */
 

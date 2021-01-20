@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/truss/syscalls.c 339224 2018-10-07 19:50:44Z allanjude $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This file has routines used to print out system calls and their

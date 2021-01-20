@@ -2,7 +2,7 @@
  * System call prototypes.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/i386/linux/linux_proto.h 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_SYSPROTO_H_

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/nexus.c 350856 2019-08-11 08:24:56Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This code implements a `root nexus' for Intel Architecture

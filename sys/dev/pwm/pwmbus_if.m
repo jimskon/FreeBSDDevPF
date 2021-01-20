@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/dev/pwm/pwmbus_if.m 349430 2019-06-26 17:28:55Z ian $
+# $FreeBSD$
 #
 
 #include <sys/bus.h>

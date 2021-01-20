@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ocs_fc/ocs_pci.c 336446 2018-07-18 07:01:34Z ram $
+ * $FreeBSD$
  */
 
 #define OCS_COPYRIGHT "Copyright (C) 2017 Broadcom. All rights reserved."

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/powerpc/aim/locore64.S 348690 2019-06-05 14:19:54Z luporl $ */
+/* $FreeBSD$ */
 
 /*-
  * Copyright (C) 2010-2016 Nathan Whitehorn
@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/aim/locore64.S 348690 2019-06-05 14:19:54Z luporl $
+ * $FreeBSD$
  */
 
 #include "assym.inc"

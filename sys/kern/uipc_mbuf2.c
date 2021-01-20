@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_mbuf2.c 350828 2019-08-10 00:01:25Z jtl $");
+__FBSDID("$FreeBSD$");
 
 /*#define PULLDOWN_DEBUG*/
 

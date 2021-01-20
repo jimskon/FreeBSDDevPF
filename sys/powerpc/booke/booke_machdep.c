@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/booke/booke_machdep.c 342783 2019-01-05 05:20:36Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"

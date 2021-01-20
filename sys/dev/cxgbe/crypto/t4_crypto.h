@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/crypto/t4_crypto.h 348442 2019-05-30 18:44:19Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef __T4_CRYPTO_H__

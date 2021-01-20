@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/locale/Makefile 341629 2018-12-06 10:53:11Z yuripv $
+# $FreeBSD$
 # See https://wiki.freebsd.org/LocaleNewApproach
 # Taken from FreeBSD svn [base]/user/edwin/locale/cldr
 #

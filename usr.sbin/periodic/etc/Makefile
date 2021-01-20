@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/periodic/etc/Makefile 289393 2015-10-15 22:55:08Z bdrewery $
+# $FreeBSD$
 
 SUBDIR=	daily security weekly monthly
 SUBDIR_PARALLEL=

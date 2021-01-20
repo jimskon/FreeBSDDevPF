@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/tftp.c 341224 2018-11-29 12:12:42Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple TFTP implementation for libsa.

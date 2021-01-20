@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/linux/Makefile 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32

@@ -27,7 +27,7 @@
  *
  * From: FreeBSD: src/sys/miscfs/kernfs/kernfs_vfsops.c 1.36
  *
- * $FreeBSD: releng/12.1/sys/fs/devfs/devfs_devs.c 340970 2018-11-26 14:01:05Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

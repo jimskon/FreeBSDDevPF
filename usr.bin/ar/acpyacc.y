@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/ar/acpyacc.y 346900 2019-04-29 18:25:39Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/mman.h>
 #include <sys/param.h>

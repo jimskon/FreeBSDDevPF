@@ -26,11 +26,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/uart_emul.c 352767 2019-09-26 18:36:52Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/uart_emul.c 352767 2019-09-26 18:36:52Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <dev/ic/ns16550.h>

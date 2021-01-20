@@ -33,7 +33,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/tws/tws_user.c 342970 2019-01-12 17:00:54Z markj $
+ * $FreeBSD$
  */
 
 #include <dev/tws/tws.h>

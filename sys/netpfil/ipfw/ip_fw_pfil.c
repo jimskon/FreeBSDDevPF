@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/ipfw/ip_fw_pfil.c 346198 2019-04-14 10:38:50Z ae $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ipfw.h"
 #include "opt_inet.h"

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2836.c 346937 2019-04-30 00:54:31Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

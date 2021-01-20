@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_inode.c	8.5 (Berkeley) 12/30/93
- * $FreeBSD: releng/12.1/sys/fs/ext2fs/ext2_inode.c 349305 2019-06-23 13:35:01Z asomers $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

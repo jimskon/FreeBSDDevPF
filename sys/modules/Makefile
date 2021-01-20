@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/Makefile 352761 2019-09-26 16:51:51Z imp $
+# $FreeBSD$
 
 SYSDIR?=${SRCTOP}/sys
 .include "${SYSDIR}/conf/kern.opts.mk"

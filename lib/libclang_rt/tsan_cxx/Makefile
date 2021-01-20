@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libclang_rt/tsan_cxx/Makefile 344212 2019-02-16 15:43:49Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

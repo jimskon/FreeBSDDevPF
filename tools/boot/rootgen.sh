@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.1/tools/boot/rootgen.sh 348145 2019-05-23 02:12:00Z ian $
+# $FreeBSD$
 
 passphrase=passphrase
 iterations=50000

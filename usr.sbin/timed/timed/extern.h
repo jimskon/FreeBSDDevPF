@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/usr.sbin/timed/timed/extern.h 327941 2018-01-13 20:35:32Z eadler $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

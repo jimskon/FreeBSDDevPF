@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/set_tos.sh 350237 2019-07-23 08:20:52Z lwhsu $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/utils.subr
 

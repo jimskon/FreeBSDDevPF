@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.1/tools/boot/install-boot.sh 336242 2018-07-13 16:33:21Z ian $
+# $FreeBSD$
 
 #
 # Installs/updates the necessary boot blocks for the desired boot environment

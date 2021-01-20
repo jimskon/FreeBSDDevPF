@@ -43,7 +43,7 @@
  * Author: Ken Merry <ken@FreeBSD.org>
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/ctl/ctl_backend_block.c 345006 2019-03-11 13:55:47Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

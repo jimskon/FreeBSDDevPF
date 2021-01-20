@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libcasper/services/cap_syslog/cap_syslog.c 344422 2019-02-21 06:40:15Z jah $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/dnv.h>
 #include <sys/nv.h>

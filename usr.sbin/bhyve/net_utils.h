@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/net_utils.h 350195 2019-07-21 11:26:49Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef _NET_UTILS_H_

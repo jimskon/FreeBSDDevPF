@@ -30,7 +30,7 @@
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/makefs/mtree.c 352077 2019-09-09 17:22:11Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/queue.h>

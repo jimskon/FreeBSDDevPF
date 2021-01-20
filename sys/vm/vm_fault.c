@@ -74,7 +74,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_fault.c 351776 2019-09-03 19:27:59Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ktrace.h"
 #include "opt_vm.h"

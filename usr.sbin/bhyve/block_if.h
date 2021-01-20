@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/block_if.h 348374 2019-05-29 23:05:26Z jhb $
+ * $FreeBSD$
  */
 
 /*

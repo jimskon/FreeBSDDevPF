@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsysdecode/Makefile 351890 2019-09-05 20:26:20Z bdrewery $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

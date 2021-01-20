@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/teken/teken.h 333669 2018-05-16 09:01:02Z dumbbell $
+ * $FreeBSD$
  */
 
 #ifndef _TEKEN_H_

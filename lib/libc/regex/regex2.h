@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex2.h	8.4 (Berkeley) 3/20/94
- * $FreeBSD: releng/12.1/lib/libc/regex/regex2.h 326025 2017-11-20 19:49:47Z pfg $
+ * $FreeBSD$
  */
 
 /*

@@ -31,7 +31,7 @@
 
 
 /*
- * $FreeBSD: releng/12.1/sys/dev/netmap/netmap.c 352355 2019-09-15 14:26:19Z vmaffione $
+ * $FreeBSD$
  *
  * This module supports memory mapped access to network devices,
  * see netmap(4).

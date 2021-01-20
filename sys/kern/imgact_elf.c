@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/imgact_elf.c 352325 2019-09-14 13:30:53Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 

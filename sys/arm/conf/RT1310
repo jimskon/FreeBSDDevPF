@@ -1,7 +1,7 @@
 #
 # Custom kernel for RT1310 boards.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/RT1310 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 #
 
 ident		RT1310

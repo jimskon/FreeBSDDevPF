@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.linker.mk 335450 2018-06-20 16:10:14Z bdrewery $
+# $FreeBSD$
 
 # Setup variables for the linker.
 #

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/cpufunc.h 348621 2019-06-04 15:32:56Z br $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPUFUNC_H_

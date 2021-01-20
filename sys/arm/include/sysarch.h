@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/arm/include/sysarch.h 350873 2019-08-11 22:11:59Z ian $ */
+/* $FreeBSD$ */
 
 #ifndef _ARM_SYSARCH_H_
 #define _ARM_SYSARCH_H_

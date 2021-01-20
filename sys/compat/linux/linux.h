@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux.h 348095 2019-05-22 05:35:35Z dchagin $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_MI_H_

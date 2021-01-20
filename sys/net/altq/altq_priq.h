@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_priq.h,v 1.7 2003/10/03 05:05:15 kjc Exp $
- * $FreeBSD: releng/12.1/sys/net/altq/altq_priq.h 338209 2018-08-22 19:38:48Z pkelsey $
+ * $FreeBSD$
  */
 
 #ifndef _ALTQ_ALTQ_PRIQ_H_

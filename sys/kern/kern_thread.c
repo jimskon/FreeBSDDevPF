@@ -32,7 +32,7 @@
 #include "opt_hwpmc_hooks.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_thread.c 342187 2018-12-18 07:11:12Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

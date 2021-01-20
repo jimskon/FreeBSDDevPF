@@ -30,7 +30,7 @@
  */
 %{
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/pfctl/parse.y 344019 2019-02-11 19:08:01Z kp $");
+__FBSDID("$FreeBSD$");
 
 #define PFIOC_USE_LATEST
 

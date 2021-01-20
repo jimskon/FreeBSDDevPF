@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfs.h 347038 2019-05-03 02:03:29Z rmacklem $
+ * $FreeBSD$
  */
 
 #ifndef _NFS_NFS_H_

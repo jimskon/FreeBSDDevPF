@@ -4,7 +4,7 @@
 #
 # This includes all the configurable parts of the kernel.
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/MT7628_FDT 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mbuf.h	8.5 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.1/sys/sys/mbuf.h 337423 2018-08-07 16:36:48Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MBUF_H_

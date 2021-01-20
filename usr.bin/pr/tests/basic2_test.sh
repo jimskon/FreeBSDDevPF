@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/pr/tests/basic2_test.sh 348460 2019-05-31 16:20:00Z asomers $
+# $FreeBSD$
 
 atf_test_case across
 across_head() {

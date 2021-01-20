@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/openpgp/decode.c 344565 2019-02-26 06:09:10Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <libsecureboot.h>
 

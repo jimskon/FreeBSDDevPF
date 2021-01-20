@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/rtsold/if.c 340521 2018-11-17 20:54:24Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mse/mse.c 334923 2018-06-10 10:23:31Z wulf $
+ * $FreeBSD$
  */
 
 /*

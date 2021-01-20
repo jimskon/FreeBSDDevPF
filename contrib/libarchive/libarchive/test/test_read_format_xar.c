@@ -24,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_read_format_xar.c 346103 2019-04-10 21:45:23Z mm $");
+__FBSDID("$FreeBSD$");
 
 #define UID	1001
 #define UNAME	"cue"

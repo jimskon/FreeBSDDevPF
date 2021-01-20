@@ -35,7 +35,7 @@
  *
  * @(#)rm_class.c  1.48     97/12/05 SMI
  * $KAME: altq_rmclass.c,v 1.19 2005/04/13 03:44:25 suz Exp $
- * $FreeBSD: releng/12.1/sys/net/altq/altq_rmclass.c 287009 2015-08-21 22:02:22Z loos $
+ * $FreeBSD$
  */
 #include "opt_altq.h"
 #include "opt_inet.h"

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/i386/gptboot/Makefile 336534 2018-07-20 05:17:56Z imp $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

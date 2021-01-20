@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/src.libnames.mk 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 #
 # The include file <src.libnames.mk> define library names suitable
 # for INTERNALLIB and PRIVATELIB definition

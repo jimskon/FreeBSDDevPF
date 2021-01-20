@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/atkbdc/atkbd.c 340518 2018-11-17 20:18:15Z wulf $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kbd.h"
 #include "opt_atkbd.h"

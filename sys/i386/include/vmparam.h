@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)vmparam.h	5.9 (Berkeley) 5/12/91
- * $FreeBSD: releng/12.1/sys/i386/include/vmparam.h 336774 2018-07-27 18:34:20Z imp $
+ * $FreeBSD$
  */
 
 

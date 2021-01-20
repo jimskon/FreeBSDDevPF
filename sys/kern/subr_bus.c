@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_bus.c 351242 2019-08-19 23:57:37Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bus.h"
 #include "opt_ddb.h"

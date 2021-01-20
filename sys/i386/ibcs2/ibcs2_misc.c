@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/ibcs2/ibcs2_misc.c 331329 2018-03-21 23:26:42Z emaste $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IBCS2 compatibility module.

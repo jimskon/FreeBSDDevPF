@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/apmd/Makefile 352276 2019-09-13 07:08:43Z bapt $
+# $FreeBSD$
 
 CONFS=	apmd.conf
 PROG=	apmd

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/mem.c 332489 2018-04-13 20:30:49Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Memory special file

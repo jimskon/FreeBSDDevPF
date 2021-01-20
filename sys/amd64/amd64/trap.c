@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/trap.c 350365 2019-07-26 19:35:33Z kib $");
+__FBSDID("$FreeBSD$");
 
 /*
  * AMD64 Trap and System call handling

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ipfilter/Makefile 348823 2019-06-09 01:26:56Z cy $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/contrib/ipfilter/netinet
 

@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/wtap/if_wtap.c 343823 2019-02-06 02:35:56Z avos $
+ * $FreeBSD$
  */
 #include "if_wtapvar.h"
 #include <sys/uio.h>    /* uio struct */

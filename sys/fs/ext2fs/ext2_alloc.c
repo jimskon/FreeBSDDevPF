@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_alloc.c	8.8 (Berkeley) 2/21/94
- * $FreeBSD: releng/12.1/sys/fs/ext2fs/ext2_alloc.c 346955 2019-04-30 09:10:45Z fsu $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

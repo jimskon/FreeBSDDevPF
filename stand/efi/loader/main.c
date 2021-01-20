@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/efi/loader/main.c 353543 2019-10-15 06:19:33Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 

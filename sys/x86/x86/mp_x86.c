@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/mp_x86.c 349958 2019-07-12 22:31:12Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #ifdef __i386__
 #include "opt_apic.h"

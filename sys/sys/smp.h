@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.1/sys/sys/smp.h 327056 2017-12-21 09:17:48Z bde $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SMP_H_

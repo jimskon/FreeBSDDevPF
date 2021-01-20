@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/veriexec/veriexec.c 344567 2019-02-26 06:17:23Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <sysexits.h>

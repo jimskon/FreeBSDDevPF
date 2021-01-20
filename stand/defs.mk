@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/defs.mk 351515 2019-08-26 17:34:07Z kevans $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

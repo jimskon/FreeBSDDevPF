@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/psci/psci.c 350824 2019-08-09 12:15:23Z mmel $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_platform.h"

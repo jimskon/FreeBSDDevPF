@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/userboot/userboot/Makefile 345327 2019-03-20 15:34:40Z mmacy $
+# $FreeBSD$
 
 LOADER_MSDOS_SUPPORT?=	yes
 LOADER_UFS_SUPPORT?=	yes

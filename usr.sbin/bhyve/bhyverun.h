@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/bhyverun.h 348226 2019-05-24 05:47:16Z rgrimes $
+ * $FreeBSD$
  */
 
 #ifndef	_FBSDRUN_H_

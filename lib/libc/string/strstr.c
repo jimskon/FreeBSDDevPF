@@ -23,7 +23,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/string/strstr.c 346268 2019-04-16 11:30:41Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <string.h>
 #include <stdint.h>

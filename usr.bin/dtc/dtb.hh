@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/dtc/dtb.hh 345880 2019-04-04 17:26:35Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef _DTB_HH_

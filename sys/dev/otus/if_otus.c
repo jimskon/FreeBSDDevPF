@@ -22,7 +22,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/otus/if_otus.c 347511 2019-05-12 12:30:45Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 

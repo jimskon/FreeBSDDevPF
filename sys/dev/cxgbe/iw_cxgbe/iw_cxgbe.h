@@ -30,7 +30,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/iw_cxgbe/iw_cxgbe.h 349796 2019-07-07 00:43:38Z np $
+ * $FreeBSD$
  */
 #ifndef __IW_CXGB4_H__
 #define __IW_CXGB4_H__

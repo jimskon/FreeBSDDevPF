@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/mips/beri/boot2/boot2.c 343644 2019-02-01 06:19:12Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/disklabel.h>

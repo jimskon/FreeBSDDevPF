@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/cfi/Makefile 336436 2018-07-17 23:23:45Z imp $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/cfi
 

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/debugfs.h 348273 2019-05-25 17:17:08Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_DEBUGFS_H_

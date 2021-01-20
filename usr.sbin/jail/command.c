@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/jail/command.c 349180 2019-06-18 23:49:13Z jamie $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/event.h>

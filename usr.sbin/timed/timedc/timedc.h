@@ -30,7 +30,7 @@
  *
  *	@(#)timedc.h	8.1 (Berkeley) 6/6/93
  *
- * $FreeBSD: releng/12.1/usr.sbin/timed/timedc/timedc.h 326025 2017-11-20 19:49:47Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

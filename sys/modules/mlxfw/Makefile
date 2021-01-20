@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/mlxfw/Makefile 347285 2019-05-08 10:49:05Z hselasky $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/dev/mlxfw
 
 KMOD=mlxfw

@@ -59,11 +59,11 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.1/sys/dev/mps/mps_user.c 352761 2019-09-26 16:51:51Z imp $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mps/mps_user.c 352761 2019-09-26 16:51:51Z imp $");
+__FBSDID("$FreeBSD$");
 
 /* TODO Move headers to mpsvar */
 #include <sys/types.h>

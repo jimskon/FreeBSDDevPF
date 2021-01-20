@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/locale/tests/locale_test.sh 352416 2019-09-16 16:17:29Z yuripv $
+# $FreeBSD$
 
 atf_test_case k_flag_posix
 k_flag_posix_head()

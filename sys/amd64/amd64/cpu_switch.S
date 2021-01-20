@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/amd64/cpu_switch.S 345443 2019-03-23 10:37:26Z kib $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>

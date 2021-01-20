@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tests/sys/geom/class/mirror/conf.sh 326863 2017-12-14 22:15:46Z markj $
+# $FreeBSD$
 
 name="$(mktemp -u mirror.XXXXXX)"
 class="mirror"

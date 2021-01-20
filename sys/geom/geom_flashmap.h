@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/geom/geom_flashmap.h 346509 2019-04-22 00:45:09Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _GEOM_GEOM_FLASHMAP_H_

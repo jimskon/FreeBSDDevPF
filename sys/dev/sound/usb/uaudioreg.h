@@ -1,5 +1,5 @@
 /*	$NetBSD: uaudioreg.h,v 1.12 2004/11/05 19:08:29 kent Exp $	*/
-/* $FreeBSD: releng/12.1/sys/dev/sound/usb/uaudioreg.h 345544 2019-03-26 13:52:01Z hselasky $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

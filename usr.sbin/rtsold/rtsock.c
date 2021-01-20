@@ -1,5 +1,5 @@
 /*	$KAME: rtsock.c,v 1.3 2000/10/10 08:46:45 itojun Exp $	*/
-/*	$FreeBSD: releng/12.1/usr.sbin/rtsold/rtsock.c 340521 2018-11-17 20:54:24Z markj $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

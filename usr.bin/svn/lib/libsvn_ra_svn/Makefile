@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/svn/lib/libsvn_ra_svn/Makefile 333355 2018-05-08 04:54:36Z peter $
+# $FreeBSD$
 
 .include "${.CURDIR}/../Makefile.inc"
 

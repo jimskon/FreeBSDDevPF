@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/net80211/ieee80211.c 343975 2019-02-10 20:59:35Z avos $");
+__FBSDID("$FreeBSD$");
 
 /*
  * IEEE 802.11 generic handler

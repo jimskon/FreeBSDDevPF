@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/mips/mips/freebsd32_machdep.c 347571 2019-05-14 19:52:18Z trasz $
+ * $FreeBSD$
  */
 
 /*

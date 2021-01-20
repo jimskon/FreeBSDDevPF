@@ -27,7 +27,7 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.1/sys/dev/mpr/mpr_sas.h 352761 2019-09-26 16:51:51Z imp $
+ * $FreeBSD$
  */
 
 struct mpr_fw_event_work;

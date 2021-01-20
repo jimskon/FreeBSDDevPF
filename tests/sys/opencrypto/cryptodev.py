@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tests/sys/opencrypto/cryptodev.py 350164 2019-07-20 07:04:25Z lwhsu $
+# $FreeBSD$
 #
 
 from __future__ import print_function

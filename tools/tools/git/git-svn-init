@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.1/tools/tools/git/git-svn-init 337365 2018-08-06 01:08:43Z bwidawsk $
+# $FreeBSD$
 
 # SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 #

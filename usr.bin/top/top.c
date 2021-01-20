@@ -9,7 +9,7 @@
  *  Copyright (c) 1994, 1995, William LeFebvre, Argonne National Laboratory
  *  Copyright (c) 1996, William LeFebvre, Group sys Consulting
  *
- * $FreeBSD: releng/12.1/usr.bin/top/top.c 344382 2019-02-20 20:28:48Z dim $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

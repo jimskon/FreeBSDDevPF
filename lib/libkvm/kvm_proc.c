@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libkvm/kvm_proc.c 353028 2019-10-03 02:51:48Z karels $");
+__FBSDID("$FreeBSD$");
 __SCCSID("@(#)kvm_proc.c	8.3 (Berkeley) 9/23/93");
 
 /*

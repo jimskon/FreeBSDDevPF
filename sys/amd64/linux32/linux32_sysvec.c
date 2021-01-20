@@ -35,7 +35,7 @@
 #include "opt_compat.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/linux32/linux32_sysvec.c 347571 2019-05-14 19:52:18Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #ifndef COMPAT_FREEBSD32
 #error "Unable to compile Linux-emulator due to missing COMPAT_FREEBSD32 option!"

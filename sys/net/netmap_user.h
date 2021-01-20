@@ -28,7 +28,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.1/sys/net/netmap_user.h 352355 2019-09-15 14:26:19Z vmaffione $
+ * $FreeBSD$
  *
  * Functions and macros to manipulate netmap structures and packets
  * in userspace. See netmap(4) for more information.

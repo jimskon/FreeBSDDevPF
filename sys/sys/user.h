@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)user.h	8.2 (Berkeley) 9/23/93
- * $FreeBSD: releng/12.1/sys/sys/user.h 348423 2019-05-30 15:10:41Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_USER_H_

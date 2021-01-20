@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/posixshmcontrol/Makefile 348426 2019-05-30 15:15:47Z kib $
+# $FreeBSD$
 
 PROG=   posixshmcontrol
 LIBADD=	util

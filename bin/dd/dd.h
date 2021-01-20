@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dd.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: releng/12.1/bin/dd/dd.h 342166 2018-12-17 15:17:09Z sobomax $
+ * $FreeBSD$
  */
 
 /* Input/output stream state. */

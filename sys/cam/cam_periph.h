@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/cam/cam_periph.h 346757 2019-04-26 17:21:12Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _CAM_CAM_PERIPH_H

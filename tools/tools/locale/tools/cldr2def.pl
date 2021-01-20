@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl -wC
-# $FreeBSD: releng/12.1/tools/tools/locale/tools/cldr2def.pl 341628 2018-12-06 10:48:46Z yuripv $
+# $FreeBSD$
 
 use strict;
 use File::Copy;

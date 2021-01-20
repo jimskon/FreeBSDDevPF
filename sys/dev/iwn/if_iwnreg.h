@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/iwn/if_iwnreg.h 344197 2019-02-16 01:19:14Z avos $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: if_iwnreg.h,v 1.40 2010/05/05 19:41:57 damien Exp $	*/
 
 /*-

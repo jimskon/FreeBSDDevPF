@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/uboot/common/main.c 346504 2019-04-21 22:28:50Z ian $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 
 #include <stand.h>

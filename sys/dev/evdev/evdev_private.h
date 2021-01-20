@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/evdev/evdev_private.h 344983 2019-03-10 20:43:08Z wulf $
+ * $FreeBSD$
  */
 
 #ifndef	_DEV_EVDEV_EVDEV_PRIVATE_H

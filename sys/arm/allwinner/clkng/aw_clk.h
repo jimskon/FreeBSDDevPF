@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/aw_clk.h 350629 2019-08-06 12:19:09Z manu $
+ * $FreeBSD$
  */
 
 #ifndef	__AW_CLK_H__

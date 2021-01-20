@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/tests/sys/kern/ptrace_test.c 352181 2019-09-10 20:18:06Z oshogbo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/cpuset.h>

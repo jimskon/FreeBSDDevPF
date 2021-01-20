@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/fdt/fdt_slicer/Makefile 346508 2019-04-22 00:38:25Z ian $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/fdt
 

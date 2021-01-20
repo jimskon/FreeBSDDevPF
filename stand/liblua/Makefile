@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/liblua/Makefile 346145 2019-04-12 01:03:00Z sjg $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

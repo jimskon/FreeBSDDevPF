@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/tom/t4_tls.h 348213 2019-05-24 00:44:31Z jhb $
+ * $FreeBSD$
  *
  */
 

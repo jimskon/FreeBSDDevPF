@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/netinet/ip_fw.h 349572 2019-07-01 10:01:08Z ae $
+ * $FreeBSD$
  */
 
 #ifndef _IPFW2_H

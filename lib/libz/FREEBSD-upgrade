@@ -1,4 +1,4 @@
-$FreeBSD: releng/12.1/lib/libz/FREEBSD-upgrade 348149 2019-05-23 05:49:43Z delphij $
+$FreeBSD$
 
 Original distribution from http://zlib.net/.  Currently, only trivial
 changes were made to support build of libstand and to suppress certain

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/sortbench/Makefile 332796 2018-04-19 21:53:57Z brooks $
+# $FreeBSD$
 
 PROG=	sort_bench
 MAN=

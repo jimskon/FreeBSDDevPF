@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mount.h	8.21 (Berkeley) 5/20/95
- * $FreeBSD: releng/12.1/sys/sys/mount.h 351777 2019-09-03 19:30:02Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MOUNT_H_

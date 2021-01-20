@@ -1,4 +1,4 @@
-// $FreeBSD: releng/12.1/lib/libomp/omp-tools.h 345235 2019-03-16 15:01:36Z dim $
+// $FreeBSD$
 /*
  * include/50/omp-tools.h.var
  */

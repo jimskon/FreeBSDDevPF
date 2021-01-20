@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/i386/i386/vm86bios.s 334924 2018-06-10 14:21:01Z bde $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>		/* miscellaneous asm macros */

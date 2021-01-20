@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/amd64/support.S 351789 2019-09-03 20:04:44Z kib $
+ * $FreeBSD$
  */
 
 #include "opt_ddb.h"

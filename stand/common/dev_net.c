@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/dev_net.c 346042 2019-04-08 18:38:18Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * This module implements a "raw device" interface suitable for

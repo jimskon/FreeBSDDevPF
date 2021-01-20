@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/sfxge/sfxge_tx.c 342352 2018-12-21 17:26:22Z arybchik $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/nvme/nvme_sysctl.c 350937 2019-08-12 18:55:36Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_nvme.h"
 

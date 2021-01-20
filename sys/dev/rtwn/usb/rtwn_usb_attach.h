@@ -17,7 +17,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/usb/rtwn_usb_attach.h 343677 2019-02-02 04:27:47Z avos $
+ * $FreeBSD$
  */
 
 void	r92cu_attach(struct rtwn_usb_softc *);

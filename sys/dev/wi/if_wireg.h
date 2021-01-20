@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/wi/if_wireg.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 #define WI_DELAY	5

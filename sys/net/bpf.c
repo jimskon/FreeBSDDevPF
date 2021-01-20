@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/net/bpf.c 345794 2019-04-02 09:31:38Z ae $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bpf.h"
 #include "opt_ddb.h"

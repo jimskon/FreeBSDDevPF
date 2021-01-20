@@ -41,7 +41,7 @@
  * Contact Information :
  * Rajesh Kumar <rajesh1.kumar@amd.com>
  *
- * $FreeBSD: releng/12.1/sys/dev/ntb/ntb_hw/ntb_hw_amd.h 351537 2019-08-27 04:14:38Z mav $
+ * $FreeBSD$
  */
 
 #ifndef	NTB_HW_AMD_H

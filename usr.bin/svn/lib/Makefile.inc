@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/svn/lib/Makefile.inc 315170 2017-03-12 18:58:44Z imp $
+# $FreeBSD$
 
 .if !defined(SVNDIR)
 

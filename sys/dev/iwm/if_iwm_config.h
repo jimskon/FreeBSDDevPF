@@ -68,7 +68,7 @@
  *****************************************************************************/
 
 /*
- * $FreeBSD: releng/12.1/sys/dev/iwm/if_iwm_config.h 346037 2019-04-08 18:15:10Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef __IWM_CONFIG_H__

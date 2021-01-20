@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/sleepqueue.h 349826 2019-07-07 18:49:39Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SLEEPQUEUE_H_

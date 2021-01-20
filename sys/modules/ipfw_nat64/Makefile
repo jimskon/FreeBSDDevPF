@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ipfw_nat64/Makefile 346213 2019-04-14 13:08:18Z ae $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/netpfil/ipfw/nat64
 

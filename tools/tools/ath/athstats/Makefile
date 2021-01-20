@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athstats/Makefile 296153 2016-02-28 06:29:25Z adrian $
+# $FreeBSD$
 
 MAN=
 

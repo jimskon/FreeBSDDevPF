@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/pcb.h 348646 2019-06-04 17:31:59Z markj $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_PCB_H_

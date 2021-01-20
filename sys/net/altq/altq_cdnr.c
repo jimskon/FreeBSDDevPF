@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  *
  * $KAME: altq_cdnr.c,v 1.15 2005/04/13 03:44:24 suz Exp $
- * $FreeBSD: releng/12.1/sys/net/altq/altq_cdnr.c 281642 2015-04-17 06:38:31Z glebius $
+ * $FreeBSD$
  */
 
 #include "opt_altq.h"

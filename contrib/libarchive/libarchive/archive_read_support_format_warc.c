@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_read_support_format_warc.c 348605 2019-06-04 10:20:56Z mm $");
+__FBSDID("$FreeBSD$");
 
 /**
  * WARC is standardised by ISO TC46/SC4/WG12 and currently available as

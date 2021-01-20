@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/tools/tools/sysdoc/sysdoc.sh 312910 2017-01-28 02:22:15Z nyan $
+# $FreeBSD$
 #
 #################################################################
 # Missing Features:

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/syscallsubr.h 337925 2018-08-16 19:09:43Z jamie $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSCALLSUBR_H_

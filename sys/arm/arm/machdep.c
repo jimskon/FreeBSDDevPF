@@ -51,7 +51,7 @@
 #include "opt_timer.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/machdep.c 341147 2018-11-28 15:34:46Z vangyzen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/buf.h>

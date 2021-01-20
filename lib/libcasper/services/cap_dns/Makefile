@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libcasper/services/cap_dns/Makefile 352188 2019-09-10 20:45:51Z oshogbo $
+# $FreeBSD$
 
 SHLIBDIR?=	/lib/casper
 

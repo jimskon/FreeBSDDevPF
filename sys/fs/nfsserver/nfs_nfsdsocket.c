@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfsserver/nfs_nfsdsocket.c 340849 2018-11-23 20:29:47Z emaste $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Socket operations for use by the nfs server.

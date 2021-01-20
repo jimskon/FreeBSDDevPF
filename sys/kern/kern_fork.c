@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_fork.c 352117 2019-09-10 06:45:44Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ktrace.h"
 #include "opt_kstack_pages.h"

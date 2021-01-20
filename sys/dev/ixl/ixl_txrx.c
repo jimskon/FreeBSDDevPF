@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.1/sys/dev/ixl/ixl_txrx.c 344097 2019-02-13 14:36:24Z marius $*/
+/*$FreeBSD$*/
 
 /*
 **	IXL driver TX/RX Routines:

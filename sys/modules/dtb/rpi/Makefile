@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/dtb/rpi/Makefile 343718 2019-02-03 15:34:09Z gonzo $
+# $FreeBSD$
 # DTS files for the Raspberry Pi-B
 .if ${MACHINE_ARCH:Marmv[67]*} != ""
 DTSO=	\

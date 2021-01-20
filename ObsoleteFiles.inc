@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/ObsoleteFiles.inc 352198 2019-09-10 22:26:31Z jkim $
+# $FreeBSD$
 #
 # This file lists old files (OLD_FILES), libraries (OLD_LIBS) and
 # directories (OLD_DIRS) which should get removed at an update. Recently

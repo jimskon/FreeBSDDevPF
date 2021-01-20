@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tools/tools/ath/athradar/athradar.c 295363 2016-02-07 04:28:03Z adrian $
+ * $FreeBSD$
  */
 
 #include "diag.h"

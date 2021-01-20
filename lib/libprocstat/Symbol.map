@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/lib/libprocstat/Symbol.map 318969 2017-05-26 22:17:44Z cem $
+ * $FreeBSD$
  */
 FBSD_1.2 {
 	procstat_close;

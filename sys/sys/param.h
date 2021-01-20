@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)param.h	8.3 (Berkeley) 4/4/95
- * $FreeBSD: releng/12.1/sys/sys/param.h 352546 2019-09-20 00:05:14Z gjb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PARAM_H_

@@ -41,7 +41,7 @@ __RCSID("$NetBSD: el.c,v 1.83 2016/02/24 17:13:22 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libedit/el.c 343090 2019-01-16 12:04:24Z bapt $");
+__FBSDID("$FreeBSD$");
 
 /*
  * el.c: EditLine interface functions

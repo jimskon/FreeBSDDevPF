@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netgraph/ng_source.c 343021 2019-01-14 09:54:53Z eugen $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This node is used for high speed packet geneneration.  It queues

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/bin/ed/io.c 300692 2016-05-25 18:38:30Z truckman $");
+__FBSDID("$FreeBSD$");
 
 #include "ed.h"
 

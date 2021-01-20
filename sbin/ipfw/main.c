@@ -17,7 +17,7 @@
  *
  * Command line interface for IP firewall facility
  *
- * $FreeBSD: releng/12.1/sbin/ipfw/main.c 346200 2019-04-14 10:44:06Z ae $
+ * $FreeBSD$
  */
 
 #include <sys/wait.h>

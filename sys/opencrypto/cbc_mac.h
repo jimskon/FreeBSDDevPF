@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/sys/opencrypto/cbc_mac.h 345124 2019-03-14 02:46:03Z sef $
+ *	$FreeBSD$
  *
  */
 

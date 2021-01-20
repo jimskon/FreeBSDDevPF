@@ -50,7 +50,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/uma_core.c 349221 2019-06-20 01:18:15Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_param.h"

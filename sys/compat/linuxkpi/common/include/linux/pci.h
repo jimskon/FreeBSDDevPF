@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/pci.h 352266 2019-09-12 21:12:39Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_PCI_H_
 #define	_LINUX_PCI_H_

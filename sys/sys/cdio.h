@@ -1,7 +1,7 @@
 /*
  * 16 Feb 93	Julian Elischer	(julian@dialix.oz.au)
  *
- * $FreeBSD: releng/12.1/sys/sys/cdio.h 349628 2019-07-03 00:11:31Z markj $
+ * $FreeBSD$
  */
 
 /*

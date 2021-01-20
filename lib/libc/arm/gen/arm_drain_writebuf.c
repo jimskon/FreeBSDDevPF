@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/arm/gen/arm_drain_writebuf.c 350877 2019-08-11 22:46:58Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/sysarch.h>
 #include <stddef.h>

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_prf.c 339409 2018-10-17 16:11:43Z jamie $");
+__FBSDID("$FreeBSD$");
 
 #ifdef _KERNEL
 #include "opt_ddb.h"

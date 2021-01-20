@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libclang_rt/asan_dynamic/Makefile 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

@@ -59,7 +59,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/fuse/fuse.h 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 #include "fuse_kernel.h"

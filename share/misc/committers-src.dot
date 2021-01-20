@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/misc/committers-src.dot 348928 2019-06-11 15:36:36Z vmaffione $
+# $FreeBSD$
 
 # This file is meant to list all FreeBSD src committers and describe the
 # mentor-mentee relationships between them.

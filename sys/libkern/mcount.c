@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/libkern/mcount.c 334520 2018-06-02 04:25:09Z bde $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/gmon.h>

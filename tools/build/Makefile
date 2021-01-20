@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/build/Makefile 338098 2018-08-20 10:39:53Z arichardson $
+# $FreeBSD$
 
 .PATH: ${.CURDIR}/../../include
 

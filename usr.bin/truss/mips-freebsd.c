@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/truss/mips-freebsd.c 351798 2019-09-03 21:11:04Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /* FreeBSD/mips-specific system call handling. */
 

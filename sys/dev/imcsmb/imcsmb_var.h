@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/imcsmb/imcsmb_var.h 330304 2018-03-03 01:53:51Z rpokala $
+ * $FreeBSD$
  */
 
 #ifndef _DEV__IMCSMB__IMCSMB_VAR_H_

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/freebsd-version/Makefile 314655 2017-03-04 11:31:08Z ngie $
+# $FreeBSD$
 
 PACKAGE=runtime
 SCRIPTS = freebsd-version

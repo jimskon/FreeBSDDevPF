@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/tools/tools/locale/tools/finalize 341628 2018-12-06 10:48:46Z yuripv $
+# $FreeBSD$
 #
 # This is a helper script for the Makefile in the parent directory.
 # When the localization definitions are generated in the draft area,

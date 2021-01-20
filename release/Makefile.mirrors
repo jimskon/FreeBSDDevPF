@@ -9,7 +9,7 @@
 #
 # Don't use this unless you know why you're using it.
 #
-# $FreeBSD: releng/12.1/release/Makefile.mirrors 349518 2019-06-28 20:28:20Z gjb $
+# $FreeBSD$
 #
 
 .include "${.CURDIR}/Makefile"

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/isp/ispmbox.h 347906 2019-05-17 14:29:56Z ken $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

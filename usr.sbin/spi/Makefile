@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/spi/Makefile 335527 2018-06-22 01:59:19Z ian $
+# $FreeBSD$
 
 #.include <src.opts.mk>
 

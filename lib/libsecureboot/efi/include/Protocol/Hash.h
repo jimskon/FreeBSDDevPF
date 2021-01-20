@@ -17,7 +17,7 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #define __EFI_HASH_PROTOCOL_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/efi/include/Protocol/Hash.h 344840 2019-03-06 06:39:42Z mw $");
+__FBSDID("$FreeBSD$");
 
 #define CONST const
 

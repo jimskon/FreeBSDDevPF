@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/truss/riscv64-freebsd.c 312691 2017-01-24 09:41:44Z lwhsu $");
+__FBSDID("$FreeBSD$");
 
 /* FreeBSD/riscv64-specific system call handling. */
 

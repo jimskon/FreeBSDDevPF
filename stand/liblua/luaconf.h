@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/liblua/luaconf.h 344209 2019-02-16 06:12:16Z kevans $ */
+/* $FreeBSD$ */
 /*
 ** $Id: luaconf.h,v 1.259 2016/12/22 13:08:50 roberto Exp $
 ** Configuration file for Lua

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libarchive/Makefile 348605 2019-06-04 10:20:56Z mm $
+# $FreeBSD$
 .include <src.opts.mk>
 
 PACKAGE=lib${LIB}

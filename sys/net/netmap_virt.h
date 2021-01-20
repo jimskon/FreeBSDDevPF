@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net/netmap_virt.h 341815 2018-12-11 11:31:13Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef NETMAP_VIRT_H

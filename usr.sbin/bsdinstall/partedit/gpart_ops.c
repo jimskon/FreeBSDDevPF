@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bsdinstall/partedit/gpart_ops.c 333803 2018-05-18 17:43:15Z nwhitehorn $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

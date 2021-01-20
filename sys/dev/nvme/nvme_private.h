@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/nvme/nvme_private.h 351914 2019-09-05 23:40:38Z imp $
+ * $FreeBSD$
  */
 
 #ifndef __NVME_PRIVATE_H__

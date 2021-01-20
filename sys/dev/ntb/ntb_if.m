@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/dev/ntb/ntb_if.m 351536 2019-08-27 04:13:22Z mav $
+# $FreeBSD$
 #
 
 #include <sys/bus.h>

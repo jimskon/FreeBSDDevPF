@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfsproto.h 347044 2019-05-03 02:58:33Z rmacklem $
+ * $FreeBSD$
  */
 
 #ifndef _NFS_NFSPROTO_H_

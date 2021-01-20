@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ocs_fc/Makefile 351894 2019-09-05 20:39:05Z bdrewery $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/ocs_fc
 KMOD = ocs_fc

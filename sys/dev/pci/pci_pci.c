@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/pci/pci_pci.c 349079 2019-06-15 20:25:36Z cperciva $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI:PCI bridge support.

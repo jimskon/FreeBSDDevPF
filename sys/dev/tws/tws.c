@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/tws/tws.c 326022 2017-11-20 19:36:21Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/tws/tws.h>
 #include <dev/tws/tws_services.h>

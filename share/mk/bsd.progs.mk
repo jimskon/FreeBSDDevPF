@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.progs.mk 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 # $Id: progs.mk,v 1.11 2012/11/06 17:18:54 sjg Exp $
 #
 #	@(#) Copyright (c) 2006, Simon J. Gerraty

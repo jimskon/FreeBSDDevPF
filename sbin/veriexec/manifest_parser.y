@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/veriexec/manifest_parser.y 344567 2019-02-26 06:17:23Z sjg $
+ * $FreeBSD$
  */
 
 #include <sys/stat.h>

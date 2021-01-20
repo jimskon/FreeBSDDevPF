@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/i386/libi386/bootinfo32.c 342616 2018-12-30 08:58:31Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <sys/param.h>

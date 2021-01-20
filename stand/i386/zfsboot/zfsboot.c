@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/i386/zfsboot/zfsboot.c 348865 2019-06-10 15:46:19Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "stand.h"
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/ar/read.c 346902 2019-04-29 18:34:11Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/queue.h>
 #include <sys/stat.h>

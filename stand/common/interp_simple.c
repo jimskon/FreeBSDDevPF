@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/interp_simple.c 346145 2019-04-12 01:03:00Z sjg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple commandline interpreter, toplevel and misc.

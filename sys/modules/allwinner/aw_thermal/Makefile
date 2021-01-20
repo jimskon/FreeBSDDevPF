@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/allwinner/aw_thermal/Makefile 346692 2019-04-25 18:39:41Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/allwinner
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/t4_l2t.h 338874 2018-09-22 01:24:30Z np $
+ * $FreeBSD$
  *
  */
 

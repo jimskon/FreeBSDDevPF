@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/12.1/lib/libc/arm/gen/Makefile.inc 350877 2019-08-11 22:46:58Z ian $
+# $FreeBSD$
 
 SRCS+=	\
 	__aeabi_read_tp.S \

@@ -36,7 +36,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/makefs/makefs.h 352079 2019-09-09 17:32:40Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef	_MAKEFS_H

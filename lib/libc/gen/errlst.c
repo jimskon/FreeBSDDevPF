@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)errlst.c	8.2 (Berkeley) 11/16/93");
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/errlst.c 342915 2019-01-10 10:37:19Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <stdio.h>

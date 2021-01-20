@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/utils.subr 346740 2019-04-26 12:59:23Z kp $
+# $FreeBSD$
 # Utility functions
 ##
 

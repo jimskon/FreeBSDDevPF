@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ffs_vfsops.c	8.8 (Berkeley) 4/18/94
- * $FreeBSD: releng/12.1/sys/fs/ext2fs/ext2_vfsops.c 350366 2019-07-26 21:08:01Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

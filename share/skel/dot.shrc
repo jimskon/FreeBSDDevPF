@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/skel/dot.shrc 327420 2017-12-31 06:58:58Z eadler $
+# $FreeBSD$
 #
 # .shrc - bourne shell startup file 
 #

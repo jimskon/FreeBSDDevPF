@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/acpica/srat.c 340007 2018-11-01 16:50:19Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

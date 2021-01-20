@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/event.h 341376 2018-12-01 17:48:28Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_EVENT_H_

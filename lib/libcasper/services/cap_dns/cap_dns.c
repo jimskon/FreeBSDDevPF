@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libcasper/services/cap_dns/cap_dns.c 352189 2019-09-10 20:49:47Z oshogbo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/dnv.h>
 #include <sys/nv.h>

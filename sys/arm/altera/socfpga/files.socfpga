@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/altera/socfpga/files.socfpga 350603 2019-08-05 18:13:13Z manu $
+# $FreeBSD$
 
 arm/altera/socfpga/socfpga_common.c		standard
 arm/altera/socfpga/socfpga_machdep.c		standard

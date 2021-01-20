@@ -43,7 +43,7 @@
  * allocate and release resources.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/tmpfs/tmpfs_vfsops.c 351475 2019-08-25 06:22:13Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

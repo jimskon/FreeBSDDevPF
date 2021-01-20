@@ -1,7 +1,7 @@
 #
 # DB120 - the AR9344 SoC reference design
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/DB120 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 #
 
 # Include the default AR934x parameters

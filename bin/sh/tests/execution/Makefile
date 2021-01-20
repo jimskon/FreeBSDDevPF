@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/sh/tests/execution/Makefile 345487 2019-03-24 22:10:26Z jilles $
+# $FreeBSD$
 
 PACKAGE=	tests
 

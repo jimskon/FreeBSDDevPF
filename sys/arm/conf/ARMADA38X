@@ -1,7 +1,7 @@
 #
 # Kernel configuration for Marvell Armada38x
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/ARMADA38X 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 #
 
 include 	"../mv/armada38x/std.armada38x"

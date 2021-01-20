@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/googletest/gmock_main/tests/Makefile 344424 2019-02-21 06:51:35Z ngie $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

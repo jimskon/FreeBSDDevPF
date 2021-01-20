@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/Makefile.libcompat 353799 2019-10-21 17:17:21Z gjb $
+# $FreeBSD$
 
 .if !targets(__<${_this:T}>__)
 __<${_this:T}>__:

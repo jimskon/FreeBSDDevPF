@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/include/busdma_impl.h 343637 2019-02-01 00:36:14Z kib $
+ * $FreeBSD$
  */
 
 #ifndef	__X86_BUSDMA_IMPL_H

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dead_vnops.c	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/fs/deadfs/dead_vnops.c 348991 2019-06-12 11:48:04Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

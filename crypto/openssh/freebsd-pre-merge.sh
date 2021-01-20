@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/crypto/openssh/freebsd-pre-merge.sh 294324 2016-01-19 14:25:22Z des $
+# $FreeBSD$
 #
 
 :>keywords

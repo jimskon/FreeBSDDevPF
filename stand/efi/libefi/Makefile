@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/efi/libefi/Makefile 345327 2019-03-20 15:34:40Z mmacy $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

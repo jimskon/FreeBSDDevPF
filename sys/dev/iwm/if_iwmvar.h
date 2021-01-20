@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_iwmvar.h,v 1.7 2015/03/02 13:51:10 jsg Exp $	*/
-/*	$FreeBSD: releng/12.1/sys/dev/iwm/if_iwmvar.h 346037 2019-04-08 18:15:10Z kevans $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2014 genua mbh <info@genua.de>

@@ -1,6 +1,6 @@
 # JZ4780 -- Kernel config for Ingenic JZ47XX boards
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/JZ4780 315141 2017-03-12 07:09:50Z manu $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

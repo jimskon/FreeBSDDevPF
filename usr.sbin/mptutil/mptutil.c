@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/12.1/usr.sbin/mptutil/mptutil.c 350441 2019-07-30 14:18:05Z emaste $");
+__RCSID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>

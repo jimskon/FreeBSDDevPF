@@ -1,4 +1,4 @@
-// $FreeBSD: releng/12.1/lib/clang/include/lldb/Host/Config.h 344212 2019-02-16 15:43:49Z dim $
+// $FreeBSD$
 //===-- Config.h -----------------------------------------------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure

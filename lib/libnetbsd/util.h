@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/lib/libnetbsd/util.h 328062 2018-01-16 21:43:21Z arichardson $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * SPDX-License-Identifier: BSD-3-Clause

@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/efibootmgr/efibootmgr.c 351913 2019-09-05 23:27:59Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/vtoc.h>

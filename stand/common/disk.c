@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/disk.c 347179 2019-05-06 08:32:49Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/disk.h>
 #include <sys/queue.h>

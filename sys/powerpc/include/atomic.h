@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/include/atomic.h 326971 2017-12-19 09:59:20Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ATOMIC_H_

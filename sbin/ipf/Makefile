@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/12.1/sbin/ipf/Makefile 315223 2017-03-14 02:10:37Z cy $
+#	$FreeBSD$
 
 SUBDIR=		libipf .WAIT
 SUBDIR+=	ipf ipfs ipfstat ipmon ipnat ippool

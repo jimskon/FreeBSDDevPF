@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athspectral/Makefile 244953 2013-01-02 04:02:27Z adrian $
+# $FreeBSD$
 
 PROG=	athspectral
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/powerpc/powerpc/swtch64.S 350269 2019-07-24 02:37:39Z jhibbits $ */
+/* $FreeBSD$ */
 /* $NetBSD: locore.S,v 1.24 2000/05/31 05:09:17 thorpej Exp $ */
 
 /*-

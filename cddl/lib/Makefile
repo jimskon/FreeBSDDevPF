@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/cddl/lib/Makefile 337995 2018-08-18 03:20:59Z kevans $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

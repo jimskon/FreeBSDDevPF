@@ -34,7 +34,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/riscv/riscv/copyinout.S 350590 2019-08-05 15:24:05Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include <machine/riscvreg.h>
 #include <sys/errno.h>

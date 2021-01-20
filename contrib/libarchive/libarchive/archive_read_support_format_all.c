@@ -24,7 +24,7 @@
  */
 
 #include "archive_platform.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_read_support_format_all.c 342359 2018-12-21 23:32:50Z mm $");
+__FBSDID("$FreeBSD$");
 
 #include "archive.h"
 #include "archive_private.h"

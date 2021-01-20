@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/dumpon/Makefile 309818 2016-12-10 16:20:39Z def $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

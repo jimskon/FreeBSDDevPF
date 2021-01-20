@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/kbdcontrol/Makefile 352276 2019-09-13 07:08:43Z bapt $
+# $FreeBSD$
 
 PROG=	kbdcontrol
 MAN=	kbdcontrol.1 kbdmap.5

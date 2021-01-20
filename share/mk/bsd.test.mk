@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.test.mk 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 #
 # Generic build infrastructure for test programs.
 #

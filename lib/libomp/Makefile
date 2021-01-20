@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libomp/Makefile 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 
 SHLIB_NAME=	libomp.so
 

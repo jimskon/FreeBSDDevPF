@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/contrib/ipfilter/tools/ipmon.c 349716 2019-07-04 03:08:14Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.

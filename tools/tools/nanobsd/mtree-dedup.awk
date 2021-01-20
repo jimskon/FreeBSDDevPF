@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tools/tools/nanobsd/mtree-dedup.awk 333435 2018-05-09 20:41:03Z imp $
+# $FreeBSD$
 #
 
 #

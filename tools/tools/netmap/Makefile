@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/tools/tools/netmap/Makefile 340618 2018-11-19 08:53:52Z vmaffione $
+# $FreeBSD$
 #
 # For multiple programs using a single source file each,
 # we can just define 'progs' and create custom targets.

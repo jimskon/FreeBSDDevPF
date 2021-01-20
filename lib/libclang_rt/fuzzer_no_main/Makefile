@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libclang_rt/fuzzer_no_main/Makefile 339014 2018-09-29 15:17:17Z dim $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

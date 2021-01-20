@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/bsnmpd/bsnmpd/Makefile 346987 2019-05-01 09:04:14Z ae $
+# $FreeBSD$
 #
 # Author: Harti Brandt <harti@freebsd.org>
 

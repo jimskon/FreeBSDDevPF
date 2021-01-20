@@ -30,7 +30,7 @@
  *
  *	@(#)dump.h	8.2 (Berkeley) 4/28/95
  *
- * $FreeBSD: releng/12.1/sbin/dump/dump.h 328426 2018-01-26 00:58:32Z mckusick $
+ * $FreeBSD$
  */
 
 /*

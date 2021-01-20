@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)pathnames.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: releng/12.1/contrib/telnet/telnetd/pathnames.h 351431 2019-08-23 17:39:59Z emaste $
+ * $FreeBSD$
  */
 
 #if BSD > 43

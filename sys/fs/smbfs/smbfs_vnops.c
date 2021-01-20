@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/smbfs/smbfs_vnops.c 344000 2019-02-11 08:52:48Z gonzo $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/systm.h>

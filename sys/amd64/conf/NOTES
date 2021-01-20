@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: releng/12.1/sys/amd64/conf/NOTES 351536 2019-08-27 04:13:22Z mav $
+# $FreeBSD$
 #
 
 #

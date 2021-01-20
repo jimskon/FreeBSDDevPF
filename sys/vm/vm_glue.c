@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_glue.c 349139 2019-06-17 15:11:04Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 #include "opt_kstack_pages.h"

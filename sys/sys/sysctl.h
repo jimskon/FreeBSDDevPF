@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)sysctl.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.1/sys/sys/sysctl.h 351358 2019-08-21 22:42:08Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSCTL_H_

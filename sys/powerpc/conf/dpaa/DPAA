@@ -5,7 +5,7 @@
 # This is not standalone kernel config. Use it only for including
 # purposes.
 #
-# $FreeBSD: releng/12.1/sys/powerpc/conf/dpaa/DPAA 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 
 cpu		BOOKE
 cpu		BOOKE_E500

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/aim/mmu_oea64.c 333599 2018-05-14 04:00:52Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Manages physical address maps.

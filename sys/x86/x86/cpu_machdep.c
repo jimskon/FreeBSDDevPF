@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/cpu_machdep.c 349983 2019-07-14 05:40:03Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_atpic.h"

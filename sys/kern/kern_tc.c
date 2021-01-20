@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_tc.c 352380 2019-09-16 06:15:22Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ntp.h"
 #include "opt_ffclock.h"

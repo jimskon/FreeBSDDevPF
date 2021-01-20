@@ -1,4 +1,4 @@
- $FreeBSD: releng/12.1/sys/compat/freebsd32/syscalls.master 345181 2019-03-15 14:16:16Z kib $
+ $FreeBSD$
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;	from: src/sys/kern/syscalls.master 1.107
 ;

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_sbuf.c 349824 2019-07-07 18:45:57Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

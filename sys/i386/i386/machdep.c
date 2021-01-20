@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/machdep.c 341490 2018-12-04 19:06:11Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_apic.h"
 #include "opt_atpic.h"

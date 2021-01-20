@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/buslogic/btreg.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _BTREG_H_

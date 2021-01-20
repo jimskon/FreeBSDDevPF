@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfs/nfs_commonport.c 346460 2019-04-20 23:46:06Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Functions that need to be different for different versions of BSD

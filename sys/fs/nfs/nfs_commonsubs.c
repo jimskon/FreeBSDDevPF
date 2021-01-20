@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfs/nfs_commonsubs.c 347038 2019-05-03 02:03:29Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 /*
  * These functions support the macros and help fiddle mbuf chains for

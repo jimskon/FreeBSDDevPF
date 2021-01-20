@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/newsyslog/newsyslog.c 344880 2019-03-07 13:10:34Z dab $");
+__FBSDID("$FreeBSD$");
 
 #define	OSF
 

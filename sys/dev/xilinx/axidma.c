@@ -33,7 +33,7 @@
 /* Xilinx AXI DMA controller driver. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/xilinx/axidma.c 348625 2019-06-04 15:39:28Z br $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>

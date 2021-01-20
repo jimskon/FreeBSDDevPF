@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/sdhci/sdhci_pci.c 343503 2019-01-27 19:04:02Z marius $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mmccam.h"
 

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/copyright.h 342663 2019-01-01 00:35:26Z delphij $
+ * $FreeBSD$
  */
 
 

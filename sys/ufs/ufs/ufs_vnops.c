@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ufs/ufs/ufs_vnops.c 350850 2019-08-10 23:03:23Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 #include "opt_suiddir.h"

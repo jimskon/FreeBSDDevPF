@@ -55,7 +55,7 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD: releng/12.1/sys/dev/amr/amr_tables.h 326255 2017-11-27 14:52:40Z pfg $
+ *	$FreeBSD$
  */
 
 /*

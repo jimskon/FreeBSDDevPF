@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/smbfs/smbfs_io.c 349699 2019-07-03 20:14:43Z markj $
+ * $FreeBSD$
  *
  */
 #include <sys/param.h>

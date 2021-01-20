@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/usr.sbin/acpi/acpidump/acpi.c 346726 2019-04-26 02:16:57Z mw $
+ *	$FreeBSD$
  */
 
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/geom/class/eli/Makefile 344135 2019-02-14 20:26:59Z asomers $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/geom/eli ${SRCTOP}/sys/crypto/sha2
 

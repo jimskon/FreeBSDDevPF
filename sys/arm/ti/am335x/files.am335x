@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.1/sys/arm/ti/am335x/files.am335x 351888 2019-09-05 19:25:44Z ian $
+#$FreeBSD$
 
 arm/ti/aintc.c				standard
 

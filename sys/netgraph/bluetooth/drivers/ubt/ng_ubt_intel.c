@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/netgraph/bluetooth/drivers/ubt/ng_ubt_intel.c 352101 2019-09-09 18:50:38Z wulf $
+ * $FreeBSD$
  */
 
 /*

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/jail.h 339409 2018-10-17 16:11:43Z jamie $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_JAIL_H_

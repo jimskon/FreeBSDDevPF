@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/liblua/lstd.h 329895 2018-02-24 02:57:24Z kevans $
+ * $FreeBSD$
  */
 
 #ifndef LSTD_H

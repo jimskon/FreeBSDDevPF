@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/tests/sys/Makefile 344978 2019-03-10 16:14:42Z ngie $
+# $FreeBSD$
 
 PACKAGE=			tests
 

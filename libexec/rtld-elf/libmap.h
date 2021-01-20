@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/libexec/rtld-elf/libmap.h 344011 2019-02-11 15:02:02Z kib $
+ * $FreeBSD$
  */
 
 int	lm_init (char *);

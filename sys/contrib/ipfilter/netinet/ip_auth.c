@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_auth.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -110,7 +110,7 @@
 /* END OF INCLUDES */
 
 #if !defined(lint)
-static const char rcsid[] = "@(#)$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_auth.c 344833 2019-03-06 02:37:25Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD$";
 /* static const char rcsid[] = "@(#)$Id: ip_auth.c,v 2.73.2.24 2007/09/09 11:32:04 darrenr Exp $"; */
 #endif
 

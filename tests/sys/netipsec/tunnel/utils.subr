@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netipsec/tunnel/utils.subr 344966 2019-03-09 10:34:42Z kp $
+# $FreeBSD$
 # Utility functions (mainly from pf tests, should be merged one day)
 ##
 

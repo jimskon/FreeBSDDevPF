@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athradar/Makefile 224266 2011-07-22 09:34:31Z adrian $
+# $FreeBSD$
 
 PROG=	athradar
 

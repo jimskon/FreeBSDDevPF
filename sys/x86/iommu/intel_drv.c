@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/iommu/intel_drv.c 350192 2019-07-21 08:28:28Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #if defined(__amd64__)

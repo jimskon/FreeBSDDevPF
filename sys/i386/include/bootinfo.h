@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/i386/include/bootinfo.h 326260 2017-11-27 15:08:52Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_BOOTINFO_H_

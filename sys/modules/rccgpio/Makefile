@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/rccgpio/Makefile 314651 2017-03-04 10:10:17Z ngie $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/rccgpio
 KMOD=	rccgpio

@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/frame.h 342697 2019-01-02 16:41:39Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_FRAME_H_

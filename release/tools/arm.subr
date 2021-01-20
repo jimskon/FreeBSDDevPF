@@ -29,7 +29,7 @@
 #
 # Common subroutines used to build arm SD card images.
 #
-# $FreeBSD: releng/12.1/release/tools/arm.subr 350592 2019-08-05 16:36:11Z manu $
+# $FreeBSD$
 #
 
 cleanup() {

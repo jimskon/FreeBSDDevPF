@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libthr/arch/aarch64/include/pthread_tls.h 346155 2019-04-12 15:12:08Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _ARCH_AARCH64_PTHREAD_TLS_H

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/libexec/rtld-elf/rtld_malloc.h 344011 2019-02-11 15:02:02Z kib $
+ * $FreeBSD$
  */
 
 #ifndef RTLD_MALLOC_H

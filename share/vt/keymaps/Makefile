@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/vt/keymaps/Makefile 342252 2018-12-19 22:46:03Z dab $
+# $FreeBSD$
 
 FILES=	INDEX.keymaps \
 	am.kbd \

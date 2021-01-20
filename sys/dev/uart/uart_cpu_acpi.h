@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/uart/uart_cpu_acpi.h 348342 2019-05-28 22:22:40Z cperciva $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_UART_CPU_ACPI_H_

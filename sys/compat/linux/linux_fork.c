@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/linux/linux_fork.c 346844 2019-04-28 14:38:21Z dchagin $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_compat.h"
 

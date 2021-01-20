@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mrsas/mrsas_cam.c 346943 2019-04-30 07:10:11Z kadesai $");
+__FBSDID("$FreeBSD$");
 
 #include "dev/mrsas/mrsas.h"
 

@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/ti/ti_pruss.c 342149 2018-12-16 02:46:51Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/poll.h>
 #include <sys/time.h>

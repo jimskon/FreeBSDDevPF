@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/ip_reass.c 341259 2018-11-29 20:25:47Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_rss.h"
 

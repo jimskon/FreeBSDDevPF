@@ -29,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/12.1/sys/dev/sfxge/common/efx_mcdi.h 350405 2019-07-29 09:25:16Z arybchik $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_EFX_MCDI_H

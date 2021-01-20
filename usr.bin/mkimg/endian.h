@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/mkimg/endian.h 343765 2019-02-05 08:05:42Z delphij $
+ * $FreeBSD$
  */
 
 #ifndef _MKIMG_ENDIAN_H_

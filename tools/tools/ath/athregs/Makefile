@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athregs/Makefile 296154 2016-02-28 06:30:39Z adrian $
+# $FreeBSD$
 
 PROG=	athregs
 

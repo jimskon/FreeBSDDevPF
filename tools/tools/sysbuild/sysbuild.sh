@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tools/tools/sysbuild/sysbuild.sh 337566 2018-08-10 06:28:25Z phk $
+# $FreeBSD$
 #
 
 set -e

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/uboot/fdt/uboot_fdt.c 346302 2019-04-16 21:01:07Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <stand.h>

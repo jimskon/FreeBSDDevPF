@@ -1,6 +1,6 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/usb/cdceem/Makefile 350685 2019-08-07 18:14:45Z trasz $
-# $FreeBSD: releng/12.1/sys/modules/usb/cdceem/Makefile 350685 2019-08-07 18:14:45Z trasz $
+# $FreeBSD$
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/usb/net
 

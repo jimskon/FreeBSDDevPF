@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/dhclient/dhclient.c 344237 2019-02-17 20:25:07Z jilles $");
+__FBSDID("$FreeBSD$");
 
 #include "dhcpd.h"
 #include "privsep.h"

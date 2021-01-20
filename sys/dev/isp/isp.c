@@ -50,7 +50,7 @@ __KERNEL_RCSID(0, "$NetBSD$");
 #endif
 #ifdef	__FreeBSD__
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/isp/isp.c 348480 2019-05-31 20:15:29Z ken $");
+__FBSDID("$FreeBSD$");
 #include <dev/isp/isp_freebsd.h>
 #endif
 #ifdef	__OpenBSD__

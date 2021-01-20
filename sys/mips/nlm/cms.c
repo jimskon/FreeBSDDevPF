@@ -30,7 +30,7 @@
  * NETLOGIC_BSD */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/mips/nlm/cms.c 343709 2019-02-03 08:53:03Z gonzo $");
+__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/systm.h>
 #include <sys/param.h>

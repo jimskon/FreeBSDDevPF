@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/usb.h 351942 2019-09-06 17:54:51Z trasz $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *

@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/gen/libc_dlopen.c 349676 2019-07-03 19:22:25Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/libc_dlopen.c 349676 2019-07-03 19:22:25Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <dlfcn.h>
 #include <stddef.h>

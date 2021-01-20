@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libproc/proc_bkpt.c 350475 2019-07-31 18:25:52Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/ptrace.h>

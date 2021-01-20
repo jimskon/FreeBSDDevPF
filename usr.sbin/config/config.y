@@ -69,7 +69,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)config.y	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.1/usr.sbin/config/config.y 350604 2019-08-05 18:17:03Z manu $
+ * $FreeBSD$
  */
 
 #include <assert.h>

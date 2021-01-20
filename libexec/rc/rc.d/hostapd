@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/hostapd 349651 2019-07-03 16:43:40Z cy $
+# $FreeBSD$
 #
 
 # PROVIDE: hostapd

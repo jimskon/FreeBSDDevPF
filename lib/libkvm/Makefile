@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/12.1/lib/libkvm/Makefile 349463 2019-06-27 16:48:24Z markj $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 LIB=	kvm

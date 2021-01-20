@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/pass_block.sh 345076 2019-03-12 19:03:47Z kp $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/utils.subr
 

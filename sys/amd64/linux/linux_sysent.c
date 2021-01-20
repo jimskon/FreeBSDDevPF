@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/amd64/linux/linux_sysent.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

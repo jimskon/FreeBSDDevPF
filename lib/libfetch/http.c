@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libfetch/http.c 352042 2019-09-08 20:41:00Z markj $");
+__FBSDID("$FreeBSD$");
 
 /*
  * The following copyright applies to the base64 code:

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libthr/thread/thr_info.c 349982 2019-07-14 05:39:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <stdlib.h>

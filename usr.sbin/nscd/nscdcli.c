@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/nscd/nscdcli.c 312927 2017-01-28 16:31:23Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

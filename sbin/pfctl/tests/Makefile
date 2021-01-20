@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/pfctl/tests/Makefile 321030 2017-07-15 19:22:01Z kp $
+# $FreeBSD$
 
 ATF_TESTS_SH=	pfctl_test
 

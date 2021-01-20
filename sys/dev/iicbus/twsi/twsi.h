@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/iicbus/twsi/twsi.h 350866 2019-08-11 20:47:01Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _TWSI_H_

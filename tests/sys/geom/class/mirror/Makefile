@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/geom/class/mirror/Makefile 327780 2018-01-10 19:41:05Z markj $
+# $FreeBSD$
 
 PACKAGE=	tests
 

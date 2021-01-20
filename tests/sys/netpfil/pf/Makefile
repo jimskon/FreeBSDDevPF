@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/Makefile 344962 2019-03-09 10:24:39Z kp $
+# $FreeBSD$
 
 PACKAGE=	tests
 

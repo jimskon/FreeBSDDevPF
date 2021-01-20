@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/riscvreg.h 343527 2019-01-28 16:14:53Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_RISCVREG_H_

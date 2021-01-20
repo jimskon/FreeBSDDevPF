@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/string/wcsxfrm.c 351041 2019-08-14 19:21:26Z dim $");
+__FBSDID("$FreeBSD$");
 
 #include <stdlib.h>
 #include <string.h>

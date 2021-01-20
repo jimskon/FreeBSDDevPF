@@ -28,7 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/include/pmap.h 344848 2019-03-06 17:33:05Z kib $
+ * $FreeBSD$
  */
 /*-
  * Copyright (C) 1995, 1996 Wolfgang Solfrank.

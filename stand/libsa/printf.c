@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/printf.c 343615 2019-01-31 17:06:59Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Standaloneified version of the FreeBSD kernel printf family.

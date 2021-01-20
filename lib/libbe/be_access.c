@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libbe/be_access.c 350344 2019-07-26 01:49:58Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include "be.h"
 #include "be_impl.h"

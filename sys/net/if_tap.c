@@ -33,7 +33,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.1/sys/net/if_tap.c 348124 2019-05-22 22:34:35Z kevans $
+ * $FreeBSD$
  * $Id: if_tap.c,v 0.21 2000/07/23 21:46:02 max Exp $
  */
 

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)tcp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/netinet/tcp.h 334804 2018-06-07 18:18:13Z rrs $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_TCP_H_

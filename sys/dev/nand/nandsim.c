@@ -29,7 +29,7 @@
 /* Simulated NAND controller driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/nand/nandsim.c 349657 2019-07-03 17:34:26Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

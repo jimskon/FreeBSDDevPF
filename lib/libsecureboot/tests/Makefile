@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsecureboot/tests/Makefile 347759 2019-05-16 16:15:41Z sjg $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

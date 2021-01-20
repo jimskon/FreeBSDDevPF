@@ -26,7 +26,7 @@
 /* Tests functions in lib/libcam/camlib.c */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libcam/tests/libcam_test.c 346918 2019-04-29 19:34:09Z ngie $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <fcntl.h>

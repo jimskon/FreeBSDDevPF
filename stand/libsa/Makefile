@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/libsa/Makefile 351515 2019-08-26 17:34:07Z kevans $
+# $FreeBSD$
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:

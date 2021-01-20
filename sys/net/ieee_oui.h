@@ -27,7 +27,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net/ieee_oui.h 350382 2019-07-27 17:59:30Z chuck $
+ * $FreeBSD$
  *
  * Author: George V. Neville-Neil
  *

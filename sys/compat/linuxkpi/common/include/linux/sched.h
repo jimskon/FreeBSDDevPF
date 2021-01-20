@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/sched.h 352264 2019-09-12 20:15:04Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_SCHED_H_
 #define	_LINUX_SCHED_H_

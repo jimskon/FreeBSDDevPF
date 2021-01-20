@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/riscv/conf/QEMU 351343 2019-08-21 16:27:19Z markj $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

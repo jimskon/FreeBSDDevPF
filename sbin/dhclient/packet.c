@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/dhclient/packet.c 349630 2019-07-03 00:32:42Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "dhcpd.h"
 

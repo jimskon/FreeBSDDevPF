@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/tools/tools/nanobsd/pcengines/build.sh 199536 2009-11-19 16:27:51Z mr $
+# $FreeBSD$
 #
 
 if [ -z "${1}" -o \! -f "${1}" ]; then

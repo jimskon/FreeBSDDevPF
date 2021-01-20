@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athratestats/Makefile 292244 2015-12-15 04:28:31Z adrian $
+# $FreeBSD$
 
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/ath_hal
 .PATH:	${.CURDIR}/../../../../sys/dev/ath/

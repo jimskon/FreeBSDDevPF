@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/contrib/ipfilter/md5.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD$	*/
 
 
 

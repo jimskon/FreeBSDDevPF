@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_pageout.h 351776 2019-09-03 19:27:59Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _VM_VM_PAGEOUT_H_

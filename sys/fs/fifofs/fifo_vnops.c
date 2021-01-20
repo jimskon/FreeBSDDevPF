@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fifo_vnops.c	8.10 (Berkeley) 5/27/95
- * $FreeBSD: releng/12.1/sys/fs/fifofs/fifo_vnops.c 350958 2019-08-12 20:31:12Z asomers $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

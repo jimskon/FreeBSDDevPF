@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/geom_disk.c 349825 2019-07-07 18:47:01Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_geom.h"
 

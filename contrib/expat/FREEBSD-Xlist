@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/contrib/expat/FREEBSD-Xlist 247296 2013-02-26 00:58:44Z delphij $
+# $FreeBSD$
 *.MPW
 *.cmake
 *.def

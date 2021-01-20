@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_compressor.c 341150 2018-11-28 16:48:40Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_gzio.h"
 #include "opt_zstdio.h"

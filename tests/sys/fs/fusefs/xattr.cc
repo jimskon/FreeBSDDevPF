@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/xattr.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 /* Tests for all things relating to extended attributes and FUSE */

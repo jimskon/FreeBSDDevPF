@@ -26,14 +26,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/cam/cam_iosched.c 337824 2018-08-15 00:15:40Z imp $
+ * $FreeBSD$
  */
 
 #include "opt_cam.h"
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/cam_iosched.c 337824 2018-08-15 00:15:40Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

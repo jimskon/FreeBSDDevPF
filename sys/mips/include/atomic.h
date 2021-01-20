@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  *
  *	from: src/sys/alpha/include/atomic.h,v 1.21.2.3 2005/10/06 18:12:05 jhb
- * $FreeBSD: releng/12.1/sys/mips/include/atomic.h 327097 2017-12-22 23:27:03Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ATOMIC_H_

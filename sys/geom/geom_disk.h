@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/geom/geom_disk.h 327996 2018-01-15 11:20:00Z avg $
+ * $FreeBSD$
  */
 
 #ifndef _GEOM_GEOM_DISK_H_

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/cxgbe/if_cxgbe/Makefile 345604 2019-03-27 21:22:59Z np $
+# $FreeBSD$
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe

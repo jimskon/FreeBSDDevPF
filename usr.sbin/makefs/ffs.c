@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/makefs/ffs.c 352085 2019-09-09 17:44:14Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #if HAVE_NBTOOL_CONFIG_H
 #include "nbtool_config.h"

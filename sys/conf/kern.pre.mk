@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/kern.pre.mk 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 
 # Part of a unified Makefile for building kernels.  This part contains all
 # of the definitions that need to be before %BEFORE_DEPEND.

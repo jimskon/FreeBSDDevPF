@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dir.h	8.2 (Berkeley) 1/21/94
- * $FreeBSD: releng/12.1/sys/ufs/ufs/dir.h 347474 2019-05-10 23:45:16Z mckusick $
+ * $FreeBSD$
  */
 
 #ifndef _UFS_UFS_DIR_H_

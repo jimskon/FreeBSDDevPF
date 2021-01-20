@@ -34,7 +34,7 @@
  *	@(#)null_vfsops.c	8.2 (Berkeley) 1/21/94
  *
  * @(#)lofs_vfsops.c	1.2 (Berkeley) 6/18/92
- * $FreeBSD: releng/12.1/sys/fs/nullfs/null_vfsops.c 345641 2019-03-28 13:42:37Z kib $
+ * $FreeBSD$
  */
 
 /*

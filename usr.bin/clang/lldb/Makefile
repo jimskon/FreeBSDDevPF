@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/lldb/Makefile 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 
 .include "${SRCTOP}/lib/clang/lldb.pre.mk"
 

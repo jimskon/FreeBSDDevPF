@@ -1,5 +1,5 @@
 /*	$OpenBSD: if_upgtvar.h,v 1.14 2008/02/02 13:48:44 mglocker Exp $ */
-/*	$FreeBSD: releng/12.1/sys/dev/usb/wlan/if_upgtvar.h 345634 2019-03-28 09:16:00Z avos $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2007 Marcus Glocker <mglocker@openbsd.org>

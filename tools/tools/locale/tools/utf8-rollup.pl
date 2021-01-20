@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl -wC
-# $FreeBSD: releng/12.1/tools/tools/locale/tools/utf8-rollup.pl 341629 2018-12-06 10:53:11Z yuripv $
+# $FreeBSD$
 
 use strict;
 use Getopt::Long;

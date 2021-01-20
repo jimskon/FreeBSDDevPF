@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/dcons/dcons_os.c 347624 2019-05-15 17:50:17Z ian $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

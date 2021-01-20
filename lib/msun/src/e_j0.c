@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/msun/src/e_j0.c 347067 2019-05-03 22:54:56Z peterj $");
+__FBSDID("$FreeBSD$");
 
 /* __ieee754_j0(x), __ieee754_y0(x)
  * Bessel function of the first and second kinds of order zero.

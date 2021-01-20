@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/freebsd32/freebsd32_ioctl.h 339186 2018-10-04 23:55:03Z brooks $
+ * $FreeBSD$
  */
 
 #ifndef _COMPAT_FREEBSD32_IOCTL_H_

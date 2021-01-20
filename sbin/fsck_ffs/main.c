@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/fsck_ffs/main.c 347474 2019-05-10 23:45:16Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #define	IN_RTLD			/* So we pickup the P_OSREL defines */
 #include <sys/param.h>

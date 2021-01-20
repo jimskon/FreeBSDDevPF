@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv6 systems.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/std.armv6 340503 2018-11-17 18:58:06Z gjb $
+# $FreeBSD$
 
 options 	HZ=1000
 options 	ARM_L2_PIPT		# Only L2 PIPT is supported

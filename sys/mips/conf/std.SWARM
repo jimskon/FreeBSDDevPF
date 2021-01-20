@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/std.SWARM 307082 2016-10-12 02:16:42Z jtl $
+# $FreeBSD$
 #
 
 hints		"SWARM.hints"

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/link_elf_obj.c 348869 2019-06-10 17:38:47Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

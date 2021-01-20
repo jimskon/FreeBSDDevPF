@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/tools/tools/cfi/cfi.c 219521 2011-03-11 18:48:28Z brucec $
+ * $FreeBSD$
  */
 
 /*

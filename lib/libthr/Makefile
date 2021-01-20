@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libthr/Makefile 346155 2019-04-12 15:12:08Z kib $
+# $FreeBSD$
 #
 # All library objects contain FreeBSD revision strings by default; they may be
 # excluded as a space-saving measure.  To produce a library that does

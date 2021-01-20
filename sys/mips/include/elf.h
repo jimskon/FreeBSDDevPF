@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/mips/include/elf.h 331459 2018-03-23 19:31:52Z jhb $
+ * $FreeBSD$
  */
 
 /*-

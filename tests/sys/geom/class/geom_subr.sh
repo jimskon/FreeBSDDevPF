@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tests/sys/geom/class/geom_subr.sh 344135 2019-02-14 20:26:59Z asomers $
+# $FreeBSD$
 
 TEST_MDS_FILE="${TMPDIR}/test_mds.$(basename $0)"
 

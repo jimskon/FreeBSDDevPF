@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/ctm/ctm_smail/Makefile 314659 2017-03-04 11:38:03Z ngie $
+# $FreeBSD$
 
 .PATH: ${.CURDIR:H}/ctm_rmail
 

@@ -33,7 +33,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/riscv/riscv/exception.S 349485 2019-06-28 00:43:38Z mhorne $");
+__FBSDID("$FreeBSD$");
 
 #include "assym.inc"
 

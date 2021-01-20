@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/tty.c 349805 2019-07-07 14:19:46Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/ktrdump/ktrdump.c 342705 2019-01-02 19:46:01Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>

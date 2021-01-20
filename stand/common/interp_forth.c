@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/interp_forth.c 346145 2019-04-12 01:03:00Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>		/* to pick up __FreeBSD_version */
 #include <string.h>

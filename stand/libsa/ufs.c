@@ -68,7 +68,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/ufs.c 335070 2018-06-13 17:42:50Z imp $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone file reading package.

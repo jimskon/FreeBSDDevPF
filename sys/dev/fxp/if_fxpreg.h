@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/fxp/if_fxpreg.h 342370 2018-12-22 19:44:06Z markj $
+ * $FreeBSD$
  */
 
 #define FXP_PCI_MMBA	0x10

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/allwinner/axp81x/Makefile 346693 2019-04-25 18:40:23Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/allwinner
 

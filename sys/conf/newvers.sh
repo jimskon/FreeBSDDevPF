@@ -30,7 +30,7 @@
 # SUCH DAMAGE.
 #
 #	@(#)newvers.sh	8.1 (Berkeley) 4/20/94
-# $FreeBSD: releng/12.1/sys/conf/newvers.sh 354233 2019-11-01 00:00:17Z gjb $
+# $FreeBSD$
 
 # Command line options:
 #

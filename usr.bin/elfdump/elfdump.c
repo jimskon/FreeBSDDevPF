@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/elfdump/elfdump.c 335395 2018-06-19 23:43:14Z oshogbo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

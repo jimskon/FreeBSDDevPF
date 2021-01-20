@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.compiler.mk 351949 2019-09-06 18:23:00Z asomers $
+# $FreeBSD$
 
 # Setup variables for the compiler
 #

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/ifconfig/ifieee80211.c 344196 2019-02-16 01:05:22Z avos $
+ * $FreeBSD$
  */
 
 /*-

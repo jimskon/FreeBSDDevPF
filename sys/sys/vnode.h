@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode.h	8.7 (Berkeley) 2/4/94
- * $FreeBSD: releng/12.1/sys/sys/vnode.h 351957 2019-09-06 19:22:33Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_VNODE_H_

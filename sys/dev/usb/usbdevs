@@ -1,4 +1,4 @@
-$FreeBSD: releng/12.1/sys/dev/usb/usbdevs 349207 2019-06-19 20:09:04Z avg $
+$FreeBSD$
 /* $NetBSD: usbdevs,v 1.392 2004/12/29 08:38:44 imp Exp $ */
 
 /*-

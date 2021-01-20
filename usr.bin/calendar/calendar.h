@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/calendar/calendar.h 345577 2019-03-27 14:47:10Z bapt $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

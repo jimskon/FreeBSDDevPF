@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/bwn/if_bwnvar.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 #ifndef _IF_BWNVAR_H

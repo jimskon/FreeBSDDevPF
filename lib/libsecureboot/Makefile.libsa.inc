@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsecureboot/Makefile.libsa.inc 346737 2019-04-26 11:12:51Z mw $
+# $FreeBSD$
 
 BRSSL_CFLAGS+= -DNO_STDIO
 

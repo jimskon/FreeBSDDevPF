@@ -1,7 +1,7 @@
 /*-
  * Test 0075:	Check boundary conditions (BPF_LD+BPF_MEM)
  *
- * $FreeBSD: releng/12.1/tools/regression/bpf/bpf_filter/tests/test0075.h 307708 2016-10-21 06:56:30Z jkim $
+ * $FreeBSD$
  */
 
 /* BPF program */

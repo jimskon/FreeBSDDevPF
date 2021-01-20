@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/usb/wlan/if_urtwvar.h 346003 2019-04-07 12:57:38Z avos $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2008 Weongyo Jeong <weongyo@FreeBSD.org>

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/efi/include/efipciio.h 293724 2016-01-12 02:17:39Z smh $ */
+/* $FreeBSD$ */
 /** @file
   EFI PCI I/O Protocol provides the basic Memory, I/O, PCI configuration, 
   and DMA interfaces that a driver uses to access its PCI controller.

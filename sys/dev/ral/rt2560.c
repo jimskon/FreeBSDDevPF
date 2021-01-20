@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/ral/rt2560.c 343975 2019-02-10 20:59:35Z avos $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2005, 2006
@@ -18,7 +18,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ral/rt2560.c 343975 2019-02-10 20:59:35Z avos $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * Ralink Technology RT2560 chipset driver

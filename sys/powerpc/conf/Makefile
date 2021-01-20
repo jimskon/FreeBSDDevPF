@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/powerpc/conf/Makefile 249390 2013-04-11 22:18:20Z bz $
+# $FreeBSD$
 
 TARGET=powerpc
 

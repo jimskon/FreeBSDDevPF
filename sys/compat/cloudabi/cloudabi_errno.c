@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/cloudabi/cloudabi_errno.c 297247 2016-03-24 21:47:15Z ed $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

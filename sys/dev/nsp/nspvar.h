@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/nsp/nspvar.h 326255 2017-11-27 14:52:40Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$NecBSD: nspvar.h,v 1.7.14.5 2001/06/29 06:27:54 honda Exp $	*/
 /*	$NetBSD$	*/
 

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/linux/linux_sysvec.c 347571 2019-05-14 19:52:18Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #define	__ELF_WORD_SIZE	64
 

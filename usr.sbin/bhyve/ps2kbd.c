@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/ps2kbd.c 341757 2018-12-09 06:41:57Z araujo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

@@ -31,7 +31,7 @@
  * FreeBSD Version.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/isp/isp_pci.c 344910 2019-03-08 00:56:07Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>

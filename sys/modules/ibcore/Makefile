@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ibcore/Makefile 326169 2017-11-24 14:50:28Z hselasky $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/ofed/drivers/infiniband/core
 
 KMOD=	ibcore

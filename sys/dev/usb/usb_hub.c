@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/usb_hub.c 343134 2019-01-18 08:47:48Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD
  *

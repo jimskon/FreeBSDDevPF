@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/usr.bin/top/utils.h 344382 2019-02-20 20:28:48Z dim $
+ * $FreeBSD$
  *
  *  Top users/processes display for Unix
  *

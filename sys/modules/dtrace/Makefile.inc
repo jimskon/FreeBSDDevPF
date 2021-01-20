@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/dtrace/Makefile.inc 285703 2015-07-19 22:14:09Z markj $
+# $FreeBSD$
 
 IGNORE_PRAGMA=	1
 

@@ -25,7 +25,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/asmc/asmcvar.h 344888 2019-03-07 15:30:48Z dab $
+ * $FreeBSD$
  *
  */
 

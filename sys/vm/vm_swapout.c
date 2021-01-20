@@ -71,7 +71,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_swapout.c 351571 2019-08-28 16:16:35Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kstack_pages.h"
 #include "opt_kstack_max_pages.h"

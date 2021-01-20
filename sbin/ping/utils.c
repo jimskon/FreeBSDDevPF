@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)ping.c	8.1 (Berkeley) 6/5/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/ping/utils.c 352357 2019-09-15 16:53:02Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <string.h>
 

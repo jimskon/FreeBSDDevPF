@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/ctm/mkCTM/Makefile 275054 2014-11-25 16:57:27Z bapt $
+# $FreeBSD$
 
 PROG=	mkctm
 MAN=

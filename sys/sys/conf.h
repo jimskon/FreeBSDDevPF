@@ -36,7 +36,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)conf.h	8.5 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.1/sys/sys/conf.h 333282 2018-05-06 00:22:38Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_CONF_H_

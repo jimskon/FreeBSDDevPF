@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mse/mse_isa.c 327102 2017-12-23 06:49:27Z imp $
+ * $FreeBSD$
  */
 
 /*-

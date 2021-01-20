@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2008 John Birrell <jb@freebsd.org>
  *
- * $FreeBSD: releng/12.1/sys/cddl/dev/dtrace/amd64/dtrace_asm.S 342267 2018-12-19 23:29:44Z mjg $
+ * $FreeBSD$
  *
  */
 /*

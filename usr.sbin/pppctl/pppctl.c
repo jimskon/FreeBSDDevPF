@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/pppctl/pppctl.c 328551 2018-01-29 14:23:44Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

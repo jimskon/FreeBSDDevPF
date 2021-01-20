@@ -1,4 +1,4 @@
-$FreeBSD: releng/12.1/tools/tools/netmap/README 340618 2018-11-19 08:53:52Z vmaffione $
+$FreeBSD$
 
 This directory contains applications that use the netmap API
 

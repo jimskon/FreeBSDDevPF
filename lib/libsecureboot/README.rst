@@ -131,4 +131,4 @@ from the relevant chain - which is sure to be a valid certificate
 signed by the corresponding trust anchor.
 
 --------------------
-$FreeBSD: releng/12.1/lib/libsecureboot/README.rst 344565 2019-02-26 06:09:10Z sjg $
+$FreeBSD$

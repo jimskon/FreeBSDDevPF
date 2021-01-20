@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/geom/concat/g_concat.h 341237 2018-11-29 15:38:27Z markj $
+ * $FreeBSD$
  */
 
 #ifndef	_G_CONCAT_H_

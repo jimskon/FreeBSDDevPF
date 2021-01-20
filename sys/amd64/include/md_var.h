@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/md_var.h 340552 2018-11-18 09:49:24Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_MD_VAR_H_

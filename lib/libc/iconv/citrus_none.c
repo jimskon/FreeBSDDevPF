@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/libc/iconv/citrus_none.c 349622 2019-07-03 00:01:38Z emaste $ */
+/* $FreeBSD$ */
 /* $NetBSD: citrus_none.c,v 1.18 2008/06/14 16:01:07 tnozaki Exp $ */
 
 /*-

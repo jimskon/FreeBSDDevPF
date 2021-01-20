@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/powerpc/kboot/main.c 348683 2019-06-05 12:34:28Z luporl $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <sys/endian.h>

@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_jail.c 340603 2018-11-19 05:40:37Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_inet.h"

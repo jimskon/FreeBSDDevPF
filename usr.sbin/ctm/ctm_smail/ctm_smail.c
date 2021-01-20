@@ -11,7 +11,7 @@
  * In return you should think about all the nice people who give away software.
  * Maybe you should write some free software too.
  *
- * $FreeBSD: releng/12.1/usr.sbin/ctm/ctm_smail/ctm_smail.c 316795 2017-04-13 22:59:17Z cem $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

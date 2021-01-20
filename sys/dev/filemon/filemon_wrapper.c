@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/filemon/filemon_wrapper.c 337272 2018-08-03 19:24:04Z bdrewery $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/eventhandler.h>
 #include <sys/filedesc.h>

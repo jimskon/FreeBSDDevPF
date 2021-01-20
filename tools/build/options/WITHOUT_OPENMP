@@ -1,2 +1,2 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_OPENMP 346331 2019-04-17 20:08:01Z dim $
+.\" $FreeBSD$
 Set to not build LLVM's OpenMP runtime.

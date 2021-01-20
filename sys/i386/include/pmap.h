@@ -40,7 +40,7 @@
  *
  *	from: hp300: @(#)pmap.h	7.2 (Berkeley) 12/16/90
  *	from: @(#)pmap.h	7.4 (Berkeley) 5/12/91
- * $FreeBSD: releng/12.1/sys/i386/include/pmap.h 344848 2019-03-06 17:33:05Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PMAP_H_

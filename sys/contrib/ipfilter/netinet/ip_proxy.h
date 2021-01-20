@@ -1,11 +1,11 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_proxy.h 348600 2019-06-04 03:04:30Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
  * See the IPFILTER.LICENCE file for details on licencing.
  *
- * $FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_proxy.h 348600 2019-06-04 03:04:30Z cy $
+ * $FreeBSD$
  * Id: ip_proxy.h,v 2.31.2.2 2005/03/12 19:33:48 darrenr Exp
  */
 

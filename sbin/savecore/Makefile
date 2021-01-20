@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/savecore/Makefile 341493 2018-12-04 20:40:28Z garga $
+# $FreeBSD$
 
 PACKAGE=runtime
 CONFS=	minfree

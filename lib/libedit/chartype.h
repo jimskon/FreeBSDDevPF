@@ -25,7 +25,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libedit/chartype.h 343090 2019-01-16 12:04:24Z bapt $
+ * $FreeBSD$
  */
 
 #ifndef _h_chartype_f

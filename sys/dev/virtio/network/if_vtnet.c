@@ -29,7 +29,7 @@
 /* Driver for VirtIO network devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/virtio/network/if_vtnet.c 347900 2019-05-17 08:19:43Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/eventhandler.h>

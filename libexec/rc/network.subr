@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/libexec/rc/network.subr 349725 2019-07-04 13:20:32Z eugen $
+# $FreeBSD$
 #
 IFCONFIG_CMD="/sbin/ifconfig"
 : ${netif_ipexpand_max:=2048}

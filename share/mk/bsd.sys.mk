@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.sys.mk 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 #
 # This file contains common settings used for building FreeBSD
 # sources.

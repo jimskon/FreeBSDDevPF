@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/pf/pf_lb.c 342542 2018-12-26 12:54:24Z kp $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_pf.h"
 #include "opt_inet.h"

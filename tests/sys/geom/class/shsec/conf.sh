@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tests/sys/geom/class/shsec/conf.sh 293441 2016-01-08 21:25:27Z ngie $
+# $FreeBSD$
 
 name="$(mktemp -u shsec.XXXXXX)"
 class="shsec"

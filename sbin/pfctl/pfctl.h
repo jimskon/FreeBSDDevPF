@@ -30,7 +30,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/pfctl/pfctl.h 344026 2019-02-11 23:13:38Z pkelsey $
+ * $FreeBSD$
  */
 
 #ifndef _PFCTL_H_

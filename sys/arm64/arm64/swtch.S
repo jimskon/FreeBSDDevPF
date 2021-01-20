@@ -35,7 +35,7 @@
 
 #include <machine/asm.h>
 
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/swtch.S 352402 2019-09-16 14:45:20Z andrew $");
+__FBSDID("$FreeBSD$");
 
 .macro clear_step_flag pcbflags, tmp
 	tbz	\pcbflags, #PCB_SINGLE_STEP_SHIFT, 999f

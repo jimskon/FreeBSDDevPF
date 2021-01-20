@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/sparc64/loader/Makefile 345327 2019-03-20 15:34:40Z mmacy $
+# $FreeBSD$
 
 HAVE_ZFS=		${MK_LOADER_ZFS}
 

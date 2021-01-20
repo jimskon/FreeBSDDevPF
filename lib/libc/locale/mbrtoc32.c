@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/locale/mbrtoc32.c 326193 2017-11-25 17:12:48Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <uchar.h>
 #include <wchar.h>

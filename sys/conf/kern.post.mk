@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/kern.post.mk 351892 2019-09-05 20:31:25Z bdrewery $
+# $FreeBSD$
 
 # Part of a unified Makefile for building kernels.  This part includes all
 # the definitions that need to be after all the % directives except %RULES

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/isci/isci.c 345530 2019-03-26 11:03:09Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/isci/isci.h>
 

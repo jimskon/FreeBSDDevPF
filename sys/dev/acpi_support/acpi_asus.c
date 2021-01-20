@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/acpi_support/acpi_asus.c 273377 2014-10-21 07:31:21Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for extra ACPI-controlled gadgets (hotkeys, leds, etc) found on

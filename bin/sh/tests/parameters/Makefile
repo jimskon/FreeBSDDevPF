@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/sh/tests/parameters/Makefile 306843 2016-10-08 13:40:12Z jilles $
+# $FreeBSD$
 
 PACKAGE=	tests
 

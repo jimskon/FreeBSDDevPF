@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: releng/12.1/sbin/ipfw/ipv6.c 341056 2018-11-27 14:01:59Z ae $
+ * $FreeBSD$
  *
  * ipv6 support
  */

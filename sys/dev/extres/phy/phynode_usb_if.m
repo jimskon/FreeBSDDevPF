@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/dev/extres/phy/phynode_usb_if.m 350592 2019-08-05 16:36:11Z manu $
+# $FreeBSD$
 #
 
 INTERFACE phynode_usb;

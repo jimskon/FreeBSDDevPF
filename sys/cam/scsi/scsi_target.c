@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/scsi/scsi_target.c 326645 2017-12-06 23:05:22Z imp $");
+__FBSDID("$FreeBSD$");
 
 
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.cpu.mk 350476 2019-07-31 18:40:43Z brooks $
+# $FreeBSD$
 
 # Set default CPU compile flags and baseline CPUTYPE for each arch.  The
 # compile flags must support the minimum CPU type for each architecture but

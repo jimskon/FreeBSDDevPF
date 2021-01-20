@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/mips/mediatek/mtk_machdep.c 336245 2018-07-13 16:43:17Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

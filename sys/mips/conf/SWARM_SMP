@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/SWARM_SMP 263301 2014-03-18 14:41:18Z imp $
+# $FreeBSD$
 #
 
 include		"std.SWARM"

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/netmap/if_ptnet.c 348517 2019-06-02 20:03:00Z vmaffione $
+ * $FreeBSD$
  */
 
 /* Driver for ptnet paravirtualized network device. */

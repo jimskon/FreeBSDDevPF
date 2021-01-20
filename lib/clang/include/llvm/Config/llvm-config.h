@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/clang/include/llvm/Config/llvm-config.h 350256 2019-07-23 18:40:32Z dim $ */
+/* $FreeBSD$ */
 /*===------- llvm/Config/llvm-config.h - llvm configuration -------*- C -*-===*/
 /*                                                                            */
 /*                     The LLVM Compiler Infrastructure                       */

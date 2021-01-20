@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  * All rights reserved.
  *
- * $FreeBSD: releng/12.1/sys/dev/advansys/advansys.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _ADVANSYS_H_

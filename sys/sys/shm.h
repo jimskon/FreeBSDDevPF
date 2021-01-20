@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/sys/shm.h 343356 2019-01-23 20:34:22Z kib $ */
+/* $FreeBSD$ */
 /*	$NetBSD: shm.h,v 1.15 1994/06/29 06:45:17 cgd Exp $	*/
 
 /*-

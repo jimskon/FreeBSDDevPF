@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/veriexec/Makefile 344567 2019-02-26 06:17:23Z sjg $
+# $FreeBSD$
 
 PROG=	veriexec
 MAN=	veriexec.8

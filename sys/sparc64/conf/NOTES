@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/sparc64/conf/NOTES 316623 2017-04-07 21:06:50Z sevan $
+# $FreeBSD$
 #
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.

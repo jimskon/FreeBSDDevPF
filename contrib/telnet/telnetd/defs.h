@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)defs.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: releng/12.1/contrib/telnet/telnetd/defs.h 351431 2019-08-23 17:39:59Z emaste $
+ * $FreeBSD$
  */
 
 /*

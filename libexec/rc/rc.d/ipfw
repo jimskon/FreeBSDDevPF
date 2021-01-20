@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/ipfw 346180 2019-04-13 08:55:49Z ae $
+# $FreeBSD$
 #
 
 # PROVIDE: ipfw

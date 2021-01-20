@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ichwd/ichwd.h 342566 2018-12-28 08:49:51Z avg $
+ * $FreeBSD$
  */
 
 #ifndef _ICHWD_H_

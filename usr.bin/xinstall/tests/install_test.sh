@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/xinstall/tests/install_test.sh 344205 2019-02-16 04:48:30Z kevans $
+# $FreeBSD$
 #
 
 copy_to_nonexistent_with_opts() {

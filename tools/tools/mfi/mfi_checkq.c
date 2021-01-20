@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/tools/tools/mfi/mfi_checkq.c 165725 2007-01-01 23:50:04Z scottl $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/fcntl.h>

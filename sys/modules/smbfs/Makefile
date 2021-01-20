@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/smbfs/Makefile 314651 2017-03-04 10:10:17Z ngie $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/crypto/des \
 	${SRCTOP}/sys/crypto/des/arch/${MACHINE_CPUARCH} \

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/geom_subr.c 332070 2018-04-05 13:56:40Z sbruno $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 

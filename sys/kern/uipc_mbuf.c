@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_mbuf.c 334054 2018-05-22 15:54:25Z fabient $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 #include "opt_mbuf_stress_test.h"

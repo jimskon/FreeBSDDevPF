@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/fs/fusefs/Makefile 350455 2019-07-30 19:47:45Z asomers $
+# $FreeBSD$
 
 PACKAGE=	tests
 

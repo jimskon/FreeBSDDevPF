@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/gzip/unlz.c 343250 2019-01-21 06:14:26Z delphij $
+ * $FreeBSD$
  */
 
 /*  Lzd - Educational decompressor for the lzip format

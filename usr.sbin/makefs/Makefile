@@ -1,4 +1,4 @@
-#	$FreeBSD: releng/12.1/usr.sbin/makefs/Makefile 352079 2019-09-09 17:32:40Z emaste $
+#	$FreeBSD$
 
 SRCDIR:=${.PARSEDIR:tA}
 

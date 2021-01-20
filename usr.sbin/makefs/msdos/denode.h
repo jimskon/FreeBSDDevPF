@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/makefs/msdos/denode.h 352079 2019-09-09 17:32:40Z emaste $ */
+/* $FreeBSD$ */
 /*	$NetBSD: denode.h,v 1.25 1997/11/17 15:36:28 ws Exp $	*/
 
 /*-

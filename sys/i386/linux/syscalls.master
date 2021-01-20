@@ -1,4 +1,4 @@
- $FreeBSD: releng/12.1/sys/i386/linux/syscalls.master 346843 2019-04-28 14:37:20Z dchagin $
+ $FreeBSD$
 
 ;	@(#)syscalls.master	8.1 (Berkeley) 7/19/93
 ; System call name/number master file (or rather, slave, from LINUX).

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/12.1/usr.sbin/mpsutil/mpsutil.c 351913 2019-09-05 23:27:59Z imp $");
+__RCSID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>

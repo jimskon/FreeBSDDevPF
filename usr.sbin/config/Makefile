@@ -1,5 +1,5 @@
 # 	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/12.1/usr.sbin/config/Makefile 352276 2019-09-13 07:08:43Z bapt $
+# $FreeBSD$
 
 SRCDIR:=${.PARSEDIR:tA}
 

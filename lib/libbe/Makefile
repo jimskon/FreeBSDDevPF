@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libbe/Makefile 346802 2019-04-28 03:49:40Z kevans $
+# $FreeBSD$
 
 SHLIBDIR?=	/lib
 

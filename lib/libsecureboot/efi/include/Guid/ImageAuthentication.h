@@ -15,7 +15,7 @@
 #define __IMAGE_AUTHTICATION_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/efi/include/Guid/ImageAuthentication.h 344840 2019-03-06 06:39:42Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include <Guid/GlobalVariable.h>
 #include <Protocol/Hash.h>

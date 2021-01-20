@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/kern/Makefile 337222 2018-08-03 01:37:00Z asomers $
+# $FreeBSD$
 
 TESTSRC=	${SRCTOP}/contrib/netbsd-tests/kernel
 .PATH:		${SRCTOP}/sys/kern

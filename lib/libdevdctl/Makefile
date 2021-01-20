@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libdevdctl/Makefile 300906 2016-05-28 17:43:40Z asomers $
+# $FreeBSD$
 
 LIB_CXX=	devdctl
 INCS=	consumer.h		\

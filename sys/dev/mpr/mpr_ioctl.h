@@ -29,7 +29,7 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD userland interface
  *
- * $FreeBSD: releng/12.1/sys/dev/mpr/mpr_ioctl.h 352761 2019-09-26 16:51:51Z imp $
+ * $FreeBSD$
  */
 /*-
  * Copyright (c) 2011-2015 LSI Corp.
@@ -60,7 +60,7 @@
  *
  * Broadcom Inc. (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.1/sys/dev/mpr/mpr_ioctl.h 352761 2019-09-26 16:51:51Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _MPR_IOCTL_H_

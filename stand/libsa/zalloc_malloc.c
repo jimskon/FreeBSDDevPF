@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/zalloc_malloc.c 353543 2019-10-15 06:19:33Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MALLOC.C - malloc equivalent, runs on top of zalloc and uses sbrk

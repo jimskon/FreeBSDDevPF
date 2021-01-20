@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/m4/gnum4.c 352277 2019-09-13 07:10:50Z bapt $");
+__FBSDID("$FreeBSD$");
 
 /*
  * functions needed to support gnu-m4 extensions, including a fake freezing

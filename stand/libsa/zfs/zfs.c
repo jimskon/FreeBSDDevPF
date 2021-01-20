@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/stand/libsa/zfs/zfs.c 350342 2019-07-26 01:47:20Z kevans $
+ *	$FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/zfs/zfs.c 350342 2019-07-26 01:47:20Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone file reading package.

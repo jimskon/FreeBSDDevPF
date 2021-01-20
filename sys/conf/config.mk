@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/config.mk 330722 2018-03-10 02:09:36Z bdrewery $
+# $FreeBSD$
 #
 # Common code to marry kernel config(8) goo and module building goo.
 #

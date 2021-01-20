@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__RCSID("$FreeBSD: releng/12.1/usr.sbin/mpsutil/mps_flash.c 298374 2016-04-20 21:11:49Z bapt $");
+__RCSID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/param.h>

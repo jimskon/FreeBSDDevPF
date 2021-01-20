@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/sparc64/static_tls.h 346155 2019-04-12 15:12:08Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _LIBC_SPARC64_STATIC_TLS_H

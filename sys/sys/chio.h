@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/chio.h 327288 2017-12-28 14:26:33Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_CHIO_H_

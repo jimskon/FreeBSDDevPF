@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/dirdeps-options.mk 337186 2018-08-02 21:33:45Z sjg $
+# $FreeBSD$
 # $Id: dirdeps-options.mk,v 1.8 2018/05/29 22:31:21 sjg Exp $
 #
 #	@(#) Copyright (c) 2018, Simon J. Gerraty

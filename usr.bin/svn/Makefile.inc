@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/svn/Makefile.inc 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

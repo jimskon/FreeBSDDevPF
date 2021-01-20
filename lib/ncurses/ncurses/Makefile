@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/ncurses/ncurses/Makefile 335733 2018-06-27 19:29:15Z bdrewery $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SHLIBDIR?=	/lib

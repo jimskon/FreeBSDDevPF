@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/man/man4/man4.i386/Makefile 314373 2017-02-28 05:14:42Z glebius $
+# $FreeBSD$
 
 PACKAGE=runtime-manuals
 

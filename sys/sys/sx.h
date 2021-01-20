@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/sx.h 336230 2018-07-12 22:34:40Z mjg $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_SX_H_

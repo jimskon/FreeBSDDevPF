@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_rwlock.c 342248 2018-12-19 22:31:20Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_hwpmc_hooks.h"

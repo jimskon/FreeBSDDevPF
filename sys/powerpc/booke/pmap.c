@@ -75,7 +75,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/booke/pmap.c 349680 2019-07-03 19:25:57Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"

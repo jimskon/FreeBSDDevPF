@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/jail/jailp.h 341788 2018-12-10 13:41:28Z eugen $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

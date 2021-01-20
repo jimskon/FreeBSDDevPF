@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_en/mlx5_en_rx.c 347782 2019-05-16 16:39:02Z hselasky $
+ * $FreeBSD$
  */
 
 #include "en.h"

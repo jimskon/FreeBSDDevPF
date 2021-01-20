@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/stg/tmc18c30reg.h 326255 2017-11-27 14:52:40Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$NecBSD: tmc18c30reg.h,v 1.4.24.1 2001/06/08 06:27:50 honda Exp $	*/
 /*	$NetBSD$	*/
 

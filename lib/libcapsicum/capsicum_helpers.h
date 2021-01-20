@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libcapsicum/capsicum_helpers.h 349425 2019-06-26 16:38:46Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _CAPSICUM_HELPERS_H_

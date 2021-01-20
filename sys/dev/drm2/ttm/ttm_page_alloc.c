@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/drm2/ttm/ttm_page_alloc.c 349139 2019-06-17 15:11:04Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/drm2/drmP.h>
 #include <dev/drm2/ttm/ttm_bo_driver.h>

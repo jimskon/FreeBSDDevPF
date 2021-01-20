@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/i2c/ads111x/Makefile 350591 2019-08-05 15:56:44Z ian $
+# $FreeBSD$
 
 .PATH:		${SRCTOP}/sys/dev/iicbus
 

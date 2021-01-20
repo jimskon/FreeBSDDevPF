@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.1/usr.sbin/ctm/ctm/ctm.c 340444 2018-11-14 20:35:04Z se $
+ * $FreeBSD$
  *
  * This is the client program of 'CTM'.  It will apply a CTM-patch to a
  * collection of files.

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/mips/ingenic/files.jz4780 310493 2016-12-24 02:31:26Z kan $
+# $FreeBSD$
 
 mips/ingenic/jz4780_dwc_fdt.c	optional dwcotg
 mips/ingenic/jz4780_ehci.c	optional ehci

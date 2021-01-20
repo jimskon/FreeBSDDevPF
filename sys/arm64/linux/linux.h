@@ -26,7 +26,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.1/sys/arm64/linux/linux.h 348092 2019-05-22 05:32:39Z dchagin $
+ * $FreeBSD$
  */
 #ifndef _ARM64_LINUX_H_
 #define	_ARM64_LINUX_H_

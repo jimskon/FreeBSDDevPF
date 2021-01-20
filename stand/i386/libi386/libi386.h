@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/i386/libi386/libi386.h 342995 2019-01-13 07:25:55Z tsoome $
+ * $FreeBSD$
  */
 
 

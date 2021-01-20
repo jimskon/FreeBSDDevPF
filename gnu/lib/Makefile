@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/gnu/lib/Makefile 352394 2019-09-16 13:41:24Z andrew $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

@@ -25,7 +25,7 @@
  ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  ** POSSIBILITY OF SUCH DAMAGE.
  **/
-/* $FreeBSD: releng/12.1/tools/tools/netmap/pkt_hash.h 340618 2018-11-19 08:53:52Z vmaffione $ */
+/* $FreeBSD$ */
 #ifndef LB_PKT_HASH_H
 #define LB_PKT_HASH_H
 /*---------------------------------------------------------------------*/

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/powerpc/Makefile 348686 2019-06-05 12:53:36Z luporl $
+# $FreeBSD$
 
 NO_OBJ=t
 

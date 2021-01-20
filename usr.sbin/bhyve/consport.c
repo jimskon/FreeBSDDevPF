@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/consport.c 349961 2019-07-13 00:23:20Z jhb $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/consport.c 349961 2019-07-13 00:23:20Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifndef WITHOUT_CAPSICUM

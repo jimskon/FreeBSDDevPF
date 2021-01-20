@@ -32,7 +32,7 @@
 /* Generic ECAM PCIe driver */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/pci/pci_host_generic_acpi.c 352471 2019-09-18 07:16:00Z jchandra $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

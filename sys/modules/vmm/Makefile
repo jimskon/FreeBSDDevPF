@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/vmm/Makefile 335910 2018-07-03 21:02:25Z bdrewery $
+# $FreeBSD$
 
 KMOD=	vmm
 

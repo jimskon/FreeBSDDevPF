@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/bhnd/siba/Makefile 326301 2017-11-28 00:42:44Z landonf $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/bhnd/siba
 

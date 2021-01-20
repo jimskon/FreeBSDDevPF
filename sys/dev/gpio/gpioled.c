@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/gpio/gpioled.c 348735 2019-06-06 11:42:26Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

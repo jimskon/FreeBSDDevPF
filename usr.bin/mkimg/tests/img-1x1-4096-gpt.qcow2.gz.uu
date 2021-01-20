@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/mkimg/tests/img-1x1-4096-gpt.qcow2.gz.uu 345428 2019-03-22 23:55:35Z marcel $
+# $FreeBSD$
 begin 644 img-1x1-4096-gpt.qcow2.gz
 M'XL("-N7?5P``VEM9RTQ>#$M-#`Y-BUG<'0N<6-O=S(N;W5T`*V82V^<,!"`
 M[_D53M])FBT>V\"FSR3-2KDE57OKA67A&*D]T_[V8CS@Q<Q`LO6NM4IDS2?;

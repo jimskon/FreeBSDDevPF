@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/linux/linux_event.c 341376 2018-12-01 17:48:28Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_compat.h"
 

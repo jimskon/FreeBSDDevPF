@@ -5,7 +5,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/input/uhid.c 343155 2019-01-18 20:59:06Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-NetBSD

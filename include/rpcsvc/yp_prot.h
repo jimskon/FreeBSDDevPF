@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/include/rpcsvc/yp_prot.h 351691 2019-09-02 08:20:02Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _RPCSVC_YP_PROT_H_

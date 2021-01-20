@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/Versions.def 340607 2018-11-19 05:47:31Z kib $
+# $FreeBSD$
 
 #
 # Note: Whenever bumping the FBSD version, always make

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ichiic/ig4_iic.c 352362 2019-09-15 19:16:42Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Intel fourth generation mobile cpus integrated I2C device.

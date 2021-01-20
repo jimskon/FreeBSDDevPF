@@ -1,5 +1,5 @@
 
-# $FreeBSD: releng/12.1/sys/modules/em/Makefile 351940 2019-09-06 17:21:21Z asomers $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/e1000
 KMOD    = if_em
