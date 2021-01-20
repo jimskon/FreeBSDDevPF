@@ -252,8 +252,10 @@ altq_enable(ifq)
 	struct ifaltq *ifq;
 {
   for (int i=0; i<MAXQ ; i++) {
+    // skon
+    printf("altq_enable:%d:%d:%d\n",i,ifq[i].altq_index,ifq[i].altq_inuse);
     if (ifq[i].altq_inuse) {
-      printf("altq_enable:%d\n",ifq[i].altq_index);
+
 	int s;
 
 	IFQ_LOCK(&ifq[i]);
@@ -264,7 +266,7 @@ altq_enable(ifq)
 	}
 	if (ALTQ_IS_ENABLED(&ifq[i])) {
 		IFQ_UNLOCK(&ifq[i]);
-		return 0;
+		break;
 	}
 
 	s = splnet();
@@ -545,6 +547,7 @@ altq_pfattach(struct pf_altq *a)
  * detach a discipline from the interface.
  * it is possible that the discipline was already overridden by another
  * discipline.
+ * Skon - must fix for multiple queues
  */
 int
 altq_pfdetach(struct pf_altq *a)
@@ -555,19 +558,27 @@ altq_pfdetach(struct pf_altq *a)
 	if ((ifp = ifunit(a->ifname)) == NULL)
 		return (EINVAL);
 
-	/* if this discipline is no longer referenced, just return */
-	/* read unlocked from if_snd */
-	if (a->altq_disc == NULL || a->altq_disc != ifp->if_snd[0].altq_disc)
-		return (0);
+	// Skon - do for all queues
+	for (int i=0; i<MAXQ; i++) {
+	  if (ifp->if_snd[i].altq_inuse) {
+	    // Skon
+	    printf("altq_pfdetach: %d\n",ifp->if_snd[i].altq_index);
+	    /* if this discipline is no longer referenced, just return */
+	    /* read unlocked from if_snd */
+	    if (a->altq_disc == NULL || a->altq_disc != ifp->if_snd[i].altq_disc)
+	      break;
+	    //return (0);
 
-	s = splnet();
-	/* read unlocked from if_snd, _disable and _detach take care */
-	if (ALTQ_IS_ENABLED(&ifp->if_snd[0]))
-		error = altq_disable(&ifp->if_snd[0]);
-	if (error == 0)
-		error = altq_detach(&ifp->if_snd[0]);
-	splx(s);
-
+	    s = splnet();
+	    /* read unlocked from if_snd, _disable and _detach take care */
+	    if (ALTQ_IS_ENABLED(&ifp->if_snd[i]))
+		error = altq_disable(&ifp->if_snd[i]);
+	    if (error == 0)
+	      error = altq_detach(&ifp->if_snd[i]);
+	    splx(s);
+	  }
+	}
+	
 	return (error);
 }
 

@@ -748,9 +748,11 @@ pf_enable_altq(struct pf_altq *altq)
 	if ((ifp = ifunit(altq->ifname)) == NULL)
 		return (EINVAL);
 
-	if (ifp->if_snd[0].altq_type != ALTQT_NONE)
+	if (ifp->if_snd[0].altq_type != ALTQT_NONE) {
+	  // skon
+	  printf("pf_enable_altq: %s\n",altq->ifname); 
 		error = altq_enable(&ifp->if_snd[0]);
-
+	}
 	/* set tokenbucket regulator */
 	if (error == 0 && ifp != NULL && ALTQ_IS_ENABLED(&ifp->if_snd[0])) {
 		tb.rate = altq->ifbandwidth;

@@ -4102,7 +4102,7 @@ iflib_if_transmit_altq(if_t ifp, struct mbuf *m, int index)
 	/*
 	 * XXX calculate buf_ring based on flowid (divvy up bits?)
 	 */
-	printf("%d",qidx);
+	//printf("%d",qidx);
 	txq = &ctx->ifc_txqs[qidx];
 
 #ifdef DRIVER_BACKPRESSURE
@@ -4190,7 +4190,10 @@ iflib_altq_if_start(if_t ifp)
 	struct mbuf *m;
 
 	for (int i = 0; i < MAXQ; i++) {
-	  if (ifq[i].altq_inuse && ifq[i].ifq_len>0) {
+
+	  if (ALTQ_IS_ENABLED(&ifp->if_snd[i]) &&
+	      ifq[i].altq_inuse && ifq[i].ifq_len>0) {
+	    //printf("%d:%d ",i,ifq[i].ifq_len);
 	    //printf("Q%d:%d ",i,ifq[i].ifq_len);
 	    IFQ_LOCK(&ifq[i]);
 	    IFQ_DEQUEUE_NOLOCK(&ifq[i], m);
@@ -4203,6 +4206,25 @@ iflib_altq_if_start(if_t ifp)
 	  }
 	}
 }
+	// Version that iterates through the queues
+	/*int mbuf_aval = 1;
+	while (mbuf_aval) {
+	  mbuf_aval=0;
+	  for (int i = 0; i < MAXQ; i++) {
+	    if (ifq[i].altq_inuse && ifq[i].ifq_len>0) {
+	      //printf("Q%d:%d ",i,ifq[i].ifq_len);
+	      IFQ_LOCK(&ifq[i]);
+	      IFQ_DEQUEUE_NOLOCK(&ifq[i], m);
+	      if (m != NULL) {
+		mbuf_aval=1;
+		//printf("T%d ",i);
+		iflib_if_transmit_altq(ifp, m, i);
+		IFQ_DEQUEUE_NOLOCK(&ifq[i], m);
+	      }
+	      IFQ_UNLOCK(&ifq[i]);
+	    }
+	  }
+	}*/
 
 static int
 iflib_altq_if_transmit(if_t ifp, struct mbuf *m)
