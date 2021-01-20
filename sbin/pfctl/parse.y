@@ -2853,7 +2853,7 @@ if_item		: STRING			{
 			  int idx = atoi(ptr);
 			  printf("INDEX: %d\n",idx);
                           $$->altq_index=idx;;
-                          if ($$->altq_index < 0 || $$->altq_index>7 {
+                          if ($$->altq_index < 0 || $$->altq_index>7) {
                             yyerror("Interface number must be between 0 and 7");
                             YYERROR;
                           }
