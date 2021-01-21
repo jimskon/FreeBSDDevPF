@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/conf/NOTES 350867 2019-08-11 20:50:41Z ian $
+# $FreeBSD$
 
 options 	FDT
 
@@ -42,3 +42,7 @@ nodevice	mps
 # Add devices which are specific to various arm platforms...
 
 device		twsi		# i2c controller on Marvel and Allwinner
+
+device		pl330		# ARM PL330 dma controller
+device		xdma		# xDMA framework for SoC on-chip dma controllers
+

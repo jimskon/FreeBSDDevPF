@@ -1,7 +1,7 @@
 /*	$NetBSD: mdreloc.c,v 1.23 2003/07/26 15:04:38 mrg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/libexec/rtld-elf/arm/reloc.c 346142 2019-04-12 00:31:22Z emaste $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -444,6 +444,15 @@ reloc_jmpslots(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 
 int
 reloc_iresolve(Obj_Entry *obj __unused,
+    struct Struct_RtldLockState *lockstate __unused)
+{
+
+	/* XXX not implemented */
+	return (0);
+}
+
+int
+reloc_iresolve_nonplt(Obj_Entry *obj __unused,
     struct Struct_RtldLockState *lockstate __unused)
 {
 

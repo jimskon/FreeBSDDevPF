@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/fs/msdosfs/msdosfs_vnops.c 340970 2018-11-26 14:01:05Z markj $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_vnops.c,v 1.68 1998/02/10 14:10:04 mrg Exp $	*/
 
 /*-

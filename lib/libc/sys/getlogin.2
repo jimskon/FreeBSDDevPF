@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)getlogin.2	8.1 (Berkeley) 6/9/93
-.\" $FreeBSD: releng/12.1/lib/libc/sys/getlogin.2 337264 2018-08-03 16:05:03Z br $
+.\" $FreeBSD$
 .\"
-.Dd June 9, 1993
+.Dd September 9, 2020
 .Dt GETLOGIN 2
 .Os
 .Sh NAME
@@ -44,7 +44,7 @@
 .Fn getlogin void
 .In sys/param.h
 .Ft int
-.Fn getlogin_r "char *name" "int len"
+.Fn getlogin_r "char *name" "size_t len"
 .Ft int
 .Fn setlogin "const char *name"
 .Sh DESCRIPTION

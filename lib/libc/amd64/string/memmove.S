@@ -27,7 +27,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/amd64/string/memmove.S 342240 2018-12-19 21:25:43Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #define	ALIGN_TEXT	.p2align 4,0x90 /* 16-byte alignment, nop filled */
 

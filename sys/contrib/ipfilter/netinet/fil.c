@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/fil.c 351775 2019-09-03 19:14:00Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -104,7 +104,7 @@ extern struct callout ipf_slowtimer_ch;
 
 #if !defined(lint)
 static const char sccsid[] = "@(#)fil.c	1.36 6/5/96 (C) 1993-2000 Darren Reed";
-static const char rcsid[] = "@(#)$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/fil.c 351775 2019-09-03 19:14:00Z cy $";
+static const char rcsid[] = "@(#)$FreeBSD$";
 /* static const char rcsid[] = "@(#)$Id: fil.c,v 2.243.2.125 2007/10/10 09:27:20 darrenr Exp $"; */
 #endif
 
@@ -114,6 +114,8 @@ static const char rcsid[] = "@(#)$FreeBSD: releng/12.1/sys/contrib/ipfilter/neti
 extern	int	opts;
 extern	int	blockreason;
 #endif /* _KERNEL */
+
+#define FASTROUTE_RECURSION
 
 #define	LBUMP(x)	softc->x++
 #define	LBUMPD(x, y)	do { softc->x.y++; DT(y); } while (0)
@@ -179,10 +181,6 @@ static	int		ipf_updateipid __P((fr_info_t *));
 static	int		ipf_settimeout __P((struct ipf_main_softc_s *,
 					    struct ipftuneable *,
 					    ipftuneval_t *));
-#ifdef	USE_INET6
-static	u_int		ipf_pcksum6 __P((fr_info_t *, ip6_t *,
-						u_int32_t, u_int32_t));
-#endif
 #if !defined(_KERNEL) || SOLARIS
 static	int		ppsratecheck(struct timeval *, int *, int);
 #endif
@@ -1700,7 +1698,7 @@ ipf_pr_ipv4hdr(fin)
 	fi->fi_p = p;
 	fin->fin_crc = p;
 	fi->fi_tos = ip->ip_tos;
-	fin->fin_id = ip->ip_id;
+	fin->fin_id = ntohs(ip->ip_id);
 	off = ntohs(ip->ip_off);
 
 	/* Get both TTL and protocol */
@@ -3440,7 +3438,7 @@ fr_cksum(fin, ip, l4proto, l4hdr)
 		ip6 = (ip6_t *)ip;
 		off = ((caddr_t)ip6 - m->m_data) + sizeof(struct ip6_hdr);
 		int len = ntohs(ip6->ip6_plen) - (off - sizeof(*ip6));
-		return(ipf_pcksum6(fin, ip6, off, len));
+		return(ipf_pcksum6(m, ip6, off, len));
 	} else {
 		return 0xffff;
 	}
@@ -6730,8 +6728,11 @@ ipf_checkl4sum(fin)
 		/*NOTREACHED*/
 	}
 
-	if (csump != NULL)
+	if (csump != NULL) {
 		hdrsum = *csump;
+		if (fin->fin_p == IPPROTO_UDP && hdrsum == 0xffff)
+			hdrsum = 0x0000;
+	}
 
 	if (dosum) {
 		sum = fr_cksum(fin, fin->fin_ip, fin->fin_p, fin->fin_dp);
@@ -6743,9 +6744,9 @@ ipf_checkl4sum(fin)
 		FR_DEBUG(("checkl4sum: %hx != %hx\n", sum, hdrsum));
 	}
 #endif
-	DT2(l4sums, u_short, hdrsum, u_short, sum);
+	DT3(l4sums, u_short, hdrsum, u_short, sum, fr_info_t *, fin);
 #ifdef USE_INET6
-	if (hdrsum == sum || (sum == 0 && fin->fin_p == IPPROTO_ICMPV6)) {
+	if (hdrsum == sum || (sum == 0 && IP_V(fin->fin_ip) == 6)) {
 #else
 	if (hdrsum == sum) {
 #endif
@@ -10275,55 +10276,4 @@ ipf_inet6_mask_del(bits, mask, mtab)
 	mtab->imt6_max--;
 	ASSERT(mtab->imt6_max >= 0);
 }
-
-#ifdef	_KERNEL
-static u_int
-ipf_pcksum6(fin, ip6, off, len)
-	fr_info_t *fin;
-	ip6_t *ip6;
-	u_int32_t off;
-	u_int32_t len;
-{
-	struct mbuf *m;
-	int sum;
-
-	m = fin->fin_m;
-	if (m->m_len < sizeof(struct ip6_hdr)) {
-		return 0xffff;
-	}
-
-	sum = in6_cksum(m, ip6->ip6_nxt, off, len);
-	return(sum);
-}
-#else
-static u_int
-ipf_pcksum6(fin, ip6, off, len)
-	fr_info_t *fin;
-	ip6_t *ip6;
-	u_int32_t off;
-	u_int32_t len;
-{
-	u_short *sp;
-	u_int sum;
-
-	sp = (u_short *)&ip6->ip6_src;
-	sum = *sp++;   /* ip6_src */
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;   /* ip6_dst */
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	sum += *sp++;
-	return(ipf_pcksum(fin, off, sum));
-}
-#endif
 #endif

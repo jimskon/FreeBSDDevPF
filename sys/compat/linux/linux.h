@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux.h 348095 2019-05-22 05:35:35Z dchagin $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_MI_H_
@@ -45,6 +45,17 @@ struct l_sockaddr {
 
 #define	LINUX_ARPHRD_ETHER	1
 #define	LINUX_ARPHRD_LOOPBACK	772
+
+/*
+ * Supported address families
+ */
+#define	LINUX_AF_UNSPEC		0
+#define	LINUX_AF_UNIX		1
+#define	LINUX_AF_INET		2
+#define	LINUX_AF_AX25		3
+#define	LINUX_AF_IPX		4
+#define	LINUX_AF_APPLETALK	5
+#define	LINUX_AF_INET6		10
 
 /*
  * net device flags
@@ -128,5 +139,11 @@ void bsd_to_linux_sigset(sigset_t *, l_sigset_t *);
 
 int linux_to_bsd_signal(int sig);
 int bsd_to_linux_signal(int sig);
+
+extern LIST_HEAD(futex_list, futex) futex_list;
+extern struct mtx futex_mtx;
+
+void linux_dev_shm_create(void);
+void linux_dev_shm_destroy(void);
 
 #endif /* _LINUX_MI_H_ */

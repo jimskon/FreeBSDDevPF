@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/userboot/userboot.h 338418 2018-09-01 02:23:45Z kevans $
+ * $FreeBSD$
  */
 
 /*
@@ -119,8 +119,7 @@ struct loader_callbacks {
         /*
          * Return some stat(2) related information about the file
          */
-	int		(*stat)(void *arg, void *h, int *mode_return,
-            int *uid_return, int *gid_return, uint64_t *size_return);
+	int		(*stat)(void *arg, void *h, struct stat *stp);
 
 	/*
 	 * Disk image i/o

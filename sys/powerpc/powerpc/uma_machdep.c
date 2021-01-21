@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/powerpc/uma_machdep.c 330610 2018-03-07 17:08:07Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -66,11 +66,6 @@ uma_small_alloc(uma_zone_t zone, vm_size_t bytes, int domain, u_int8_t *flags,
 		return (NULL);
 
 	pa = VM_PAGE_TO_PHYS(m);
-
-	/* On book-e sizeof(void *) < sizeof(vm_paddr_t) */
-	if ((vm_offset_t)pa != pa)
-		return (NULL);
-
 	if (!hw_direct_map) {
 		pmap_kenter(pa, pa);
 		va = (void *)(vm_offset_t)pa;

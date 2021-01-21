@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)udp_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/netinet/udp_var.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_UDP_VAR_H_
@@ -149,9 +149,10 @@ extern u_long			udp_sendspace;
 extern u_long			udp_recvspace;
 VNET_DECLARE(int, udp_cksum);
 VNET_DECLARE(int, udp_blackhole);
+VNET_DECLARE(int, udp_log_in_vain);
 #define	V_udp_cksum		VNET(udp_cksum)
 #define	V_udp_blackhole		VNET(udp_blackhole)
-extern int			udp_log_in_vain;
+#define	V_udp_log_in_vain	VNET(udp_log_in_vain)
 
 static __inline struct inpcbinfo *
 udp_get_inpcbinfo(int protocol)

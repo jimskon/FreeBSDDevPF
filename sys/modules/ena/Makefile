@@ -1,7 +1,7 @@
 #
 # BSD LICENSE
 #
-# Copyright (c) 2015-2017 Amazon.com, Inc. or its affiliates.
+# Copyright (c) 2015-2019 Amazon.com, Inc. or its affiliates.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,15 +27,17 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/modules/ena/Makefile 318647 2017-05-22 14:46:13Z zbb $
+# $FreeBSD$
 #
 
 .PATH:	${SRCTOP}/sys/dev/ena \
 	${SRCTOP}/sys/contrib/ena-com
 
 KMOD	= if_ena
-SRCS	= ena.c ena_com.c ena_eth_com.c ena_sysctl.c
+SRCS	= ena_com.c ena_eth_com.c
+SRCS	+= ena.c ena_sysctl.c ena_datapath.c ena_netmap.c
 SRCS	+= device_if.h bus_if.h pci_if.h
+SRCS	+= opt_rss.h
 CFLAGS  += -I${SRCTOP}/sys/contrib
 
 .include <bsd.kmod.mk>

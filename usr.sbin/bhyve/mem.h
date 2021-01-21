@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/mem.h 335104 2018-06-14 01:34:53Z araujo $
+ * $FreeBSD$
  */
 
 #ifndef _MEM_H_
@@ -61,5 +61,7 @@ int	read_mem(struct vmctx *ctx, int vcpu, uint64_t gpa, uint64_t *rval,
 int	register_mem(struct mem_range *memp);
 int	register_mem_fallback(struct mem_range *memp);
 int	unregister_mem(struct mem_range *memp);
+int	write_mem(struct vmctx *ctx, int vcpu, uint64_t gpa, uint64_t wval,
+		  int size);
 
 #endif	/* _MEM_H_ */

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/dtb.build.mk 347169 2019-05-06 02:08:52Z kevans $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 # Grab all the options for a kernel build. For backwards compat, we need to

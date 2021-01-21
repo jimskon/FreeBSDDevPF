@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_core/wq.h 341957 2018-12-12 12:46:11Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef __MLX5_WQ_H__

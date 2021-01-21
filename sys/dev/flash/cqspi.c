@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/flash/cqspi.c 332885 2018-04-23 10:35:00Z br $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 
@@ -50,6 +50,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/flash/cqspi.c 332885 2018-04-23 10:35:00
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/mutex.h>
+#include <sys/rman.h>
 #include <geom/geom_disk.h>
 
 #include <machine/bus.h>

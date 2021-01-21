@@ -1,5 +1,5 @@
 #	from: @(#)bsd.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: releng/12.1/share/mk/bsd.prog.mk 352769 2019-09-26 18:56:41Z emaste $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 .include <bsd.compiler.mk>
@@ -50,6 +50,10 @@ CXXFLAGS+= -mretpoline
 .if !defined(NO_SHARED) || ${NO_SHARED:tl} == "no"
 LDFLAGS+= -Wl,-zretpolineplt
 .endif
+.endif
+
+.if ${MACHINE_CPUARCH} == "riscv" && ${LINKER_FEATURES:Mriscv-relaxations} == ""
+CFLAGS += -mno-relax
 .endif
 
 .if defined(CRUNCH_CFLAGS)

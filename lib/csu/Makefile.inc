@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/csu/Makefile.inc 352394 2019-09-16 13:41:24Z andrew $
+# $FreeBSD$
 
 SSP_CFLAGS=
 
@@ -12,6 +12,9 @@ NO_WMISSING_VARIABLE_DECLARATIONS=
 
 OBJS+=	crtbegin.o crtbeginS.o crtbeginT.o
 OBJS+=	crtend.o crtendS.o
+
+CFLAGS+=	-fno-asynchronous-unwind-tables
+CFLAGS+=	-fno-omit-frame-pointer
 
 CFLAGS_CRTS=	-DSHARED ${PICFLAG}
 

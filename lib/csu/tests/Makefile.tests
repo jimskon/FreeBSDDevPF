@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/csu/tests/Makefile.tests 352394 2019-09-16 13:41:24Z andrew $
+# $FreeBSD$
 
 ATF_TESTS_C+=	init_test
 ATF_TESTS_C+=	fini_test

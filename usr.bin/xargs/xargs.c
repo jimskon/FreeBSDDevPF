@@ -46,7 +46,7 @@ static char sccsid[] = "@(#)xargs.c	8.1 (Berkeley) 6/6/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/xargs/xargs.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -650,7 +650,7 @@ waitchildren(const char *name, int waitall)
 		if (childerr != 0 && cause_exit == 0) {
 			errno = childerr;
 			waitall = 1;
-			cause_exit = ENOENT ? 127 : 126;
+			cause_exit = errno == ENOENT ? 127 : 126;
 			warn("%s", name);
 		} else if (WIFSIGNALED(status)) {
 			waitall = cause_exit = 1;

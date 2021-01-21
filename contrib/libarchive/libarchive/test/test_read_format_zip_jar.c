@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_read_format_zip_jar.c 310623 2016-12-27 01:10:28Z mm $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Issue 822: jar files have an empty External File Attributes field which
@@ -40,7 +40,7 @@ DEFINE_TEST(test_read_format_zip_jar)
 	char data[16];
 
 	extract_reference_file(refname);
-	p = slurpfile(&s, refname);
+	p = slurpfile(&s, "%s", refname);
 
 	assert((a = archive_read_new()) != NULL);
 	assertEqualIntA(a, ARCHIVE_OK, archive_read_support_format_zip_seekable(a));

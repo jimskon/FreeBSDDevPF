@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/an/if_an_pci.c 338948 2018-09-26 17:12:14Z imp $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This is a PCI shim for the Aironet PC4500/4800 wireless network
@@ -230,7 +230,8 @@ an_attach_pci(dev)
 	    NULL, an_intr, sc, &sc->irq_handle);
 	if (error)
 		device_printf(dev, "couldn't setup interrupt\n");
-
+	else
+		gone_in_dev(dev, 13, "pccard removed, an doesn't support modern crypto");
 fail:
 	if (error)
 		an_release_resources(dev);

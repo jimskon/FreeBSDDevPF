@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libdevctl/devctl.h 346380 2019-04-19 12:54:05Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __DEVCTL_H__

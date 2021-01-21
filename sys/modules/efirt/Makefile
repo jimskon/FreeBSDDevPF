@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/efirt/Makefile 351892 2019-09-05 20:31:25Z bdrewery $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/${MACHINE}/${MACHINE}
 .PATH: ${SRCTOP}/sys/dev/efidev

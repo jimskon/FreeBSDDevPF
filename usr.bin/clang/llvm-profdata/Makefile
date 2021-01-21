@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-profdata/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-profdata
 
-SRCDIR=		tools/llvm-profdata
+SRCDIR=		llvm/tools/llvm-profdata
 SRCS+=		llvm-profdata.cpp
 
 LIBADD+=	z

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/intel/vmx.h 329162 2018-02-12 14:45:27Z tychon $
+ * $FreeBSD$
  */
 
 #ifndef _VMX_H_
@@ -87,6 +87,7 @@ struct vmxcap {
 	int	set;
 	uint32_t proc_ctls;
 	uint32_t proc_ctls2;
+	uint32_t exc_bitmap;
 };
 
 struct vmxstate {

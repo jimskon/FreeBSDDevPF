@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/i386/libi386/libi386.h 342995 2019-01-13 07:25:55Z tsoome $
+ * $FreeBSD$
  */
 
 
@@ -89,6 +89,8 @@ extern struct devdesc	currdev;	/* our current device */
 #define MAXDEV		31		/* maximum number of distinct devices */
 #define MAXBDDEV	MAXDEV
 
+#include <readin.h>
+
 /* exported devices XXX rename? */
 extern struct devsw bioscd;
 extern struct devsw biosfd;
@@ -104,7 +106,7 @@ int	bd_getdev(struct i386_devdesc *dev);	/* return dev_t for (dev) */
 
 ssize_t	i386_copyin(const void *src, vm_offset_t dest, const size_t len);
 ssize_t	i386_copyout(const vm_offset_t src, void *dest, const size_t len);
-ssize_t	i386_readin(const int fd, vm_offset_t dest, const size_t len);
+ssize_t	i386_readin(readin_handle_t fd, vm_offset_t dest, const size_t len);
 
 struct preloaded_file;
 void	bios_addsmapdata(struct preloaded_file *);

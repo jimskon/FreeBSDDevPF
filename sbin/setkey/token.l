@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sbin/setkey/token.l 326025 2017-11-20 19:49:47Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: token.l,v 1.43 2003/07/25 09:35:28 itojun Exp $	*/
 
 /*-
@@ -66,6 +66,8 @@ extern void parse_init(void);
 int parse(FILE **);
 int yyparse(void);
 %}
+
+%option noyywrap
 
 /* common section */
 nl		\n

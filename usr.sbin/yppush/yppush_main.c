@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/yppush/yppush_main.c 351691 2019-09-02 08:20:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <signal.h>

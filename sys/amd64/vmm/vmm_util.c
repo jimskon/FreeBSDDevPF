@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/vmm_util.c 351751 2019-09-03 16:18:07Z emaste $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/vmm/vmm_util.c 351751 2019-09-03 16:18:07Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/libkern.h>
@@ -46,9 +46,10 @@ vmm_is_intel(void)
 }
 
 bool
-vmm_is_amd(void)
+vmm_is_svm(void)
 {
-	return (strcmp(cpu_vendor, "AuthenticAMD") == 0);
+	return (strcmp(cpu_vendor, "AuthenticAMD") == 0 ||
+	    strcmp(cpu_vendor, "HygonGenuine") == 0);
 }
 
 bool

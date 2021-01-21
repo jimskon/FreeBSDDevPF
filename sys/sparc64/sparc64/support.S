@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/sparc64/sparc64/support.S 351789 2019-09-03 20:04:44Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_kstack_pages.h"
 

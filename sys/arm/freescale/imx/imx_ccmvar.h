@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/freescale/imx/imx_ccmvar.h 329999 2018-02-26 02:28:32Z ian $
+ * $FreeBSD$
  */
 
 #ifndef	IMX_CCMVAR_H
@@ -49,10 +49,12 @@ uint32_t imx_ccm_perclk_hz(void);
 uint32_t imx_ccm_sdhci_hz(void);
 uint32_t imx_ccm_uart_hz(void);
 uint32_t imx_ccm_ahb_hz(void);
+uint32_t imx_ccm_ipu_hz(void);
 
 void imx_ccm_usb_enable(device_t _usbdev);
 void imx_ccm_usbphy_enable(device_t _phydev);
 void imx_ccm_ssi_configure(device_t _ssidev);
+int imx_ccm_pll_video_enable(void);
 void imx_ccm_hdmi_enable(void);
 void imx_ccm_ipu_enable(int ipu);
 int  imx6_ccm_sata_enable(void);

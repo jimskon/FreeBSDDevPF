@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/zfsd/zfsd_hotspare_007_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -82,6 +82,9 @@ function verify_assertion # spare_dev
 
 	# Re-enable the  missing disk
 	log_must create_gnop $REMOVAL_DISK $PHYSPATH
+
+	# And now the spare should be released
+	wait_for_pool_dev_state_change 20 $spare_dev AVAIL
 }
 
 typeset PHYSPATH="some_physical_path"

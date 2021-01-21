@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/gtaskqueue.h 349109 2019-06-16 14:53:53Z marius $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_GTASKQUEUE_H_
@@ -64,9 +64,6 @@ void	taskqgroup_detach(struct taskqgroup *qgroup, struct grouptask *gtask);
 struct taskqgroup *taskqgroup_create(const char *name);
 void	taskqgroup_destroy(struct taskqgroup *qgroup);
 int	taskqgroup_adjust(struct taskqgroup *qgroup, int cnt, int stride);
-void	taskqgroup_config_gtask_init(void *ctx, struct grouptask *gtask,
-	    gtask_fn_t *fn, const char *name);
-void	taskqgroup_config_gtask_deinit(struct grouptask *gtask);
 
 #define TASK_ENQUEUED			0x1
 #define TASK_SKIP_WAKEUP		0x2

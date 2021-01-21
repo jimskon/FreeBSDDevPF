@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netipsec/xform_ah.c 351358 2019-08-21 22:42:08Z jhb $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_ah.c,v 1.63 2001/06/26 06:18:58 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -38,6 +38,7 @@
  */
 #include "opt_inet.h"
 #include "opt_inet6.h"
+#include "opt_ipsec.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -575,14 +576,16 @@ ah_input(struct mbuf *m, struct secasvar *sav, int skip, int protoff)
 	/* Figure out header size. */
 	rplen = HDRSIZE(sav);
 
-	/* XXX don't pullup, just copy header */
-	IP6_EXTHDR_GET(ah, struct newah *, m, skip, rplen);
-	if (ah == NULL) {
-		DPRINTF(("ah_input: cannot pullup header\n"));
-		AHSTAT_INC(ahs_hdrops);		/*XXX*/
-		error = ENOBUFS;
-		goto bad;
+	if (m->m_len < skip + rplen) {
+		m = m_pullup(m, skip + rplen);
+		if (m == NULL) {
+			DPRINTF(("ah_input: cannot pullup header\n"));
+			AHSTAT_INC(ahs_hdrops);		/*XXX*/
+			error = ENOBUFS;
+			goto bad;
+		}
 	}
+	ah = (struct newah *)(mtod(m, caddr_t) + skip);
 
 	/* Check replay window, if applicable. */
 	SECASVAR_LOCK(sav);

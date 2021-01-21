@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/iicbus/twsi/twsi.h 350866 2019-08-11 20:47:01Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _TWSI_H_
@@ -57,7 +57,9 @@ struct twsi_softc {
 	clk_t		clk_reg;
 #endif
 
-	struct iic_msg		*msg;
+	struct iic_msg		*msgs;
+	uint32_t		nmsgs;
+	uint32_t		msg_idx;
 	uint16_t		sent_bytes;
 	uint16_t		recv_bytes;
 	int			transfer;

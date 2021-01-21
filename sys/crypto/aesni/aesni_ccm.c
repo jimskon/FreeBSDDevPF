@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *
- *	$FreeBSD: releng/12.1/sys/crypto/aesni/aesni_ccm.c 352235 2019-09-11 23:45:58Z mav $
+ *	$FreeBSD$
  *
  * This file implements AES-CCM+CBC-MAC, as described
  * at https://tools.ietf.org/html/rfc3610, using Intel's
@@ -155,7 +155,7 @@ cbc_mac_start(const unsigned char *auth_data, size_t auth_len,
 		 * already partially filled, by auth_amt, so we need
 		 * to handle that.  The last block needs to be zero padded.
 		 */
-		copy_amt = MIN(auth_len - auth_amt,
+		copy_amt = MIN(auth_len,
 		    sizeof(staging_block) - auth_amt);
 		byte_ptr = (uint8_t*)&staging_block;
 		bcopy(auth_ptr, &byte_ptr[auth_amt], copy_amt);

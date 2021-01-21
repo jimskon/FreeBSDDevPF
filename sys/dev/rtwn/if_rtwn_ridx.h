@@ -17,7 +17,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_ridx.h 331043 2018-03-16 01:03:10Z avos $
+ * $FreeBSD$
  */
 
 #ifndef IF_RTWN_RIDX_H
@@ -46,7 +46,6 @@
 #define RTWN_RATE_IS_CCK(rate)  ((rate) <= RTWN_RIDX_CCK11)
 #define RTWN_RATE_IS_OFDM(rate) \
 	((rate) >= RTWN_RIDX_OFDM6 && (rate) != RTWN_RIDX_UNKNOWN)
-
 
 static const uint8_t ridx2rate[] =
 	{ 2, 4, 11, 22, 12, 18, 24, 36, 48, 72, 96, 108 };

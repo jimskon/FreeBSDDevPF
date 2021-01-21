@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/storage/ustorage_fs.c 326255 2017-11-27 14:52:40Z pfg $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -380,10 +380,6 @@ ustorage_fs_attach(device_t dev)
 			ustorage_fs_ramdisk =
 			    malloc(USTORAGE_FS_RAM_SECT << 9, M_USB,
 			    M_ZERO | M_WAITOK);
-
-			if (ustorage_fs_ramdisk == NULL) {
-				return (ENOMEM);
-			}
 		}
 		sc->sc_lun[0].memory_image = ustorage_fs_ramdisk;
 		sc->sc_lun[0].num_sectors = USTORAGE_FS_RAM_SECT;

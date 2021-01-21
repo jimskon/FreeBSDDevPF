@@ -35,11 +35,15 @@
 /*
  * procfs ioctl definitions.
  *
- * $FreeBSD: releng/12.1/sys/sys/pioctl.h 325966 2017-11-18 14:26:50Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_PIOCTL_H
 # define _SYS_PIOCTL_H
+
+#ifndef _KERNEL
+#warning "<sys/pioctl.h> is deprecated, ptrace() should be used instead"
+#endif
 
 # include <sys/ioccom.h>
 

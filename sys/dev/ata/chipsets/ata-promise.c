@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ata/chipsets/ata-promise.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -795,7 +795,7 @@ ata_promise_mio_reset(device_t dev)
 	    if (ata_sata_phy_reset(dev, -1, 1)) {
 		u_int32_t signature = ch->hw.softreset(dev, ATA_PM);
 
-		if (1 | bootverbose)
+		if (bootverbose)
         	    device_printf(dev, "SIGNATURE: %08x\n", signature);
 
 		switch (signature >> 16) {

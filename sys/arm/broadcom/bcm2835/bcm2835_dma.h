@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2835_dma.h 326258 2017-11-27 15:04:10Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_BCM2835_DMA_H_
@@ -42,6 +42,10 @@
 
 /* Peripheral DREQ Signals (4.2.1.3) */
 #define	BCM_DMA_DREQ_NONE	0
+/*
+ * XXX This doesn't seem to work for the Raspberry Pi 4, but the peripheral
+ * documentation still lists it at 11.
+ */
 #define	BCM_DMA_DREQ_EMMC	11
 #define	BCM_DMA_DREQ_SDHOST	13
 

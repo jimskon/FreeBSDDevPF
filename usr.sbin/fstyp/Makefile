@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/fstyp/Makefile 337160 2018-08-02 18:55:55Z mav $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

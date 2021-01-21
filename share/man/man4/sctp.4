@@ -24,15 +24,18 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/share/man/man4/sctp.4 339871 2018-10-29 20:08:19Z tuexen $
+.\" $FreeBSD$
 .\"
-.Dd October 10, 2018
+.Dd July 9, 2020
 .Dt SCTP 4
 .Os
 .Sh NAME
 .Nm sctp
 .Nd Internet Stream Control Transmission Protocol
 .Sh SYNOPSIS
+.Cd "options SCTP"
+.Cd "options SCTP_SUPPORT"
+.Pp
 .In sys/types.h
 .In sys/socket.h
 .In netinet/sctp.h
@@ -141,8 +144,18 @@ The
 transport protocol also provides a unordered service as well.
 The unordered service allows a message to be sent and delivered
 with no regard to the ordering of any other message.
+.Pp
+The
+.Tn SCTP
+kernel implementation may either be compiled into the kernel, or loaded
+dynamically as a module.
+To support dynamic loading of the stack, the kernel must be compiled
+with
+.Cd "options SCTP_SUPPORT" .
 .Ss Extensions
-The FreeBSD implementation of
+The
+.Fx
+implementation of
 .Tn SCTP
 also supports the following extensions:
 .Bl -tag -width "sctp partial reliability"
@@ -472,6 +485,8 @@ Enable SCTP blackholing.
 See
 .Xr blackhole 4
 for more details.
+.It Va sendall_limit
+Maximum message size (in bytes) that can be transmitted with SCTP_SENDALL flags set.
 .It Va buffer_splitting
 Enable send/receive buffer splitting.
 .It Va vtag_time_wait
@@ -604,3 +619,7 @@ Maximum outgoing SCTP buffer size.
 .Xr sctp_recvmsg 3 ,
 .Xr sctp_sendmsg 3 ,
 .Xr blackhole 4
+.Sh BUGS
+The
+.Nm
+kernel module cannot be unloaded.

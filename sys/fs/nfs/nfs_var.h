@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfs_var.h 346460 2019-04-20 23:46:06Z rmacklem $
+ * $FreeBSD$
  */
 
 /*
@@ -142,7 +142,7 @@ void nfsrv_throwawayallstate(NFSPROC_T *);
 int nfsrv_checksequence(struct nfsrv_descript *, uint32_t, uint32_t *,
     uint32_t *, int, uint32_t *, NFSPROC_T *);
 int nfsrv_checkreclaimcomplete(struct nfsrv_descript *, int);
-void nfsrv_cache_session(uint8_t *, uint32_t, int, struct mbuf **);
+void nfsrv_cache_session(struct nfsrv_descript *, struct mbuf **);
 void nfsrv_freeallbackchannel_xprts(void);
 int nfsrv_layoutcommit(struct nfsrv_descript *, vnode_t, int, int, uint64_t,
     uint64_t, uint64_t, int, struct timespec *, int, nfsv4stateid_t *,

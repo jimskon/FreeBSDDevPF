@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015-2017 Mellanox Technologies, Ltd.
+ * Copyright (c) 2015-2020 Mellanox Technologies, Ltd.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,19 +23,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/srcu.h 345915 2019-04-05 11:11:20Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef	_LINUX_SRCU_H_
 #define	_LINUX_SRCU_H_
 
+#include <linux/compiler.h>
+
 struct srcu_struct {
 };
 
-#define	srcu_dereference(ptr,srcu)	((__typeof(*(ptr)) *)(ptr))
+#define	srcu_dereference(p, srcu) \
+	((__typeof(*(p)) *)READ_ONCE(p))
 
 #define	DEFINE_STATIC_SRCU(name) \
-	static struct srcu_struct name = {}
+	static struct srcu_struct name
 
 /* prototypes */
 
@@ -45,5 +48,9 @@ extern void synchronize_srcu(struct srcu_struct *);
 extern void srcu_barrier(struct srcu_struct *);
 extern int init_srcu_struct(struct srcu_struct *);
 extern void cleanup_srcu_struct(struct srcu_struct *);
+
+#define	synchronize_srcu_expedited(srcu) do {	\
+	synchronize_srcu(srcu);			\
+} while (0)
 
 #endif					/* _LINUX_SRCU_H_ */

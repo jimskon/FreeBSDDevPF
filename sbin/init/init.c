@@ -43,7 +43,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)init.c	8.1 (Berkeley) 7/15/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/sbin/init/init.c 337968 2018-08-17 14:57:13Z trasz $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -106,7 +106,6 @@ static void stall(const char *, ...) __printflike(1, 2);
 static void warning(const char *, ...) __printflike(1, 2);
 static void emergency(const char *, ...) __printflike(1, 2);
 static void disaster(int);
-static void badsys(int);
 static void revoke_ttys(void);
 static int  runshutdown(void);
 static char *strk(char *);
@@ -307,9 +306,8 @@ invalid:
 	 * We catch or block signals rather than ignore them,
 	 * so that they get reset on exec.
 	 */
-	handle(badsys, SIGSYS, 0);
-	handle(disaster, SIGABRT, SIGFPE, SIGILL, SIGSEGV, SIGBUS, SIGXCPU,
-	    SIGXFSZ, 0);
+	handle(disaster, SIGABRT, SIGFPE, SIGILL, SIGSEGV, SIGBUS, SIGSYS,
+	    SIGXCPU, SIGXFSZ, 0);
 	handle(transition_handler, SIGHUP, SIGINT, SIGEMT, SIGTERM, SIGTSTP,
 	    SIGUSR1, SIGUSR2, SIGWINCH, 0);
 	handle(alrm_handler, SIGALRM, 0);
@@ -504,22 +502,6 @@ emergency(const char *message, ...)
 
 	vsyslog(LOG_EMERG, message, ap);
 	va_end(ap);
-}
-
-/*
- * Catch a SIGSYS signal.
- *
- * These may arise if a system does not support sysctl.
- * We tolerate up to 25 of these, then throw in the towel.
- */
-static void
-badsys(int sig)
-{
-	static int badcount = 0;
-
-	if (badcount++ < 25)
-		return;
-	disaster(sig);
 }
 
 /*

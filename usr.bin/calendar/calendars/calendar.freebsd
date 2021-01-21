@@ -1,7 +1,7 @@
 /*
  * FreeBSD
  *
- * $FreeBSD: releng/12.1/usr.bin/calendar/calendars/calendar.freebsd 350059 2019-07-16 17:27:51Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef _calendar_freebsd_

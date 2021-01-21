@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.compiler.mk 351949 2019-09-06 18:23:00Z asomers $
+# $FreeBSD$
 
 # Setup variables for the compiler
 #
@@ -168,7 +168,7 @@ ${X_}COMPILER_TYPE:=	clang
 . endif
 .endif
 .if !defined(${X_}COMPILER_VERSION)
-${X_}COMPILER_VERSION!=echo "${_v:M[1-9].[0-9]*}" | awk -F. '{print $$1 * 10000 + $$2 * 100 + $$3;}'
+${X_}COMPILER_VERSION!=echo "${_v:M[1-9]*.[0-9]*}" | awk -F. '{print $$1 * 10000 + $$2 * 100 + $$3;}'
 .endif
 .undef _v
 .endif

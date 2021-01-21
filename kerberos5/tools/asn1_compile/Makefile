@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/kerberos5/tools/asn1_compile/Makefile 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 
 PROG=	asn1_compile
 MAN=

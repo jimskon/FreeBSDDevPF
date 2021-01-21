@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_exit.c 352217 2019-09-11 16:06:05Z oshogbo $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ktrace.h"
 
@@ -394,7 +394,6 @@ exit1(struct thread *td, int rval, int signo)
 	}
 
 	vmspace_exit(td);
-	killjobc();
 	(void)acct_process(td);
 
 #ifdef KTRACE
@@ -440,6 +439,12 @@ exit1(struct thread *td, int rval, int signo)
 	PROC_LOCK(p);
 	p->p_flag &= ~(P_TRACED | P_PPWAIT | P_PPTRACE);
 	PROC_UNLOCK(p);
+
+	/*
+	 * killjobc() might drop and re-acquire proctree_lock to
+	 * revoke control tty if exiting process was a session leader.
+	 */
+	killjobc();
 
 	/*
 	 * Reparent all children processes:

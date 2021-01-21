@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/bin/pwait/pwait.c 314886 2017-03-07 22:16:55Z bdrewery $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/event.h>
@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: releng/12.1/bin/pwait/pwait.c 314886 2017-03-07 22:16:55Z bd
 
 #include <err.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>

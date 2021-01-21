@@ -10,7 +10,7 @@
 # + 32MB RAM
 # + uboot environment
 
-# $FreeBSD: releng/12.1/sys/mips/conf/PICOSTATION_M2HP 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

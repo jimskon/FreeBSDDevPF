@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/usr.sbin/usbdump/usbdump.c 349664 2019-07-03 18:18:05Z hselasky $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsecureboot/local.trust.mk 349894 2019-07-10 21:35:55Z sjg $
+# $FreeBSD$
 
 # Consider this file an example.
 #

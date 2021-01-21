@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/cxgbei/cxgbei.c 348670 2019-06-04 20:37:00Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -714,6 +714,8 @@ stop_worker_threads(void)
 			cv_wait(&cwt->cwt_cv, &cwt->cwt_lock);
 		} while (cwt->cwt_state != CWT_STOPPED);
 		mtx_unlock(&cwt->cwt_lock);
+		mtx_destroy(&cwt->cwt_lock);
+		cv_destroy(&cwt->cwt_cv);
 	}
 	free(cwt_softc, M_CXGBE);
 }

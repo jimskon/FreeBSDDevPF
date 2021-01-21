@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/cpu.h 341081 2018-11-27 17:03:15Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPU_H_

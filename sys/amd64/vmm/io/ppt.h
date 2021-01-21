@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/io/ppt.h 351751 2019-09-03 16:18:07Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef _IO_PPT_H_

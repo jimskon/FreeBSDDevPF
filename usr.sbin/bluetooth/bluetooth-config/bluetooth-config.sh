@@ -7,7 +7,7 @@
 # this stuff is worth it, you can buy me a beer in return Poul-Henning Kamp
 # ----------------------------------------------------------------------------
 #
-# $FreeBSD: releng/12.1/usr.sbin/bluetooth/bluetooth-config/bluetooth-config.sh 344096 2019-02-13 14:32:14Z lme $
+# $FreeBSD$
 #
 
 # define our bail out shortcut

@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/mm_types.h 348034 2019-05-21 02:36:12Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_MM_TYPES_H_
@@ -55,6 +55,12 @@ mmdrop(struct mm_struct *mm)
 {
 	if (__predict_false(atomic_dec_and_test(&mm->mm_count)))
 		linux_mm_dtor(mm);
+}
+
+static inline bool
+mmget_not_zero(struct mm_struct *mm)
+{
+	return (atomic_inc_not_zero(&mm->mm_users));
 }
 
 static inline void

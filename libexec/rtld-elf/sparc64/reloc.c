@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/libexec/rtld-elf/sparc64/reloc.c 344011 2019-02-11 15:02:02Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/mman.h>
@@ -562,6 +562,15 @@ reloc_jmpslots(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 
 int
 reloc_iresolve(Obj_Entry *obj __unused,
+    struct Struct_RtldLockState *lockstate __unused)
+{
+
+	/* XXX not implemented */
+	return (0);
+}
+
+int
+reloc_iresolve_nonplt(Obj_Entry *obj __unused,
     struct Struct_RtldLockState *lockstate __unused)
 {
 

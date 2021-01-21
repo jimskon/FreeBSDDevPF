@@ -51,7 +51,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_mqueue.c 351255 2019-08-20 17:45:22Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 

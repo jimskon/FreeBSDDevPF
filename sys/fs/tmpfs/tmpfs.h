@@ -31,12 +31,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/tmpfs/tmpfs.h 346285 2019-04-16 17:33:08Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _FS_TMPFS_TMPFS_H_
 #define _FS_TMPFS_TMPFS_H_
 
+#include <sys/cdefs.h>
 #include <sys/queue.h>
 #include <sys/tree.h>
 
@@ -378,10 +379,6 @@ struct tmpfs_mount {
 	/* All node lock to protect the node list and tmp_pages_used. */
 	struct mtx		tm_allnode_lock;
 
-	/* Zones used to store file system meta data, per tmpfs mount. */
-	uma_zone_t		tm_dirent_pool;
-	uma_zone_t		tm_node_pool;
-
 	/* Read-only status. */
 	bool			tm_ronly;
 	/* Do not use namecache. */
@@ -395,12 +392,12 @@ struct tmpfs_mount {
  * This structure maps a file identifier to a tmpfs node.  Used by the
  * NFS code.
  */
-struct tmpfs_fid {
-	uint16_t		tf_len;
-	uint16_t		tf_pad;
-	ino_t			tf_id;
-	unsigned long		tf_gen;
+struct tmpfs_fid_data {
+	ino_t			tfd_id;
+	unsigned long		tfd_gen;
 };
+_Static_assert(sizeof(struct tmpfs_fid_data) <= MAXFIDSZ,
+    "(struct tmpfs_fid_data) is larger than (struct fid).fid_data");
 
 struct tmpfs_dir_cursor {
 	struct tmpfs_dirent	*tdc_current;
@@ -491,10 +488,9 @@ struct tmpfs_dirent *tmpfs_dir_next(struct tmpfs_node *dnode,
 #define TMPFS_PAGES_MINRESERVED		(4 * 1024 * 1024 / PAGE_SIZE)
 
 size_t tmpfs_mem_avail(void);
-
 size_t tmpfs_pages_used(struct tmpfs_mount *tmp);
-
-#endif
+void tmpfs_subr_init(void);
+void tmpfs_subr_uninit(void);
 
 /*
  * Macros/functions to convert from generic data structures to tmpfs
@@ -537,5 +533,6 @@ tmpfs_use_nc(struct vnode *vp)
 
 	return (!(VFS_TO_TMPFS(vp->v_mount)->tm_nonc));
 }
+#endif /* _KERNEL */
 
 #endif /* _FS_TMPFS_TMPFS_H_ */

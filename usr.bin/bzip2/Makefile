@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/bzip2/Makefile 351666 2019-09-01 16:57:19Z markj $
+# $FreeBSD$
 
 BZ2DIR=	${SRCTOP}/contrib/bzip2
 .PATH: ${BZ2DIR}

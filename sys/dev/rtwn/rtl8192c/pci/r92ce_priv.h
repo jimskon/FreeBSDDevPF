@@ -17,14 +17,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_priv.h 307529 2016-10-17 20:38:24Z avos $
+ * $FreeBSD$
  */
 
 #ifndef R92CE_PRIV_H
 #define R92CE_PRIV_H
 
 #include <dev/rtwn/rtl8192c/r92c_priv.h>
-
 
 /*
  * MAC initialization values.
@@ -52,7 +51,6 @@ static const struct rtwn_mac_prog rtl8192ce_mac[] = {
 	{ 0x703, 0x87 }, { 0x708, 0x21 }, { 0x709, 0x43 }, { 0x70a, 0x65 },
 	{ 0x70b, 0x87 }
 };
-
 
 /*
  * Baseband initialization values.

@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_task.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_task.c 307529 2016-10-17 20
 #include <dev/rtwn/if_rtwnvar.h>
 
 #include <dev/rtwn/if_rtwn_task.h>
-
 
 static void
 rtwn_cmdq_cb(void *arg, int pending)

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/geom_dump.c 349825 2019-07-07 18:47:01Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sbuf.h>
@@ -319,7 +319,7 @@ g_confxml(void *p, int flag)
 }
 
 void
-g_trace(int level, const char *fmt, ...)
+(g_trace)(int level, const char *fmt, ...)
 {
 	va_list ap;
 

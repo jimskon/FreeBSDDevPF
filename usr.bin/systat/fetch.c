@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/systat/fetch.c 340459 2018-11-15 17:25:32Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #ifdef lint
 static const char sccsid[] = "@(#)fetch.c	8.1 (Berkeley) 6/6/93";
@@ -60,9 +60,11 @@ kvm_ckread(void *a, void *b, int l)
 		return (1);
 }
 
-void getsysctl(const char *name, void *ptr, size_t len)
+void
+getsysctl(const char *name, void *ptr, size_t len)
 {
 	size_t nlen = len;
+
 	if (sysctlbyname(name, ptr, &nlen, NULL, 0) != 0) {
 		error("sysctl(%s...) failed: %s", name,
 		    strerror(errno));

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/ps2mouse.c 339435 2018-10-19 00:24:23Z gjb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 
@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/ps2mouse.c 339435 2018-10-19 00:2
 #include <pthread_np.h>
 
 #include "atkbdc.h"
+#include "debug.h"
 #include "console.h"
 
 /* mouse device commands */
@@ -289,8 +290,8 @@ ps2mouse_write(struct ps2mouse_softc *sc, uint8_t val, int insert)
 			fifo_put(sc, PS2MC_ACK);
 			break;
 		default:
-			fprintf(stderr, "Unhandled ps2 mouse current "
-			    "command byte 0x%02x\n", val);
+			EPRINTLN("Unhandled ps2 mouse current "
+			    "command byte 0x%02x", val);
 			break;
 		}
 		sc->curcmd = 0;
@@ -358,8 +359,8 @@ ps2mouse_write(struct ps2mouse_softc *sc, uint8_t val, int insert)
 			break;
 		default:
 			fifo_put(sc, PS2MC_ACK);
-			fprintf(stderr, "Unhandled ps2 mouse command "
-			    "0x%02x\n", val);
+			EPRINTLN("Unhandled ps2 mouse command "
+			    "0x%02x", val);
 			break;
 		}
 	}

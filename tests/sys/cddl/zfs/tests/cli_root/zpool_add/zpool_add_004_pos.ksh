@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/cli_root/zpool_add/zpool_add_004_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.
@@ -58,6 +58,8 @@
 
 verify_runnable "global"
 
+set_disks
+
 function cleanup
 {
 	poolexists $TESTPOOL && \
@@ -67,19 +69,16 @@ function cleanup
 		log_must $ZFS destroy -f $TESTPOOL1/$TESTVOL
 	poolexists $TESTPOOL1 && \
 		destroy_pool "$TESTPOOL1"	
-
-	partition_cleanup
-
 }
 
 log_assert "'zpool add <pool> <vdev> ...' can add zfs volume to the pool." 
 
 log_onexit cleanup
 
-create_pool "$TESTPOOL" "${disk}p1"
+create_pool "$TESTPOOL" "${DISK0}"
 log_must poolexists "$TESTPOOL"
 
-create_pool "$TESTPOOL1" "${disk}p2"
+create_pool "$TESTPOOL1" "${DISK1}"
 log_must poolexists "$TESTPOOL1"
 log_must $ZFS create -V $VOLSIZE $TESTPOOL1/$TESTVOL
 

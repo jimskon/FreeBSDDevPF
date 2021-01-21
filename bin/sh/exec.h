@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)exec.h	8.3 (Berkeley) 6/8/95
- * $FreeBSD: releng/12.1/bin/sh/exec.h 336320 2018-07-15 21:55:17Z jilles $
+ * $FreeBSD$
  */
 
 /* values of cmdtype */

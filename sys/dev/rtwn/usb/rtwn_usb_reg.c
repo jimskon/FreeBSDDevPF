@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/usb/rtwn_usb_reg.c 343892 2019-02-08 04:32:41Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -57,7 +57,6 @@ static int	rtwn_usb_read_region_1(struct rtwn_softc *,
 
 /* USB Requests. */
 #define R92C_REQ_REGS		0x05
-
 
 static int
 rtwn_do_request(struct rtwn_softc *sc, struct usb_device_request *req,

@@ -42,7 +42,7 @@ static const char sccsid[] = "@(#)fortune.c   8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/fortune/fortune/fortune.c 328486 2018-01-27 17:43:09Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/endian.h>
@@ -400,11 +400,12 @@ form_file_list(char **files, int file_cnt)
 			sp = files[i];
 		else {
 			percent = 0;
-			for (sp = files[i]; isdigit((unsigned char)*sp); sp++)
+			for (sp = files[i]; isdigit((unsigned char)*sp); sp++) {
 				percent = percent * 10 + *sp - '0';
-			if (percent > 100) {
-				fprintf(stderr, "percentages must be <= 100\n");
-				return (FALSE);
+				if (percent > 100) {
+					fprintf(stderr, "percentages must be <= 100\n");
+					return (FALSE);
+				}
 			}
 			if (*sp == '.') {
 				fprintf(stderr, "percentages must be integers\n");

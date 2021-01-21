@@ -1,7 +1,7 @@
 /*-
  * BSD LICENSE
  *
- * Copyright (c) 2015-2017 Amazon.com, Inc. or its affiliates.
+ * Copyright (c) 2015-2020 Amazon.com, Inc. or its affiliates.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ena/ena_sysctl.h 318647 2017-05-22 14:46:13Z zbb $
+ * $FreeBSD$
  *
  */
 
@@ -39,6 +39,9 @@
 
 #include "ena.h"
 
-void	ena_sysctl_add_nodes(struct ena_adapter *);
+void	ena_sysctl_add_nodes(struct ena_adapter *adapter);
+
+extern int ena_enable_9k_mbufs;
+#define ena_mbuf_sz (ena_enable_9k_mbufs ? MJUM9BYTES : MJUMPAGESIZE)
 
 #endif /* !(ENA_SYSCTL_H) */

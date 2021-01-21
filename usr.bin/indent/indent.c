@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)indent.c	5.17 (Berkeley) 6/7/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/indent/indent.c 336333 2018-07-16 05:46:50Z pstef $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -58,6 +58,30 @@ __FBSDID("$FreeBSD: releng/12.1/usr.bin/indent/indent.c 336333 2018-07-16 05:46:
 #include "indent_globs.h"
 #include "indent_codes.h"
 #include "indent.h"
+
+/* Globals */
+FILE	*input, *output;
+char	*labbuf, *s_lab, *e_lab, *l_lab;
+char	*codebuf, *s_code, *e_code, *l_code;
+char	*combuf, *s_com, *e_com, *l_com;
+char	*tokenbuf, *s_token, *e_token, *l_token;
+char	*in_buffer, *in_buffer_limit;
+char	*buf_ptr, *buf_end;
+
+char	 sc_buf[sc_size];
+
+char	*save_com, *sc_end;
+char	*bp_save;
+char	*be_save;
+
+struct options		opt;
+int	 line_no;
+
+struct parser_state	ps;
+int	 ifdef_level;
+struct parser_state	state_stack[5];
+struct parser_state	match_state[5];
+
 
 static void bakcopy(void);
 static void indent_declaration(int, int);
@@ -245,10 +269,10 @@ main(int argc, char **argv)
 
     /* Restrict input/output descriptors and enter Capsicum sandbox. */
     cap_rights_init(&rights, CAP_FSTAT, CAP_WRITE);
-    if (cap_rights_limit(fileno(output), &rights) < 0 && errno != ENOSYS)
+    if (caph_rights_limit(fileno(output), &rights) < 0)
 	err(EXIT_FAILURE, "unable to limit rights for %s", out_name);
     cap_rights_init(&rights, CAP_FSTAT, CAP_READ);
-    if (cap_rights_limit(fileno(input), &rights) < 0 && errno != ENOSYS)
+    if (caph_rights_limit(fileno(input), &rights) < 0)
 	err(EXIT_FAILURE, "unable to limit rights for %s", in_name);
     if (caph_enter() < 0)
 	err(EXIT_FAILURE, "unable to enter capability mode");
@@ -943,6 +967,7 @@ check_type:
 	case structure:
 	    if (ps.p_l_follow > 0)
 		goto copy_id;
+	    /* FALLTHROUGH */
 	case decl:		/* we have a declaration type (int, etc.) */
 	    parse(decl);	/* let parser worry about indentation */
 	    if (ps.last_token == rparen && ps.tos <= 1) {

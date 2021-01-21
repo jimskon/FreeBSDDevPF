@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/acpica/acpivar.h 352470 2019-09-18 07:09:16Z jchandra $
+ * $FreeBSD$
  */
 
 #ifndef _ACPIVAR_H_
@@ -371,6 +371,7 @@ int		acpi_bus_alloc_gas(device_t dev, int *type, int *rid,
 		    u_int flags);
 void		acpi_walk_subtables(void *first, void *end,
 		    acpi_subtable_handler *handler, void *arg);
+BOOLEAN		acpi_has_hid(ACPI_HANDLE handle);
 BOOLEAN		acpi_MatchHid(ACPI_HANDLE h, const char *hid);
 
 struct acpi_parse_resource_set {
@@ -430,6 +431,7 @@ ACPI_STATUS	acpi_pwr_wake_enable(ACPI_HANDLE consumer, int enable);
 ACPI_STATUS	acpi_pwr_switch_consumer(ACPI_HANDLE consumer, int state);
 int		acpi_device_pwr_for_sleep(device_t bus, device_t dev,
 		    int *dstate);
+int		acpi_set_powerstate(device_t child, int state);
 
 /* APM emulation */
 void		acpi_apm_init(struct acpi_softc *);
@@ -464,6 +466,7 @@ int		acpi_wakeup_machdep(struct acpi_softc *sc, int state,
 		    int sleep_result, int intr_enabled);
 int		acpi_table_quirks(int *quirks);
 int		acpi_machdep_quirks(int *quirks);
+int		acpi_pnpinfo_str(ACPI_HANDLE handle, char *buf, size_t buflen);
 
 uint32_t	hpet_get_uid(device_t dev);
 
@@ -475,7 +478,7 @@ int		acpi_battery_remove(device_t dev);
 int		acpi_battery_get_units(void);
 int		acpi_battery_get_info_expire(void);
 int		acpi_battery_bst_valid(struct acpi_bst *bst);
-int		acpi_battery_bif_valid(struct acpi_bif *bif);
+int		acpi_battery_bix_valid(struct acpi_bix *bix);
 int		acpi_battery_get_battinfo(device_t dev,
 		    struct acpi_battinfo *info);
 
@@ -489,8 +492,12 @@ int		acpi_acad_get_acline(int *);
 #define ACPI_PKG_VALID(pkg, size)				\
     ((pkg) != NULL && (pkg)->Type == ACPI_TYPE_PACKAGE &&	\
      (pkg)->Package.Count >= (size))
+#define	ACPI_PKG_VALID_EQ(pkg, size)				\
+    ((pkg) != NULL && (pkg)->Type == ACPI_TYPE_PACKAGE &&	\
+     (pkg)->Package.Count == (size))
 int		acpi_PkgInt(ACPI_OBJECT *res, int idx, UINT64 *dst);
 int		acpi_PkgInt32(ACPI_OBJECT *res, int idx, uint32_t *dst);
+int		acpi_PkgInt16(ACPI_OBJECT *res, int idx, uint16_t *dst);
 int		acpi_PkgStr(ACPI_OBJECT *res, int idx, void *dst, size_t size);
 int		acpi_PkgGas(device_t dev, ACPI_OBJECT *res, int idx, int *type,
 		    int *rid, struct resource **dst, u_int flags);
@@ -522,6 +529,15 @@ ACPI_HANDLE	acpi_GetReference(ACPI_HANDLE scope, ACPI_OBJECT *obj);
 SYSCTL_DECL(_debug_acpi);
 
 /*
+ * Parse and use proximity information in SRAT and SLIT.
+ */
+int		acpi_pxm_init(int ncpus, vm_paddr_t maxphys);
+void		acpi_pxm_parse_tables(void);
+void		acpi_pxm_set_mem_locality(void);
+void		acpi_pxm_set_cpu_locality(void);
+int		acpi_pxm_get_cpu_locality(int apic_id);
+
+/*
  * Map a PXM to a VM domain.
  *
  * Returns the VM domain ID if found, or -1 if not found / invalid.
@@ -531,5 +547,12 @@ int		acpi_get_cpus(device_t dev, device_t child, enum cpu_sets op,
 		    size_t setsize, cpuset_t *cpuset);
 int		acpi_get_domain(device_t dev, device_t child, int *domain);
 
+#ifdef __aarch64__
+/*
+ * ARM specific ACPI interfaces, relating to IORT table.
+ */
+int	acpi_iort_map_pci_msi(u_int seg, u_int rid, u_int *xref, u_int *devid);
+int	acpi_iort_its_lookup(u_int its_id, u_int *xref, int *pxm);
+#endif
 #endif /* _KERNEL */
 #endif /* !_ACPIVAR_H_ */

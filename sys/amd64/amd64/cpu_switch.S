@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/amd64/cpu_switch.S 345443 2019-03-23 10:37:26Z kib $
+ * $FreeBSD$
  */
 
 #include <machine/asmacros.h>
@@ -86,7 +86,7 @@ END(cpu_throw)
  */
 ENTRY(cpu_switch)
 	/* Switch to new thread.  First, save context. */
-	movq	TD_PCB(%rdi),%r8
+	leaq	TD_MD_PCB(%rdi),%r8
 
 	movq	(%rsp),%rax			/* Hardware registers */
 	movq	%r15,PCB_R15(%r8)
@@ -152,7 +152,7 @@ ctx_switch_xsave:
 	callq	pmap_activate_sw
 	SETLK	%r15,TD_LOCK(%r13)		/* Release the old thread */
 sw1:
-	movq	TD_PCB(%r12),%r8
+	leaq	TD_MD_PCB(%r12),%r8
 #if defined(SCHED_ULE) && defined(SMP)
 	/* Wait for the new thread to become unblocked */
 	movq	$blocked_lock, %rdx
@@ -207,11 +207,12 @@ do_kthread:
 	cmpq	%rax,%rdx
 	jne	do_tss
 done_tss:
-	movq	%r8,PCPU(RSP0)
+	movq	TD_MD_STACK_BASE(%r12),%r9
+	movq	%r9,PCPU(RSP0)
 	movq	%r8,PCPU(CURPCB)
 	movq	PCPU(PTI_RSP0),%rax
 	cmpq	$~0,PCPU(UCR3)
-	cmove	%r8,%rax
+	cmove	%r9,%rax
 	movq	%rax,TSS_RSP0(%rdx)
 	movq	%r12,PCPU(CURTHREAD)		/* into next thread */
 
@@ -232,6 +233,8 @@ done_load_dr:
 	movq	%rax,(%rsp)
 	movq	PCPU(CURTHREAD),%rdi
 	call	fpu_activate_sw
+	cmpb	$0,cpu_flush_rsb_ctxsw(%rip)
+	jne	rsb_flush
 	ret
 
 	/*

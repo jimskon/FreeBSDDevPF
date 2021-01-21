@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITH_BINUTILS 341239 2018-11-29 15:48:36Z emaste $
+.\" $FreeBSD$
 Set to build and install GNU
 .Xr as 1 ,
 .Xr objdump 1 ,

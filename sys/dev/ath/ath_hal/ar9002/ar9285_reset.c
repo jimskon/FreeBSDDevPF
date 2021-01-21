@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar9002/ar9285_reset.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 
 /*
@@ -107,7 +107,7 @@ ar9285SetTransmitPower(struct ath_hal *ah,
     if (IS_EEP_MINOR_V2(ah)) {
         AH5416(ah)->ah_ht40PowerIncForPdadc = pModal->ht40PowerIncForPdadc;
     }
- 
+
     if (!ar9285SetPowerPerRateTable(ah, pEepData,  chan,
                                     &AH5416(ah)->ah_ratesArray[0],cfgCtl,
                                     twiceAntennaReduction,

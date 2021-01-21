@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ppbus/vpo.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -126,6 +126,7 @@ vpo_probe(device_t dev)
 		return (error);
 	}
 	ppb_unlock(ppbus);
+	gone_in_dev(dev, 13, "Hardware no longer relevant");
 
 	return (0);
 }

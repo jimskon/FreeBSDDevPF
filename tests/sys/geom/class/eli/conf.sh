@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tests/sys/geom/class/eli/conf.sh 348587 2019-06-03 21:03:28Z jhb $
+# $FreeBSD$
 
 class="eli"
 base=$(atf_get ident)

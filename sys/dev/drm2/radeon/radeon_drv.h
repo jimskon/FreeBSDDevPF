@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/drm2/radeon/radeon_drv.h 342969 2019-01-12 16:58:32Z markj $");
+__FBSDID("$FreeBSD$");
 
 #ifndef __RADEON_DRV_H__
 #define __RADEON_DRV_H__

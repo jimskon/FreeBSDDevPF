@@ -41,7 +41,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ubsec/ubsec.c 338324 2018-08-26 12:51:46Z markm $");
+__FBSDID("$FreeBSD$");
 
 /*
  * uBsec 5[56]01, 58xx hardware crypto accelerator
@@ -475,6 +475,7 @@ skip_rng:
 		crypto_kregister(sc->sc_cid, CRK_MOD_EXP_CRT, 0);
 #endif
 	}
+	gone_in_dev(dev, 13, "Does not support modern crypto algorithms");
 	return (0);
 bad4:
 	crypto_unregister_all(sc->sc_cid);

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/geom/geom_ctl.h 344583 2019-02-26 15:03:59Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _GEOM_GEOM_CTL_H_

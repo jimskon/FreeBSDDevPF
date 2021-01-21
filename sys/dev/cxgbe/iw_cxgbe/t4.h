@@ -30,7 +30,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/iw_cxgbe/t4.h 345587 2019-03-27 18:46:47Z np $
+ * $FreeBSD$
  */
 #ifndef __T4_H__
 #define __T4_H__

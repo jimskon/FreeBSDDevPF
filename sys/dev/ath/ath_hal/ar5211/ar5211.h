@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5211/ar5211.h 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #ifndef _ATH_AR5211_H_
 #define _ATH_AR5211_H_
@@ -218,7 +218,7 @@ extern	uint32_t ar5211GetRxDP(struct ath_hal *, HAL_RX_QUEUE);
 extern	void ar5211SetRxDP(struct ath_hal *, uint32_t rxdp, HAL_RX_QUEUE);
 extern	void ar5211EnableReceive(struct ath_hal *);
 extern	HAL_BOOL ar5211StopDmaReceive(struct ath_hal *);
-extern	void ar5211StartPcuReceive(struct ath_hal *);
+extern	void ar5211StartPcuReceive(struct ath_hal *, HAL_BOOL);
 extern	void ar5211StopPcuReceive(struct ath_hal *);
 extern	void ar5211SetMulticastFilter(struct ath_hal *,
 		uint32_t filter0, uint32_t filter1);

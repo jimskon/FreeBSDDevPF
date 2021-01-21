@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsqlite3/Makefile 349650 2019-07-03 16:23:06Z cy $
+# $FreeBSD$
 
 PACKAGE=lib${LIB}
 PRIVATELIB=	yes

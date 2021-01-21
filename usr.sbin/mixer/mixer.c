@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/mixer/mixer.c 317596 2017-04-29 19:12:44Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <fcntl.h>
@@ -241,6 +241,11 @@ main(int argc, char *argv[])
 		lrel = rrel = 0;
 		if (argc > 1) {
 			m = sscanf(argv[1], "%7[^:]:%7s", lstr, rstr);
+			if (m == EOF) {
+				warnx("invalid value: %s", argv[1]);
+				dusage = 1;
+				break;
+			}
 			if (m > 0) {
 				if (*lstr == '+' || *lstr == '-')
 					lrel = rrel = 1;

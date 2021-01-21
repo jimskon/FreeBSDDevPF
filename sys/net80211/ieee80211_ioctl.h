@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net80211/ieee80211_ioctl.h 326272 2017-11-27 15:23:17Z pfg $
+ * $FreeBSD$
  */
 #ifndef _NET80211_IEEE80211_IOCTL_H_
 #define _NET80211_IEEE80211_IOCTL_H_
@@ -710,6 +710,8 @@ struct ieee80211req {
 #define	IEEE80211_IOC_GREENFIELD	112	/* Greenfield (on, off) */
 #define	IEEE80211_IOC_STBC		113	/* STBC Tx/RX (on, off) */
 #define	IEEE80211_IOC_LDPC		114	/* LDPC Tx/RX (on, off) */
+#define	IEEE80211_IOC_UAPSD		115	/* UAPSD (on, off) */
+#define	IEEE80211_IOC_UAPSD_INFO	116	/* UAPSD (SP, per-AC enable) */
 
 /* VHT */
 #define	IEEE80211_IOC_VHTCONF		130	/* VHT config (off, on; widths) */
@@ -741,6 +743,9 @@ struct ieee80211req {
 #define	IEEE80211_IOC_QUIET_OFFSET	207	/* Quiet Offset */
 #define	IEEE80211_IOC_QUIET_DUR		208	/* Quiet Duration */
 #define	IEEE80211_IOC_QUIET_COUNT	209	/* Quiet Count */
+
+#define	IEEE80211_IOC_IC_NAME		210	/* HW device name. */
+
 /*
  * Parameters for controlling a scan requested with
  * IEEE80211_IOC_SCAN_REQ.

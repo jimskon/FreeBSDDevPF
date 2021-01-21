@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: kbdmux.c,v 1.4 2005/07/14 17:38:35 max Exp $
- * $FreeBSD: releng/12.1/sys/dev/kbdmux/kbdmux.c 340518 2018-11-17 20:18:15Z wulf $
+ * $FreeBSD$
  */
 
 #include "opt_evdev.h"
@@ -378,9 +378,7 @@ static keyboard_switch_t kbdmuxsw = {
 	.clear_state =	kbdmux_clear_state,
 	.get_state =	kbdmux_get_state,
 	.set_state =	kbdmux_set_state,
-	.get_fkeystr =	genkbd_get_fkeystr,
 	.poll =		kbdmux_poll,
-	.diag =		genkbd_diag,
 };
 
 #ifdef EVDEV_SUPPORT

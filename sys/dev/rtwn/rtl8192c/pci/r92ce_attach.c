@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_attach.c 342834 2019-01-07 04:41:50Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -60,7 +60,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_attach.c 342834 
 #include <dev/rtwn/rtl8192c/pci/r92ce_priv.h>
 #include <dev/rtwn/rtl8192c/pci/r92ce_reg.h>
 #include <dev/rtwn/rtl8192c/pci/r92ce_tx_desc.h>
-
 
 static struct rtwn_r92c_txpwr r92c_txpwr;
 

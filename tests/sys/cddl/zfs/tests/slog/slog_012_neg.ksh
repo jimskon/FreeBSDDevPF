@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/slog/slog_012_neg.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -74,7 +74,9 @@ function test_slog_mirror_corruption # <pooltype> <sparetype>
 	log_must $DD if=/dev/urandom of=$mntpnt/testfile.${TESTCASE_ID} count=100
 
 	ldev=$(random_get $LDEV)
-	log_must create_vdevs $ldev
+	eval `$STAT -s $ldev`
+	log_must $TRUNCATE -s0 $ldev
+	log_must $TRUNCATE -s $st_size $ldev
 	log_must $ZPOOL scrub $TESTPOOL
 
 	log_must display_status $TESTPOOL

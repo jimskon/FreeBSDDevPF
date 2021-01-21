@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu_led.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu_led.c 307529 201
 #include <dev/rtwn/rtl8192c/r92c_reg.h>
 
 #include <dev/rtwn/rtl8192c/usb/r92cu.h>
-
 
 void
 r92cu_set_led(struct rtwn_softc *sc, int led, int on)

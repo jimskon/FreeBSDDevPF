@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/include/busdma_impl.h 343637 2019-02-01 00:36:14Z kib $
+ * $FreeBSD$
  */
 
 #ifndef	__X86_BUSDMA_IMPL_H
@@ -84,6 +84,7 @@ struct bus_dma_impl {
 	void (*map_unload)(bus_dma_tag_t dmat, bus_dmamap_t map);
 	void (*map_sync)(bus_dma_tag_t dmat, bus_dmamap_t map,
 	    bus_dmasync_op_t op);
+	bool (*id_mapped)(bus_dma_tag_t, vm_paddr_t, bus_size_t);
 };
 
 void bus_dma_dflt_lock(void *arg, bus_dma_lock_op_t op);

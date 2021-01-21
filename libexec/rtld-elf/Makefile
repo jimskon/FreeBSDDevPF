@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/libexec/rtld-elf/Makefile 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 
 # Use the following command to build local debug version of dynamic
 # linker:

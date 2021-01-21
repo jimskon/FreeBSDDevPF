@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libutil/login_class.c 296723 2016-03-12 14:54:34Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/cpuset.h>
@@ -132,6 +132,7 @@ static struct login_vars {
 }, envars[] = {
     { "lang",           "LANG",       NULL, 1},
     { "charset",        "MM_CHARSET", NULL, 1},
+    { "mail",           "MAIL",       NULL, 1},
     { "timezone",       "TZ",         NULL, 1},
     { "term",           "TERM",       NULL, 0},
     { NULL,             NULL,         NULL, 0}

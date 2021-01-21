@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/input/ums.c 337720 2018-08-13 19:00:42Z wulf $");
+__FBSDID("$FreeBSD$");
 
 /*
  * HID spec: http://www.usb.org/developers/devclass_docs/HID1_11.pdf
@@ -79,7 +79,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/input/ums.c 337720 2018-08-13 19:00:
 
 #include <sys/ioccom.h>
 #include <sys/filio.h>
-#include <sys/tty.h>
 #include <sys/mouse.h>
 
 #ifdef USB_DEBUG

@@ -21,7 +21,7 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libkvm/kvm_getswapinfo.3 311101 2017-01-02 15:12:11Z pfg $
+.\" $FreeBSD$
 .\"
 .Dd January 2, 2017
 .Dt KVM_SWAPINFO 3
@@ -101,8 +101,8 @@ You may call the function with
 .Dv NULL
 to clear the cache.
 .Sh DIAGNOSTICS
-If the load average was unobtainable, \-1 is returned; otherwise,
-the number of swap devices actually retrieved is returned.
+If the swap summary information was unobtainable, \-1 is returned;
+otherwise, the number of swap devices actually retrieved is returned.
 .Pp
 If the name of the swap device does not fit in the static char buffer
 in the structure, it is truncated.

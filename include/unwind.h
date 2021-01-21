@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/include/unwind.h 326695 2017-12-08 15:57:29Z pfg $ */
+/* $FreeBSD$ */
 
 /*-
    libunwind - a platform-independent unwind library

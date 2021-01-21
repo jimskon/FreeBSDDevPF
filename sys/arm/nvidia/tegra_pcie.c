@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/nvidia/tegra_pcie.c 338107 2018-08-20 15:57:27Z alc $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Nvidia Integrated PCI/PCI-Express controller driver.
@@ -1632,5 +1632,5 @@ static device_method_t tegra_pcib_methods[] = {
 static devclass_t pcib_devclass;
 DEFINE_CLASS_1(pcib, tegra_pcib_driver, tegra_pcib_methods,
     sizeof(struct tegra_pcib_softc), ofw_pci_driver);
-DRIVER_MODULE(pcib, simplebus, tegra_pcib_driver, pcib_devclass,
+DRIVER_MODULE(tegra_pcib, simplebus, tegra_pcib_driver, pcib_devclass,
     NULL, NULL);

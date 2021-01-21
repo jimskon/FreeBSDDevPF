@@ -59,7 +59,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ichwd/ichwd.c 342568 2018-12-28 08:52:50Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -296,6 +296,7 @@ static struct ichwd_device ichwd_devices[] = {
 static struct ichwd_device ichwd_smb_devices[] = {
 	{ DEVICEID_LEWISBURG_SMB, "Lewisburg watchdog timer",		10, 4 },
 	{ DEVICEID_SRPTLP_SMB,    "Sunrise Point-LP watchdog timer",	10, 4 },
+	{ DEVICEID_C3000,         "Intel Atom C3000 watchdog timer",	10, 4 },
 	{ 0, NULL, 0, 0 },
 };
 

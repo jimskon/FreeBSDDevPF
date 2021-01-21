@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_en/mlx5_en_tx.c 347741 2019-05-16 16:03:46Z hselasky $
+ * $FreeBSD$
  */
 
 #include "en.h"
@@ -214,22 +214,30 @@ max_inline:
 	return (MIN(mb->m_pkthdr.len, sq->max_inline));
 }
 
+/*
+ * This function parse IPv4 and IPv6 packets looking for TCP and UDP
+ * headers.
+ *
+ * The return value indicates the number of bytes from the beginning
+ * of the packet until the first byte after the TCP or UDP header. If
+ * this function returns zero, the parsing failed.
+ */
 static int
-mlx5e_get_full_header_size(struct mbuf *mb)
+mlx5e_get_full_header_size(const struct mbuf *mb)
 {
-	struct ether_vlan_header *eh;
-	struct tcphdr *th;
-	struct ip *ip;
+	const struct ether_vlan_header *eh;
+	const struct tcphdr *th;
+	const struct ip *ip;
 	int ip_hlen, tcp_hlen;
-	struct ip6_hdr *ip6;
+	const struct ip6_hdr *ip6;
 	uint16_t eth_type;
 	int eth_hdr_len;
 
-	eh = mtod(mb, struct ether_vlan_header *);
-	if (mb->m_len < ETHER_HDR_LEN)
+	eh = mtod(mb, const struct ether_vlan_header *);
+	if (unlikely(mb->m_len < ETHER_HDR_LEN))
 		return (0);
 	if (eh->evl_encap_proto == htons(ETHERTYPE_VLAN)) {
-		if (mb->m_len < (ETHER_HDR_LEN + ETHER_VLAN_ENCAP_LEN))
+		if (unlikely(mb->m_len < (ETHER_HDR_LEN + ETHER_VLAN_ENCAP_LEN)))
 			return (0);
 		eth_type = ntohs(eh->evl_proto);
 		eth_hdr_len = ETHER_HDR_LEN + ETHER_VLAN_ENCAP_LEN;
@@ -239,8 +247,8 @@ mlx5e_get_full_header_size(struct mbuf *mb)
 	}
 	switch (eth_type) {
 	case ETHERTYPE_IP:
-		ip = (struct ip *)(mb->m_data + eth_hdr_len);
-		if (mb->m_len < eth_hdr_len + sizeof(*ip))
+		ip = (const struct ip *)(mb->m_data + eth_hdr_len);
+		if (unlikely(mb->m_len < eth_hdr_len + sizeof(*ip)))
 			return (0);
 		switch (ip->ip_p) {
 		case IPPROTO_TCP:
@@ -256,8 +264,8 @@ mlx5e_get_full_header_size(struct mbuf *mb)
 		}
 		break;
 	case ETHERTYPE_IPV6:
-		ip6 = (struct ip6_hdr *)(mb->m_data + eth_hdr_len);
-		if (mb->m_len < eth_hdr_len + sizeof(*ip6))
+		ip6 = (const struct ip6_hdr *)(mb->m_data + eth_hdr_len);
+		if (unlikely(mb->m_len < eth_hdr_len + sizeof(*ip6)))
 			return (0);
 		switch (ip6->ip6_nxt) {
 		case IPPROTO_TCP:
@@ -273,9 +281,15 @@ mlx5e_get_full_header_size(struct mbuf *mb)
 	default:
 		return (0);
 	}
-	if (mb->m_len < eth_hdr_len + sizeof(*th))
-		return (0);
-	th = (struct tcphdr *)(mb->m_data + eth_hdr_len);
+	if (unlikely(mb->m_len < eth_hdr_len + sizeof(*th))) {
+		const struct mbuf *m_th = mb->m_next;
+		if (unlikely(mb->m_len != eth_hdr_len ||
+		    m_th == NULL || m_th->m_len < sizeof(*th)))
+			return (0);
+		th = (const struct tcphdr *)(m_th->m_data);
+	} else {
+		th = (const struct tcphdr *)(mb->m_data + eth_hdr_len);
+	}
 	tcp_hlen = th->th_off << 2;
 	eth_hdr_len += tcp_hlen;
 done:
@@ -284,7 +298,7 @@ done:
 	 * does not need to reside within the first m_len bytes of
 	 * data:
 	 */
-	if (mb->m_pkthdr.len < eth_hdr_len)
+	if (unlikely(mb->m_pkthdr.len < eth_hdr_len))
 		return (0);
 	return (eth_hdr_len);
 }
@@ -306,8 +320,10 @@ mlx5e_sq_xmit(struct mlx5e_sq *sq, struct mbuf **mbp)
 	u8 opcode;
 
 	/* Return ENOBUFS if the queue is full */
-	if (unlikely(!mlx5e_sq_has_room_for(sq, 2 * MLX5_SEND_WQE_MAX_WQEBBS)))
+	if (unlikely(!mlx5e_sq_has_room_for(sq, 2 * MLX5_SEND_WQE_MAX_WQEBBS))) {
+		sq->stats.enobuf++;
 		return (ENOBUFS);
+	}
 
 	/* Align SQ edge with NOPs to avoid WQE wrap around */
 	pi = ((~sq->pc) & sq->wq.sz_m1);
@@ -315,8 +331,10 @@ mlx5e_sq_xmit(struct mlx5e_sq *sq, struct mbuf **mbp)
 		/* Send one multi NOP message instead of many */
 		mlx5e_send_nop(sq, (pi + 1) * MLX5_SEND_WQEBB_NUM_DS);
 		pi = ((~sq->pc) & sq->wq.sz_m1);
-		if (pi < (MLX5_SEND_WQE_MAX_WQEBBS - 1))
+		if (pi < (MLX5_SEND_WQE_MAX_WQEBBS - 1)) {
+			sq->stats.enobuf++;
 			return (ENOMEM);
+		}
 	}
 
 	/* Setup local variables */
@@ -398,18 +416,18 @@ mlx5e_sq_xmit(struct mlx5e_sq *sq, struct mbuf **mbp)
 
 	if (likely(ihs == 0)) {
 		/* nothing to inline */
-	} else if (unlikely(ihs > sq->max_inline)) {
-		/* inline header size is too big */
-		err = EINVAL;
-		goto tx_drop;
 	} else if ((mb->m_flags & M_VLANTAG) != 0) {
 		struct ether_vlan_header *eh = (struct ether_vlan_header *)
 		    wqe->eth.inline_hdr_start;
 
 		/* Range checks */
-		if (unlikely(ihs > (MLX5E_MAX_TX_INLINE - ETHER_VLAN_ENCAP_LEN)))
-			ihs = (MLX5E_MAX_TX_INLINE - ETHER_VLAN_ENCAP_LEN);
-		else if (unlikely(ihs < ETHER_HDR_LEN)) {
+		if (unlikely(ihs > (sq->max_inline - ETHER_VLAN_ENCAP_LEN))) {
+			if (mb->m_pkthdr.csum_flags & CSUM_TSO) {
+				err = EINVAL;
+				goto tx_drop;
+			}
+			ihs = (sq->max_inline - ETHER_VLAN_ENCAP_LEN);
+		} else if (unlikely(ihs < ETHER_HDR_LEN)) {
 			err = EINVAL;
 			goto tx_drop;
 		}
@@ -426,6 +444,14 @@ mlx5e_sq_xmit(struct mlx5e_sq *sq, struct mbuf **mbp)
 		ihs += ETHER_VLAN_ENCAP_LEN;
 		wqe->eth.inline_hdr_sz = cpu_to_be16(ihs);
 	} else {
+		/* check if inline header size is too big */
+		if (unlikely(ihs > sq->max_inline)) {
+			if (unlikely(mb->m_pkthdr.csum_flags & CSUM_TSO)) {
+				err = EINVAL;
+				goto tx_drop;
+			}
+			ihs = sq->max_inline;
+		}
 		m_copydata(mb, 0, ihs, wqe->eth.inline_hdr_start);
 		m_adj(mb, ihs);
 		wqe->eth.inline_hdr_sz = cpu_to_be16(ihs);
@@ -609,7 +635,8 @@ mlx5e_xmit(struct ifnet *ifp, struct mbuf *mb)
 	struct mlx5e_sq *sq;
 	int ret;
 
-	if (mb->m_pkthdr.snd_tag != NULL) {
+	if ((mb->m_pkthdr.csum_flags & CSUM_SND_TAG) != 0 &&
+	    (mb->m_pkthdr.snd_tag != NULL)) {
 		sq = mlx5e_select_queue_by_send_tag(ifp, mb);
 		if (unlikely(sq == NULL)) {
 			/* Check for route change */

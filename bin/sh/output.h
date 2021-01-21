@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)output.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.1/bin/sh/output.h 345613 2019-03-27 21:53:44Z jilles $
+ * $FreeBSD$
  */
 
 #ifndef OUTPUT_INCL

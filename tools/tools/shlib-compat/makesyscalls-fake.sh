@@ -1,6 +1,6 @@
 #! /bin/sh -
 #
-# $FreeBSD: releng/12.1/tools/tools/shlib-compat/makesyscalls-fake.sh 248693 2013-03-25 00:31:14Z gleb $
+# $FreeBSD$
 
 set -e
 

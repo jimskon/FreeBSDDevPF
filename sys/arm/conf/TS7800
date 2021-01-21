@@ -1,7 +1,7 @@
 #
 # Custom kernel for the TS-7800 board.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/TS7800 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 #
 
 ident		TS7800

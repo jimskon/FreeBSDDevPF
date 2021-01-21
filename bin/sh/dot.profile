@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/sh/dot.profile 338374 2018-08-29 16:59:19Z brd $
+# $FreeBSD$
 #
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:~/bin
 export PATH

@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_fw.c 342832 2019-01-07 04:34:15Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_fw.c 342832 2019-01-0
 #include <dev/rtwn/rtl8188e/r88e.h>
 #include <dev/rtwn/rtl8188e/r88e_reg.h>
 #include <dev/rtwn/rtl8188e/r88e_fw_cmd.h>
-
 
 #ifndef RTWN_WITHOUT_UCODE
 int

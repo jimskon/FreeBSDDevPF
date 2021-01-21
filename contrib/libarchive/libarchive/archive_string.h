@@ -22,18 +22,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_string.h 311903 2017-01-10 21:59:35Z mm $
+ * $FreeBSD$
  *
  */
+
+#ifndef ARCHIVE_STRING_H_INCLUDED
+#define ARCHIVE_STRING_H_INCLUDED
 
 #ifndef __LIBARCHIVE_BUILD
 #ifndef __LIBARCHIVE_TEST
 #error This header is only to be used internally to libarchive.
 #endif
 #endif
-
-#ifndef ARCHIVE_STRING_H_INCLUDED
-#define	ARCHIVE_STRING_H_INCLUDED
 
 #include <stdarg.h>
 #ifdef HAVE_STDLIB_H

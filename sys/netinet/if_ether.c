@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/if_ether.c 346388 2019-04-19 15:33:54Z bz $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 

@@ -1,7 +1,7 @@
 /*
  * Calibration calendar for calendar(1)
  *
- * $FreeBSD: releng/12.1/usr.bin/calendar/tests/calendar.calibrate 170448 2007-06-09 06:01:24Z grog $
+ * $FreeBSD$
  */
 
 LANG=C
@@ -188,6 +188,7 @@ LANG=C
 06/28	jun 28
 06/29	jun 29
 06/30	jun 30
+06/SunThird	sunthird
 07/01	jul 1
 07/02	jul 2
 07/03	jul 3

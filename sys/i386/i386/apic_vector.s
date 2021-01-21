@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD: releng/12.1/sys/i386/i386/apic_vector.s 332489 2018-04-13 20:30:49Z kib $
+ * $FreeBSD$
  */
 
 /*
@@ -306,6 +306,23 @@ IDTVEC(cpususpend)
 	call	as_lapic_eoi
 	movl	$cpususpend_handler, %eax
 	call	*%eax
+	jmp	doreti
+
+/*
+ * Executed by a CPU when it receives an IPI_SWI.
+ */
+	.text
+	SUPERALIGN_TEXT
+IDTVEC(ipi_swi)
+	PUSH_FRAME
+	SET_KERNEL_SREGS
+	cld
+	KENTER
+	call	as_lapic_eoi
+	FAKE_MCOUNT(TF_EIP(%esp))
+	movl	$ipi_swi_handler, %eax
+	call	*%eax
+	MEXITCOUNT
 	jmp	doreti
 
 /*

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_timeout.c 326218 2017-11-25 23:41:05Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_callout_profiling.h"
 #include "opt_ddb.h"
@@ -50,6 +50,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_timeout.c 326218 2017-11-25 23:41:
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/callout.h>
+#include <sys/domainset.h>
 #include <sys/file.h>
 #include <sys/interrupt.h>
 #include <sys/kernel.h>
@@ -128,7 +129,8 @@ SYSCTL_INT(_kern, OID_AUTO, pin_pcpu_swi, CTLFLAG_RDTUN | CTLFLAG_NOFETCH, &pin_
  * TODO:
  *	allocate more timeout table slots when table overflows.
  */
-u_int callwheelsize, callwheelmask;
+static u_int __read_mostly callwheelsize;
+static u_int __read_mostly callwheelmask;
 
 /*
  * The callout cpu exec entities represent informations necessary for
@@ -142,9 +144,9 @@ u_int callwheelsize, callwheelmask;
  */
 struct cc_exec {
 	struct callout		*cc_curr;
-	void			(*cc_drain)(void *);
+	callout_func_t		*cc_drain;
 #ifdef SMP
-	void			(*ce_migration_func)(void *);
+	callout_func_t		*ce_migration_func;
 	void			*ce_migration_arg;
 	int			ce_migration_cpu;
 	sbintime_t		ce_migration_time;
@@ -201,7 +203,7 @@ struct callout_cpu cc_cpu;
 #define	CC_UNLOCK(cc)	mtx_unlock_spin(&(cc)->cc_lock)
 #define	CC_LOCK_ASSERT(cc)	mtx_assert(&(cc)->cc_lock, MA_OWNED)
 
-static int timeout_cpu;
+static int __read_mostly timeout_cpu;
 
 static void	callout_cpu_init(struct callout_cpu *cc, int cpu);
 static void	softclock_call_cc(struct callout *c, struct callout_cpu *cc,
@@ -320,8 +322,9 @@ callout_cpu_init(struct callout_cpu *cc, int cpu)
 	mtx_init(&cc->cc_lock, "callout", NULL, MTX_SPIN | MTX_RECURSE);
 	SLIST_INIT(&cc->cc_callfree);
 	cc->cc_inited = 1;
-	cc->cc_callwheel = malloc(sizeof(struct callout_list) * callwheelsize,
-	    M_CALLOUT, M_WAITOK);
+	cc->cc_callwheel = malloc_domainset(sizeof(struct callout_list) *
+	    callwheelsize, M_CALLOUT,
+	    DOMAINSET_PREF(pcpu_find(cpu)->pc_domain), M_WAITOK);
 	for (i = 0; i < callwheelsize; i++)
 		LIST_INIT(&cc->cc_callwheel[i]);
 	TAILQ_INIT(&cc->cc_expireq);
@@ -644,7 +647,7 @@ softclock_call_cc(struct callout *c, struct callout_cpu *cc,
     int direct)
 {
 	struct rm_priotracker tracker;
-	void (*c_func)(void *);
+	callout_func_t *c_func, *drain;
 	void *c_arg;
 	struct lock_class *class;
 	struct lock_object *c_lock;
@@ -652,7 +655,7 @@ softclock_call_cc(struct callout *c, struct callout_cpu *cc,
 	int c_iflags;
 #ifdef SMP
 	struct callout_cpu *new_cc;
-	void (*new_func)(void *);
+	callout_func_t *new_func;
 	void *new_arg;
 	int flags, new_cpu;
 	sbintime_t new_prec, new_time;
@@ -661,7 +664,7 @@ softclock_call_cc(struct callout *c, struct callout_cpu *cc,
 	sbintime_t sbt1, sbt2;
 	struct timespec ts2;
 	static sbintime_t maxdt = 2 * SBT_1MS;	/* 2 msec */
-	static timeout_t *lastfunc;
+	static callout_func_t *lastfunc;
 #endif
 
 	KASSERT((c->c_iflags & CALLOUT_PENDING) == CALLOUT_PENDING,
@@ -754,8 +757,6 @@ skip:
 	KASSERT(cc_exec_curr(cc, direct) == c, ("mishandled cc_curr"));
 	cc_exec_curr(cc, direct) = NULL;
 	if (cc_exec_drain(cc, direct)) {
-		void (*drain)(void *);
-		
 		drain = cc_exec_drain(cc, direct);
 		cc_exec_drain(cc, direct) = NULL;
 		CC_UNLOCK(cc);
@@ -1017,7 +1018,7 @@ callout_when(sbintime_t sbt, sbintime_t precision, int flags,
  */
 int
 callout_reset_sbt_on(struct callout *c, sbintime_t sbt, sbintime_t prec,
-    void (*ftn)(void *), void *arg, int cpu, int flags)
+    callout_func_t *ftn, void *arg, int cpu, int flags)
 {
 	sbintime_t to_sbt, precision;
 	struct callout_cpu *cc;
@@ -1176,7 +1177,7 @@ callout_schedule(struct callout *c, int to_ticks)
 }
 
 int
-_callout_stop_safe(struct callout *c, int flags, void (*drain)(void *))
+_callout_stop_safe(struct callout *c, int flags, callout_func_t *drain)
 {
 	struct callout_cpu *cc, *old_cc;
 	struct lock_class *class;

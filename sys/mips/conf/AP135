@@ -9,7 +9,7 @@
 # PCIe host controllers - there's two of them, and the existing
 # PCIe code here doesn't support that just yet.
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/AP135 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 #
 
 #NO_UNIVERSE

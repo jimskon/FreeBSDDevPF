@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *
- * $FreeBSD: releng/12.1/sys/dev/pci/pci_host_generic.h 352468 2019-09-18 06:50:29Z jchandra $
+ * $FreeBSD$
  *
  */
 

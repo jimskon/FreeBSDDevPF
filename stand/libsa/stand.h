@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/libsa/stand.h 353543 2019-10-15 06:19:33Z tsoome $
+ * $FreeBSD$
  * From	$NetBSD: stand.h,v 1.22 1997/06/26 19:17:40 drochner Exp $	
  */
 
@@ -126,6 +126,7 @@ extern struct fs_ops dosfs_fsops;
 extern struct fs_ops ext2fs_fsops;
 extern struct fs_ops splitfs_fsops;
 extern struct fs_ops pkgfs_fsops;
+extern struct fs_ops efihttp_fsops;
 
 /* where values for lseek(2) */
 #define	SEEK_SET	0	/* set file offset to offset */
@@ -433,6 +434,8 @@ void *Realloc(void *, size_t, const char *, int);
 void *Reallocf(void *, size_t, const char *, int);
 void Free(void *, const char *, int);
 extern void	mallocstats(void);
+
+const char *x86_hypervisor(void);
 
 #ifdef DEBUG_MALLOC
 #define malloc(x)	Malloc(x, __FILE__, __LINE__)

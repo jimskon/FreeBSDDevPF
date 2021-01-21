@@ -1,7 +1,7 @@
 #
 # Custom kernel for Marvell SheevaPlug devices.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/SHEEVAPLUG 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 #
 #NO_UNIVERSE
 

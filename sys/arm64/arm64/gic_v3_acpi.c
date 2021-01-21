@@ -30,7 +30,7 @@
 #include "opt_acpi.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/gic_v3_acpi.c 330582 2018-03-07 13:16:03Z andrew $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -305,6 +305,8 @@ gic_v3_add_children(ACPI_SUBTABLE_HEADER *entry, void *arg)
 	struct gic_v3_acpi_devinfo *di;
 	struct gic_v3_softc *sc;
 	device_t child, dev;
+	u_int xref;
+	int err, pxm;
 
 	if (entry->Type == ACPI_MADT_TYPE_GENERIC_TRANSLATOR) {
 		/* We have an ITS, add it as a child */
@@ -321,7 +323,14 @@ gic_v3_add_children(ACPI_SUBTABLE_HEADER *entry, void *arg)
 		resource_list_add(&di->di_rl, SYS_RES_MEMORY, 0,
 		    gict->BaseAddress, gict->BaseAddress + 128 * 1024 - 1,
 		    128 * 1024);
-		di->di_gic_dinfo.gic_domain = -1;
+		err = acpi_iort_its_lookup(gict->TranslationId, &xref, &pxm);
+		if (err == 0) {
+			di->di_gic_dinfo.gic_domain = pxm;
+			di->di_gic_dinfo.msi_xref = xref;
+		} else {
+			di->di_gic_dinfo.gic_domain = -1;
+			di->di_gic_dinfo.msi_xref = ACPI_MSI_XREF;
+		}
 		sc->gic_nchildren++;
 		device_set_ivars(child, di);
 	}

@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/include/pthread.h 337992 2018-08-18 01:05:38Z pfg $
+ * $FreeBSD$
  */
 #ifndef _PTHREAD_H_
 #define	_PTHREAD_H_
@@ -301,6 +301,9 @@ void		pthread_testcancel(void);
 int		pthread_getprio(pthread_t);
 int		pthread_setprio(pthread_t, int);
 void		pthread_yield(void);
+
+int		pthread_getname_np(pthread_t, char *, size_t);
+int		pthread_setname_np(pthread_t, const char *);
 #endif
 
 int		pthread_mutexattr_getprioceiling(

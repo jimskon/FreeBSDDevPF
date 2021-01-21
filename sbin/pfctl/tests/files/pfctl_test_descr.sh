@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/pfctl/tests/files/pfctl_test_descr.sh 340551 2018-11-18 09:48:51Z kp $
+# $FreeBSD$
 # atf-sh, to be sourced by run.sh
 
 pf0001_descr () { echo "Pass with labels" ; }

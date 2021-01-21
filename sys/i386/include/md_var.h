@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/i386/include/md_var.h 333445 2018-05-10 02:31:54Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_MD_VAR_H_

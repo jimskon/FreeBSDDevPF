@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netmap/Makefile 346257 2019-04-16 01:03:38Z ngie $
+# $FreeBSD$
 
 PACKAGE=	tests
 

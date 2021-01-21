@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/gnu/usr.bin/gdb/Makefile.inc 328926 2018-02-06 12:12:44Z bapt $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -45,7 +45,12 @@ CFLAGS+= -I${CNTRB_GDB}/gdb/config
 CFLAGS+= -I${CNTRB_BU}/include
 CFLAGS+= -I${CNTRB_GDB}/include
 CFLAGS+= -I${CNTRB_BU}/bfd
-CFLAGS+= -I${SRCTOP}/lib/libedit/edit
+CFLAGS+= -I${SYSROOT:U${DESTDIR}}/${INCLUDEDIR}/edit
+
+# Some bits here currently rely on some of the linker-merging magic that happens
+# with -fcommon.  While this is the default right now, explicitly set -fcommon
+# so that it continues to build when the default flips.
+CFCOMMONFLAG= -fcommon
 
 GENSRCS+= nm.h tm.h
 

@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_init.c 311347 2017-01-05 02:04:53Z kevlo $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -56,7 +56,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_init.c 311347 20
 
 #include <dev/rtwn/rtl8192c/pci/r92ce.h>
 #include <dev/rtwn/rtl8192c/pci/r92ce_reg.h>
-
 
 void
 r92ce_init_intr(struct rtwn_softc *sc)

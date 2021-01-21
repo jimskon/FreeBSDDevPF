@@ -28,7 +28,7 @@
 static char sccsid[] = "@(#)popen.c	5.7 (Berkeley) 2/14/89";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/usr.sbin/cron/cron/popen.c 298886 2016-05-01 16:41:25Z pfg $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include "cron.h"
@@ -55,9 +55,10 @@ static PID_T *pids;
 static int fds;
 
 FILE *
-cron_popen(program, type, e)
+cron_popen(program, type, e, pidptr)
 	char *program, *type;
 	entry *e;
+	PID_T *pidptr;
 {
 	register char *cp;
 	FILE *iop;
@@ -111,7 +112,7 @@ cron_popen(program, type, e)
 #endif
 
 	iop = NULL;
-	switch(pid = vfork()) {
+	switch(pid = fork()) {
 	case -1:			/* error */
 		(void)close(pdes[0]);
 		(void)close(pdes[1]);
@@ -218,6 +219,9 @@ pfree:
 		free((char *)argv[argc]);
 	}
 #endif
+
+	*pidptr = pid;
+
 	return(iop);
 }
 

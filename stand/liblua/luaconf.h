@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/liblua/luaconf.h 344209 2019-02-16 06:12:16Z kevans $ */
+/* $FreeBSD$ */
 /*
 ** $Id: luaconf.h,v 1.259 2016/12/22 13:08:50 roberto Exp $
 ** Configuration file for Lua
@@ -202,7 +202,7 @@
 
 #else			/* }{ */
 
-#define LUA_ROOT       "/boot/lua/" LUA_VDIR "/"
+#define LUA_ROOT       LUA_PATH "/" LUA_VDIR "/"
 #define LUA_LDIR       LUA_ROOT "share/"
 #define LUA_CDIR       LUA_ROOT "lib/"
 #ifndef LUA_PATH_DEFAULT
@@ -783,11 +783,7 @@
 ** smaller buffer would force a memory allocation for each call to
 ** 'string.format'.)
 */
-#if LUA_FLOAT_TYPE == LUA_FLOAT_LONGDOUBLE
-#define LUAL_BUFFERSIZE		8192
-#else
-#define LUAL_BUFFERSIZE   ((int)(0x80 * sizeof(void*) * sizeof(lua_Integer)))
-#endif
+#define LUAL_BUFFERSIZE		128
 
 /* }================================================================== */
 

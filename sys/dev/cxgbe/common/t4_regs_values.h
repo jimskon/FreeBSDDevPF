@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/common/t4_regs_values.h 333620 2018-05-15 04:24:38Z np $
+ * $FreeBSD$
  *
  */
 
@@ -146,6 +146,11 @@
 #define X_FETCHBURSTMIN_32B		1
 #define X_FETCHBURSTMIN_64B		2
 #define X_FETCHBURSTMIN_128B		3
+
+/* T6 and later use a single-bit encoding for FetchBurstMin */
+#define X_FETCHBURSTMIN_SHIFT_T6	6
+#define X_FETCHBURSTMIN_64B_T6		0
+#define X_FETCHBURSTMIN_128B_T6		1
 
 #define X_FETCHBURSTMAX_SHIFT		6
 #define X_FETCHBURSTMAX_64B		0

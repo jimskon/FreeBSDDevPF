@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/uboot/fdt/uboot_fdt.c 346302 2019-04-16 21:01:07Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <stand.h>
@@ -62,6 +62,8 @@ fdt_platform_load_from_ubenv(const char *var)
 
 	return (1);
 }
+
+#define	FDT_DTB_PADSZ	1024
 
 int
 fdt_platform_load_dtb(void)
@@ -127,7 +129,8 @@ fdt_platform_fixups(void)
 	ethstr = NULL;
 
 	/* Apply overlays before anything else */
-	fdt_apply_overlays();
+	if (fdt_apply_overlays() > 0)
+		fdt_pad_dtb(FDT_DTB_PADSZ);
 
 	/* Acquire sys_info */
 	si = ub_get_sys_info();

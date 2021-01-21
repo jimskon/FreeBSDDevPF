@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/net/if_tun_test.sh 345287 2019-03-19 00:29:18Z kp $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/../common/vnet.subr
 

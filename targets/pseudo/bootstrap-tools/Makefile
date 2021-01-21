@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/targets/pseudo/bootstrap-tools/Makefile 325412 2017-11-05 00:11:51Z bdrewery $
+# $FreeBSD$
 
 # building clang is particularly tedious - so avoid re-inventing wheels
 
@@ -43,7 +43,7 @@ BSARGS= 	DESTDIR= \
 		MK_HTML=no NO_LINT=yes MK_MAN=no \
 		-DNO_PIC MK_PROFILE=no -DNO_SHARED \
 		-DNO_CPU_CFLAGS MK_WARNS=no MK_CTF=no \
-		MK_CLANG_EXTRAS=no MK_CLANG_FULL=no \
+		MK_CLANG_EXTRAS=no MK_CLANG_FORMAT=no MK_CLANG_FULL=no \
 		MK_LLDB=no MK_TESTS=no \
 		MK_INCLUDES=yes
 

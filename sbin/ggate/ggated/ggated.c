@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/ggate/ggated/ggated.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -349,6 +349,16 @@ exports_check(struct ggd_export *ex, struct g_gate_cinit *cinit,
 		flags = O_WRONLY;
 	else
 		flags = O_RDWR;
+	if (conn->c_diskfd != -1) {
+		if (strcmp(conn->c_path, ex->e_path) != 0) {
+			g_gate_log(LOG_ERR, "old %s and new %s: "
+			    "Path mismatch during handshakes.",
+			    conn->c_path, ex->e_path);
+			return (EPERM);
+		}
+		return (0);
+	}
+
 	conn->c_diskfd = open(ex->e_path, flags);
 	if (conn->c_diskfd == -1) {
 		error = errno;
@@ -455,7 +465,7 @@ connection_new(struct g_gate_cinit *cinit, struct sockaddr *s, int sfd)
 	conn->c_token = cinit->gc_token;
 	ip = htonl(((struct sockaddr_in *)(void *)s)->sin_addr.s_addr);
 	conn->c_srcip = ip;
-	conn->c_sendfd = conn->c_recvfd = -1;
+	conn->c_diskfd = conn->c_sendfd = conn->c_recvfd = -1;
 	if ((cinit->gc_flags & GGATE_FLAG_SEND) != 0)
 		conn->c_sendfd = sfd;
 	else
@@ -510,6 +520,8 @@ connection_remove(struct ggd_connection *conn)
 	LIST_REMOVE(conn, c_next);
 	g_gate_log(LOG_DEBUG, "Connection removed [%s %s].",
 	    ip2str(conn->c_srcip), conn->c_path);
+	if (conn->c_diskfd != -1)
+		close(conn->c_diskfd);
 	if (conn->c_sendfd != -1)
 		close(conn->c_sendfd);
 	if (conn->c_recvfd != -1)

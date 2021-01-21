@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_rx.c 342830 2019-01-07 04:23:06Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -54,7 +54,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_rx.c 342830 2019-01-0
 #include <dev/rtwn/rtl8192c/r92c.h>
 #include <dev/rtwn/rtl8188e/r88e.h>
 #include <dev/rtwn/rtl8188e/r88e_rx_desc.h>
-
 
 int
 r88e_classify_intr(struct rtwn_softc *sc, void *buf, int len)

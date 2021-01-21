@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/lib/libc/stdlib/Symbol.map 346537 2019-04-22 10:01:20Z kib $
+ * $FreeBSD$
  */
 
 FBSD_1.0 {

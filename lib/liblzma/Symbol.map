@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/lib/liblzma/Symbol.map 282808 2015-05-12 05:42:13Z delphij $
+ * $FreeBSD$
  */
 
 XZ_5.0 {
@@ -180,9 +180,6 @@ XZprivate_1.0 {
 	lzma_raw_coder_memusage;
 	lzma_raw_decoder_init;
 	lzma_raw_encoder_init;
-	lzma_sha256_finish;
-	lzma_sha256_init;
-	lzma_sha256_update;
 	lzma_simple_arm_decoder_init;
 	lzma_simple_arm_encoder_init;
 	lzma_simple_armthumb_decoder_init;

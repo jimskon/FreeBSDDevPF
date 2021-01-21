@@ -30,7 +30,7 @@
  */ 
 #include <sys/cdefs.h>
 #ifdef __FreeBSD__
-__FBSDID("$FreeBSD: releng/12.1/sys/net80211/ieee80211_mesh.c 344969 2019-03-09 12:54:10Z avos $");
+__FBSDID("$FreeBSD$");
 #endif
 
 /*
@@ -3569,16 +3569,21 @@ mesh_ioctl_set80211(struct ieee80211vap *vap, struct ieee80211req *ireq)
 			ieee80211_mesh_rt_flush(vap);
 			break;
 		case IEEE80211_MESH_RTCMD_ADD:
-			if (IEEE80211_ADDR_EQ(vap->iv_myaddr, ireq->i_data) ||
-			    IEEE80211_ADDR_EQ(broadcastaddr, ireq->i_data))
-				return EINVAL;
-			error = copyin(ireq->i_data, &tmpaddr,
+			error = copyin(ireq->i_data, tmpaddr,
 			    IEEE80211_ADDR_LEN);
-			if (error == 0)
-				ieee80211_mesh_discover(vap, tmpaddr, NULL);
+			if (error != 0)
+				break;
+			if (IEEE80211_ADDR_EQ(vap->iv_myaddr, tmpaddr) ||
+			    IEEE80211_ADDR_EQ(broadcastaddr, tmpaddr))
+				return EINVAL;
+			ieee80211_mesh_discover(vap, tmpaddr, NULL);
 			break;
 		case IEEE80211_MESH_RTCMD_DELETE:
-			ieee80211_mesh_rt_del(vap, ireq->i_data);
+			error = copyin(ireq->i_data, tmpaddr,
+			    IEEE80211_ADDR_LEN);
+			if (error != 0)
+				break;
+			ieee80211_mesh_rt_del(vap, tmpaddr);
 			break;
 		default:
 			return ENOSYS;

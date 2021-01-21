@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/controller/xhci_pci.c 351018 2019-08-14 09:43:27Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stdint.h>
 #include <sys/stddef.h>
@@ -106,6 +106,9 @@ xhci_pci_match(device_t self)
 		return ("AMD 300 Series USB 3.0 controller");
 	case 0x78141022:
 		return ("AMD FCH USB 3.0 controller");
+
+	case 0x145f1d94:
+		return ("Hygon USB 3.0 controller");
 
 	case 0x01941033:
 		return ("NEC uPD720200 USB 3.0 controller");

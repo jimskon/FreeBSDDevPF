@@ -38,7 +38,7 @@
  * - An example of how to use the asynchronous pass(4) driver interface.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/camdd/camdd.c 336914 2018-07-30 15:46:40Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/ioctl.h>
 #include <sys/stdint.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: releng/12.1/usr.sbin/camdd/camdd.c 336914 2018-07-30 15:46:4
 #include <sys/time.h>
 #include <sys/uio.h>
 #include <vm/vm.h>
-#include <machine/bus.h>
 #include <sys/bus.h>
 #include <sys/bus_dma.h>
 #include <sys/mtio.h>
@@ -3086,13 +3085,13 @@ camdd_rw(struct camdd_io_opts *io_opts, int num_io_opts, uint64_t max_io,
 	int error = 0;
 	int i;
 
+	bzero(devs, sizeof(devs));
+
 	if (num_io_opts != 2) {
 		warnx("Must have one input and one output path");
 		error = 1;
 		goto bailout;
 	}
-
-	bzero(devs, sizeof(devs));
 
 	for (i = 0; i < num_io_opts; i++) {
 		switch (io_opts[i].dev_type) {

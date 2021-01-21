@@ -17,7 +17,7 @@
  *
  * NEW command line interface for IP firewall facility
  *
- * $FreeBSD: releng/12.1/sbin/ipfw/altq.c 338209 2018-08-22 19:38:48Z pkelsey $
+ * $FreeBSD$
  *
  * altq interface
  */
@@ -140,7 +140,7 @@ altq_qid_to_name(u_int32_t qid)
 }
 
 void
-print_altq_cmd(struct buf_pr *bp, ipfw_insn_altq *altqptr)
+print_altq_cmd(struct buf_pr *bp, const ipfw_insn_altq *altqptr)
 {
 	if (altqptr) {
 		const char *qname;

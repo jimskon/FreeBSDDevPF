@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/googletest/Makefile.inc 344423 2019-02-21 06:49:20Z ngie $
+# $FreeBSD$
 
 .include <googletest.test.inc.mk>
 
@@ -7,5 +7,8 @@ GOOGLEMOCK_SRCROOT= ${GTEST_DIR}/googlemock
 GOOGLETEST_SRCROOT= ${GTEST_DIR}/googletest
 
 CXXFLAGS+=	${GTESTS_FLAGS}
+
+# Silence warnings about usage of deprecated std::auto_ptr
+CXXWARNFLAGS+=	-Wno-deprecated-declarations
 
 WARNS?=		6

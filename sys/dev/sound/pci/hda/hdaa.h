@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/sound/pci/hda/hdaa.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 /*
@@ -214,6 +214,7 @@ struct hdaa_devinfo {
 	struct hdaa_chan	*chans;
 	struct callout		poll_jack;
 	int			poll_ival;
+	uint32_t		init_clear;
 };
 
 #define HDAA_CHN_RUNNING	0x00000001

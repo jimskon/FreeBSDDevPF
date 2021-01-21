@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/examples/tests/tests/googletest/Makefile 345203 2019-03-15 21:43:52Z ngie $
+# $FreeBSD$
 #
 # This Makefile differs from the other examples, in the sense that its purpose
 # is to install the upstream provided googletest sample unit tests.

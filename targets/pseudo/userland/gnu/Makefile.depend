@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/targets/pseudo/userland/gnu/Makefile.depend 328928 2018-02-06 12:22:42Z bapt $
+# $FreeBSD$
 
 .if !defined(MK_GPL_DTC)
 .include "${SRCTOP}/share/mk/src.opts.mk"
@@ -12,8 +12,6 @@ DIRDEPS = \
 	gnu/lib/libgcov \
 	gnu/lib/libgomp \
 	gnu/lib/libregex/doc \
-	gnu/lib/libssp \
-	gnu/lib/libssp/libssp_nonshared \
 	gnu/lib/libstdc++ \
 	gnu/lib/libsupc++ \
 	gnu/usr.bin/binutils/ar \

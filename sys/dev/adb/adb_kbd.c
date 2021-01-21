@@ -24,7 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/adb/adb_kbd.c 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
@@ -196,25 +196,23 @@ static kbd_set_state_t  akbd_set_state;
 static kbd_poll_mode_t  akbd_poll;
 
 keyboard_switch_t akbdsw = {
-        akbd_probe,
-        akbd_init,
-        akbd_term,
-        akbd_interrupt,
-        akbd_test_if,
-        akbd_enable,
-        akbd_disable,
-        akbd_read,
-        akbd_check,
-        akbd_read_char,
-        akbd_check_char,
-        akbd_ioctl,
-        akbd_lock,
-        akbd_clear_state,
-        akbd_get_state,
-        akbd_set_state,
-        genkbd_get_fkeystr,
-        akbd_poll,
-        genkbd_diag,
+        .probe =	akbd_probe,
+        .init =		akbd_init,
+        .term =		akbd_term,
+        .intr =		akbd_interrupt,
+        .test_if =	akbd_test_if,
+        .enable =	akbd_enable,
+        .disable =	akbd_disable,
+        .read =		akbd_read,
+        .check =	akbd_check,
+        .read_char =	akbd_read_char,
+        .check_char =	akbd_check_char,
+        .ioctl =	akbd_ioctl,
+        .lock =		akbd_lock,
+        .clear_state =	akbd_clear_state,
+        .get_state =	akbd_get_state,
+        .set_state =	akbd_set_state,
+        .poll =		akbd_poll,
 };
 
 KEYBOARD_DRIVER(akbd, akbdsw, akbd_configure);

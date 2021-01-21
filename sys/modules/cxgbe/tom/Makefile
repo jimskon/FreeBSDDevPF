@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/cxgbe/tom/Makefile 330884 2018-03-13 23:05:51Z jhb $
+# $FreeBSD$
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/efi/include/efilib.h 353543 2019-10-15 06:19:33Z tsoome $
+ * $FreeBSD$
  */
 
 #ifndef _LOADER_EFILIB_H
@@ -42,6 +42,7 @@ extern EFI_RUNTIME_SERVICES	*RS;
 extern struct devsw efipart_fddev;
 extern struct devsw efipart_cddev;
 extern struct devsw efipart_hddev;
+extern struct devsw efihttp_dev;
 extern struct devsw efinet_dev;
 extern struct netif_driver efinetif;
 
@@ -83,6 +84,7 @@ int efi_handle_update_dev(EFI_HANDLE, struct devsw *, int, uint64_t);
 
 EFI_DEVICE_PATH *efi_lookup_image_devpath(EFI_HANDLE);
 EFI_DEVICE_PATH *efi_lookup_devpath(EFI_HANDLE);
+void efi_close_devpath(EFI_HANDLE);
 EFI_HANDLE efi_devpath_handle(EFI_DEVICE_PATH *);
 EFI_DEVICE_PATH *efi_devpath_last_node(EFI_DEVICE_PATH *);
 EFI_DEVICE_PATH *efi_devpath_trim(EFI_DEVICE_PATH *);
@@ -91,9 +93,13 @@ bool efi_devpath_match_node(EFI_DEVICE_PATH *, EFI_DEVICE_PATH *);
 bool efi_devpath_is_prefix(EFI_DEVICE_PATH *, EFI_DEVICE_PATH *);
 CHAR16 *efi_devpath_name(EFI_DEVICE_PATH *);
 void efi_free_devpath_name(CHAR16 *);
+bool efi_devpath_same_disk(EFI_DEVICE_PATH *, EFI_DEVICE_PATH *);
 EFI_DEVICE_PATH *efi_devpath_to_media_path(EFI_DEVICE_PATH *);
 UINTN efi_devpath_length(EFI_DEVICE_PATH *);
 EFI_HANDLE efi_devpath_to_handle(EFI_DEVICE_PATH *path, EFI_HANDLE *handles, unsigned nhandles);
+EFI_DEVICE_PATH *efi_name_to_devpath(const char *path);
+EFI_DEVICE_PATH *efi_name_to_devpath16(CHAR16 *path);
+void efi_devpath_free(EFI_DEVICE_PATH *dp);
 
 int efi_status_to_errno(EFI_STATUS);
 EFI_STATUS errno_to_efi_status(int errno);
@@ -105,7 +111,6 @@ EFI_STATUS efi_main(EFI_HANDLE Ximage, EFI_SYSTEM_TABLE* Xsystab);
 
 EFI_STATUS main(int argc, CHAR16 *argv[]);
 void efi_exit(EFI_STATUS status) __dead2;
-void delay(int usecs);
 
 /* EFI environment initialization. */
 void efi_init_environment(void);
@@ -124,10 +129,19 @@ void cpy16to8(const CHAR16 *, char *, size_t);
  * the loader setting / getting FreeBSD specific variables.
  */
 
+EFI_STATUS efi_delenv(EFI_GUID *guid, const char *varname);
+EFI_STATUS efi_freebsd_delenv(const char *varname);
 EFI_STATUS efi_freebsd_getenv(const char *v, void *data, __size_t *len);
 EFI_STATUS efi_getenv(EFI_GUID *g, const char *v, void *data, __size_t *len);
 EFI_STATUS efi_global_getenv(const char *v, void *data, __size_t *len);
+EFI_STATUS efi_setenv(EFI_GUID *guid, const char *varname, UINT32 attr, void *data, __size_t len);
 EFI_STATUS efi_setenv_freebsd_wcs(const char *varname, CHAR16 *valstr);
+
+/* guids and names */
+bool efi_guid_to_str(const EFI_GUID *, char **);
+bool efi_str_to_guid(const char *, EFI_GUID *);
+bool efi_name_to_guid(const char *, EFI_GUID *);
+bool efi_guid_to_name(EFI_GUID *, char **);
 
 /* efipart.c */
 int	efipart_inithandles(void);

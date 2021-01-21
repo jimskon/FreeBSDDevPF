@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.1/sys/conf/options.arm 336813 2018-07-28 11:00:45Z andrew $
+#$FreeBSD$
 ARMV6			opt_global.h
 ARMV7			opt_global.h
 ARM_CACHE_LOCK_ENABLE	opt_global.h
@@ -47,6 +47,7 @@ SOC_ALTERA_ARRIA10	opt_global.h
 SOC_ALTERA_CYCLONE5	opt_global.h
 SOC_BCM2835		opt_global.h
 SOC_BCM2836		opt_global.h
+SOC_BRCM_BCM2837	opt_global.h
 SOC_IMX51		opt_global.h
 SOC_IMX53		opt_global.h
 SOC_IMX6		opt_global.h

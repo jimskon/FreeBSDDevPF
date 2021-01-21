@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ahci/ahci.h 351904 2019-09-05 23:02:08Z imp $
+ * $FreeBSD$
  */
 
 /* ATA register defines */
@@ -214,6 +214,13 @@
 #define		AHCI_CAP2_SADM	0x00000010
 #define		AHCI_CAP2_DESO	0x00000020
 
+#define AHCI_BOHC                   0x28
+#define		AHCI_BOHC_BOS	0x00000001
+#define		AHCI_BOHC_OOS	0x00000002
+#define		AHCI_BOHC_SOOE	0x00000004
+#define		AHCI_BOHC_OOC	0x00000008
+#define		AHCI_BOHC_BB	0x00000010
+
 #define AHCI_VSCAP                  0xa4
 #define AHCI_OFFSET                 0x100
 #define AHCI_STEP                   0x80
@@ -319,9 +326,10 @@
 /* Total main work area. */
 #define AHCI_WORK_SIZE              (AHCI_CT_OFFSET + AHCI_CT_SIZE * ch->numslots)
 
-
-/* NVMe remapped device */
-#define AHCI_REMAPPED_UNIT	(1 << 31)
+/* ivars value fields */
+#define AHCI_REMAPPED_UNIT	(1 << 31)	/* NVMe remapped device. */
+#define AHCI_EM_UNIT		(1 << 30)	/* Enclosure Mgmt device. */
+#define AHCI_UNIT		0xff		/* Channel number. */
 
 struct ahci_dma_prd {
     u_int64_t                   dba;

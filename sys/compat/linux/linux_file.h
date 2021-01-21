@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_file.h 328890 2018-02-05 17:29:12Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_FILE_H_
@@ -71,7 +71,7 @@
 #define	LINUX_O_NONBLOCK	00004000
 #define	LINUX_O_NDELAY		LINUX_O_NONBLOCK
 #define	LINUX_O_SYNC		00010000
-#define	LINUX_FASYNC		00020000
+#define	LINUX_O_ASYNC		00020000
 #define	LINUX_O_DIRECT		00040000	/* Direct disk access hint */
 #define	LINUX_O_LARGEFILE	00100000
 #define	LINUX_O_DIRECTORY	00200000	/* Must be a directory */
@@ -126,5 +126,12 @@
 #define	LINUX_F_WRLCK		1
 #define	LINUX_F_UNLCK		2
 #endif
+
+/*
+ * sync_file_range flags
+ */
+#define	LINUX_SYNC_FILE_RANGE_WAIT_BEFORE	1
+#define	LINUX_SYNC_FILE_RANGE_WRITE		2
+#define	LINUX_SYNC_FILE_RANGE_WAIT_AFTER	4
 
 #endif	/* !_LINUX_FILE_H_ */

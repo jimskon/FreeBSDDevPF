@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/secure/lib/libcrypto/aarch64/vpaes-armv8.S 344603 2019-02-26 19:34:42Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from vpaes-armv8.pl. */
 .text
 

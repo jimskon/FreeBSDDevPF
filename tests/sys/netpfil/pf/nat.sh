@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/nat.sh 344966 2019-03-09 10:34:42Z kp $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/utils.subr
 
@@ -11,6 +11,10 @@ exhaust_head()
 
 exhaust_body()
 {
+	if [ "$(atf_config_get ci false)" = "true" ]; then
+		atf_skip "https://bugs.freebsd.org/244703"
+	fi
+
 	pft_init
 
 	epair_nat=$(vnet_mkepair)

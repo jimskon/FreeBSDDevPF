@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/mevent.h 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_MEVENT_H_
@@ -41,6 +41,9 @@ enum ev_type {
 struct mevent;
 
 struct mevent *mevent_add(int fd, enum ev_type type, 
+			  void (*func)(int, enum ev_type, void *),
+			  void *param);
+struct mevent *mevent_add_disabled(int fd, enum ev_type type,
 			  void (*func)(int, enum ev_type, void *),
 			  void *param);
 int	mevent_enable(struct mevent *evp);

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_sockbuf.c 337328 2018-08-04 20:26:54Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 
@@ -957,11 +957,11 @@ sbappendaddr(struct sockbuf *sb, const struct sockaddr *asa,
 
 void
 sbappendcontrol_locked(struct sockbuf *sb, struct mbuf *m0,
-    struct mbuf *control)
+    struct mbuf *control, int flags)
 {
 	struct mbuf *m, *mlast;
 
-	m_clrprotoflags(m0);
+	sbm_clrprotoflags(m0, flags);
 	m_last(control)->m_next = m0;
 
 	SBLASTRECORDCHK(sb);
@@ -979,11 +979,12 @@ sbappendcontrol_locked(struct sockbuf *sb, struct mbuf *m0,
 }
 
 void
-sbappendcontrol(struct sockbuf *sb, struct mbuf *m0, struct mbuf *control)
+sbappendcontrol(struct sockbuf *sb, struct mbuf *m0, struct mbuf *control,
+    int flags)
 {
 
 	SOCKBUF_LOCK(sb);
-	sbappendcontrol_locked(sb, m0, control);
+	sbappendcontrol_locked(sb, m0, control, flags);
 	SOCKBUF_UNLOCK(sb);
 }
 

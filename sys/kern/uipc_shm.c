@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_shm.c 351345 2019-08-21 18:28:38Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -531,6 +531,7 @@ retry:
 		object->charge += delta;
 	}
 	shmfd->shm_size = length;
+	shmfd->shm_oldsize = (size_t)length;
 	mtx_lock(&shm_timestamp_lock);
 	vfs_timestamp(&shmfd->shm_ctime);
 	shmfd->shm_mtime = shmfd->shm_ctime;
@@ -554,7 +555,7 @@ shm_alloc(struct ucred *ucred, mode_t mode)
 	shmfd->shm_uid = ucred->cr_uid;
 	shmfd->shm_gid = ucred->cr_gid;
 	shmfd->shm_mode = mode;
-	shmfd->shm_object = vm_pager_allocate(OBJT_DEFAULT, NULL,
+	shmfd->shm_object = vm_pager_allocate(OBJT_SWAP, NULL,
 	    shmfd->shm_size, VM_PROT_DEFAULT, 0, ucred);
 	KASSERT(shmfd->shm_object != NULL, ("shm_create: vm_pager_allocate"));
 	shmfd->shm_object->pg_color = 0;
@@ -900,6 +901,7 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 	struct shmfd *shmfd;
 	vm_prot_t maxprot;
 	int error;
+	bool writecnt;
 
 	shmfd = fp->f_data;
 	maxprot = VM_PROT_NONE;
@@ -910,10 +912,10 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 	if ((fp->f_flag & FWRITE) != 0)
 		maxprot |= VM_PROT_WRITE;
 
+	writecnt = (flags & MAP_SHARED) != 0 && (prot & VM_PROT_WRITE) != 0;
+
 	/* Don't permit shared writable mappings on read-only descriptors. */
-	if ((flags & MAP_SHARED) != 0 &&
-	    (maxprot & VM_PROT_WRITE) == 0 &&
-	    (prot & VM_PROT_WRITE) != 0)
+	if (writecnt && (maxprot & VM_PROT_WRITE) == 0)
 		return (EACCES);
 	maxprot &= cap_maxprot;
 
@@ -936,10 +938,16 @@ shm_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t objsize,
 	mtx_unlock(&shm_timestamp_lock);
 	vm_object_reference(shmfd->shm_object);
 
+	if (writecnt)
+		vm_pager_update_writecount(shmfd->shm_object, 0, objsize);
 	error = vm_mmap_object(map, addr, objsize, prot, maxprot, flags,
-	    shmfd->shm_object, foff, FALSE, td);
-	if (error != 0)
+	    shmfd->shm_object, foff, writecnt, td);
+	if (error != 0) {
+		if (writecnt)
+			vm_pager_release_writecount(shmfd->shm_object, 0,
+			    objsize);
 		vm_object_deallocate(shmfd->shm_object);
+	}
 	return (error);
 }
 

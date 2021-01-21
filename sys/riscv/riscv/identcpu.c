@@ -35,7 +35,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/riscv/riscv/identcpu.c 349490 2019-06-28 01:01:54Z mhorne $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,6 +58,11 @@ char machine[] = "riscv";
 
 SYSCTL_STRING(_hw, HW_MACHINE, machine, CTLFLAG_RD, machine, 0,
     "Machine class");
+
+/* Hardware implementation info. These values may be empty. */
+register_t mvendorid;	/* The CPU's JEDEC vendor ID */
+register_t marchid;	/* The architecture ID */
+register_t mimpid;	/* The implementation ID */
 
 struct cpu_desc {
 	u_int		cpu_impl;

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/vinum/geom_vinum_volume.c 326270 2017-11-27 15:17:37Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -163,4 +163,6 @@ gv_bio_done(struct gv_softc *sc, struct bio *bp)
 		gv_plex_raid5_done(p, bp);
 		break;
 	}
+
+	gv_drive_done(s->drive_sc);
 }

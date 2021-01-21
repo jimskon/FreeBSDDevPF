@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/driver.h 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef MLX5_DRIVER_H
@@ -145,6 +145,7 @@ enum {
 	MLX5_REG_PMPE		 = 0x5010,
 	MLX5_REG_PMAOS		 = 0x5012,
 	MLX5_REG_PPLM		 = 0x5023,
+	MLX5_REG_PDDR		 = 0x5031,
 	MLX5_REG_PBSR		 = 0x5038,
 	MLX5_REG_PCAM		 = 0x507f,
 	MLX5_REG_NODE_DESC	 = 0x6001,
@@ -632,6 +633,8 @@ struct mlx5_priv {
 	struct mlx5_rl_table	rl_table;
 #endif
 	struct mlx5_pme_stats pme_stats;
+
+	struct mlx5_eswitch	*eswitch;
 };
 
 enum mlx5_device_state {
@@ -640,7 +643,8 @@ enum mlx5_device_state {
 };
 
 enum mlx5_interface_state {
-	MLX5_INTERFACE_STATE_UP,
+	MLX5_INTERFACE_STATE_UP = 0x1,
+	MLX5_INTERFACE_STATE_TEARDOWN = 0x2,
 };
 
 enum mlx5_pci_status {
@@ -1182,5 +1186,8 @@ static inline bool mlx5_rl_is_supported(struct mlx5_core_dev *dev)
 	return !!(dev->priv.rl_table.max_size);
 }
 #endif
+
+void mlx5_disable_interrupts(struct mlx5_core_dev *);
+void mlx5_poll_interrupts(struct mlx5_core_dev *);
 
 #endif /* MLX5_DRIVER_H */

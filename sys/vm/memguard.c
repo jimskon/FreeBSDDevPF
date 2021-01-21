@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/memguard.c 349142 2019-06-17 15:14:26Z markj $");
+__FBSDID("$FreeBSD$");
 
 /*
  * MemGuard is a simple replacement allocator for debugging only
@@ -502,4 +502,10 @@ memguard_cmp_zone(uma_zone_t zone)
 	 * but it is also the slowest way.
 	 */
 	return (strcmp(zone->uz_name, vm_memguard_desc) == 0);
+}
+
+unsigned long
+memguard_get_req_size(const void *addr)
+{
+	return (*v2sizep(trunc_page((uintptr_t)addr)));
 }

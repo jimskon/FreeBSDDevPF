@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/vt/vt_font.c 331981 2018-04-04 05:21:46Z gordon $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -92,11 +92,6 @@ vtfont_lookup(const struct vt_font *vf, term_char_t c)
 	unsigned int normal_map;
 	unsigned int bold_map;
 
-	/*
-	 * No support for printing right hand sides for CJK fullwidth
-	 * characters. Simply print a space and assume that the left
-	 * hand side describes the entire character.
-	 */
 	src = TCHAR_CHARACTER(c);
 	if (TCHAR_FORMAT(c) & TF_CJK_RIGHT) {
 		normal_map = VFNT_MAP_NORMAL_RIGHT;

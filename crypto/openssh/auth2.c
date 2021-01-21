@@ -24,7 +24,7 @@
  */
 
 #include "includes.h"
-__RCSID("$FreeBSD: releng/12.1/crypto/openssh/auth2.c 339216 2018-10-06 21:32:55Z emaste $");
+__RCSID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -317,8 +317,6 @@ input_userauth_request(int type, u_int32_t seq, struct ssh *ssh)
 #ifdef HAVE_LOGIN_CAP
 	if (authctxt->pw != NULL &&
 	    (lc = PRIVSEP(login_getpwclass(authctxt->pw))) != NULL) {
-		logit("user %s login class %s", authctxt->pw->pw_name,
-		    authctxt->pw->pw_class);
 		from_host = auth_get_canonical_hostname(ssh, options.use_dns);
 		from_ip = ssh_remote_ipaddr(ssh);
 		if (!auth_hostok(lc, from_host, from_ip)) {

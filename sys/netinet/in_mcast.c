@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/in_mcast.c 349762 2019-07-05 10:31:37Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/in_mcast.c 349762 2019-07-05 10:31:3
 #include <sys/sysctl.h>
 #include <sys/ktr.h>
 #include <sys/taskqueue.h>
-#include <sys/gtaskqueue.h>
 #include <sys/tree.h>
 
 #include <net/if.h>
@@ -223,23 +222,28 @@ inm_is_ifp_detached(const struct in_multi *inm)
 }
 #endif
 
-static struct grouptask free_gtask;
-static struct in_multi_head inm_free_list;
-static void inm_release_task(void *arg __unused);
-static void inm_init(void)
+/*
+ * Interface detach can happen in a taskqueue thread context, so we must use a
+ * dedicated thread to avoid deadlocks when draining inm_release tasks.
+ */
+TASKQUEUE_DEFINE_THREAD(inm_free);
+static struct in_multi_head inm_free_list = SLIST_HEAD_INITIALIZER();
+static void inm_release_task(void *arg __unused, int pending __unused);
+static struct task inm_free_task = TASK_INITIALIZER(0, inm_release_task, NULL);
+
+void
+inm_release_wait(void *arg __unused)
 {
-	SLIST_INIT(&inm_free_list);
-	taskqgroup_config_gtask_init(NULL, &free_gtask, inm_release_task, "inm release task");
+
+	/*
+	 * Make sure all pending multicast addresses are freed before
+	 * the VNET or network device is destroyed:
+	 */
+	taskqueue_drain(taskqueue_inm_free, &inm_free_task);
 }
-
-#ifdef EARLY_AP_STARTUP
-SYSINIT(inm_init, SI_SUB_SMP + 1, SI_ORDER_FIRST,
-	inm_init, NULL);
-#else
-SYSINIT(inm_init, SI_SUB_ROOT_CONF - 1, SI_ORDER_FIRST,
-	inm_init, NULL);
+#ifdef VIMAGE
+VNET_SYSUNINIT(inm_release_wait, SI_SUB_PROTO_DOMAIN, SI_ORDER_FIRST, inm_release_wait, NULL);
 #endif
-
 
 void
 inm_release_list_deferred(struct in_multi_head *inmh)
@@ -250,7 +254,7 @@ inm_release_list_deferred(struct in_multi_head *inmh)
 	mtx_lock(&in_multi_free_mtx);
 	SLIST_CONCAT(&inm_free_list, inmh, in_multi, inm_nrele);
 	mtx_unlock(&in_multi_free_mtx);
-	GROUPTASK_ENQUEUE(&free_gtask);
+	taskqueue_enqueue(taskqueue_inm_free, &inm_free_task);
 }
 
 void
@@ -303,7 +307,7 @@ inm_release_deferred(struct in_multi *inm)
 }
 
 static void
-inm_release_task(void *arg __unused)
+inm_release_task(void *arg __unused, int pending __unused)
 {
 	struct in_multi_head inm_free_tmp;
 	struct in_multi *inm, *tinm;
@@ -2205,7 +2209,11 @@ inp_join_group(struct inpcb *inp, struct sockopt *sopt)
                             __func__);
 			goto out_inp_locked;
 		}
-		inm_acquire(imf->imf_inm);
+		/*
+		 * NOTE: Refcount from in_joingroup_locked()
+		 * is protecting membership.
+		 */
+		ip_mfilter_insert(&imo->imo_head, imf);
 	} else {
 		CTR1(KTR_IGMPV3, "%s: merge inm state", __func__);
 		IN_MULTI_LIST_LOCK();
@@ -2229,8 +2237,6 @@ inp_join_group(struct inpcb *inp, struct sockopt *sopt)
 			goto out_inp_locked;
 		}
 	}
-	if (is_new)
-		ip_mfilter_insert(&imo->imo_head, imf);
 
 	imf_commit(imf);
 	imf = NULL;
@@ -2399,6 +2405,12 @@ inp_leave_group(struct inpcb *inp, struct sockopt *sopt)
 	if (is_final) {
 		ip_mfilter_remove(&imo->imo_head, imf);
 		imf_leave(imf);
+
+		/*
+		 * Give up the multicast address record to which
+		 * the membership points.
+		 */
+		(void) in_leavegroup_locked(imf->imf_inm, imf);
 	} else {
 		if (imf->imf_st[0] == MCAST_EXCLUDE) {
 			error = EADDRNOTAVAIL;
@@ -2453,14 +2465,8 @@ inp_leave_group(struct inpcb *inp, struct sockopt *sopt)
 out_inp_locked:
 	INP_WUNLOCK(inp);
 
-	if (is_final && imf) {
-		/*
-		 * Give up the multicast address record to which
-		 * the membership points.
-		 */
-		(void) in_leavegroup_locked(imf->imf_inm, imf);
+	if (is_final && imf)
 		ip_mfilter_free(imf);
-	}
 
 	IN_MULTI_UNLOCK();
 	return (error);

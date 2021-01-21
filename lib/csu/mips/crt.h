@@ -20,7 +20,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/csu/mips/crt.h 352394 2019-09-16 13:41:24Z andrew $
+ * $FreeBSD$
  */
 
 #ifndef _CRT_H_
@@ -34,10 +34,14 @@
     "bal	1f		\n"					\
     "nop			\n"					\
     "1:				\n"					\
-    ".cpload $ra		\n"					\
+    ".cpload	$ra		\n"					\
+    "addu	$sp, $sp, -8	\n"					\
     ".set reorder		\n"					\
+    ".cprestore	4		\n"					\
     ".local	" __STRING(func) "\n"					\
-    "jal	" __STRING(func)
+    "jal	" __STRING(func) "\n"					\
+    "nop			\n"					\
+    "addu	$sp, $sp, 8	\n"
 #else
 #define	INIT_CALL_SEQ(func)						\
     ".set noreorder		\n"					\
@@ -47,7 +51,8 @@
     ".set reorder		\n"					\
     ".cpsetup $ra, $v0, 1b	\n"					\
     ".local	" __STRING(func) "\n"					\
-    "jal	" __STRING(func)
+    "jal	" __STRING(func) "\n"					\
+    "nop			\n"
 #endif
 
 #endif

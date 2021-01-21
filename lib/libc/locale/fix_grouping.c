@@ -27,13 +27,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/locale/fix_grouping.c 326193 2017-11-25 17:12:48Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <limits.h>
 #include <stddef.h>
 
-static const char nogrouping[] = { CHAR_MAX, '\0' };
+static const char nogrouping[] = { '\0' };
 
 /*
  * Internal helper used to convert grouping sequences from string

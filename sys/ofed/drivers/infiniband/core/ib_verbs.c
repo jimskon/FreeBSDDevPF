@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ofed/drivers/infiniband/core/ib_verbs.c 348849 2019-06-10 09:03:08Z slavash $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/errno.h>
 #include <linux/err.h>

@@ -27,9 +27,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/usr.sbin/rpc.statd/rpc.statd.8 263142 2014-03-14 03:07:51Z eadler $
+.\" $FreeBSD$
 .\"
-.Dd November 1, 2007
+.Dd November 21, 2019
 .Dt RPC.STATD 8
 .Os
 .Sh NAME
@@ -38,6 +38,7 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl d
+.Op Fl F
 .Op Fl h Ar bindip
 .Op Fl p Ar port
 .Sh DESCRIPTION
@@ -71,6 +72,17 @@ These messages are logged with level
 LOG_DEBUG and facility LOG_DAEMON.
 Error conditions are logged irrespective
 of this option, using level LOG_ERR.
+.It Fl F
+Run
+.Nm
+in the foreground, rather than going into daemon mode.
+This is useful if some other process uses
+.Xr fork 2
+and
+.Xr exec 3
+to run
+.Nm ,
+and wants to monitor when and how it exits.
 .It Fl h Ar bindip
 Specify specific IP addresses to bind to.
 This option may be specified multiple times.

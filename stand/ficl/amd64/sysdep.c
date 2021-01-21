@@ -7,7 +7,7 @@
 **
 *******************************************************************/
 
-/* $FreeBSD: releng/12.1/stand/ficl/amd64/sysdep.c 330864 2018-03-13 16:33:00Z imp $ */
+/* $FreeBSD$ */
 
 #ifdef TESTMAIN
 #include <stdio.h>
@@ -16,6 +16,8 @@
 #include <stand.h>
 #endif
 #include "ficl.h"
+
+#include "../x86/sysdep.c"
 
 /*
 *******************  FreeBSD  P O R T   B E G I N S   H E R E ******************** Michael Smith

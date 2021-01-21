@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_asconf.h 336511 2018-07-19 20:16:33Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_ASCONF_H_
 #define _NETINET_SCTP_ASCONF_H_
@@ -43,7 +43,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_asconf.h 336511 2018-07-19 20:1
 /*
  * function prototypes
  */
-extern void sctp_asconf_cleanup(struct sctp_tcb *, struct sctp_nets *);
+extern void sctp_asconf_cleanup(struct sctp_tcb *);
 
 extern struct mbuf *sctp_compose_asconf(struct sctp_tcb *, int *, int);
 
@@ -56,8 +56,8 @@ sctp_handle_asconf_ack(struct mbuf *, int, struct sctp_asconf_ack_chunk *,
     struct sctp_tcb *, struct sctp_nets *, int *);
 
 extern uint32_t
-sctp_addr_mgmt_ep_sa(struct sctp_inpcb *, struct sockaddr *,
-    uint32_t, uint32_t, struct sctp_ifa *);
+sctp_addr_mgmt_ep_sa(struct sctp_inpcb *, struct sockaddr *, uint32_t,
+    uint32_t);
 
 
 extern int

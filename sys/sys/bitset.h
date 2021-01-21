@@ -28,14 +28,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/bitset.h 326256 2017-11-27 15:01:59Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_BITSET_H_
 #define	_SYS_BITSET_H_
 
 #define	__bitset_mask(_s, n)						\
-	(1L << ((__bitset_words((_s)) == 1) ?				\
+	(1UL << ((__bitset_words((_s)) == 1) ?				\
 	    (__size_t)(n) : ((n) % _BITSET_BITS)))
 
 #define	__bitset_word(_s, n)						\

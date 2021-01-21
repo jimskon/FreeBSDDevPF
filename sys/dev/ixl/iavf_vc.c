@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.1/sys/dev/ixl/iavf_vc.c 341636 2018-12-06 15:28:09Z erj $*/
+/*$FreeBSD$*/
 
 /*
 **	Virtual Channel support

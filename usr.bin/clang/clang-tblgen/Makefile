@@ -1,18 +1,24 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/clang-tblgen/Makefile 327952 2018-01-14 00:08:34Z dim $
+# $FreeBSD$
 
 PROG_CXX=	clang-tblgen
 MAN=
 
-SRCDIR=		tools/clang/utils/TableGen
+SRCDIR=		clang/utils/TableGen
+SRCS+=		ASTTableGen.cpp
 SRCS+=		ClangASTNodesEmitter.cpp
+SRCS+=		ClangASTPropertiesEmitter.cpp
 SRCS+=		ClangAttrEmitter.cpp
 SRCS+=		ClangCommentCommandInfoEmitter.cpp
 SRCS+=		ClangCommentHTMLNamedCharacterReferenceEmitter.cpp
 SRCS+=		ClangCommentHTMLTagsEmitter.cpp
 SRCS+=		ClangDataCollectorsEmitter.cpp
 SRCS+=		ClangDiagnosticsEmitter.cpp
+SRCS+=		ClangOpcodesEmitter.cpp
+SRCS+=		ClangOpenCLBuiltinEmitter.cpp
 SRCS+=		ClangOptionDocEmitter.cpp
 SRCS+=		ClangSACheckersEmitter.cpp
+SRCS+=		ClangTypeNodesEmitter.cpp
+SRCS+=		MveEmitter.cpp
 SRCS+=		NeonEmitter.cpp
 SRCS+=		TableGen.cpp
 

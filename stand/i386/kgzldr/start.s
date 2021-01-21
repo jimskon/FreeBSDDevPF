@@ -23,7 +23,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/stand/i386/kgzldr/start.s 103436 2002-09-17 01:49:00Z peter $
+# $FreeBSD$
 #
 
 		.set entry,0x10			# kgz.entry

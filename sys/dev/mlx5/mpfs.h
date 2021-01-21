@@ -22,14 +22,15 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mpfs.h 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _MLX5_MPFS_H_
 #define _MLX5_MPFS_H_
 
 struct mlx5_core_dev;
-int mlx5_mpfs_add_mac(struct mlx5_core_dev *dev, u32 *p_index, const u8 *mac);
+int mlx5_mpfs_add_mac(struct mlx5_core_dev *dev, u32 *p_index, const u8 *mac,
+    u8 vlan_valid, u16 bbvlan);
 int mlx5_mpfs_del_mac(struct mlx5_core_dev *dev, u32 index);
 int mlx5_mpfs_init(struct mlx5_core_dev *dev);
 void mlx5_mpfs_destroy(struct mlx5_core_dev *dev);

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_ib/mlx5_ib_qp.c 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/module.h>

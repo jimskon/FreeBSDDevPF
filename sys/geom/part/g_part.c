@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/part/g_part.c 352084 2019-09-09 17:43:44Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -135,9 +135,9 @@ struct g_part_alias_list {
 SYSCTL_DECL(_kern_geom);
 SYSCTL_NODE(_kern_geom, OID_AUTO, part, CTLFLAG_RW, 0,
     "GEOM_PART stuff");
-static u_int check_integrity = 1;
+u_int geom_part_check_integrity = 1;
 SYSCTL_UINT(_kern_geom_part, OID_AUTO, check_integrity,
-    CTLFLAG_RWTUN, &check_integrity, 1,
+    CTLFLAG_RWTUN, &geom_part_check_integrity, 1,
     "Enable integrity checking");
 static u_int auto_resize = 1;
 SYSCTL_UINT(_kern_geom_part, OID_AUTO, auto_resize,
@@ -420,7 +420,7 @@ g_part_check_integrity(struct g_part_table *table, struct g_consumer *cp)
 	if (failed != 0) {
 		printf("GEOM_PART: integrity check failed (%s, %s)\n",
 		    pp->name, table->gpt_scheme->name);
-		if (check_integrity != 0)
+		if (geom_part_check_integrity != 0)
 			return (EINVAL);
 		table->gpt_corrupt = 1;
 	}
@@ -1383,7 +1383,7 @@ g_part_ctl_resize(struct gctl_req *req, struct g_part_parms *gpp)
 	}
 
 	pp = entry->gpe_pp;
-	if ((g_debugflags & 16) == 0 &&
+	if ((g_debugflags & G_F_FOOTSHOOTING) == 0 &&
 	    (pp->acr > 0 || pp->acw > 0 || pp->ace > 0)) {
 		if (entry->gpe_end - entry->gpe_start + 1 > gpp->gpp_size) {
 			/* Deny shrinking of an opened partition. */
@@ -1846,7 +1846,8 @@ g_part_ctlreq(struct gctl_req *req, struct g_class *mp, const char *verb)
 		table = gpp.gpp_geom->softc;
 		if (table != NULL && table->gpt_corrupt &&
 		    ctlreq != G_PART_CTL_DESTROY &&
-		    ctlreq != G_PART_CTL_RECOVER) {
+		    ctlreq != G_PART_CTL_RECOVER &&
+		    geom_part_check_integrity) {
 			gctl_error(req, "%d table '%s' is corrupt",
 			    EPERM, gpp.gpp_geom->name);
 			return;

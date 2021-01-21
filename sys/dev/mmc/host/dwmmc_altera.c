@@ -26,20 +26,25 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mmc/host/dwmmc_altera.c 327392 2017-12-30 22:01:17Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include <sys/bus.h>
 #include <sys/module.h>
+#include <sys/queue.h>
+#include <sys/taskqueue.h>
 
 #include <machine/bus.h>
 
 #include <dev/mmc/bridge.h>
+#include <dev/mmc/mmc_fdt_helpers.h>
 
 #include <dev/ofw/ofw_bus_subr.h>
 
 #include <dev/mmc/host/dwmmc_var.h>
+
+#include "opt_mmccam.h"
 
 static struct ofw_compat_data compat_data[] = {
 	{"altr,socfpga-dw-mshc",	1},
@@ -66,9 +71,17 @@ static int
 altera_dwmmc_attach(device_t dev)
 {
 	struct dwmmc_softc *sc;
+	phandle_t root;
 
 	sc = device_get_softc(dev);
 	sc->hwtype = HWTYPE_ALTERA;
+
+	root = OF_finddevice("/");
+
+	if (ofw_bus_node_is_compatible(root, "altr,socfpga-stratix10")) {
+		sc->bus_hz = 24000000;
+		sc->use_pio = 1;
+	}
 
 	return (dwmmc_attach(dev));
 }

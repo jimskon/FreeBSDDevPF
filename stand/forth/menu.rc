@@ -1,5 +1,5 @@
 \ Menu.rc
-\ $FreeBSD: releng/12.1/stand/forth/menu.rc 320011 2017-06-16 20:08:44Z tsoome $
+\ $FreeBSD$
 \
 \ You should not edit this file! Put any overrides in menu.rc.local
 \ instead as this file can be replaced during system updates.
@@ -72,7 +72,7 @@ s" currdev" getenv dup 0> [if] drop 4 s" zfs:" compare 0= [if]
     set mainmenu_caption[7]="Select Boot [E]nvironment..."
     set mainmenu_command[7]="3 goto_menu"
     set mainmenu_keycode[7]=101
-    set mainansi_caption[7]="Select Boot ^[1mE^[37mnvironment..."
+    set mainansi_caption[7]="Select Boot ^[1mE^[mnvironment..."
 
     s" chain_disk" getenv? [if]
 	set mainmenu_caption[8]="Chain[L]oad ${chain_disk}"

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/qlxgbe/ql_isr.c 351676 2019-09-02 00:31:03Z emaste $");
+__FBSDID("$FreeBSD$");
 
 
 #include "ql_os.h"

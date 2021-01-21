@@ -3,7 +3,7 @@
 \ ** John Sadler (john_sadler@alum.mit.edu)
 \ ** September, 1998
 \
-\ $FreeBSD: releng/12.1/stand/ficl/softwords/softcore.fr 352241 2019-09-12 06:26:22Z tsoome $
+\ $FreeBSD$
 
 \ ** Ficl USER variables
 \ ** See words.c for primitive def'n of USER

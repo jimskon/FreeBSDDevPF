@@ -27,7 +27,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.sbin/etcupdate/etcupdate.sh 326276 2017-11-27 15:37:16Z pfg $
+# $FreeBSD$
 
 # This is a tool to manage updating files that are not updated as part
 # of 'make installworld' such as files in /etc.  Unlike other tools,
@@ -593,6 +593,12 @@ post_install_file()
 				fi
 			else
 				NEWALIAS_WARN=yes
+			fi
+			;;
+		/usr/share/certs/trusted/* | /usr/share/certs/blacklisted/*)
+			log "certctl rehash"
+			if [ -z "$dryrun" ]; then
+				env DESTDIR=${DESTDIR} certctl rehash >&3 2>&1
 			fi
 			;;
 		/etc/login.conf)

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net/iflib_private.h 343304 2019-01-22 17:34:53Z gallatin $
+ * $FreeBSD$
  */
 
 #ifndef __NET_IFLIB_PRIVATE_H_

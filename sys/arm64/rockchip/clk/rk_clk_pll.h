@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/rockchip/clk/rk_clk_pll.h 350689 2019-08-07 18:35:59Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _RK_CLK_PLL_H_
@@ -57,8 +57,6 @@ struct rk_clk_pll_def {
 
 	struct rk_clk_pll_rate	*rates;
 	struct rk_clk_pll_rate	*frac_rates;
-
-	bool			normal_mode;
 };
 
 #define	RK_CLK_PLL_HAVE_GATE	0x1

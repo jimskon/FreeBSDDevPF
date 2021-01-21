@@ -24,7 +24,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tools/build/beinstall.sh 336856 2018-07-29 01:44:26Z will $
+# $FreeBSD$
 #
 ##
 # Install a boot environment using the current FreeBSD source tree.

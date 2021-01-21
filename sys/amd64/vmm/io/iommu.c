@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/io/iommu.c 326257 2017-11-27 15:03:07Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/vmm/io/iommu.c 326257 2017-11-27 15:03:07Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -184,7 +184,7 @@ iommu_init(void)
 
 	if (vmm_is_intel())
 		ops = &iommu_ops_intel;
-	else if (vmm_is_amd())
+	else if (vmm_is_svm())
 		ops = &iommu_ops_amd;
 	else
 		ops = NULL;

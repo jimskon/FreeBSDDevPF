@@ -1,7 +1,7 @@
 #
 # Custom kernel for Seagate DockStar (Marvell SheevaPlug based) devices.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/DOCKSTAR 330045 2018-02-27 00:30:10Z ian $
+# $FreeBSD$
 #
 #    https://www.FreeBSD.org/doc/en_US.ISO8859-1/books/handbook/kernelconfig-config.html
 #
@@ -15,7 +15,7 @@
 # If you are in doubt as to the purpose or necessity of a line, check first 
 # in NOTES.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/DOCKSTAR 330045 2018-02-27 00:30:10Z ian $
+# $FreeBSD$
 #
 #NO_UNIVERSE
 
@@ -69,7 +69,7 @@ device		loop			# Network loopback
 device		md			# Memory/malloc disk
 device		pty			# BSD-style compatibility pseudo ttys
 device		random			# Entropy device
-device		tun			# Packet tunnel.
+device		tuntap			# Packet tunnel.
 device		ether			# Required for all ethernet devices
 device		vlan			# 802.1Q VLAN support
 device		wlan			# 802.11 WLAN support

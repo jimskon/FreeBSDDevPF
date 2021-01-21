@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/scsi/scsi_sg.c 347379 2019-05-09 04:16:06Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -570,7 +570,7 @@ sgioctl(struct cdev *dev, u_long cmd, caddr_t arg, int flag, struct thread *td)
 			dir = CAM_DIR_IN;
 			break;
 		case SG_DXFER_TO_FROM_DEV:
-			dir = CAM_DIR_IN | CAM_DIR_OUT;
+			dir = CAM_DIR_BOTH;
 			break;
 		case SG_DXFER_NONE:
 		default:

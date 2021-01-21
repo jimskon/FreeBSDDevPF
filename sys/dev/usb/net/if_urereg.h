@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/usb/net/if_urereg.h 347559 2019-05-14 03:08:37Z ganbold $
+ * $FreeBSD$
  */
 
 #define	URE_CONFIG_IDX		0	/* config number 1 */

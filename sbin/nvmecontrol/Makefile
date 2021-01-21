@@ -1,4 +1,6 @@
-# $FreeBSD: releng/12.1/sbin/nvmecontrol/Makefile 350954 2019-08-12 19:44:57Z mav $
+# $FreeBSD$
+
+.include <src.opts.mk>
 
 PACKAGE=runtime
 PROG=	nvmecontrol
@@ -11,6 +13,8 @@ MAN=	nvmecontrol.8
 LDFLAGS+= -rdynamic
 LIBADD+= util
 SUBDIR=	modules
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .PATH:	${SRCTOP}/sys/dev/nvme
 

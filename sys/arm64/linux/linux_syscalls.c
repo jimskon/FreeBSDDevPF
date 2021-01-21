@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/arm64/linux/linux_syscalls.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 const char *linux_syscallnames[] = {
@@ -240,7 +240,7 @@ const char *linux_syscallnames[] = {
 	"mlockall",			/* 230 = mlockall */
 	"munlockall",			/* 231 = munlockall */
 	"linux_mincore",			/* 232 = linux_mincore */
-	"madvise",			/* 233 = madvise */
+	"linux_madvise",			/* 233 = linux_madvise */
 	"linux_remap_file_pages",			/* 234 = linux_remap_file_pages */
 	"linux_mbind",			/* 235 = linux_mbind */
 	"linux_get_mempolicy",			/* 236 = linux_get_mempolicy */

@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/ata.h 351527 2019-08-27 03:52:22Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_ATA_H_
@@ -46,6 +46,7 @@ struct ata_params {
 #define ATA_ATAPI_TYPE_TAPE             0x0100  /* streaming tape */
 #define ATA_ATAPI_TYPE_CDROM            0x0500  /* CD-ROM device */
 #define ATA_ATAPI_TYPE_OPTICAL          0x0700  /* optical disk */
+#define ATA_ATAPI_REMOVABLE             0x0080
 #define ATA_DRQ_MASK                    0x0060
 #define ATA_DRQ_SLOW                    0x0000  /* cpu 3 ms delay */
 #define ATA_DRQ_INTR                    0x0020  /* interrupt 10 ms delay */

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/sys/contrib/dev/acpica/acpica_prep.sh 327607 2018-01-06 03:41:35Z jkim $
+# $FreeBSD$
 #
 # Unpack an ACPI CA drop and restructure it to fit the FreeBSD layout
 #
@@ -18,12 +18,13 @@ fulldirs="common compiler components include os_specific"
 
 # files to remove
 stripdirs="generate libraries parsers preprocessor tests tools"
-stripfiles="Makefile README accygwin.h acdragonfly.h acdragonflyex.h	\
-	acefi.h acefiex.h achaiku.h acintel.h aclinux.h aclinuxex.h	\
-	acmacosx.h acmsvc.h acmsvcex.h acnetbsd.h acos2.h acqnx.h	\
-	acwin.h acwin64.h acwinex.h new_table.txt osbsdtbl.c osefitbl.c	\
-	osefixf.c osfreebsdtbl.c oslinuxtbl.c osunixdir.c osunixmap.c	\
-	oswindir.c oswintbl.c oswinxf.c readme.txt utclib.c utprint.c"
+stripfiles="Makefile README aslcompiler.y accygwin.h acdragonfly.h	\
+	acdragonflyex.h acefi.h acefiex.h achaiku.h acintel.h aclinux.h	\
+	aclinuxex.h acmacosx.h acmsvc.h acmsvcex.h acnetbsd.h acos2.h	\
+	acqnx.h acwin.h acwin64.h acwinex.h new_table.txt osbsdtbl.c	\
+	osefitbl.c osefixf.c osfreebsdtbl.c oslinuxtbl.c osunixdir.c	\
+	osunixmap.c oswindir.c oswintbl.c oswinxf.c readme.txt utclib.c	\
+	utprint.c"
 
 # include files to canonify
 src_headers="acapps.h acbuffer.h acclib.h accommon.h acconfig.h		\

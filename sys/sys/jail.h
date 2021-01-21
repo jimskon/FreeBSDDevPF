@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/jail.h 339409 2018-10-17 16:11:43Z jamie $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_JAIL_H_
@@ -110,11 +110,13 @@ struct xprison {
 
 struct iovec;
 
+__BEGIN_DECLS
 int jail(struct jail *);
 int jail_set(struct iovec *, unsigned int, int);
 int jail_get(struct iovec *, unsigned int, int);
 int jail_attach(int);
 int jail_remove(int);
+__END_DECLS
 
 #else /* _KERNEL */
 
@@ -368,6 +370,7 @@ void getcredhostname(struct ucred *, char *, size_t);
 void getcreddomainname(struct ucred *, char *, size_t);
 void getcredhostuuid(struct ucred *, char *, size_t);
 void getcredhostid(struct ucred *, unsigned long *);
+void getjailname(struct ucred *cred, char *name, size_t len);
 void prison0_init(void);
 int prison_allow(struct ucred *, unsigned);
 int prison_check(struct ucred *cred1, struct ucred *cred2);

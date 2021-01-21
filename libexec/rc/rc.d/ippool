@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/ippool 345899 2019-04-05 01:22:30Z cy $
+# $FreeBSD$
 #
 
 # PROVIDE: ippool
 # REQUIRE: FILESYSTEMS
 # BEFORE:  ipfilter
-# KEYWORD: nojail
+# KEYWORD: nojailvnet
 
 . /etc/rc.subr
 

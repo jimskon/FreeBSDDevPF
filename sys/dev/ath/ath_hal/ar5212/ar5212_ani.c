@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5212_ani.c 334848 2018-06-08 18:15:23Z adrian $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -225,7 +225,7 @@ ar5212AniControl(struct ath_hal *ah, HAL_ANI_CMD cmd, int param)
 	struct ath_hal_5212 *ahp = AH5212(ah);
 	struct ar5212AniState *aniState = ahp->ah_curani;
 	const struct ar5212AniParams *params = AH_NULL;
-	
+
 	/*
 	 * This function may be called before there's a current
 	 * channel (eg to disable ANI.)
@@ -784,7 +784,7 @@ ar5212AniLowerImmunity(struct ath_hal *ah)
 	struct ath_hal_5212 *ahp = AH5212(ah);
 	struct ar5212AniState *aniState;
 	const struct ar5212AniParams *params;
-	
+
 	HALASSERT(ANI_ENA(ah));
 
 	aniState = ahp->ah_curani;

@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/msi.c 344912 2019-03-08 01:04:19Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 
@@ -154,7 +154,7 @@ struct pic msi_pic = {
 
 u_int first_msi_irq;
 
-u_int num_msi_irqs = 512;
+u_int num_msi_irqs = 2048;
 SYSCTL_UINT(_machdep, OID_AUTO, num_msi_irqs, CTLFLAG_RDTUN, &num_msi_irqs, 0,
     "Number of IRQs reserved for MSI and MSI-X interrupts");
 
@@ -319,6 +319,7 @@ msi_init(void)
 	switch (cpu_vendor_id) {
 	case CPU_VENDOR_INTEL:
 	case CPU_VENDOR_AMD:
+	case CPU_VENDOR_HYGON:
 		break;
 	case CPU_VENDOR_CENTAUR:
 		if (CPUID_TO_FAMILY(cpu_id) == 0x6 &&

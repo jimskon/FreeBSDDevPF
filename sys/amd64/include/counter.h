@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/counter.h 336047 2018-07-06 19:50:44Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __MACHINE_COUNTER_H__
@@ -33,9 +33,7 @@
 
 #include <sys/pcpu.h>
 
-extern struct pcpu __pcpu[];
-
-#define	EARLY_COUNTER	&__pcpu[0].pc_early_dummy_counter
+#define	EARLY_COUNTER	&temp_bsp_pcpu.pc_early_dummy_counter
 
 #define	counter_enter()	do {} while (0)
 #define	counter_exit()	do {} while (0)
@@ -84,6 +82,7 @@ static inline void
 counter_u64_add(counter_u64_t c, int64_t inc)
 {
 
+	KASSERT(IS_BSP() || c != EARLY_COUNTER, ("EARLY_COUNTER used on AP"));
 	__asm __volatile("addq\t%1,%%gs:(%0)"
 	    :
 	    : "r" ((char *)c - (char *)&__pcpu[0]), "ri" (inc)

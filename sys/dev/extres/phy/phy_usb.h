@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/extres/phy/phy_usb.h 350592 2019-08-05 16:36:11Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_EXTRES_PHY_USB_H_

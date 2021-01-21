@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/localpkg 298514 2016-04-23 16:10:54Z lme $
+# $FreeBSD$
 #
 
 # PROVIDE: localpkg
-# REQUIRE: abi
+# REQUIRE: sysvipc linux
 # BEFORE:  securelevel
 # KEYWORD: shutdown
 

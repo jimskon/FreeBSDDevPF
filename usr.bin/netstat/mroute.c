@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/netstat/mroute.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Print multicast routing structures and statistics.
@@ -409,14 +409,12 @@ mrt_stats()
 
 	mstaddr = nl[N_MRTSTAT].n_value;
 
-	if (mstaddr == 0) {
-		fprintf(stderr, "No IPv4 MROUTING kernel support.\n");
+	if (fetch_stats("net.inet.ip.mrtstat", mstaddr, &mrtstat,
+	    sizeof(mrtstat), kread_counters) != 0) {
+		if ((live && errno == ENOENT) || (!live && mstaddr == 0))
+			fprintf(stderr, "No IPv4 MROUTING kernel support.\n");
 		return;
 	}
-
-	if (fetch_stats("net.inet.ip.mrtstat", mstaddr, &mrtstat,
-	    sizeof(mrtstat), kread_counters) != 0)
-		return;
 
 	xo_emit("{T:IPv4 multicast forwarding}:\n");
 

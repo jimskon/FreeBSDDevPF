@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/iommu/intel_qi.c 338318 2018-08-25 19:38:08Z alc $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 
@@ -58,6 +58,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/x86/iommu/intel_qi.c 338318 2018-08-25 19:38
 #include <x86/include/busdma_impl.h>
 #include <x86/iommu/intel_reg.h>
 #include <x86/iommu/busdma_dmar.h>
+#include <dev/pci/pcireg.h>
 #include <x86/iommu/intel_dmar.h>
 
 static bool

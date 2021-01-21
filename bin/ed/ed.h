@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ed.h,v 1.5 1994/02/01 00:34:39 alm Exp
- * $FreeBSD: releng/12.1/bin/ed/ed.h 309873 2016-12-12 03:46:40Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

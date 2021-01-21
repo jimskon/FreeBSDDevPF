@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rp/rp.c 332122 2018-04-06 17:35:35Z brooks $");
+__FBSDID("$FreeBSD$");
 
 /* 
  * rp.c - for RocketPort FreeBSD
@@ -674,7 +674,7 @@ static void rp_do_poll(void *arg)
 
 	rp = arg;
 	tp = rp->rp_tty;
-	tty_lock_assert(tp, MA_OWNED);
+	tty_assert_locked(tp);
 	ctl = rp->rp_ctlp;
 	CtlMask = ctl->ctlmask(ctl);
 	if (CtlMask & (1 << rp->rp_aiop)) {

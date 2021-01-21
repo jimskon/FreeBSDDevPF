@@ -24,7 +24,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.1/stand/lua/logo-beastie.lua 333418 2018-05-09 16:44:19Z kevans $
+-- $FreeBSD$
 --
 
 local drawer = require("drawer")
@@ -48,7 +48,7 @@ local beastie_color = {
 "                \\       /       /\\",
 "           \027[36m______\027[31m( (_  / \\______/",
 "         \027[36m,'  ,-----'   |",
-"         `--{__________)\027[37m"
+"         `--{__________)\027[m"
 }
 
 drawer.addLogo("beastie", {

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ah_eeprom_9287.h 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	__AH_EEPROM_9287_H__
@@ -165,6 +165,5 @@ typedef struct {
 
 typedef struct modal_eep_ar9287_header MODAL_EEP_9287_HEADER;
 typedef struct base_eep_ar9287_header BASE_EEP_9287_HEADER;
-
 
 #endif /* __AH_EEPROM_9287_H__ */

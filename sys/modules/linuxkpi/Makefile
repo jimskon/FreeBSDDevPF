@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/linuxkpi/Makefile 348280 2019-05-25 20:53:23Z johalun $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/compat/linuxkpi/common/src
 
 KMOD=	linuxkpi
@@ -19,13 +19,7 @@ SRCS=	linux_compat.c \
 	linux_usb.c \
 	linux_work.c
 
-SRCS+=	bus_if.h \
-	device_if.h \
-	pci_if.h \
-	vnode_if.h \
-	usb_if.h \
-	opt_usb.h \
-	opt_stack.h
+SRCS+=	${LINUXKPI_GENSRCS}
 
 CFLAGS+= -I${SRCTOP}/sys/compat/linuxkpi/common/include
 CFLAGS+= -I${SRCTOP}/sys/contrib/ck/include

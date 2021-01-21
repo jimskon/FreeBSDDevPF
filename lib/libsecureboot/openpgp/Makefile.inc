@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsecureboot/openpgp/Makefile.inc 347759 2019-05-16 16:15:41Z sjg $
+# $FreeBSD$
 
 # decode OpenPGP signatures per rfc4880
 .PATH: ${.PARSEDIR}

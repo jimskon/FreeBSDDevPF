@@ -25,17 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/pci_uart.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/pci_uart.c 326276 2017-11-27 15:37:16Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 
 #include <stdio.h>
 
 #include "bhyverun.h"
+#include "debug.h"
 #include "pci_emul.h"
 #include "uart_emul.h"
 
@@ -104,8 +105,8 @@ pci_uart_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	pi->pi_arg = sc;
 
 	if (uart_set_backend(sc, opts) != 0) {
-		fprintf(stderr, "Unable to initialize backend '%s' for "
-		    "pci uart at %d:%d\n", opts, pi->pi_slot, pi->pi_func);
+		EPRINTLN("Unable to initialize backend '%s' for "
+		    "pci uart at %d:%d", opts, pi->pi_slot, pi->pi_func);
 		return (-1);
 	}
 

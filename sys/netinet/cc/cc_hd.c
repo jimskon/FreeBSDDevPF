@@ -54,7 +54,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/cc/cc_hd.c 342188 2018-12-18 09:13:50Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -249,4 +249,5 @@ SYSCTL_PROC(_net_inet_tcp_cc_hd, OID_AUTO, queue_min,
     &hd_qmin_handler, "IU", "minimum queueing delay threshold (qmin) in ticks");
 
 DECLARE_CC_MODULE(hd, &hd_cc_algo);
+MODULE_VERSION(hd, 1);
 MODULE_DEPEND(hd, ertt, 1, 1, 1);

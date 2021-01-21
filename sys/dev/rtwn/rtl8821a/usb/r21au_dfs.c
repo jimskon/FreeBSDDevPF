@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_dfs.c 310867 2016-12-30 22:24:01Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -59,7 +59,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_dfs.c 310867 201
 
 #include <dev/rtwn/rtl8821a/usb/r21au.h>
 #include <dev/rtwn/rtl8821a/usb/r21au_reg.h>
-
 
 #define R21AU_RADAR_CHECK_PERIOD	(2 * hz)
 

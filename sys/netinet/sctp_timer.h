@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_timer.h 326023 2017-11-20 19:43:44Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_TIMER_H_
 #define _NETINET_SCTP_TIMER_H_
@@ -43,19 +43,20 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_timer.h 326023 2017-11-20 19:43
 #define SCTP_RTT_SHIFT 3
 #define SCTP_RTT_VAR_SHIFT 2
 
-struct sctp_nets *
-sctp_find_alternate_net(struct sctp_tcb *,
-    struct sctp_nets *, int mode);
+struct sctp_nets *sctp_find_alternate_net(struct sctp_tcb *, struct sctp_nets *, int);
 
 int
 sctp_t3rxt_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
+
 int
 sctp_t1init_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
+
 int
 sctp_shutdown_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
+
 int
 sctp_heartbeat_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
@@ -72,20 +73,17 @@ int
 sctp_shutdownack_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
 int
-sctp_strreset_timer(struct sctp_inpcb *inp, struct sctp_tcb *stcb,
-    struct sctp_nets *net);
+    sctp_strreset_timer(struct sctp_inpcb *, struct sctp_tcb *);
 
 int
 sctp_asconf_timer(struct sctp_inpcb *, struct sctp_tcb *,
     struct sctp_nets *);
 
 void
-sctp_delete_prim_timer(struct sctp_inpcb *, struct sctp_tcb *,
-    struct sctp_nets *);
+     sctp_delete_prim_timer(struct sctp_inpcb *, struct sctp_tcb *);
 
 void
-sctp_autoclose_timer(struct sctp_inpcb *, struct sctp_tcb *,
-    struct sctp_nets *net);
+     sctp_autoclose_timer(struct sctp_inpcb *, struct sctp_tcb *);
 
 void sctp_audit_retranmission_queue(struct sctp_association *);
 

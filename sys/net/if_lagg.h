@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/net/if_lagg.h 334193 2018-05-24 23:21:23Z mmacy $
+ * $FreeBSD$
  */
 
 #ifndef _NET_LAGG_H
@@ -63,11 +63,11 @@ struct lagg_protos {
 
 #define	LAGG_PROTO_DEFAULT	LAGG_PROTO_FAILOVER
 #define LAGG_PROTOS	{						\
-	{ "failover",		LAGG_PROTO_FAILOVER },		\
+	{ "failover",		LAGG_PROTO_FAILOVER },			\
 	{ "lacp",		LAGG_PROTO_LACP },			\
 	{ "loadbalance",	LAGG_PROTO_LOADBALANCE },		\
-	{ "roundrobin",	LAGG_PROTO_ROUNDROBIN },		\
-	{ "broadcast",	LAGG_PROTO_BROADCAST },		\
+	{ "roundrobin",		LAGG_PROTO_ROUNDROBIN },		\
+	{ "broadcast",		LAGG_PROTO_BROADCAST },			\
 	{ "none",		LAGG_PROTO_NONE },			\
 	{ "default",		LAGG_PROTO_DEFAULT }			\
 }
@@ -147,19 +147,21 @@ struct lagg_reqopts {
 #define	LAGG_OPT_LACP_STRICT		0x10		/* LACP strict mode */
 #define	LAGG_OPT_LACP_TXTEST		0x20		/* LACP debug: txtest */
 #define	LAGG_OPT_LACP_RXTEST		0x40		/* LACP debug: rxtest */
-#define	LAGG_OPT_LACP_TIMEOUT		0x80		/* LACP timeout */
+#define	LAGG_OPT_LACP_FAST_TIMO		0x80		/* LACP fast timeout */
+#define	LAGG_OPT_RR_LIMIT		0x100		/* RR stride */
 	u_int			ro_count;		/* number of ports */
 	u_int			ro_active;		/* active port count */
 	u_int			ro_flapping;		/* number of flapping */
 	int			ro_flowid_shift;	/* shift the flowid */
-	uint32_t		ro_bkt;			/* packet bucket for roundrobin */
+	uint32_t		ro_bkt;			/* stride for RR */
 };
 
 #define	SIOCGLAGGOPTS		_IOWR('i', 152, struct lagg_reqopts)
 #define	SIOCSLAGGOPTS		 _IOW('i', 153, struct lagg_reqopts)
 
 #define	LAGG_OPT_BITS		"\020\001USE_FLOWID\005LACP_STRICT" \
-				"\006LACP_TXTEST\007LACP_RXTEST"
+				"\006LACP_TXTEST\007LACP_RXTEST" \
+				"\010LACP_FAST_TIMO"
 
 #ifdef _KERNEL
 
@@ -214,6 +216,7 @@ struct lagg_softc {
 	struct ifmedia			sc_media;	/* media config */
 	void				*sc_psc;	/* protocol data */
 	uint32_t			sc_seq;		/* sequence counter */
+	uint32_t			sc_stride;	/* stride for RR */
 	uint32_t			sc_flags;
 	int				sc_destroying;	/* destroying lagg */
 
@@ -225,8 +228,6 @@ struct lagg_softc {
 	struct callout			sc_callout;
 	u_int				sc_opts;
 	int				flowid_shift;	/* shift the flowid */
-	uint32_t			sc_bkt;		/* packates bucket for roundrobin */
-	uint32_t			sc_bkt_count;	/* packates bucket count for roundrobin */
 	struct lagg_counters		detached_counters; /* detached ports sum */
 };
 

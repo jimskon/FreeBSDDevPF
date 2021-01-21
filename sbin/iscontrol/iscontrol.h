@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/iscontrol/iscontrol.h 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 /*
  | $Id: iscontrol.h,v 2.3 2007/04/27 08:36:49 danny Exp danny $
@@ -149,8 +149,8 @@ int	recvpdu(isess_t *sess, pdu_t *pp);
 
 int	lookup(token_t *tbl, char *m);
 
-int	vflag;
-char	*iscsidev;
+extern int	vflag;
+extern char	*iscsidev;
 
 void	parseArgs(int nargs, char **args, isc_opt_t *op);
 void	parseConfig(FILE *fd, char *key, isc_opt_t *op);

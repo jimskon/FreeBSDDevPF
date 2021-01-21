@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/net/if_stf.c 346434 2019-04-20 11:01:47Z markj $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: if_stf.c,v 1.73 2001/12/03 11:08:30 keiichi Exp $	*/
 
 /*-

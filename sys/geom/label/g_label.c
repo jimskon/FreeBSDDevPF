@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/label/g_label.c 346509 2019-04-22 00:45:09Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_geom.h"
 

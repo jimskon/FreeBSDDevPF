@@ -63,7 +63,7 @@
 #include "event_factory.h"
 #include "exception.h"
 
-__FBSDID("$FreeBSD: releng/12.1/lib/libdevdctl/event.cc 329284 2018-02-14 23:52:39Z asomers $");
+__FBSDID("$FreeBSD$");
 
 /*================================== Macros ==================================*/
 #define NUM_ELEMENTS(x) (sizeof(x) / sizeof(*x))
@@ -427,7 +427,7 @@ Event::TimestampEventString(std::string &eventString)
 		 * Add a timestamp as the final field of the event if it is
 		 * not already present.
 		 */
-		if (eventString.find("timestamp=") == string::npos) {
+		if (eventString.find(" timestamp=") == string::npos) {
 			const size_t bufsize = 32;	// Long enough for a 64-bit int
 			timeval now;
 			char timebuf[bufsize];

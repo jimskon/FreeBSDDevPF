@@ -1,4 +1,4 @@
-/* $OpenBSD: xmalloc.c,v 1.9 2015/11/17 18:25:02 tobias Exp $ */
+/* $OpenBSD: xmalloc.c,v 1.10 2019/06/28 05:44:09 deraadt Exp $ */
 /*
  * Author: Tatu Ylonen <ylo@cs.hut.fi>
  * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/diff/xmalloc.c 315051 2017-03-11 05:01:29Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <stdarg.h>
@@ -81,7 +81,7 @@ xasprintf(char **ret, const char *fmt, ...)
 	i = vasprintf(ret, fmt, ap);
 	va_end(ap);
 
-	if (i < 0 || *ret == NULL)
+	if (i == -1)
 		err(2, "xasprintf");
 
 	return i;

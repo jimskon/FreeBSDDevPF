@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/netmap/netmap_bdg.h 345663 2019-03-28 22:19:09Z rpokala $
+ * $FreeBSD$
  */
 #ifndef _NET_NETMAP_BDG_H_
 #define _NET_NETMAP_BDG_H_

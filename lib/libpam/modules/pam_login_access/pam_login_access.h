@@ -35,7 +35,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libpam/modules/pam_login_access/pam_login_access.h 326219 2017-11-26 02:00:33Z pfg $
+ * $FreeBSD$
  */
 
-extern int login_access(const char *, const char *);
+#include <stdbool.h>
+
+struct pam_login_access_options {
+	bool		defgroup;
+	bool		audit;
+	const char	*accessfile;
+	/* Delimiters for fields and for lists of users, ttys or hosts. */
+	const char	*fieldsep; /* field separator */
+	const char	*listsep; /* list-element separator */
+};
+
+extern int login_access(const char *, const char *, struct pam_login_access_options *);

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/atf.test.mk 336758 2018-07-27 10:44:38Z eadler $
+# $FreeBSD$
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #
@@ -55,6 +55,8 @@ LDADD.${_T}+= ${LIBATF_CXX} ${LIBATF_C}
 .endif
 TEST_INTERFACE.${_T}= atf
 .endfor
+# Silence warnings about usage of deprecated std::auto_ptr
+CXXWARNFLAGS+=	-Wno-deprecated-declarations
 .endif
 
 .if !empty(ATF_TESTS_SH)

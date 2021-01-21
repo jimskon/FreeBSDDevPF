@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu_rx.c 342830 2019-01-07 04:23:06Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -47,7 +47,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu_rx.c 342830 2019
 #include <dev/rtwn/if_rtwnvar.h>
 
 #include <dev/rtwn/rtl8192c/usb/r92cu.h>
-
 
 int
 r92cu_align_rx(int totlen, int len)

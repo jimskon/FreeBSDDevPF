@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/allwinner_pinctrl.h 327184 2017-12-25 22:09:25Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _ALLWINNER_PINCTRL_H_
@@ -38,6 +38,7 @@ struct allwinner_pins {
 	const char *functions[8];
 	uint8_t eint_func;
 	uint8_t eint_num;
+	uint8_t eint_bank;
 };
 
 struct allwinner_padconf {

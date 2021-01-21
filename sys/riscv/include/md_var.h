@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: releng/12.1/sys/riscv/include/md_var.h 349490 2019-06-28 01:01:54Z mhorne $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -39,6 +39,9 @@ extern int szsigcode;
 extern uint64_t *vm_page_dump;
 extern int vm_page_dump_size;
 extern u_long elf_hwcap;
+extern register_t mvendorid;
+extern register_t marchid;
+extern register_t mimpid;
 
 struct dumperinfo;
 

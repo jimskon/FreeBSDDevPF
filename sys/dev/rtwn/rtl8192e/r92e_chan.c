@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192e/r92e_chan.c 322988 2017-08-28 22:14:16Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -127,7 +127,6 @@ r92e_get_txpower(struct rtwn_softc *sc, int chain, struct ieee80211_channel *c,
 		min_mcs = RTWN_RIDX_HT_MCS(i * 8);
 		for (ridx = min_mcs; ridx <= max_mcs; ridx++)
 			power[ridx] += pwr_diff;
-
 	}
 
 	/* Apply max limit. */

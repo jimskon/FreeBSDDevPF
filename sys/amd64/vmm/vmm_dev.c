@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/vmm_dev.c 348223 2019-05-24 04:15:38Z rgrimes $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/vmm/vmm_dev.c 348223 2019-05-24 04:15:38Z rgrimes $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -790,8 +790,12 @@ vmmdev_ioctl(struct cdev *cdev, u_long cmd, caddr_t data, int fflag,
 		vcpu_unlock_all(sc);
 
 done:
-	/* Make sure that no handler returns a bogus value like ERESTART */
-	KASSERT(error >= 0, ("vmmdev_ioctl: invalid error return %d", error));
+	/*
+	 * Make sure that no handler returns a kernel-internal
+	 * error value to userspace.
+	 */
+	KASSERT(error == ERESTART || error >= 0,
+	    ("vmmdev_ioctl: invalid error return %d", error));
 	return (error);
 }
 

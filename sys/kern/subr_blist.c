@@ -85,7 +85,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_blist.c 342203 2018-12-18 21:01:48Z markj $");
+__FBSDID("$FreeBSD$");
 
 #ifdef _KERNEL
 

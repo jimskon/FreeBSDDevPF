@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/interp_simple.c 346145 2019-04-12 01:03:00Z sjg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Simple commandline interpreter, toplevel and misc.
@@ -97,7 +97,7 @@ interp_include(const char *filename)
 	}
 
 #ifdef LOADER_VERIEXEC
-	if (verify_file(fd, filename, 0, VE_GUESS) < 0) {
+	if (verify_file(fd, filename, 0, VE_GUESS, __func__) < 0) {
 		close(fd);
 		sprintf(command_errbuf,"can't verify '%s'", filename);
 		return(CMD_ERROR);
@@ -114,7 +114,7 @@ interp_include(const char *filename)
 		line++;
 		flags = 0;
 		/* Discard comments */
-		if (strncmp(input+strspn(input, " "), "\\ ", 2) == 0)
+		if (strncmp(input+strspn(input, " "), "\\", 1) == 0)
 			continue;
 		cp = input;
 		/* Echo? */

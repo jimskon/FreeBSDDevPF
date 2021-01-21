@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/nfs.c 337039 2018-08-01 12:14:10Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -486,7 +486,8 @@ nfs_open(const char *upath, struct open_file *f)
 
 #ifdef NFS_DEBUG
  	if (debug)
- 	    printf("nfs_open: %s (rootpath=%s)\n", upath, rootpath);
+		printf("nfs_open: %s (rootip=%s rootpath=%s)\n", upath,
+		    inet_ntoa(rootip), rootpath);
 #endif
 	if (!rootpath[0]) {
 		printf("no rootpath, no nfs\n");
@@ -691,14 +692,14 @@ nfs_read(struct open_file *f, void *buf, size_t size, size_t *resid)
 		if (cc == -1) {
 #ifdef NFS_DEBUG
 			if (debug)
-				printf("nfs_read: read: %s", strerror(errno));
+				printf("nfs_read: read: %s\n", strerror(errno));
 #endif
 			return (errno);	/* XXX - from nfs_readdata */
 		}
 		if (cc == 0) {
 #ifdef NFS_DEBUG
 			if (debug)
-				printf("nfs_read: hit EOF unexpectantly");
+				printf("nfs_read: hit EOF unexpectedly\n");
 #endif
 			goto ret;
 		}

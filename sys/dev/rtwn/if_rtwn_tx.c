@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_tx.c 314315 2017-02-26 20:49:35Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_tx.c 314315 2017-02-26 20:4
 #include <dev/rtwn/if_rtwn_debug.h>
 #include <dev/rtwn/if_rtwn_ridx.h>
 #include <dev/rtwn/if_rtwn_tx.h>
-
 
 void
 rtwn_drain_mbufq(struct rtwn_softc *sc)

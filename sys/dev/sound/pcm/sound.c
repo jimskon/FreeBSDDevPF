@@ -44,7 +44,7 @@
 
 #include "feeder_if.h"
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.1/sys/dev/sound/pcm/sound.c 326255 2017-11-27 14:52:40Z pfg $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 devclass_t pcm_devclass;
 
@@ -1158,6 +1158,8 @@ pcm_unregister(device_t dev)
 	PCM_LOCK(d);
 	PCM_WAIT(d);
 
+	d->flags |= SD_F_DETACHING;
+	
 	if (d->inprog != 0) {
 		device_printf(dev, "unregister: operation in progress\n");
 		PCM_UNLOCK(d);

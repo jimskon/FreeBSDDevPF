@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/ath/athalq/Makefile 264925 2014-04-25 19:25:05Z imp $
+# $FreeBSD$
 
 PROG=	athalq
 MAN=

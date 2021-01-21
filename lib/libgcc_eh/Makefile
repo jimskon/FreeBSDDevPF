@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libgcc_eh/Makefile 308563 2016-11-11 23:28:07Z emaste $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -9,5 +9,11 @@ MK_SSP=		no
 WARNS?=	2
 
 .include "Makefile.inc"
+
+.if ${.MAKE.LEVEL} > 0
+# avoid circular dependencies
+GENDIRDEPS_FILTER+= Nlib/msun
+CFLAGS+= -I${SRCTOP}/lib/msun/src
+.endif
 
 .include <bsd.lib.mk>

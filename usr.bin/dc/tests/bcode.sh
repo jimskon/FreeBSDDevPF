@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/dc/tests/bcode.sh 348460 2019-05-31 16:20:00Z asomers $
+# $FreeBSD$
 
 atf_test_case bmod
 bmod_head()

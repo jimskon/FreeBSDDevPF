@@ -62,12 +62,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/* $FreeBSD: releng/12.1/sys/sys/bus_dma.h 328945 2018-02-06 19:14:15Z bz $ */
+/* $FreeBSD$ */
 
 #ifndef _BUS_DMA_H_
 #define _BUS_DMA_H_
 
+#ifdef _KERNEL
 #include <sys/_bus_dma.h>
+#endif
 
 /*
  * Machine independent interface for mapping physical addresses to peripheral
@@ -133,6 +135,7 @@ typedef struct bus_dma_segment {
 	bus_size_t	ds_len;		/* length of transfer */
 } bus_dma_segment_t;
 
+#ifdef _KERNEL
 /*
  * A function that returns 1 if the address cannot be accessed by
  * a device and 0 if it can be.
@@ -302,5 +305,6 @@ BUS_DMAMAP_OP void bus_dmamap_sync(bus_dma_tag_t dmat, bus_dmamap_t dmamap, bus_
 BUS_DMAMAP_OP void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t dmamap);
 
 #undef BUS_DMAMAP_OP
+#endif /* _KERNEL */
 
 #endif /* _BUS_DMA_H_ */

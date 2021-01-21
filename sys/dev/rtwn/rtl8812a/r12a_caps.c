@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_caps.c 308356 2016-11-05 23:21:30Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -58,7 +58,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_caps.c 308356 2016-11
 #include <dev/rtwn/rtl8812a/r12a.h>
 #include <dev/rtwn/rtl8812a/r12a_reg.h>
 #include <dev/rtwn/rtl8812a/r12a_var.h>
-
 
 int
 r12a_ioctl_net(struct ieee80211com *ic, u_long cmd, void *data)

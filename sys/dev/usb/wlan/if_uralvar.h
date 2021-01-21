@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/usb/wlan/if_uralvar.h 345634 2019-03-28 09:16:00Z avos $	*/
+/*	$FreeBSD$	*/
 
 /*-
  * Copyright (c) 2005

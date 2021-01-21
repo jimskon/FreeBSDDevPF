@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/secure/usr.bin/ssh/Makefile 337852 2018-08-15 14:53:42Z brd $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -36,6 +36,9 @@ LIBADD+=	crypto
 .if defined(LOCALBASE)
 CFLAGS+= -DXAUTH_PATH=\"${LOCALBASE}/bin/xauth\"
 .endif
+
+# Workaround VMware Workstation NAT bug
+CFLAGS+=-DVMWARE_GUEST_WORKAROUND
 
 .include <bsd.prog.mk>
 

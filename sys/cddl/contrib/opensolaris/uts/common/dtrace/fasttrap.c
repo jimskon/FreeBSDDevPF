@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2010 The FreeBSD Foundation
  *
- * $FreeBSD: releng/12.1/sys/cddl/contrib/opensolaris/uts/common/dtrace/fasttrap.c 349016 2019-06-13 16:33:55Z markj $
+ * $FreeBSD$
  */
 
 /*

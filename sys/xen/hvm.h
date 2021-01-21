@@ -17,7 +17,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/xen/hvm.h 336474 2018-07-19 08:44:52Z royger $
+ * $FreeBSD$
  */
 
 #ifndef	__XEN_HVM_H__

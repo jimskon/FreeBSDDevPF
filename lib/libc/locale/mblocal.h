@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/locale/mblocal.h 326193 2017-11-25 17:12:48Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _MBLOCAL_H_

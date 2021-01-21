@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/jme/if_jme.c 352766 2019-09-26 18:36:15Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -569,7 +569,7 @@ jme_map_intr_vector(struct jme_softc *sc)
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ3_COMP);
 	map[MSINUM_REG_INDEX(N_INTR_TXQ4_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ4_COMP);
-	map[MSINUM_REG_INDEX(N_INTR_TXQ4_COMP)] |=
+	map[MSINUM_REG_INDEX(N_INTR_TXQ5_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ5_COMP);
 	map[MSINUM_REG_INDEX(N_INTR_TXQ6_COMP)] |=
 	    MSINUM_INTR_SOURCE(2, N_INTR_TXQ6_COMP);

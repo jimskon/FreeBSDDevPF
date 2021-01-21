@@ -13,14 +13,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_rx.h 312315 2017-01-17 00:35:23Z avos $
+ * $FreeBSD$
  */
 
 #ifndef IF_RTWN_RX_H
 #define IF_RTWN_RX_H
 
 #define	RTWN_NOISE_FLOOR	-95
-
 
 void	rtwn_get_rates(struct rtwn_softc *, const struct ieee80211_rateset *,
 	    const struct ieee80211_htrateset *, uint32_t *, int *, int);

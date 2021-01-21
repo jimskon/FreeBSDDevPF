@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/xen/xenpv.c 329389 2018-02-16 18:04:27Z royger $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -54,12 +54,14 @@ __FBSDID("$FreeBSD: releng/12.1/sys/x86/xen/xenpv.c 329389 2018-02-16 18:04:27Z 
  * prevent clashes with MMIO/ACPI regions.
  *
  * Since this is not possible on i386 just use any available memory
- * chunk and hope we don't clash with anything else.
+ * chunk above 1MB and hope we don't clash with anything else.
  */
 #ifdef __amd64__
 #define LOW_MEM_LIMIT	0x100000000ul
+#elif defined(__i386__)
+#define LOW_MEM_LIMIT	0x100000ul
 #else
-#define LOW_MEM_LIMIT	0
+#error "Unsupported architecture"
 #endif
 
 static devclass_t xenpv_devclass;

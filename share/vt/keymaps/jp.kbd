@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/vt/keymaps/jp.kbd 270156 2014-08-18 21:07:12Z se $
+# $FreeBSD$
 #                                                         alt
 # scan                       cntrl          alt    alt   cntrl lock
 # code  base   shift  cntrl  shift  alt    shift  cntrl  shift state
@@ -115,4 +115,4 @@
   115   '\'    '_'    fs     us     '\'    '_'    fs     us      O
   121   ' '    ' '    nul    ' '    ' '    ' '    susp   ' '     O
   123   ' '    ' '    nul    ' '    ' '    ' '    susp   ' '     O
-  125   0xa5   '|'    fs     us     0xa5   '|'    fs     us      O
+  125   '\'    '|'    fs     us     0xa5   '|'    fs     us      O

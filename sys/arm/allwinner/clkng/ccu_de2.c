@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_de2.c 350605 2019-08-05 18:27:25Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_de2.c 350605 2019-08-05 18:27:25Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -163,4 +163,4 @@ DEFINE_CLASS_1(ccu_de2, ccu_de2_driver, ccu_de2_methods,
   sizeof(struct aw_ccung_softc), aw_ccung_driver);
 
 EARLY_DRIVER_MODULE(ccu_de2, simplebus, ccu_de2_driver,
-    ccu_de2ng_devclass, 0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_LAST);
+    ccu_de2ng_devclass, 0, 0, BUS_PASS_RESOURCE + BUS_PASS_ORDER_LAST);

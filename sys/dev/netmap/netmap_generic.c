@@ -67,7 +67,7 @@
 #ifdef __FreeBSD__
 
 #include <sys/cdefs.h> /* prerequisite */
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/netmap/netmap_generic.c 350006 2019-07-15 20:12:54Z vmaffione $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/errno.h>

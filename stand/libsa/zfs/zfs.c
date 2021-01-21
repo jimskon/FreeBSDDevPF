@@ -23,11 +23,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/stand/libsa/zfs/zfs.c 350342 2019-07-26 01:47:20Z kevans $
+ *	$FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/zfs/zfs.c 350342 2019-07-26 01:47:20Z kevans $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	Stand-alone file reading package.
@@ -417,7 +417,7 @@ vdev_read(vdev_t *vdev, void *priv, off_t offset, void *buf, size_t bytes)
 		full_sec_size -= secsz;
 
 	/* Return of partial sector data requires a bounce buffer. */
-	if ((head > 0) || do_tail_read) {
+	if ((head > 0) || do_tail_read || bytes < secsz) {
 		bouncebuf = zfs_alloc(secsz);
 		if (bouncebuf == NULL) {
 			printf("vdev_read: out of memory\n");
@@ -441,14 +441,28 @@ vdev_read(vdev_t *vdev, void *priv, off_t offset, void *buf, size_t bytes)
 		outbuf += min(secsz - head, bytes);
 	}
 
-	/* Full data return from read sectors */
+	/*
+	 * Full data return from read sectors.
+	 * Note, there is still corner case where we read
+	 * from sector boundary, but less than sector size, e.g. reading 512B
+	 * from 4k sector.
+	 */
 	if (full_sec_size > 0) {
-		res = read(fd, outbuf, full_sec_size);
-		if (res != full_sec_size) {
-			ret = EIO;
-			goto error;
+		if (bytes < full_sec_size) {
+			res = read(fd, bouncebuf, secsz);
+			if (res != secsz) {
+				ret = EIO;
+				goto error;
+			}
+			memcpy(outbuf, bouncebuf, bytes);
+		} else {
+			res = read(fd, outbuf, full_sec_size);
+			if (res != full_sec_size) {
+				ret = EIO;
+				goto error;
+			}
+			outbuf += full_sec_size;
 		}
-		outbuf += full_sec_size;
 	}
 
 	/* Partial data return from last sector */
@@ -590,7 +604,7 @@ zfs_probe_dev(const char *devname, uint64_t *pool_guid)
 		int slice = dev->d_slice;
 
 		free(dev);
-		if (partition != -1 && slice != -1) {
+		if (partition != D_PARTNONE && slice != D_SLICENONE) {
 			ret = zfs_probe(pa.fd, pool_guid);
 			if (ret == 0)
 				return (0);
@@ -769,11 +783,16 @@ zfs_fmtdev(void *vdev)
 	if (dev->dd.d_dev->dv_type != DEVT_ZFS)
 		return (buf);
 
-	if (dev->pool_guid == 0) {
-		spa = STAILQ_FIRST(&zfs_pools);
+	/* Do we have any pools? */
+	spa = STAILQ_FIRST(&zfs_pools);
+	if (spa == NULL)
+		return (buf);
+
+	if (dev->pool_guid == 0)
 		dev->pool_guid = spa->spa_guid;
-	} else
+	else
 		spa = spa_find_by_guid(dev->pool_guid);
+
 	if (spa == NULL) {
 		printf("ZFS: can't find pool by guid\n");
 		return (buf);

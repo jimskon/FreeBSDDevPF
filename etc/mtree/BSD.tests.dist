@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/etc/mtree/BSD.tests.dist 352416 2019-09-16 16:17:29Z yuripv $
+# $FreeBSD$
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -432,6 +432,8 @@
         ..
         mdconfig
         ..
+        nvmecontrol
+        ..
         pfctl
             files
             ..
@@ -744,6 +746,8 @@
                 ..
                 mirror
                 ..
+                multipath
+                ..
                 nop
                 ..
                 part
@@ -783,6 +787,10 @@
         net
         ..
         netinet
+        ..
+        netinet6
+            frag6
+            ..
         ..
         netipsec
             tunnel
@@ -980,6 +988,8 @@
         ..
         getconf
         ..
+        gh-bc
+        ..
         grep
         ..
         gzip
@@ -1009,6 +1019,8 @@
         ncal
         ..
         opensm
+        ..
+        patch
         ..
         pr
         ..
@@ -1070,7 +1082,11 @@
         ..
         fstyp
         ..
+        jail
+        ..
         makefs
+        ..
+        mixer
         ..
         newsyslog
         ..

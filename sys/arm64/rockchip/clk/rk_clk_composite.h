@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/rockchip/clk/rk_clk_composite.h 350687 2019-08-07 18:26:32Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _RK_CLK_COMPOSITE_H_
@@ -52,7 +52,9 @@ struct rk_clk_composite_def {
 
 #define	RK_CLK_COMPOSITE_HAVE_MUX	0x0001
 #define	RK_CLK_COMPOSITE_HAVE_GATE	0x0002
-
+#define	RK_CLK_COMPOSITE_DIV_EXP	0x0004	/* Register   0, 1, 2, 2, ... */
+						/* Divider    1, 2, 4, 8, ... */
+#define	RK_CLK_COMPOSITE_GRF		0x0008 /* Use syscon registers instead of CRU's */
 int rk_clk_composite_register(struct clkdom *clkdom,
     struct rk_clk_composite_def *clkdef);
 

@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5416/ar5416_power.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -114,7 +114,7 @@ static void
 ar5416SetPowerModeNetworkSleep(struct ath_hal *ah, int setChip)
 {
 	OS_REG_SET_BIT(ah, AR_STA_ID1, AR_STA_ID1_PWR_SAV);
-	
+
 	if (setChip)
 		OS_REG_CLR_BIT(ah, AR_RTC_FORCE_WAKE, AR_RTC_FORCE_WAKE_EN);
 }

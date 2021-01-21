@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/event.h 341376 2018-12-01 17:48:28Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_EVENT_H_
@@ -111,7 +111,7 @@ struct kevent32 {
 #ifndef __amd64__
 	uint32_t	pad0;
 #endif
-	int32_t		data1, data2;
+	uint32_t	data1, data2;
 	uint32_t	udata;		/* opaque user data identifier */
 #ifndef __amd64__
 	uint32_t	pad1;

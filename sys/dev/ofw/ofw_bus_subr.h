@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ofw/ofw_bus_subr.h 349314 2019-06-23 16:16:55Z ian $
+ * $FreeBSD$
  */
 
 #ifndef	_DEV_OFW_OFW_BUS_SUBR_H_
@@ -69,7 +69,8 @@ struct intr_map_data_fdt {
 #define FDTCOMPAT_PNP_INFO(t, busname) \
 	MODULE_PNP_INFO(FDTCOMPAT_PNP_DESCR, busname, t, t, sizeof(t) / sizeof(t[0]));
 
-#define SIMPLEBUS_PNP_INFO(t) FDTCOMPAT_PNP_INFO(t, simplebus)
+#define	OFWBUS_PNP_INFO(t)	FDTCOMPAT_PNP_INFO(t, ofwbus)
+#define	SIMPLEBUS_PNP_INFO(t)	FDTCOMPAT_PNP_INFO(t, simplebus)
 
 /* Generic implementation of ofw_bus_if.m methods and helper routines */
 int	ofw_bus_gen_setup_devinfo(struct ofw_bus_devinfo *, phandle_t);

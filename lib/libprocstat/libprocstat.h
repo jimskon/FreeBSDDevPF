@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libprocstat/libprocstat.h 341777 2018-12-10 01:03:16Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _LIBPROCSTAT_H_

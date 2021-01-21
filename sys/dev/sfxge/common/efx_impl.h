@@ -29,7 +29,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/12.1/sys/dev/sfxge/common/efx_impl.h 342348 2018-12-21 17:18:33Z arybchik $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_EFX_IMPL_H

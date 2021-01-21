@@ -80,7 +80,7 @@
 
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/syscall.c 319873 2017-06-12 21:03:23Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -143,14 +143,10 @@ cpu_fetch_syscall_args(struct thread *td)
 static void
 syscall(struct thread *td, struct trapframe *frame)
 {
-	int error;
 
 	td->td_sa.nap = 4;
-
-	error = syscallenter(td);
-	KASSERT(error != 0 || td->td_ar == NULL,
-	    ("returning from syscall with td_ar set!"));
-	syscallret(td, error);
+	syscallenter(td);
+	syscallret(td);
 }
 
 void

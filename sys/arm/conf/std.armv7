@@ -1,6 +1,6 @@
 # Standard kernel config items for all ARMv7 systems.
 #
-# $FreeBSD: releng/12.1/sys/arm/conf/std.armv7 340503 2018-11-17 18:58:06Z gjb $
+# $FreeBSD$
 
 options 	HZ=1000
 options 	ARM_L2_PIPT		# Only L2 PIPT is supported
@@ -34,6 +34,7 @@ options 	GEOM_LABEL		# Provides labelization
 options 	COMPAT_43		# Compatible with BSD 4.3 [KEEP THIS!]
 options 	SCSI_DELAY=5000		# Delay (in ms) before probing SCSI
 options 	KTRACE			# ktrace(1) support
+options 	STACK			# stack(9) support
 options 	SYSVSHM			# SYSV-style shared memory
 options 	SYSVMSG			# SYSV-style message queues
 options 	SYSVSEM			# SYSV-style semaphores

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/vt/vt_core.c 353005 2019-10-02 13:36:54Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/consio.h>
@@ -1039,6 +1039,13 @@ vt_allocate_keyboard(struct vt_device *vd)
 		DPRINTF(20, "%s: no kbdmux allocated\n", __func__);
 		idx0 = kbd_allocate("*", -1, vd, vt_kbdevent, vd);
 		if (idx0 < 0) {
+			/*
+			 * We don't have a keyboard yet, so we must invalidate
+			 * vd->vd_keyboard so that later keyboard attachment can
+			 * succeed.  Any value >= 0 can accidentally match a
+			 * keyboard.
+			 */
+			vd->vd_keyboard = -1;
 			DPRINTF(10, "%s: No keyboard found.\n", __func__);
 			return (-1);
 		}

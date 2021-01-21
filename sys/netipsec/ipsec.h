@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netipsec/ipsec.h 351358 2019-08-21 22:42:08Z jhb $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ipsec.h,v 1.53 2001/11/20 08:32:38 itojun Exp $	*/
 
 /*-
@@ -38,11 +38,6 @@
 
 #ifndef _NETIPSEC_IPSEC_H_
 #define _NETIPSEC_IPSEC_H_
-
-#if defined(_KERNEL) && !defined(_LKM) && !defined(KLD_MODULE)
-#include "opt_inet.h"
-#include "opt_ipsec.h"
-#endif
 
 #include <net/pfkeyv2.h>
 #include <netipsec/keydb.h>

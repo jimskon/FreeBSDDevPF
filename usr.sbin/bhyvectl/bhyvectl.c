@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyvectl/bhyvectl.c 335026 2018-06-13 03:35:24Z araujo $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyvectl/bhyvectl.c 335026 2018-06-13 03:35:24Z araujo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -656,6 +656,8 @@ cpu_vendor_intel(void)
 	cpu_vendor[12] = '\0';
 
 	if (strcmp(cpu_vendor, "AuthenticAMD") == 0) {
+		return (false);
+	} else if (strcmp(cpu_vendor, "HygonGenuine") == 0) {
 		return (false);
 	} else if (strcmp(cpu_vendor, "GenuineIntel") == 0) {
 		return (true);

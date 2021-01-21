@@ -1,9 +1,9 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-mc/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-mc
 MAN=
 
-SRCDIR=		tools/llvm-mc
+SRCDIR=		llvm/tools/llvm-mc
 SRCS+=		Disassembler.cpp
 SRCS+=		llvm-mc.cpp
 

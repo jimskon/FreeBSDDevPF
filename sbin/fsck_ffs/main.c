@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.6 (Berkeley) 5/14/95";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/fsck_ffs/main.c 347474 2019-05-10 23:45:16Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #define	IN_RTLD			/* So we pickup the P_OSREL defines */
 #include <sys/param.h>
@@ -423,13 +423,11 @@ checkfilesys(char *filesys)
 	 */
 	if ((sblock.fs_flags & FS_SUJ) == FS_SUJ) {
 		if ((sblock.fs_flags & FS_NEEDSFSCK) != FS_NEEDSFSCK && skipclean) {
-			if (preen || reply("USE JOURNAL")) {
-				if (suj_check(filesys) == 0) {
-					printf("\n***** FILE SYSTEM MARKED CLEAN *****\n");
-					if (chkdoreload(mntp) == 0)
-						exit(0);
-					exit(4);
-				}
+			if (suj_check(filesys) == 0) {
+				printf("\n***** FILE SYSTEM MARKED CLEAN *****\n");
+				if (chkdoreload(mntp) == 0)
+					exit(0);
+				exit(4);
 			}
 			printf("** Skipping journal, falling through to full fsck\n\n");
 		}

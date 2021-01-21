@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/arc4random.c 338059 2018-08-19 17:40:50Z delphij $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <fcntl.h>

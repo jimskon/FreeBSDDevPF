@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/netmap/netmap_freebsd.c 350009 2019-07-15 20:25:49Z vmaffione $ */
+/* $FreeBSD$ */
 #include "opt_inet.h"
 #include "opt_inet6.h"
 

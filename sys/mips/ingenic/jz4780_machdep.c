@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/mips/ingenic/jz4780_machdep.c 343708 2019-02-03 08:45:01Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_platform.h"

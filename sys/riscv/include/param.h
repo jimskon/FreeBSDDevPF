@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: releng/12.1/sys/riscv/include/param.h 348644 2019-06-04 17:31:05Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PARAM_H_

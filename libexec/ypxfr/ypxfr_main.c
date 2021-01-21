@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/libexec/ypxfr/ypxfr_main.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <stdio.h>
@@ -52,6 +52,8 @@ __FBSDID("$FreeBSD: releng/12.1/libexec/ypxfr/ypxfr_main.c 325966 2017-11-18 14:
 #include <rpcsvc/ypclnt.h>
 #include <rpcsvc/ypxfrd.h>
 #include "ypxfr_extern.h"
+
+int debug = 1;
 
 char *progname = "ypxfr";
 char *yp_dir = _PATH_YP;
@@ -175,8 +177,6 @@ main(int argc, char *argv[])
 	int remoteport;
 	int interdom = 0;
 	int secure = 0;
-
-	debug = 1;
 
 	if (!isatty(fileno(stderr))) {
 		openlog("ypxfr", LOG_PID, LOG_DAEMON);

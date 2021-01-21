@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fflush.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fflush.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <errno.h>
@@ -99,6 +99,8 @@ __fflush(FILE *fp)
 		retval = __sflush(fp);
 	return (retval);
 }
+
+__weak_reference(__fflush, fflush_unlocked);
 
 int
 __sflush(FILE *fp)

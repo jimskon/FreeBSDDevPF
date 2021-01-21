@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/t4_netmap.c 346974 2019-04-30 21:24:44Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -63,7 +63,7 @@ extern int fl_pad;	/* XXXNM */
  * 2 = supermassive black hole (buffer packing enabled)
  */
 int black_hole = 0;
-SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_black_hole, CTLFLAG_RDTUN, &black_hole, 0,
+SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_black_hole, CTLFLAG_RWTUN, &black_hole, 0,
     "Sink incoming packets.");
 
 int rx_ndesc = 256;
@@ -85,7 +85,7 @@ SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_holdoff_tmr_idx, CTLFLAG_RWTUN,
  *  1: no backpressure, drop packets for the congested queue immediately.
  */
 static int nm_cong_drop = 1;
-SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_cong_drop, CTLFLAG_RDTUN,
+SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_cong_drop, CTLFLAG_RWTUN,
     &nm_cong_drop, 0,
     "Congestion control for netmap rx queues (0 = backpressure, 1 = drop");
 
@@ -110,12 +110,22 @@ static int nm_split_rss = 0;
 SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_split_rss, CTLFLAG_RWTUN,
     &nm_split_rss, 0, "Split the netmap rx queues into two groups.");
 
+/*
+ * netmap(4) says "netmap does not use features such as checksum offloading, TCP
+ * segmentation offloading, encryption, VLAN encapsulation/decapsulation, etc."
+ * but this knob can be used to get the hardware to checksum all tx traffic
+ * anyway.
+ */
+static int nm_txcsum = 0;
+SYSCTL_INT(_hw_cxgbe, OID_AUTO, nm_txcsum, CTLFLAG_RWTUN,
+    &nm_txcsum, 0, "Enable transmit checksum offloading.");
+
 static int
 alloc_nm_rxq_hwq(struct vi_info *vi, struct sge_nm_rxq *nm_rxq, int cong)
 {
 	int rc, cntxt_id, i;
 	__be32 v;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct sge_params *sp = &sc->params.sge;
 	struct netmap_adapter *na = NA(vi->ifp);
 	struct fw_iq_cmd c;
@@ -159,7 +169,7 @@ alloc_nm_rxq_hwq(struct vi_info *vi, struct sge_nm_rxq *nm_rxq, int cong)
 		(black_hole == 2 ? F_FW_IQ_CMD_FL0PACKEN : 0));
 	c.fl0dcaen_to_fl0cidxfthresh =
 	    htobe16(V_FW_IQ_CMD_FL0FBMIN(chip_id(sc) <= CHELSIO_T5 ?
-		X_FETCHBURSTMIN_128B : X_FETCHBURSTMIN_64B) |
+		X_FETCHBURSTMIN_128B : X_FETCHBURSTMIN_64B_T6) |
 		V_FW_IQ_CMD_FL0FBMAX(chip_id(sc) <= CHELSIO_T5 ?
 		X_FETCHBURSTMAX_512B : X_FETCHBURSTMAX_256B));
 	c.fl0size = htobe16(na->num_rx_desc / 8 + sp->spg_len / EQ_ESIZE);
@@ -235,7 +245,7 @@ alloc_nm_rxq_hwq(struct vi_info *vi, struct sge_nm_rxq *nm_rxq, int cong)
 static int
 free_nm_rxq_hwq(struct vi_info *vi, struct sge_nm_rxq *nm_rxq)
 {
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	int rc;
 
 	rc = -t4_iq_free(sc, sc->mbox, sc->pf, 0, FW_IQ_TYPE_FL_INT_CAP,
@@ -252,7 +262,7 @@ alloc_nm_txq_hwq(struct vi_info *vi, struct sge_nm_txq *nm_txq)
 {
 	int rc, cntxt_id;
 	size_t len;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct netmap_adapter *na = NA(vi->ifp);
 	struct fw_eq_eth_cmd c;
 
@@ -274,9 +284,11 @@ alloc_nm_txq_hwq(struct vi_info *vi, struct sge_nm_txq *nm_txq)
 	    htobe32(V_FW_EQ_ETH_CMD_HOSTFCMODE(X_HOSTFCMODE_NONE) |
 		V_FW_EQ_ETH_CMD_PCIECHN(vi->pi->tx_chan) | F_FW_EQ_ETH_CMD_FETCHRO |
 		V_FW_EQ_ETH_CMD_IQID(sc->sge.nm_rxq[nm_txq->iqidx].iq_cntxt_id));
-	c.dcaen_to_eqsize = htobe32(V_FW_EQ_ETH_CMD_FBMIN(X_FETCHBURSTMIN_64B) |
-		      V_FW_EQ_ETH_CMD_FBMAX(X_FETCHBURSTMAX_512B) |
-		      V_FW_EQ_ETH_CMD_EQSIZE(len / EQ_ESIZE));
+	c.dcaen_to_eqsize =
+	    htobe32(V_FW_EQ_ETH_CMD_FBMIN(chip_id(sc) <= CHELSIO_T5 ?
+		X_FETCHBURSTMIN_64B : X_FETCHBURSTMIN_64B_T6) |
+		V_FW_EQ_ETH_CMD_FBMAX(X_FETCHBURSTMAX_512B) |
+		V_FW_EQ_ETH_CMD_EQSIZE(len / EQ_ESIZE));
 	c.eqaddr = htobe64(nm_txq->ba);
 
 	rc = -t4_wr_mbox(sc, sc->mbox, &c, sizeof(c), &c);
@@ -323,7 +335,7 @@ alloc_nm_txq_hwq(struct vi_info *vi, struct sge_nm_txq *nm_txq)
 static int
 free_nm_txq_hwq(struct vi_info *vi, struct sge_nm_txq *nm_txq)
 {
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	int rc;
 
 	rc = -t4_eth_eq_free(sc, sc->mbox, sc->pf, 0, nm_txq->cntxt_id);
@@ -343,7 +355,7 @@ cxgbe_netmap_on(struct adapter *sc, struct vi_info *vi, struct ifnet *ifp,
 	struct sge_nm_rxq *nm_rxq;
 	struct sge_nm_txq *nm_txq;
 	int rc, i, j, hwidx, defq, nrssq;
-	struct hw_buf_info *hwb;
+	struct rx_buf_info *rxb;
 
 	ASSERT_SYNCHRONIZED_OP(sc);
 
@@ -351,17 +363,22 @@ cxgbe_netmap_on(struct adapter *sc, struct vi_info *vi, struct ifnet *ifp,
 	    (ifp->if_drv_flags & IFF_DRV_RUNNING) == 0)
 		return (EAGAIN);
 
-	hwb = &sc->sge.hw_buf_info[0];
-	for (i = 0; i < SGE_FLBUF_SIZES; i++, hwb++) {
-		if (hwb->size == NETMAP_BUF_SIZE(na))
+	rxb = &sc->sge.rx_buf_info[0];
+	for (i = 0; i < SW_ZONE_SIZES; i++, rxb++) {
+		if (rxb->size1 == NETMAP_BUF_SIZE(na)) {
+			hwidx = rxb->hwidx1;
 			break;
+		}
+		if (rxb->size2 == NETMAP_BUF_SIZE(na)) {
+			hwidx = rxb->hwidx2;
+			break;
+		}
 	}
-	if (i >= SGE_FLBUF_SIZES) {
+	if (i >= SW_ZONE_SIZES) {
 		if_printf(ifp, "no hwidx for netmap buffer size %d.\n",
 		    NETMAP_BUF_SIZE(na));
 		return (ENXIO);
 	}
-	hwidx = i;
 
 	/* Must set caps before calling netmap_reset */
 	nm_set_native_flags(na);
@@ -545,7 +562,7 @@ cxgbe_netmap_reg(struct netmap_adapter *na, int on)
 {
 	struct ifnet *ifp = na->ifp;
 	struct vi_info *vi = ifp->if_softc;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	int rc;
 
 	rc = begin_synchronized_op(sc, vi, SLEEP_OK | INTR_OK, "t4nmreg");
@@ -571,7 +588,10 @@ ndesc_to_npkt(const int n)
 }
 #define MAX_NPKT_IN_TYPE1_WR	(ndesc_to_npkt(SGE_MAX_WR_NDESC))
 
-/* Space (in descriptors) needed for a type1 WR that carries n packets */
+/*
+ * Space (in descriptors) needed for a type1 WR (TX_PKTS or TX_PKTS2) that
+ * carries n packets
+ */
 static inline int
 npkt_to_ndesc(const int n)
 {
@@ -581,7 +601,10 @@ npkt_to_ndesc(const int n)
 	return ((n + 2) / 2);
 }
 
-/* Space (in 16B units) needed for a type1 WR that carries n packets */
+/*
+ * Space (in 16B units) needed for a type1 WR (TX_PKTS or TX_PKTS2) that
+ * carries n packets
+ */
 static inline int
 npkt_to_len16(const int n)
 {
@@ -651,7 +674,7 @@ ring_nm_txq_db(struct adapter *sc, struct sge_nm_txq *nm_txq)
  */
 static void
 cxgbe_nm_tx(struct adapter *sc, struct sge_nm_txq *nm_txq,
-    struct netmap_kring *kring, int npkt, int npkt_remaining, int txcsum)
+    struct netmap_kring *kring, int npkt, int npkt_remaining)
 {
 	struct netmap_ring *ring = kring->ring;
 	struct netmap_slot *slot;
@@ -668,7 +691,7 @@ cxgbe_nm_tx(struct adapter *sc, struct sge_nm_txq *nm_txq,
 		len = 0;
 
 		wr = (void *)&nm_txq->desc[nm_txq->pidx];
-		wr->op_pkd = htobe32(V_FW_WR_OP(FW_ETH_TX_PKTS_WR));
+		wr->op_pkd = nm_txq->op_pkd;
 		wr->equiq_to_len16 = htobe32(V_FW_WR_LEN16(npkt_to_len16(n)));
 		wr->npkt = n;
 		wr->r3 = 0;
@@ -683,16 +706,7 @@ cxgbe_nm_tx(struct adapter *sc, struct sge_nm_txq *nm_txq,
 			cpl->ctrl0 = nm_txq->cpl_ctrl0;
 			cpl->pack = 0;
 			cpl->len = htobe16(slot->len);
-			/*
-			 * netmap(4) says "netmap does not use features such as
-			 * checksum offloading, TCP segmentation offloading,
-			 * encryption, VLAN encapsulation/decapsulation, etc."
-			 *
-			 * So the ncxl interfaces have tx hardware checksumming
-			 * disabled by default.  But you can override netmap by
-			 * enabling IFCAP_TXCSUM on the interface manully.
-			 */
-			cpl->ctrl1 = txcsum ? 0 :
+			cpl->ctrl1 = nm_txcsum ? 0 :
 			    htobe64(F_TXPKT_IPCSUM_DIS | F_TXPKT_L4CSUM_DIS);
 
 			usgl = (void *)(cpl + 1);
@@ -776,7 +790,8 @@ reclaim_nm_tx_desc(struct sge_nm_txq *nm_txq)
 	while (nm_txq->cidx != hw_cidx) {
 		wr = (void *)&nm_txq->desc[nm_txq->cidx];
 
-		MPASS(wr->op_pkd == htobe32(V_FW_WR_OP(FW_ETH_TX_PKTS_WR)));
+		MPASS(wr->op_pkd == htobe32(V_FW_WR_OP(FW_ETH_TX_PKTS_WR)) ||
+		    wr->op_pkd == htobe32(V_FW_WR_OP(FW_ETH_TX_PKTS2_WR)));
 		MPASS(wr->type == 1);
 		MPASS(wr->npkt > 0 && wr->npkt <= MAX_NPKT_IN_TYPE1_WR);
 
@@ -802,11 +817,11 @@ cxgbe_netmap_txsync(struct netmap_kring *kring, int flags)
 	struct netmap_adapter *na = kring->na;
 	struct ifnet *ifp = na->ifp;
 	struct vi_info *vi = ifp->if_softc;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct sge_nm_txq *nm_txq = &sc->sge.nm_txq[vi->first_nm_txq + kring->ring_id];
 	const u_int head = kring->rhead;
 	u_int reclaimed = 0;
-	int n, d, npkt_remaining, ndesc_remaining, txcsum;
+	int n, d, npkt_remaining, ndesc_remaining;
 
 	/*
 	 * Tx was at kring->nr_hwcur last time around and now we need to advance
@@ -817,7 +832,6 @@ cxgbe_netmap_txsync(struct netmap_kring *kring, int flags)
 
 	npkt_remaining = head >= kring->nr_hwcur ? head - kring->nr_hwcur :
 	    kring->nkr_num_slots - kring->nr_hwcur + head;
-	txcsum = ifp->if_capenable & (IFCAP_TXCSUM | IFCAP_TXCSUM_IPV6);
 	while (npkt_remaining) {
 		reclaimed += reclaim_nm_tx_desc(nm_txq);
 		ndesc_remaining = contiguous_ndesc_available(nm_txq);
@@ -841,7 +855,7 @@ cxgbe_netmap_txsync(struct netmap_kring *kring, int flags)
 
 		/* Send n packets and update nm_txq->pidx and kring->nr_hwcur */
 		npkt_remaining -= n;
-		cxgbe_nm_tx(sc, nm_txq, kring, n, npkt_remaining, txcsum);
+		cxgbe_nm_tx(sc, nm_txq, kring, n, npkt_remaining);
 	}
 	MPASS(npkt_remaining == 0);
 	MPASS(kring->nr_hwcur == head);
@@ -867,7 +881,7 @@ cxgbe_netmap_rxsync(struct netmap_kring *kring, int flags)
 	struct netmap_ring *ring = kring->ring;
 	struct ifnet *ifp = na->ifp;
 	struct vi_info *vi = ifp->if_softc;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct sge_nm_rxq *nm_rxq = &sc->sge.nm_rxq[vi->first_nm_rxq + kring->ring_id];
 	u_int const head = kring->rhead;
 	u_int n;
@@ -907,7 +921,7 @@ cxgbe_netmap_rxsync(struct netmap_kring *kring, int flags)
 		MPASS((n & 7) == 0);
 
 		IDXINCR(kring->nr_hwcur, n, kring->nkr_num_slots);
-		IDXINCR(nm_rxq->fl_pidx, n, nm_rxq->fl_sidx);
+		IDXINCR(nm_rxq->fl_pidx, n, nm_rxq->fl_sidx2);
 
 		while (n > 0) {
 			for (i = 0; i < 8; i++, fl_pidx++, slot++) {
@@ -915,10 +929,10 @@ cxgbe_netmap_rxsync(struct netmap_kring *kring, int flags)
 				MPASS(ba != 0);
 				nm_rxq->fl_desc[fl_pidx] = htobe64(ba | hwidx);
 				slot->flags &= ~NS_BUF_CHANGED;
-				MPASS(fl_pidx <= nm_rxq->fl_sidx);
+				MPASS(fl_pidx <= nm_rxq->fl_sidx2);
 			}
 			n -= 8;
-			if (fl_pidx == nm_rxq->fl_sidx) {
+			if (fl_pidx == nm_rxq->fl_sidx2) {
 				fl_pidx = 0;
 				slot = &ring->slot[0];
 			}
@@ -982,6 +996,7 @@ cxgbe_nm_attach(struct vi_info *vi)
 	na.nm_register = cxgbe_netmap_reg;
 	na.num_tx_rings = vi->nnmtxq;
 	na.num_rx_rings = vi->nnmrxq;
+	na.rx_buf_maxsize = MAX_MTU;
 	netmap_attach(&na);	/* This adds IFCAP_NETMAP to if_capabilities */
 }
 
@@ -1023,7 +1038,7 @@ void
 service_nm_rxq(struct sge_nm_rxq *nm_rxq)
 {
 	struct vi_info *vi = nm_rxq->vi;
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct ifnet *ifp = vi->ifp;
 	struct netmap_adapter *na = NA(ifp);
 	struct netmap_kring *kring = na->rx_rings[nm_rxq->nid];

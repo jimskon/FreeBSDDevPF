@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5212_recv.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -87,7 +87,7 @@ ar5212StopDmaReceive(struct ath_hal *ah)
  * Start Transmit at the PCU engine (unpause receive)
  */
 void
-ar5212StartPcuReceive(struct ath_hal *ah)
+ar5212StartPcuReceive(struct ath_hal *ah, HAL_BOOL is_scanning)
 {
 	struct ath_hal_private *ahp = AH_PRIVATE(ah);
 
@@ -95,8 +95,8 @@ ar5212StartPcuReceive(struct ath_hal *ah)
 	OS_REG_WRITE(ah, AR_DIAG_SW,
 		OS_REG_READ(ah, AR_DIAG_SW) &~ AR_DIAG_RX_DIS);
 	ar5212EnableMibCounters(ah);
-	/* NB: restore current settings */
-	ar5212AniReset(ah, ahp->ah_curchan, ahp->ah_opmode, AH_TRUE);
+	/* NB: restore current settings if we're not scanning */
+	ar5212AniReset(ah, ahp->ah_curchan, ahp->ah_opmode, !is_scanning);
 }
 
 /*
@@ -265,7 +265,6 @@ ar5212ProcRxDesc(struct ath_hal *ah, struct ath_desc *ds,
 	rs->rs_datalen = ads->ds_rxstatus0 & AR_DataLen;
 	rs->rs_tstamp = MS(ads->ds_rxstatus1, AR_RcvTimestamp);
 	rs->rs_status = 0;
-	/* XXX what about KeyCacheMiss? */
 	rs->rs_rssi = MS(ads->ds_rxstatus0, AR_RcvSigStrength);
 	/* discard invalid h/w rssi data */
 	if (rs->rs_rssi == -128)
@@ -274,6 +273,8 @@ ar5212ProcRxDesc(struct ath_hal *ah, struct ath_desc *ds,
 		rs->rs_keyix = MS(ads->ds_rxstatus1, AR_KeyIdx);
 	else
 		rs->rs_keyix = HAL_RXKEYIX_INVALID;
+	if (ads->ds_rxstatus1 & AR_KeyCacheMiss)
+		rs->rs_status |= HAL_RXERR_KEYMISS;
 	/* NB: caller expected to do rate table mapping */
 	rs->rs_rate = MS(ads->ds_rxstatus0, AR_RcvRate);
 	rs->rs_antenna  = MS(ads->ds_rxstatus0, AR_RcvAntenna);

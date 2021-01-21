@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libnv/common_impl.h 341079 2018-11-27 17:00:47Z markj $
+ * $FreeBSD$
  */
 
 #ifndef	_COMMON_IMPL_H_

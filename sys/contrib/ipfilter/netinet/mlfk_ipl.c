@@ -1,9 +1,9 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/mlfk_ipl.c 350668 2019-08-07 01:08:57Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
  *
- * $FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/mlfk_ipl.c 350668 2019-08-07 01:08:57Z cy $
+ * $FreeBSD$
  * See the IPFILTER.LICENCE file for details on licencing.
  */
 

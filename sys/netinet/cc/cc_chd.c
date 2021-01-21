@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/cc/cc_chd.c 342188 2018-12-18 09:13:50Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -493,4 +493,5 @@ SYSCTL_UINT(_net_inet_tcp_cc_chd,  OID_AUTO, use_max,
     "as the basic delay measurement for the algorithm.");
 
 DECLARE_CC_MODULE(chd, &chd_cc_algo);
+MODULE_VERSION(chd, 1);
 MODULE_DEPEND(chd, ertt, 1, 1, 1);

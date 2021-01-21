@@ -29,7 +29,7 @@
 #
 #  Authors: Alan Somers         (Spectra Logic Corporation)
 #
-# $FreeBSD: releng/12.1/tests/sys/net/if_clone_test.sh 350121 2019-07-19 14:12:11Z asomers $
+# $FreeBSD$
 
 # Outline:
 # For each cloned interface type, do three tests

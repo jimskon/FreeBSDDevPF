@@ -27,9 +27,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libc/sys/clock_gettime.2 315694 2017-03-22 00:50:36Z vangyzen $
+.\" $FreeBSD$
 .\"
-.Dd March 20, 2017
+.Dd December 7, 2019
 .Dt CLOCK_GETTIME 2
 .Os
 .Sh NAME
@@ -174,3 +174,11 @@ The clock IDs
 .Fa CLOCK_UPTIME_PRECISE ,
 .Fa CLOCK_SECOND
 are FreeBSD extensions to the POSIX interface.
+.Sh HISTORY
+The
+.Fn clock_gettime ,
+.Fn clock_settime ,
+and
+.Fn clock_getres
+system calls first appeared in
+.Fx 3.0 .

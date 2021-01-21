@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/pseudofs/pseudofs_vnops.c 348597 2019-06-04 01:00:30Z johalun $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_pseudofs.h"
 
@@ -447,10 +447,6 @@ pfs_lookup(struct vop_cachedlookup_args *va)
 	if (vn->v_type != VDIR)
 		PFS_RETURN (ENOTDIR);
 	KASSERT_PN_IS_DIR(pd);
-
-	error = VOP_ACCESS(vn, VEXEC, cnp->cn_cred, cnp->cn_thread);
-	if (error)
-		PFS_RETURN (error);
 
 	/*
 	 * Don't support DELETE or RENAME.  CREATE is supported so

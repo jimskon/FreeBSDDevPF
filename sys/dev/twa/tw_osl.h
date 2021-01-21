@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/sys/dev/twa/tw_osl.h 326255 2017-11-27 14:52:40Z pfg $
+ *	$FreeBSD$
  */
 
 /*
@@ -56,6 +56,12 @@
 /* Reserve two command packets.  One for ioctls and one for AENs */
 #define TW_OSLI_MAX_NUM_IOS		(TW_OSLI_MAX_NUM_REQUESTS - 2)
 #define TW_OSLI_MAX_NUM_AENS		0x100
+
+#ifdef PAE
+#define	TW_OSLI_DMA_BOUNDARY		(1u << 31)
+#else
+#define	TW_OSLI_DMA_BOUNDARY		((bus_size_t)((uint64_t)1 << 32))
+#endif
 
 /* Possible values of req->state. */
 #define TW_OSLI_REQ_STATE_INIT		0x0	/* being initialized */

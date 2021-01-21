@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/libsa/net.h 330864 2018-03-13 16:33:00Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _STAND_NET_H
@@ -91,6 +91,7 @@ extern	struct in_addr rootip;
 extern	struct in_addr swapip;
 extern	struct in_addr gateip;
 extern	struct in_addr nameip;
+extern	struct in_addr servip;
 extern	n_long netmask;
 extern	u_int intf_mtu;
 

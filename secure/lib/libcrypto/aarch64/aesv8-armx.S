@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/secure/lib/libcrypto/aarch64/aesv8-armx.S 344603 2019-02-26 19:34:42Z jkim $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from aesv8-armx.pl. */
 #include "arm_arch.h"
 

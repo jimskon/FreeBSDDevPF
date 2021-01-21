@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net80211/ieee80211_vht.h 311855 2017-01-10 05:30:15Z adrian $
+ * $FreeBSD$
  */
 #ifndef _NET80211_IEEE80211_VHT_H_
 #define _NET80211_IEEE80211_VHT_H_
@@ -45,7 +45,7 @@ int	ieee80211_vht_updateparams(struct ieee80211_node *,
 void	ieee80211_setup_vht_rates(struct ieee80211_node *,
 	    const uint8_t *, const uint8_t *);
 
-void	ieee80211_vht_timeout(struct ieee80211com *ic);
+void	ieee80211_vht_timeout(struct ieee80211vap *vap);
 
 void	ieee80211_vht_node_join(struct ieee80211_node *ni);
 void	ieee80211_vht_node_leave(struct ieee80211_node *ni);

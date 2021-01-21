@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)cons.h	7.2 (Berkeley) 5/9/91
- * $FreeBSD: releng/12.1/sys/sys/cons.h 334340 2018-05-29 16:16:24Z avg $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CONS_H_

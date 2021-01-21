@@ -33,12 +33,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/hwpmc/hwpmc_mod.c 343350 2019-01-23 17:36:58Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
+#include <sys/systm.h>
 #include <sys/domainset.h>
 #include <sys/eventhandler.h>
-#include <sys/gtaskqueue.h>
 #include <sys/jail.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
@@ -63,7 +63,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/hwpmc/hwpmc_mod.c 343350 2019-01-23 17:3
 #include <sys/sysctl.h>
 #include <sys/sysent.h>
 #include <sys/syslog.h>
-#include <sys/systm.h>
+#include <sys/taskqueue.h>
 #include <sys/vnode.h>
 
 #include <sys/linker.h>		/* needs to be after <sys/malloc.h> */
@@ -187,7 +187,7 @@ static int pmc_threadfreelist_entries=0;
 /*
  * Task to free thread descriptors
  */
-static struct grouptask free_gtask;
+static struct task free_task;
 
 /*
  * A map of row indices to classdep structures.
@@ -304,7 +304,7 @@ static int pmc_callchaindepth = PMC_CALLCHAIN_DEPTH;
 SYSCTL_INT(_kern_hwpmc, OID_AUTO, callchaindepth, CTLFLAG_RDTUN,
     &pmc_callchaindepth, 0, "depth of call chain records");
 
-char pmc_cpuid[64];
+char pmc_cpuid[PMC_CPUID_LEN];
 SYSCTL_STRING(_kern_hwpmc, OID_AUTO, cpuid, CTLFLAG_RD,
 	pmc_cpuid, 0, "cpu version string");
 #ifdef	HWPMC_DEBUG
@@ -2411,27 +2411,28 @@ pmc_thread_descriptor_pool_free(struct pmc_thread *pt)
 	LIST_INSERT_HEAD(&pmc_threadfreelist, pt, pt_next);
 	pmc_threadfreelist_entries++;
 	if (pmc_threadfreelist_entries > pmc_threadfreelist_max)
-		GROUPTASK_ENQUEUE(&free_gtask);
+		taskqueue_enqueue(taskqueue_fast, &free_task);
 	mtx_unlock_spin(&pmc_threadfreelist_mtx);
 }
 
 /*
- * A callout to manage the free list.
+ * An asynchronous task to manage the free list.
  */
 static void
-pmc_thread_descriptor_pool_free_task(void *arg __unused)
+pmc_thread_descriptor_pool_free_task(void *arg __unused, int pending __unused)
 {
 	struct pmc_thread *pt;
 	LIST_HEAD(, pmc_thread) tmplist;
 	int delta;
 
 	LIST_INIT(&tmplist);
+
 	/* Determine what changes, if any, we need to make. */
 	mtx_lock_spin(&pmc_threadfreelist_mtx);
 	delta = pmc_threadfreelist_entries - pmc_threadfreelist_max;
-	while (delta > 0 &&
-		   (pt = LIST_FIRST(&pmc_threadfreelist)) != NULL) {
+	while (delta > 0 && (pt = LIST_FIRST(&pmc_threadfreelist)) != NULL) {
 		delta--;
+		pmc_threadfreelist_entries--;
 		LIST_REMOVE(pt, pt_next);
 		LIST_INSERT_HEAD(&tmplist, pt, pt_next);
 	}
@@ -4828,7 +4829,7 @@ pmc_capture_user_callchain(int cpu, int ring, struct trapframe *tf)
 			nfree++;
 #endif
 		if (ps->ps_td != td ||
-		   ps->ps_nsamples == PMC_USER_CALLCHAIN_PENDING ||
+		   ps->ps_nsamples != PMC_USER_CALLCHAIN_PENDING ||
 		   ps->ps_pmc->pm_state != PMC_STATE_RUNNING)
 			continue;
 
@@ -5714,11 +5715,8 @@ pmc_initialize(void)
 	mtx_init(&pmc_threadfreelist_mtx, "pmc-threadfreelist", "pmc-leaf",
 	    MTX_SPIN);
 
-	/*
-	 * Initialize the callout to monitor the thread free list.
-	 * This callout will also handle the initial population of the list.
-	 */
-	taskqgroup_config_gtask_init(NULL, &free_gtask, pmc_thread_descriptor_pool_free_task, "thread descriptor pool free task");
+	/* Initialize the task to prune the thread free list. */
+	TASK_INIT(&free_task, 0, pmc_thread_descriptor_pool_free_task, NULL);
 
 	/* register process {exit,fork,exec} handlers */
 	pmc_exit_tag = EVENTHANDLER_REGISTER(process_exit,
@@ -5817,6 +5815,7 @@ pmc_cleanup(void)
 		}
 
 	/* reclaim allocated data structures */
+	taskqueue_drain(taskqueue_fast, &free_task);
 	mtx_destroy(&pmc_threadfreelist_mtx);
 	pmc_thread_descriptor_pool_drain();
 
@@ -5824,7 +5823,6 @@ pmc_cleanup(void)
 		mtx_pool_destroy(&pmc_mtxpool);
 
 	mtx_destroy(&pmc_processhash_mtx);
-	taskqgroup_config_gtask_deinit(&free_gtask);
 	if (pmc_processhash) {
 #ifdef	HWPMC_DEBUG
 		struct pmc_process *pp;

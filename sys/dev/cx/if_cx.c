@@ -23,7 +23,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cx/if_cx.c 313982 2017-02-20 03:43:12Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 
@@ -871,6 +871,7 @@ static int cx_attach (device_t dev)
 	}
 	splx (s);
 
+	gone_in_dev(dev, 13, "sync serial (T1/E1) ISA card drivers");
 	return 0;
 }
 

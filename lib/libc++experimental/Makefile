@@ -1,9 +1,9 @@
-# $FreeBSD: releng/12.1/lib/libc++experimental/Makefile 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
 PACKAGE=	clibs
-SRCDIR=		${SRCTOP}/contrib/libc++
+SRCDIR=		${SRCTOP}/contrib/llvm-project/libcxx
 
 LIB=		c++experimental
 NO_PIC=

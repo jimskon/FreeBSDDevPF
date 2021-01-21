@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/glxiic/glxiic.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 /*
  * AMD Geode LX CS5536 System Management Bus controller.
  *
@@ -411,8 +411,7 @@ glxiic_attach(device_t dev)
 	glxiic_smb_enable(sc, IIC_FASTEST, 0);
 
 	/* Probe and attach the iicbus when interrupts are available. */
-	config_intrhook_oneshot((ich_func_t)bus_generic_attach, dev);
-	error = 0;
+	error = bus_delayed_attach_children(dev);
 
 out:
 	if (error != 0) {

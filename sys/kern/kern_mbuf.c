@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_mbuf.c 340401 2018-11-13 18:21:47Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 
@@ -1020,6 +1020,7 @@ m_getjcl(int how, short type, int flags, int size)
 		uma_zfree(zone_mbuf, m);
 		return (NULL);
 	}
+	MBUF_PROBE5(m__getjcl, how, type, flags, size, m);
 	return (m);
 }
 

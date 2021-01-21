@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/bus.h 350892 2019-08-12 09:20:02Z avg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_BUS_H_
@@ -432,6 +432,8 @@ struct resource *
 	bus_generic_alloc_resource(device_t bus, device_t child, int type,
 				   int *rid, rman_res_t start, rman_res_t end,
 				   rman_res_t count, u_int flags);
+int	bus_generic_translate_resource(device_t dev, int type, rman_res_t start,
+			      rman_res_t *newstart);
 int	bus_generic_attach(device_t dev);
 int	bus_generic_bind_intr(device_t dev, device_t child,
 			      struct resource *irq, int cpu);
@@ -563,6 +565,7 @@ int	bus_child_present(device_t child);
 int	bus_child_pnpinfo_str(device_t child, char *buf, size_t buflen);
 int	bus_child_location_str(device_t child, char *buf, size_t buflen);
 void	bus_enumerate_hinted_children(device_t bus);
+int	bus_delayed_attach_children(device_t bus);
 
 static __inline struct resource *
 bus_alloc_resource_any(device_t dev, int type, int *rid, u_int flags)

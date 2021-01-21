@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/arm64/include/bus_dma.h 320528 2017-07-01 05:35:29Z jah $ */
+/* $FreeBSD$ */
 
 #ifndef _MACHINE_BUS_DMA_H_
 #define	_MACHINE_BUS_DMA_H_
@@ -7,6 +7,18 @@
 #include <sys/bus_dma.h>
 
 #include <machine/bus_dma_impl.h>
+
+/*
+ * Is DMA address 1:1 mapping of physical address
+ */
+static inline bool
+bus_dma_id_mapped(bus_dma_tag_t dmat, vm_paddr_t buf, bus_size_t buflen)
+{
+	struct bus_dma_tag_common *tc;
+
+	tc = (struct bus_dma_tag_common *)dmat;
+	return (tc->impl->id_mapped(dmat, buf, buflen));
+}
 
 /*
  * Allocate a handle for mapping from kva/uva/physical

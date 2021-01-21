@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/libusb/libusb10.c 345539 2019-03-26 13:45:11Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -91,7 +91,8 @@ void
 libusb_set_debug(libusb_context *ctx, int level)
 {
 	ctx = GET_CONTEXT(ctx);
-	if (ctx)
+	/* debug_fixed is set when the environment overrides libusb_set_debug */
+	if (ctx && ctx->debug_fixed == 0)
 		ctx->debug = level;
 }
 
@@ -132,7 +133,7 @@ libusb_init(libusb_context **context)
 {
 	struct libusb_context *ctx;
 	pthread_condattr_t attr;
-	char *debug;
+	char *debug, *ep;
 	int ret;
 
 	ctx = malloc(sizeof(*ctx));
@@ -143,9 +144,23 @@ libusb_init(libusb_context **context)
 
 	debug = getenv("LIBUSB_DEBUG");
 	if (debug != NULL) {
-		ctx->debug = atoi(debug);
-		if (ctx->debug != 0)
+		/*
+		 * If LIBUSB_DEBUG is set, we'll honor that and use it to
+		 * override libusb_set_debug calls.
+		 */
+		errno = 0;
+		ctx->debug = strtol(debug, &ep, 10);
+		if (errno == 0 && *ep == '\0') {
 			ctx->debug_fixed = 1;
+		} else {
+			/*
+			 * LIBUSB_DEBUG conversion failed for some reason, but
+			 * we don't care about the specifics all that much.  We
+			 * can't use it either way.  Force it to the default,
+			 * 0, in case we had a partial number.
+			 */
+			ctx->debug = 0;
+		}
 	}
 	TAILQ_INIT(&ctx->pollfds);
 	TAILQ_INIT(&ctx->tr_done);
@@ -1699,5 +1714,20 @@ libusb_error_name(int code)
 		return ("LIBUSB_ERROR_OTHER");
 	default:
 		return ("LIBUSB_ERROR_UNKNOWN");
+	}
+}
+
+int
+libusb_has_capability(uint32_t capability)
+{
+
+	switch (capability) {
+	case LIBUSB_CAP_HAS_CAPABILITY:
+	case LIBUSB_CAP_HAS_HOTPLUG:
+	case LIBUSB_CAP_HAS_HID_ACCESS:
+	case LIBUSB_CAP_SUPPORTS_DETACH_KERNEL_DRIVER:
+		return (1);
+	default:
+		return (0);
 	}
 }

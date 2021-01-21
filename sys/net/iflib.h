@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net/iflib.h 353052 2019-10-03 15:23:38Z markj $
+ * $FreeBSD$
  */
 #ifndef __IFLIB_H_
 #define __IFLIB_H_
@@ -95,7 +95,6 @@ typedef struct if_rxd_info {
 
 typedef struct if_rxd_update {
 	uint64_t	*iru_paddrs;
-	caddr_t		*iru_vaddrs;
 	qidx_t		*iru_idxs;
 	qidx_t		iru_pidx;
 	uint16_t	iru_qsidx;
@@ -221,6 +220,9 @@ typedef struct if_softc_ctx {
 	uint32_t isc_tx_qdepth;
 
 	iflib_intr_mode_t isc_intr;
+	uint16_t isc_rxd_buf_size[8]; /* set at init time by driver, 0
+				         means use iflib-calculated size
+				         based on isc_max_frame_size */
 	uint16_t isc_max_frame_size; /* set at init time by driver */
 	uint16_t isc_min_frame_size; /* set at init time by driver, only used if
 					IFLIB_NEED_ETHER_PAD is set. */
@@ -293,7 +295,7 @@ typedef enum {
 
 
 /*
- * Interface has a separate command queue for RX
+ * Interface has a separate completion queue for RX
  */
 #define IFLIB_HAS_RXCQ		0x01
 /*
@@ -305,7 +307,7 @@ typedef enum {
  */
 #define IFLIB_IS_VF		0x04
 /*
- * Interface has a separate command queue for TX
+ * Interface has a separate completion queue for TX
  */
 #define IFLIB_HAS_TXCQ		0x08
 /*
@@ -366,7 +368,21 @@ typedef enum {
  * interrupts instead of doing combined RX/TX processing.
  */
 #define	IFLIB_SINGLE_IRQ_RX_ONLY	0x40000
+/*
+ * Don't need/want most of the niceties of
+ * emulating ethernet
+ */
+#define IFLIB_PSEUDO_ETHER	0x80000
 
+
+/*
+ * These enum values are used in iflib_needs_restart to indicate to iflib
+ * functions whether or not the interface needs restarting when certain events
+ * happen.
+ */
+enum iflib_restart_event {
+	IFLIB_RESTART_VLAN_CONFIG,
+};
 
 /*
  * field accessors

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/controller/ehci_imx.c 335989 2018-07-05 16:00:58Z ian $");
+__FBSDID("$FreeBSD$");
 
 /*
  * EHCI driver for Freescale i.MX SoCs which incorporate the USBOH3 controller.
@@ -510,5 +510,5 @@ static driver_t ehci_driver = {
 
 static devclass_t ehci_devclass;
 
-DRIVER_MODULE(ehci, simplebus, ehci_driver, ehci_devclass, 0, 0);
-MODULE_DEPEND(ehci, usb, 1, 1, 1);
+DRIVER_MODULE(imx_ehci, simplebus, ehci_driver, ehci_devclass, 0, 0);
+MODULE_DEPEND(imx_ehci, usb, 1, 1, 1);

@@ -19,7 +19,7 @@
  *
  * CDDL HEADER END
  *
- * $FreeBSD: releng/12.1/sys/cddl/dev/dtrace/arm/dtrace_subr.c 316648 2017-04-09 02:00:03Z pkelsey $
+ * $FreeBSD$
  *
  */
 /*
@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cddl/dev/dtrace/arm/dtrace_subr.c 316648 2017-04-09 02:00:03Z pkelsey $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -123,7 +123,18 @@ dtrace_invop_remove(int (*func)(uintptr_t, struct trapframe *, uintptr_t))
 void
 dtrace_toxic_ranges(void (*func)(uintptr_t base, uintptr_t limit))
 {
-	printf("IMPLEMENT ME: dtrace_toxic_ranges\n");
+
+	/*
+	 * There are no ranges to exclude that are common to all 32-bit arm
+	 * platforms.  This function only needs to exclude ranges "... in
+	 * which it is impossible to recover from such a load after it has been
+	 * attempted." -- i.e., accessing within the range causes some sort
+	 * fault in the system which is not handled by the normal arm
+	 * exception-handling mechanisms.  If systems exist where that is the
+	 * case, a method to handle this functionality would have to be added to
+	 * the platform_if interface so that those systems could provide their
+	 * specific toxic range(s).
+	 */
 }
 
 void
@@ -237,7 +248,7 @@ dtrace_invop_start(struct trapframe *frame)
 	register_t *r0, *sp;
 	int data, invop, reg, update_sp;
 
-	invop = dtrace_invop(frame->tf_pc, frame, frame->tf_pc);
+	invop = dtrace_invop(frame->tf_pc, frame, frame->tf_r0);
 	switch (invop & DTRACE_INVOP_MASK) {
 	case DTRACE_INVOP_PUSHM:
 		sp = (register_t *)frame->tf_svc_sp;

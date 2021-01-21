@@ -24,7 +24,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/net_backends.h 350195 2019-07-21 11:26:49Z vmaffione $
+ * $FreeBSD$
  */
 
 #ifndef __NET_BACKENDS_H__
@@ -43,9 +43,13 @@ void	netbe_cleanup(net_backend_t *be);
 uint64_t netbe_get_cap(net_backend_t *be);
 int	 netbe_set_cap(net_backend_t *be, uint64_t cap,
              unsigned vnet_hdr_len);
-ssize_t	netbe_send(net_backend_t *be, struct iovec *iov, int iovcnt);
-ssize_t	netbe_recv(net_backend_t *be, struct iovec *iov, int iovcnt);
+size_t	netbe_get_vnet_hdr_len(net_backend_t *be);
+ssize_t	netbe_send(net_backend_t *be, const struct iovec *iov, int iovcnt);
+ssize_t	netbe_peek_recvlen(net_backend_t *be);
+ssize_t	netbe_recv(net_backend_t *be, const struct iovec *iov, int iovcnt);
 ssize_t	netbe_rx_discard(net_backend_t *be);
+void	netbe_rx_disable(net_backend_t *be);
+void	netbe_rx_enable(net_backend_t *be);
 
 
 /*

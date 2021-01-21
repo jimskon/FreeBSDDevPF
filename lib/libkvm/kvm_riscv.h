@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libkvm/kvm_riscv.h 349463 2019-06-27 16:48:24Z markj $
+ * $FreeBSD$
  */
 
 #ifndef __KVM_RISCV_H__

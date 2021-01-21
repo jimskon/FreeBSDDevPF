@@ -27,8 +27,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/mp_machdep.c 338356 2018-08-28 18:47:02Z kib $");
+__FBSDID("$FreeBSD$");
 
+#include "opt_acpi.h"
 #include "opt_cpu.h"
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -39,6 +40,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/mp_machdep.c 338356 2018-08-28 1
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/cpuset.h>
+#include <sys/domainset.h>
 #ifdef GPROF 
 #include <sys/gmon.h>
 #endif
@@ -59,6 +61,8 @@ __FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/mp_machdep.c 338356 2018-08-28 1
 #include <vm/pmap.h>
 #include <vm/vm_kern.h>
 #include <vm/vm_extern.h>
+#include <vm/vm_page.h>
+#include <vm/vm_phys.h>
 
 #include <x86/apicreg.h>
 #include <machine/clock.h>
@@ -75,6 +79,11 @@ __FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/mp_machdep.c 338356 2018-08-28 1
 #include <machine/cpu.h>
 #include <x86/init.h>
 
+#ifdef DEV_ACPI
+#include <contrib/dev/acpica/include/acpi.h>
+#include <dev/acpica/acpivar.h>
+#endif
+
 #define WARMBOOT_TARGET		0
 #define WARMBOOT_OFF		(KERNBASE + 0x0467)
 #define WARMBOOT_SEG		(KERNBASE + 0x0469)
@@ -87,8 +96,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/mp_machdep.c 338356 2018-08-28 1
 #define GiB(v)			(v ## ULL << 30)
 
 #define	AP_BOOTPT_SZ		(PAGE_SIZE * 3)
-
-extern	struct pcpu __pcpu[];
 
 /* Temporary variables for init_secondary()  */
 char *doublefault_stack;
@@ -244,6 +251,10 @@ cpu_mp_start(void)
 	setidt(IPI_SUSPEND, pti ? IDTVEC(cpususpend_pti) : IDTVEC(cpususpend),
 	    SDT_SYSIGT, SEL_KPL, 0);
 
+	/* Install an IPI for calling delayed SWI */
+	setidt(IPI_SWI, pti ? IDTVEC(ipi_swi_pti) : IDTVEC(ipi_swi),
+	    SDT_SYSIGT, SEL_KPL, 0);
+
 	/* Set boot_cpu_id if needed. */
 	if (boot_cpu_id == -1) {
 		boot_cpu_id = PCPU_GET(apic_id);
@@ -261,8 +272,11 @@ cpu_mp_start(void)
 	init_ops.start_all_aps();
 
 	set_interrupt_apic_ids();
-}
 
+#if defined(DEV_ACPI) && MAXMEMDOM > 1
+	acpi_pxm_set_cpu_locality();
+#endif
+}
 
 /*
  * AP CPU's call this to initialize themselves.
@@ -385,6 +399,27 @@ init_secondary(void)
  * local functions and data
  */
 
+#ifdef NUMA
+static void
+mp_realloc_pcpu(int cpuid, int domain)
+{
+	vm_page_t m;
+	vm_offset_t oa, na;
+
+	oa = (vm_offset_t)&__pcpu[cpuid];
+	if (_vm_phys_domain(pmap_kextract(oa)) == domain)
+		return;
+	m = vm_page_alloc_domain(NULL, 0, domain,
+	    VM_ALLOC_NORMAL | VM_ALLOC_NOOBJ);
+	if (m == NULL)
+		return;
+	na = PHYS_TO_DMAP(VM_PAGE_TO_PHYS(m));
+	pagecopy((void *)oa, (void *)na);
+	pmap_qenter((vm_offset_t)&__pcpu[cpuid], &m, 1);
+	/* XXX old pcpu page leaked. */
+}
+#endif
+
 /*
  * start each AP in our list
  */
@@ -393,7 +428,7 @@ native_start_all_aps(void)
 {
 	u_int64_t *pt4, *pt3, *pt2;
 	u_int32_t mpbioswarmvec;
-	int apic_id, cpu, i;
+	int apic_id, cpu, domain, i;
 	u_char mpbiosreason;
 
 	mtx_init(&ap_boot_mtx, "ap boot", NULL, MTX_SPIN);
@@ -432,21 +467,39 @@ native_start_all_aps(void)
 	outb(CMOS_REG, BIOS_RESET);
 	outb(CMOS_DATA, BIOS_WARM);	/* 'warm-start' */
 
+	/* Relocate pcpu areas to the correct domain. */
+#ifdef NUMA
+	if (vm_ndomains > 1)
+		for (cpu = 1; cpu < mp_ncpus; cpu++) {
+			apic_id = cpu_apic_ids[cpu];
+			domain = acpi_pxm_get_cpu_locality(apic_id);
+			mp_realloc_pcpu(cpu, domain);
+		}
+#endif
+
 	/* start each AP */
+	domain = 0;
 	for (cpu = 1; cpu < mp_ncpus; cpu++) {
 		apic_id = cpu_apic_ids[cpu];
-
+#ifdef NUMA
+		if (vm_ndomains > 1)
+			domain = acpi_pxm_get_cpu_locality(apic_id);
+#endif
 		/* allocate and set up an idle stack data page */
 		bootstacks[cpu] = (void *)kmem_malloc(kstack_pages * PAGE_SIZE,
 		    M_WAITOK | M_ZERO);
 		doublefault_stack = (char *)kmem_malloc(PAGE_SIZE, M_WAITOK |
 		    M_ZERO);
 		mce_stack = (char *)kmem_malloc(PAGE_SIZE, M_WAITOK | M_ZERO);
-		nmi_stack = (char *)kmem_malloc(PAGE_SIZE, M_WAITOK | M_ZERO);
-		dbg_stack = (char *)kmem_malloc(PAGE_SIZE, M_WAITOK | M_ZERO);
-		dpcpu = (void *)kmem_malloc(DPCPU_SIZE, M_WAITOK | M_ZERO);
+		nmi_stack = (char *)kmem_malloc_domainset(
+		    DOMAINSET_PREF(domain), PAGE_SIZE, M_WAITOK | M_ZERO);
+		dbg_stack = (char *)kmem_malloc_domainset(
+		    DOMAINSET_PREF(domain), PAGE_SIZE, M_WAITOK | M_ZERO);
+		dpcpu = (void *)kmem_malloc_domainset(DOMAINSET_PREF(domain),
+		    DPCPU_SIZE, M_WAITOK | M_ZERO);
 
-		bootSTK = (char *)bootstacks[cpu] + kstack_pages * PAGE_SIZE - 8;
+		bootSTK = (char *)bootstacks[cpu] +
+		    kstack_pages * PAGE_SIZE - 8;
 		bootAP = cpu;
 
 		/* attempt to start the Application Processor */

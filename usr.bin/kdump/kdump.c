@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)kdump.c	8.1 (Berkeley) 6/6/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/kdump/kdump.c 338021 2018-08-18 20:23:53Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #define _WANT_KERNEL_ERRNO
 #ifdef __LP64__
@@ -55,6 +55,7 @@ __FBSDID("$FreeBSD: releng/12.1/usr.bin/kdump/kdump.c 338021 2018-08-18 20:23:53
 #include <sys/uio.h>
 #include <sys/event.h>
 #include <sys/ktrace.h>
+#include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -1247,7 +1248,12 @@ ktrsyscall(struct ktr_syscall *ktr, u_int sv_flags)
 				narg--;
 				break;
 			case SYS_shm_open:
-				print_number(ip, narg, c);
+				if (ip[0] == (uintptr_t)SHM_ANON) {
+					printf("(SHM_ANON");
+					ip++;
+				} else {
+					print_number(ip, narg, c);
+				}
 				putchar(',');
 				print_mask_arg(sysdecode_open_flags, ip[0]);
 				putchar(',');

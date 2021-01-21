@@ -23,9 +23,8 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192e/usb/r92eu.h 312680 2017-01-24 02:35:38Z kevlo $
+ * $FreeBSD$
  */
-
 
 #ifndef RTL8192EU_H
 #define RTL8192EU_H

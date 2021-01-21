@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *      @(#)extern.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.1/usr.bin/systat/extern.h 326025 2017-11-20 19:49:47Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
@@ -165,6 +165,11 @@ void	 showtcp(void);
 void	 status(void);
 void	 suspend(int);
 char	*sysctl_dynread(const char *, size_t *);
+void	 sysputpage(WINDOW* , int, int, int, uint64_t, int);
+void	 sysputspaces(WINDOW* , int, int, int);
+void	 sysputstrs(WINDOW* , int, int, int);
+void	 sysputuint64(WINDOW* , int, int, int, uint64_t, int);
+void	 sysputwuint64(WINDOW* , int, int, int, uint64_t, int);
 
 #define SYSTAT_CMD(name)	\
 	void	 close ## name(WINDOW *); \
@@ -176,4 +181,4 @@ char	*sysctl_dynread(const char *, size_t *);
 	void	 show ## name(void)
 
 SYSTAT_CMD( zarc );
-SYSTAT_CMD ( sctp );
+SYSTAT_CMD( sctp );

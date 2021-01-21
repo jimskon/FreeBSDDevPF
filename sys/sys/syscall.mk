@@ -1,6 +1,6 @@
 # FreeBSD system call object files.
 # DO NOT EDIT-- this file is automatically @generated.
-# $FreeBSD: releng/12.1/sys/sys/syscall.mk 351565 2019-08-28 07:43:31Z brooks $
+# $FreeBSD$
 MIASM =  \
 	syscall.o \
 	exit.o \
@@ -408,4 +408,6 @@ MIASM =  \
 	getfhat.o \
 	fhlink.o \
 	fhlinkat.o \
-	fhreadlink.o
+	fhreadlink.o \
+	__sysctlbyname.o \
+	close_range.o

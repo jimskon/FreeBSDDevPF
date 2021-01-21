@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5312/ar5312_gpio.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -128,6 +128,5 @@ ar5312GpioSetIntr(struct ath_hal *ah, u_int gpio, uint32_t ilevel)
 	/* Change the interrupt mask. */
 	(void) ar5212SetInterrupts(ah, AH5212(ah)->ah_maskReg | HAL_INT_GPIO);
 }
-
 
 #endif /* AH_SUPPORT_AR5312 */

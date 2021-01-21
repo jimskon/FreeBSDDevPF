@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/psim/uart_iobus.c 338074 2018-08-19 21:10:21Z mmacy $
+ * $FreeBSD$
  */
 
 /*
@@ -42,7 +42,6 @@
 #include <sys/malloc.h>
 #include <sys/mutex.h>
 #include <sys/module.h>
-#include <sys/tty.h>
 #include <machine/bus.h>
 #include <sys/timepps.h>
 

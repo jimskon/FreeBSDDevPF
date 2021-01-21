@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)unpcb.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.1/sys/sys/unpcb.h 337222 2018-08-03 01:37:00Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UNPCB_H_
@@ -108,7 +108,6 @@ struct unpcb {
  */
 #define	UNP_CONNECTING			0x010	/* Currently connecting. */
 #define	UNP_BINDING			0x020	/* Currently binding. */
-#define	UNP_NASCENT			0x040	/* Newborn child socket. */
 
 /*
  * Flags in unp_gcflag.
@@ -156,7 +155,7 @@ struct xunpcb {
 		char	xu_dummy2[256];
 	};
 	struct xsocket	xu_socket;
-} __aligned(8);
+} __aligned(MAX(8, sizeof(void *)));
 
 struct xunpgen {
 	ksize_t	xug_len;

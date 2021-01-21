@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libfigpar/string_m.c 343941 2019-02-09 14:44:17Z se $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ksyms/ksyms.c 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -397,6 +397,7 @@ ksyms_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)
 {
 	struct tsizes ts;
 	struct ksyms_softc *sc;
+	vm_object_t object;
 	vm_size_t elfsz;
 	int error, try;
 
@@ -434,8 +435,9 @@ ksyms_open(struct cdev *dev, int flags, int fmt __unused, struct thread *td)
 		ksyms_size_calc(&ts);
 		elfsz = sizeof(struct ksyms_hdr) + ts.ts_symsz + ts.ts_strsz;
 
-		sc->sc_obj = vm_object_allocate(OBJT_DEFAULT,
+		object = vm_object_allocate(OBJT_PHYS,
 		    OFF_TO_IDX(round_page(elfsz)));
+		sc->sc_obj = object;
 		sc->sc_objsz = elfsz;
 
 		error = ksyms_snapshot(sc, &ts);

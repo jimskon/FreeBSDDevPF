@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/riscv/riscv/riscv_console.c 322361 2017-08-10 14:18:09Z br $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kdb.h>
@@ -205,20 +205,6 @@ static int
 riscv_cngetc(struct consdev *cp)
 {
 	int ch;
-
-#if defined(KDB)
-	/*
-	 * RISCVTODO: BBL polls for console data on timer interrupt,
-	 * but interrupts are turned off in KDB.
-	 * So we currently do not have console in KDB.
-	 */
-	if (kdb_active) {
-		ch = sbi_console_getchar();
-		while (ch) {
-			ch = sbi_console_getchar();
-		}
-	}
-#endif
 
 	ch = sbi_console_getchar();
 	if (ch > 0 && ch < 0xff) {

@@ -1,7 +1,7 @@
 /*
  * dovend.c : Inserts all but the first few vendor options.
  *
- * $FreeBSD: releng/12.1/libexec/bootpd/dovend.c 348325 2019-05-28 13:14:53Z emaste $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

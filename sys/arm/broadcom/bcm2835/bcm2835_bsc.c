@@ -30,7 +30,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2835_bsc.c 332262 2018-04-08 00:56:19Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for bcm2835 i2c-compatible two-wire bus, named 'BSC' on this SoC.
@@ -347,9 +347,7 @@ bcm_bsc_attach(device_t dev)
 	}
 
 	/* Probe and attach the iicbus when interrupts are available. */
-	config_intrhook_oneshot((ich_func_t)bus_generic_attach, dev);
-
-	return (0);
+	return (bus_delayed_attach_children(dev));
 }
 
 static int

@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/vmware/vmxnet3/Makefile 344027 2019-02-11 23:24:39Z pkelsey $
+# $FreeBSD$
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -28,6 +28,6 @@
 KMOD=	if_vmx
 SRCS=	if_vmx.c
 SRCS+=	bus_if.h device_if.h pci_if.h ifdi_if.h
-SRCS+=	opt_inet.h opt_inet6.h
+SRCS+=	opt_inet.h opt_inet6.h opt_rss.h
 
 .include <bsd.kmod.mk>

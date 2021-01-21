@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/i2c/Makefile 351869 2019-09-05 16:37:10Z ian $
+# $FreeBSD$
 
 SUBDIR = \
 	ads111x \
@@ -17,6 +17,7 @@ SUBDIR = \
 	isl \
 	isl12xx \
 	jedec_dimm \
+	mux \
 	nxprtc \
 	rtc8583 \
 	s35390a \

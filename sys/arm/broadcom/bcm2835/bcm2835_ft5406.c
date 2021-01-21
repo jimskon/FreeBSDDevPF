@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2835_ft5406.c 337720 2018-08-13 19:00:42Z wulf $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -227,7 +227,7 @@ ft5406ts_init(void *arg)
 		return;
 	}
 
-	touchbuf = VCBUS_TO_PHYS(msg.body.resp.address);
+	touchbuf = VCBUS_TO_ARMC(msg.body.resp.address);
 	sc->touch_buf = (uint8_t*)pmap_mapdev(touchbuf, FT5406_WINDOW_SIZE);
 
 	/* 60Hz */

@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)if.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/net/if.h 341238 2018-11-29 15:42:32Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _NET_IF_H_
@@ -580,6 +580,16 @@ struct ifrsshash {
 };
 
 #define	IFNET_PCP_NONE	0xff	/* PCP disabled */
+
+#define	IFDR_MSG_SIZE		64
+#define	IFDR_REASON_MSG		1
+#define	IFDR_REASON_VENDOR	2
+struct ifdownreason {
+	char		ifdr_name[IFNAMSIZ];
+	uint32_t	ifdr_reason;
+	uint32_t	ifdr_vendor;
+	char		ifdr_msg[IFDR_MSG_SIZE];
+};
 
 #endif /* __BSD_VISIBLE */
 

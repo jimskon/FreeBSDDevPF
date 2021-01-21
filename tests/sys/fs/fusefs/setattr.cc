@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/setattr.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {
@@ -586,11 +586,11 @@ TEST_F(Setattr, utimensat) {
 				in.body.setattr.valid == valid &&
 				(time_t)in.body.setattr.atime ==
 					newtimes[0].tv_sec &&
-				in.body.setattr.atimensec ==
+				(long)in.body.setattr.atimensec ==
 					newtimes[0].tv_nsec &&
 				(time_t)in.body.setattr.mtime ==
 					newtimes[1].tv_sec &&
-				in.body.setattr.mtimensec ==
+				(long)in.body.setattr.mtimensec ==
 					newtimes[1].tv_nsec);
 		}, Eq(true)),
 		_)
@@ -641,7 +641,7 @@ TEST_F(Setattr, utimensat_mtime_only) {
 				in.body.setattr.valid == valid &&
 				(time_t)in.body.setattr.mtime ==
 					newtimes[1].tv_sec &&
-				in.body.setattr.mtimensec ==
+				(long)in.body.setattr.mtimensec ==
 					newtimes[1].tv_nsec);
 		}, Eq(true)),
 		_)

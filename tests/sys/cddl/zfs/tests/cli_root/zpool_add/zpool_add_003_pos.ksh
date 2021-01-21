@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/cli_root/zpool_add/zpool_add_003_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.
@@ -58,30 +58,19 @@
 
 verify_runnable "global"
 
-function cleanup
-{
-        poolexists $TESTPOOL && \
-                destroy_pool $TESTPOOL
-
-	partition_cleanup
-
-	[[ -e $tmpfile ]] && \
-		log_must $RM -f $tmpfile
-}
+set_disks
 
 log_assert "'zpool add -n <pool> <vdev> ...' can display the configuration" \
 	"without actually adding devices to the pool."
 
-log_onexit cleanup
+tmpfile="zpool_add_003.tmp${TESTCASE_ID}"
 
-tmpfile="$TMPDIR/zpool_add_003.tmp${TESTCASE_ID}"
-
-create_pool "$TESTPOOL" "${disk}p1"
+create_pool "$TESTPOOL" "${DISK0}"
 log_must poolexists "$TESTPOOL"
 
-$ZPOOL add -n "$TESTPOOL" ${disk}p2 > $tmpfile
+$ZPOOL add -n "$TESTPOOL" ${DISK1} > $tmpfile
 
-log_mustnot iscontained "$TESTPOOL" "${disk}p2"
+log_mustnot iscontained "$TESTPOOL" "${DISK1}"
 
 str="would update '$TESTPOOL' to the following configuration:"
 $CAT $tmpfile | $GREP "$str" >/dev/null 2>&1

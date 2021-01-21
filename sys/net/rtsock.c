@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)rtsock.c	8.7 (Berkeley) 10/12/95
- * $FreeBSD: releng/12.1/sys/net/rtsock.c 347123 2019-05-04 13:05:21Z tuexen $
+ * $FreeBSD$
  */
 #include "opt_mpath.h"
 #include "opt_inet.h"

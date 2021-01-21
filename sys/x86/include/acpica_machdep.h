@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/include/acpica_machdep.h 326263 2017-11-27 15:11:47Z pfg $
+ * $FreeBSD$
  */
 
 /******************************************************************************
@@ -84,6 +84,7 @@ void	madt_parse_interrupt_values(void *entry,
 	    enum intr_trigger *trig, enum intr_polarity *pol);
 
 extern int madt_found_sci_override;
+extern int (*apei_nmi)(void);
 
 #endif /* _KERNEL */
 

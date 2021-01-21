@@ -40,7 +40,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ufs_lookup.c	8.6 (Berkeley) 4/1/94
- * $FreeBSD: releng/12.1/sys/fs/ext2fs/ext2_lookup.c 346955 2019-04-30 09:10:45Z fsu $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -891,10 +891,6 @@ ext2_add_first_entry(struct vnode *dvp, struct ext2fs_direct_2 *entry,
 	    EXT2F_ROCOMPAT_METADATA_CKSUM)) {
 		entry->e2d_reclen = dirblksize - sizeof(struct ext2fs_direct_tail);
 		buf = malloc(dirblksize, M_TEMP, M_WAITOK);
-		if (!buf) {
-			error = ENOMEM;
-			goto out;
-		}
 		memcpy(buf, entry, EXT2_DIR_REC_LEN(entry->e2d_namlen));
 		ext2_init_dirent_tail(EXT2_DIRENT_TAIL(buf, dirblksize));
 		ext2_dirent_csum_set(dp, (struct ext2fs_direct_2 *)buf);

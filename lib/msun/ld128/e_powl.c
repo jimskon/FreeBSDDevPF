@@ -60,7 +60,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/msun/ld128/e_powl.c 336362 2018-07-17 07:42:14Z bde $");
+__FBSDID("$FreeBSD$");
 
 #include <float.h>
 #include <math.h>

@@ -28,13 +28,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/vnic/thunder_bgx_fdt.c 336281 2018-07-14 16:06:53Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bitset.h>
 #include <sys/bitstring.h>
 #include <sys/bus.h>
+#include <sys/ctype.h>
 #include <sys/endian.h>
 #include <sys/kernel.h>
 #include <sys/malloc.h>
@@ -151,6 +152,7 @@ bgx_fdt_phy_name_match(struct bgx *bgx, char *phy_name, ssize_t size)
 {
 	const char *type;
 	ssize_t sz;
+	char last;
 
 	switch (bgx->qlm_mode) {
 	case QLM_MODE_SGMII:
@@ -193,10 +195,11 @@ bgx_fdt_phy_name_match(struct bgx *bgx, char *phy_name, ssize_t size)
 
 	if (sz > size)
 		return (FALSE);
-	if (strncmp(phy_name, type, sz - 1) == 0 &&
-	    (phy_name[sz - 1] == '\0' || phy_name[sz - 1] == '@'))
-		return (TRUE);
-
+	if (strncmp(phy_name, type, sz - 1) == 0) {
+		last = phy_name[sz - 1];
+		if (last == '\0' || last == '@' || isdigit(last))
+			return (TRUE);
+	}
 	return (FALSE);
 }
 

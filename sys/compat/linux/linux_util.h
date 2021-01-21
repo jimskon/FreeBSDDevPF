@@ -30,7 +30,7 @@
  *
  * from: svr4_util.h,v 1.5 1994/11/18 02:54:31 christos Exp
  * from: linux_util.h,v 1.2 1995/03/05 23:23:50 fvdl Exp
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_util.h 328890 2018-02-05 17:29:12Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef	_LINUX_UTIL_H_
@@ -50,7 +50,7 @@ MALLOC_DECLARE(M_EPOLL);
 MALLOC_DECLARE(M_FUTEX);
 MALLOC_DECLARE(M_FUTEX_WP);
 
-extern const char linux_emul_path[];
+extern char linux_emul_path[];
 
 int linux_emul_convpath(struct thread *, const char *, enum uio_seg, char **, int, int);
 

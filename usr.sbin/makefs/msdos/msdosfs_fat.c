@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/makefs/msdos/msdosfs_fat.c 352081 2019-09-09 17:34:18Z emaste $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_fat.c,v 1.28 1997/11/17 15:36:49 ws Exp $	*/
 
 /*-

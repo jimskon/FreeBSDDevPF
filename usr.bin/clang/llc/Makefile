@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llc/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llc
 
-SRCDIR=		tools/llc
+SRCDIR=		llvm/tools/llc
 SRCS+=		llc.cpp
 
 LIBADD+=	z

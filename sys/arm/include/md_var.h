@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	from: FreeBSD: src/sys/i386/include/md_var.h,v 1.40 2001/07/12
- * $FreeBSD: releng/12.1/sys/arm/include/md_var.h 336783 2018-07-27 21:25:01Z imp $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_MD_VAR_H_
@@ -42,6 +42,7 @@ extern uint32_t *vm_page_dump;
 extern int vm_page_dump_size;
 extern u_long elf_hwcap;
 extern u_long elf_hwcap2;
+extern vm_paddr_t arm_physmem_kernaddr;
 
 extern int (*_arm_memcpy)(void *, void *, int, int);
 extern int (*_arm_bzero)(void *, int, int);

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/minigzip/Makefile 348149 2019-05-23 05:49:43Z delphij $
+# $FreeBSD$
 
 SRCDIR=	${SRCTOP}/sys/contrib/zlib/test
 .PATH:	${SRCDIR}

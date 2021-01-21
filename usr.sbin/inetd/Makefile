@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/12.1/usr.sbin/inetd/Makefile 337687 2018-08-12 13:29:40Z brd $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -9,7 +9,6 @@ MAN=	inetd.8
 MLINKS=	inetd.8 inetd.conf.5
 SRCS=	inetd.c builtins.c
 
-WARNS?=	3
 CFLAGS+= -DLOGIN_CAP
 #CFLAGS+= -DSANITY_CHECK
 

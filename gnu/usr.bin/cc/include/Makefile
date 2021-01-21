@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/gnu/usr.bin/cc/include/Makefile 315175 2017-03-12 18:59:16Z imp $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 
@@ -6,7 +6,7 @@
 
 INCSDIR=${INCLUDEDIR}/gcc/${GCCVER}
 
-.PATH: ${GCCDIR}/config/${GCC_CPU} ${SRCTOP}/contrib/llvm/tools/clang/lib/Headers
+.PATH: ${GCCDIR}/config/${GCC_CPU} ${SRCTOP}/contrib/llvm-project/clang/lib/Headers
 
 .if ${TARGET_ARCH} == "i386" || ${TARGET_ARCH} == "amd64"
 INCS=	ammintrin.h emmintrin.h mmintrin.h mm3dnow.h pmmintrin.h \

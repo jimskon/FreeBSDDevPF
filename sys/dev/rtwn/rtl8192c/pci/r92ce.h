@@ -17,14 +17,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce.h 342830 2019-01-07 04:23:06Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8192CE_H
 #define RTL8192CE_H
 
 #include <dev/rtwn/rtl8192c/r92c.h>
-
 
 /*
  * Global definitions.
@@ -34,7 +33,6 @@
 #define R92CE_LPQ_NPAGES	28
 #define R92CE_TX_PAGE_COUNT	\
 	(R92CE_PUBQ_NPAGES + R92CE_HPQ_NPAGES + R92CE_LPQ_NPAGES)
-
 
 /*
  * Function declarations.

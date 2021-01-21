@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/atf/libatf-c/tests/Makefile 349052 2019-06-15 09:28:48Z emaste $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

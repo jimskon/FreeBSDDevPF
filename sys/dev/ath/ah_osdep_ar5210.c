@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ah_osdep_ar5210.c 318856 2017-05-25 04:18:46Z adrian $
+ * $FreeBSD$
  *
  */
 
@@ -64,7 +64,6 @@ ath_hal_ar5210_modevent(module_t mod __unused, int type, void *data __unused)
 	default:
 		error = EOPNOTSUPP;
 		break;
-
 	}
 	return (error);
 }

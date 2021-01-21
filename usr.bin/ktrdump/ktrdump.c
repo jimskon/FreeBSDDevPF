@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/ktrdump/ktrdump.c 342705 2019-01-02 19:46:01Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/capsicum.h>
@@ -132,8 +132,7 @@ main(int ac, char **av)
 			if ((in = open(optarg, O_RDONLY)) == -1)
 				err(1, "%s", optarg);
 			cap_rights_init(&rights, CAP_FSTAT, CAP_MMAP_R);
-			if (cap_rights_limit(in, &rights) < 0 &&
-			    errno != ENOSYS)
+			if (caph_rights_limit(in, &rights) < 0)
 				err(1, "unable to limit rights for %s",
 				    optarg);
 			break;

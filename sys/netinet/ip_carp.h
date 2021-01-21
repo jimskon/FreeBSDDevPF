@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netinet/ip_carp.h 326272 2017-11-27 15:23:17Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_carp.h,v 1.8 2004/07/29 22:12:15 mcbride Exp $	*/
 
 /*-
@@ -149,7 +149,7 @@ int		carp_output (struct ifnet *, struct mbuf *,
 int		carp_master(struct ifaddr *);
 int		carp_iamatch(struct ifaddr *, uint8_t **);
 struct ifaddr	*carp_iamatch6(struct ifnet *, struct in6_addr *);
-caddr_t		carp_macmatch6(struct ifnet *, struct mbuf *, const struct in6_addr *);
+char *		carp_macmatch6(struct ifnet *, struct mbuf *, const struct in6_addr *);
 int		carp_forus(struct ifnet *, u_char *);
 
 /* These are external networking stack hooks for CARP */
@@ -174,7 +174,7 @@ extern int (*carp_iamatch_p)(struct ifaddr *, uint8_t **);
 #ifdef INET6
 /* netinet6/nd6_nbr.c */
 extern struct ifaddr *(*carp_iamatch6_p)(struct ifnet *, struct in6_addr *);
-extern caddr_t (*carp_macmatch6_p)(struct ifnet *, struct mbuf *,
+extern char * (*carp_macmatch6_p)(struct ifnet *, struct mbuf *,
     const struct in6_addr *);
 #endif
 #endif

@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_h3.c 350629 2019-08-06 12:19:09Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_h3.c 350629 2019-08-06 12:19:09Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -306,7 +306,8 @@ FRAC_CLK(pll_video_clk,
     31, 28, 1000,				/* gate, lock, lock retries */
     AW_CLK_HAS_LOCK,				/* flags */
     270000000, 297000000,			/* freq0, freq1 */
-    24, 25);					/* mode sel, freq sel */
+    24, 25,					/* mode sel, freq sel */
+    192000000, 600000000);			/* min freq, max freq */
 
 static const char *pll_ve_parents[] = {"osc24M"};
 FRAC_CLK(pll_ve_clk,
@@ -318,7 +319,8 @@ FRAC_CLK(pll_ve_clk,
     31, 28, 1000,				/* gate, lock, lock retries */
     AW_CLK_HAS_LOCK,				/* flags */
     270000000, 297000000,			/* freq0, freq1 */
-    24, 25);					/* mode sel, freq sel */
+    24, 25,					/* mode sel, freq sel */
+    192000000, 600000000);			/* min freq, max freq */
 
 static const char *pll_ddr_parents[] = {"osc24M"};
 NKMP_CLK_WITH_UPDATE(pll_ddr_clk,
@@ -366,7 +368,8 @@ FRAC_CLK(pll_gpu_clk,
     31, 28, 1000,				/* gate, lock, lock retries */
     AW_CLK_HAS_LOCK,				/* flags */
     270000000, 297000000,			/* freq0, freq1 */
-    24, 25);					/* mode sel, freq sel */
+    24, 25,					/* mode sel, freq sel */
+    192000000, 600000000);			/* min freq, max freq */
 
 static const char *pll_periph1_parents[] = {"osc24M"};
 NKMP_CLK(pll_periph1_clk,
@@ -391,7 +394,8 @@ FRAC_CLK(pll_de_clk,
     31, 28, 1000,				/* gate, lock, lock retries */
     AW_CLK_HAS_LOCK,				/* flags */
     270000000, 297000000,			/* freq0, freq1 */
-    24, 25);					/* mode sel, freq sel */
+    24, 25,					/* mode sel, freq sel */
+    192000000, 600000000);			/* min freq, max freq */
 
 static const char *cpux_parents[] = {"osc32k", "osc24M", "pll_cpux", "pll_cpux"};
 MUX_CLK(cpux_clk,
@@ -787,4 +791,4 @@ DEFINE_CLASS_1(ccu_h3ng, ccu_h3ng_driver, ccu_h3ng_methods,
   sizeof(struct aw_ccung_softc), aw_ccung_driver);
 
 EARLY_DRIVER_MODULE(ccu_h3ng, simplebus, ccu_h3ng_driver,
-    ccu_h3ng_devclass, 0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_LAST);
+    ccu_h3ng_devclass, 0, 0, BUS_PASS_RESOURCE + BUS_PASS_ORDER_MIDDLE);

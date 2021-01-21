@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/net/pfil.h 331436 2018-03-23 16:56:44Z kp $ */
+/*	$FreeBSD$ */
 /*	$NetBSD: pfil.h,v 1.22 2003/06/23 12:57:08 martin Exp $	*/
 
 /*-

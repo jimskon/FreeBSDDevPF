@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libcxxrt/Makefile 350400 2019-07-29 06:13:22Z dim $
+# $FreeBSD$
 
 PACKAGE=	clibs
 SRCDIR=		${SRCTOP}/contrib/libcxxrt

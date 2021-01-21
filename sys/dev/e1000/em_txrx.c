@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/e1000/em_txrx.c 344097 2019-02-13 14:36:24Z marius $ */
+/* $FreeBSD$ */
 #include "if_em.h"
 
 #ifdef RSS

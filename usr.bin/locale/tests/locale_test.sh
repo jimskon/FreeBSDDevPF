@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/locale/tests/locale_test.sh 352416 2019-09-16 16:17:29Z yuripv $
+# $FreeBSD$
 
 atf_test_case k_flag_posix
 k_flag_posix_head()
@@ -160,8 +160,24 @@ no_flags_posix_body()
 	    noexpr
 }
 
+atf_test_case k_flag_unknown_kw
+k_flag_unknown_kw_head()
+{
+	atf_set "descr" \
+	    "Verify 'locale -k' exit status is '1' for unknown keywords"
+}
+k_flag_unknown_kw_body()
+{
+	export LC_ALL="C"
+
+	# Hopefully the keyword will stay nonexistent
+	atf_check -s exit:1 -o empty -e ignore locale -k nonexistent
+}
+
+
 atf_init_test_cases()
 {
 	atf_add_test_case k_flag_posix
 	atf_add_test_case no_flags_posix
+	atf_add_test_case k_flag_unknown_kw
 }

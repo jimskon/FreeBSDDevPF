@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ath/if_ath_beacon.c 327479 2018-01-02 00:07:28Z adrian $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -777,7 +777,6 @@ ath_beacon_generate(struct ath_softc *sc, struct ieee80211vap *vap)
 	 * insure cab frames are triggered by this beacon.
 	 */
 	if (vap->iv_bcn_off.bo_tim[4] & 1) {
-
 		/* NB: only at DTIM */
 		ATH_TXQ_LOCK(&avp->av_mcastq);
 		if (nmcastq) {

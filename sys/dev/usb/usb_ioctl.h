@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/usb_ioctl.h 353278 2019-10-07 15:25:00Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

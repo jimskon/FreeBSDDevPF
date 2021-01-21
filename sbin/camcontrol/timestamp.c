@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/camcontrol/timestamp.c 351528 2019-08-27 03:53:22Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 

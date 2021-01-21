@@ -1,5 +1,5 @@
 #	from: @(#)bsd.subdir.mk	5.9 (Berkeley) 2/1/91
-# $FreeBSD: releng/12.1/share/mk/bsd.subdir.mk 338737 2018-09-17 22:15:09Z bdrewery $
+# $FreeBSD$
 #
 # The include file <bsd.subdir.mk> contains the default targets
 # for building subdirectories.
@@ -16,8 +16,8 @@
 #
 # SUBDIR	A list of subdirectories that should be built as well.
 #		Each of the targets will execute the same target in the
-#		subdirectories. SUBDIR.yes is automatically appended
-#		to this list.
+#		subdirectories. SUBDIR.yes and SUBDIR.yes.yes are
+#		automatically appended to this list.
 #
 # +++ targets +++
 #
@@ -122,8 +122,8 @@ install:	beforeinstall realinstall afterinstall
 # SUBDIR recursing may be disabled for MK_DIRDEPS_BUILD
 .if !target(_SUBDIR)
 
-.if defined(SUBDIR) || defined(SUBDIR.yes)
-SUBDIR:=${SUBDIR} ${SUBDIR.yes}
+.if defined(SUBDIR) || defined(SUBDIR.yes) || defined(SUBDIR.yes.yes)
+SUBDIR:=${SUBDIR} ${SUBDIR.yes} ${SUBDIR.yes.yes}
 SUBDIR:=${SUBDIR:u}
 .endif
 

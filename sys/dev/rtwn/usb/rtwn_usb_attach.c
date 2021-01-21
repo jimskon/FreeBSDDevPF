@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/usb/rtwn_usb_attach.c 321735 2017-07-30 23:35:21Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -87,7 +87,6 @@ static void	rtwn_usb_attach_methods(struct rtwn_softc *);
 static void	rtwn_usb_sysctlattach(struct rtwn_softc *);
 
 #define RTWN_CONFIG_INDEX	0
-
 
 static int
 rtwn_usb_match(device_t self)

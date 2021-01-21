@@ -71,7 +71,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)nfsstat.c	8.2 (Berkeley) 3/31/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/usr.bin/nfsstat/nfsstat.c 351829 2019-09-04 20:14:21Z rmacklem $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -731,7 +731,7 @@ exp_intpr(int clientOnly, int serverOnly, int nfs41)
 			    "{T:PutRootFH/%13.13s}{T:DelegRet/%13.13s}"
 			    "{T:GetAcl/%13.13s}{T:SetAcl/%13.13s}\n");
 			xo_emit("{:rellckown/%13ju}{:freestateid/%13ju}"
-			    "{:getacl/%13ju}{:delegret/%13ju}"
+			    "{:putrootfh/%13ju}{:delegret/%13ju}"
 			    "{:getacl/%13ju}{:setacl/%13ju}\n",
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_RELEASELCKOWN],
 			    (uintmax_t)ext_nfsstats.rpccnt[NFSPROC_FREESTATEID],

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/cd9660.c 345631 2019-03-28 08:38:31Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Stand-alone ISO9660 file reading package.
@@ -286,7 +286,7 @@ cd9660_open(const char *path, struct open_file *f)
 	struct file *fp = NULL;
 	void *buf;
 	struct iso_primary_descriptor *vd;
-	size_t buf_size, read, dsize, off;
+	size_t read, dsize, off;
 	daddr_t bno, boff;
 	struct iso_directory_record rec;
 	struct iso_directory_record *dp = NULL;
@@ -294,7 +294,8 @@ cd9660_open(const char *path, struct open_file *f)
 	bool isdir = false;
 
 	/* First find the volume descriptor */
-	buf = malloc(buf_size = ISO_DEFAULT_BLOCK_SIZE);
+	buf = malloc(MAX(ISO_DEFAULT_BLOCK_SIZE,
+	    sizeof(struct iso_primary_descriptor)));
 	vd = buf;
 	for (bno = 16;; bno++) {
 		twiddle(1);
@@ -438,8 +439,7 @@ cd9660_open(const char *path, struct open_file *f)
 	return 0;
 
 out:
-	if (fp)
-		free(fp);
+	free(fp);
 	free(buf);
 
 	return rc;

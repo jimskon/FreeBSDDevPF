@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/mmc/mmc_xpt.c 351752 2019-09-03 16:20:04Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -1082,7 +1082,6 @@ mmcprobe_done(struct cam_periph *periph, union ccb *done_ccb)
                 //xpt_async(AC_LOST_DEVICE, path, NULL);
         }
 
-	xpt_release_ccb(done_ccb);
         if (softc->action != PROBE_INVALID)
                 xpt_schedule(periph, priority);
 	/* Drop freeze taken due to CAM_DEV_QFREEZE flag set. */
@@ -1099,6 +1098,7 @@ mmcprobe_done(struct cam_periph *periph, union ccb *done_ccb)
 			xpt_async(AC_FOUND_DEVICE, path, done_ccb);
 		}
 	}
+	xpt_release_ccb(done_ccb);
         if (softc->action == PROBE_DONE || softc->action == PROBE_INVALID) {
                 cam_periph_invalidate(periph);
                 cam_periph_release_locked(periph);

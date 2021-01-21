@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ath/if_ath_led.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Driver for the Atheros Wireless LAN controller.
@@ -111,7 +111,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/ath/if_ath_led.c 326255 2017-11-27 14:52
 /*
  * XXX TODO: move the LED sysctls here.
  */
-
 
 /*
  * Configure the hardware for software and LED blinking.

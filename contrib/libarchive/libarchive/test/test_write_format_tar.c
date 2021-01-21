@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_write_format_tar.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD$");
 
 static char buff[1000000];
 static char buff2[64];
@@ -81,7 +81,7 @@ DEFINE_TEST(test_write_format_tar)
 
 		/* This calculation gives "the smallest multiple of
 		 * the block size that is at least 2048 bytes". */
-		failure("blocksize=%d", blocksize);
+		failure("blocksize=%zu", blocksize);
 		assertEqualInt(((2048 - 1)/blocksize+1)*blocksize, used);
 
 		/*

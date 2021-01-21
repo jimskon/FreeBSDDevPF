@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/include/acpica_machdep.h 308938 2016-11-21 19:26:58Z andrew $
+ * $FreeBSD$
  */
 
 /******************************************************************************
@@ -56,6 +56,8 @@ struct acpi_generic_address;
 
 int	acpi_map_addr(struct acpi_generic_address  *, bus_space_tag_t *,
     bus_space_handle_t *, bus_size_t);
+
+extern int (*apei_nmi)(void);
 
 #endif /* _KERNEL */
 

@@ -24,7 +24,7 @@
  * behaviour
  *
  * $OpenBSD: pch.h,v 1.9 2003/10/31 20:20:45 millert Exp $
- * $FreeBSD: releng/12.1/usr.bin/patch/pch.h 311109 2017-01-02 18:23:31Z pfg $
+ * $FreeBSD$
  */
 
 #define	OLD_FILE	0
@@ -36,6 +36,8 @@ struct file_name {
 	char *path;
 	bool exists;
 };
+
+extern char	*source_file;
 
 void		re_patch(void);
 void		open_patch_file(const char *);

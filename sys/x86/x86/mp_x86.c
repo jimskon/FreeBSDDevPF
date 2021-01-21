@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/mp_x86.c 349958 2019-07-12 22:31:12Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #ifdef __i386__
 #include "opt_apic.h"
@@ -44,6 +44,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/mp_x86.c 349958 2019-07-12 22:31:12Z
 #ifdef GPROF 
 #include <sys/gmon.h>
 #endif
+#include <sys/interrupt.h>
 #include <sys/kdb.h>
 #include <sys/kernel.h>
 #include <sys/ktr.h>
@@ -508,7 +509,8 @@ topo_probe(void)
 
 	if (mp_ncpus <= 1)
 		; /* nothing */
-	else if (cpu_vendor_id == CPU_VENDOR_AMD)
+	else if (cpu_vendor_id == CPU_VENDOR_AMD ||
+	    cpu_vendor_id == CPU_VENDOR_HYGON)
 		topo_probe_amd();
 	else if (cpu_vendor_id == CPU_VENDOR_INTEL)
 		topo_probe_intel();
@@ -608,6 +610,7 @@ assign_cpu_ids(void)
 {
 	struct topo_node *node;
 	u_int smt_mask;
+	int nhyper;
 
 	smt_mask = (1u << core_id_shift) - 1;
 
@@ -616,6 +619,7 @@ assign_cpu_ids(void)
 	 * beyond MAXCPU.  CPU 0 is always assigned to the BSP.
 	 */
 	mp_ncpus = 0;
+	nhyper = 0;
 	TOPO_FOREACH(node, &topo_root) {
 		if (node->type != TOPO_TYPE_PU)
 			continue;
@@ -643,6 +647,9 @@ assign_cpu_ids(void)
 			continue;
 		}
 
+		if (cpu_info[node->hwid].cpu_hyperthread)
+			nhyper++;
+
 		cpu_apic_ids[mp_ncpus] = node->hwid;
 		apic_cpuids[node->hwid] = mp_ncpus;
 		topo_set_pu_id(node, mp_ncpus);
@@ -652,6 +659,9 @@ assign_cpu_ids(void)
 	KASSERT(mp_maxid >= mp_ncpus - 1,
 	    ("%s: counters out of sync: max %d, count %d", __func__, mp_maxid,
 	    mp_ncpus));
+
+	mp_ncores = mp_ncpus - nhyper;
+	smp_threads_per_core = mp_ncpus / mp_ncores;
 }
 
 /*
@@ -1066,6 +1076,11 @@ init_secondary_tail(void)
 	cpu_initclocks_ap();
 #endif
 
+	/*
+	 * Assert that smp_after_idle_runnable condition is reasonable.
+	 */
+	MPASS(PCPU_GET(curpcb) == NULL);
+
 	sched_throw(NULL);
 
 	panic("scheduler returned us to %s", __func__);
@@ -1075,13 +1090,12 @@ init_secondary_tail(void)
 static void
 smp_after_idle_runnable(void *arg __unused)
 {
-	struct thread *idle_td;
+	struct pcpu *pc;
 	int cpu;
 
 	for (cpu = 1; cpu < mp_ncpus; cpu++) {
-		idle_td = pcpu_find(cpu)->pc_idlethread;
-		while (idle_td->td_lastcpu == NOCPU &&
-		    idle_td->td_oncpu == NOCPU)
+		pc = pcpu_find(cpu);
+		while (atomic_load_ptr(&pc->pc_curpcb) == (uintptr_t)NULL)
 			cpu_spinwait();
 		kmem_free((vm_offset_t)bootstacks[cpu], kstack_pages *
 		    PAGE_SIZE);
@@ -1337,6 +1351,21 @@ ipi_all_but_self(u_int ipi)
 	lapic_ipi_vectored(ipi, APIC_IPI_DEST_OTHERS);
 }
 
+void
+ipi_self_from_nmi(u_int vector)
+{
+
+	lapic_ipi_vectored(vector, APIC_IPI_DEST_SELF);
+
+	/* Wait for IPI to finish. */
+	if (!lapic_ipi_wait(50000)) {
+		if (panicstr != NULL)
+			return;
+		else
+			panic("APIC: IPI is stuck");
+	}
+}
+
 int
 ipi_nmi_handler(void)
 {
@@ -1540,6 +1569,16 @@ invlcache_handler(void)
 }
 
 /*
+ * Handle an IPI_SWI by waking delayed SWI thread.
+ */
+void
+ipi_swi_handler(struct trapframe frame)
+{
+
+	intr_event_handle(clk_intr_event, &frame);
+}
+
+/*
  * This is called once the rest of the system is up and running and we're
  * ready to let the AP's out of the pen.
  */
@@ -1600,29 +1639,48 @@ volatile uint32_t smp_tlb_generation;
 #define	read_eflags() read_rflags()
 #endif
 
+/*
+ * Used by pmap to request invalidation of TLB or cache on local and
+ * remote processors.  Mask provides the set of remote CPUs which are
+ * to be signalled with the IPI specified by vector.  The curcpu_cb
+ * callback is invoked on the calling CPU while waiting for remote
+ * CPUs to complete the operation.
+ *
+ * The callback function is called unconditionally on the caller's
+ * underlying processor, even when this processor is not set in the
+ * mask.  So, the callback function must be prepared to handle such
+ * spurious invocations.
+ */
 static void
 smp_targeted_tlb_shootdown(cpuset_t mask, u_int vector, pmap_t pmap,
-    vm_offset_t addr1, vm_offset_t addr2)
+    vm_offset_t addr1, vm_offset_t addr2, smp_invl_cb_t curcpu_cb)
 {
 	cpuset_t other_cpus;
 	volatile uint32_t *p_cpudone;
 	uint32_t generation;
 	int cpu;
 
-	/* It is not necessary to signal other CPUs while in the debugger. */
-	if (kdb_active || panicstr != NULL)
+	/*
+	 * It is not necessary to signal other CPUs while booting or
+	 * when in the debugger.
+	 */
+	if (kdb_active || panicstr != NULL || !smp_started) {
+		curcpu_cb(pmap, addr1, addr2);
 		return;
+	}
+
+	sched_pin();
 
 	/*
 	 * Check for other cpus.  Return if none.
 	 */
 	if (CPU_ISFULLSET(&mask)) {
 		if (mp_ncpus <= 1)
-			return;
+			goto nospinexit;
 	} else {
 		CPU_CLR(PCPU_GET(cpuid), &mask);
 		if (CPU_EMPTY(&mask))
-			return;
+			goto nospinexit;
 	}
 
 	if (!(read_eflags() & PSL_I))
@@ -1646,6 +1704,7 @@ smp_targeted_tlb_shootdown(cpuset_t mask, u_int vector, pmap_t pmap,
 			ipi_send_cpu(cpu, vector);
 		}
 	}
+	curcpu_cb(pmap, addr1, addr2);
 	while ((cpu = CPU_FFS(&other_cpus)) != 0) {
 		cpu--;
 		CPU_CLR(cpu, &other_cpus);
@@ -1654,55 +1713,54 @@ smp_targeted_tlb_shootdown(cpuset_t mask, u_int vector, pmap_t pmap,
 			ia32_pause();
 	}
 	mtx_unlock_spin(&smp_ipi_mtx);
+	sched_unpin();
+	return;
+
+nospinexit:
+	curcpu_cb(pmap, addr1, addr2);
+	sched_unpin();
 }
 
 void
-smp_masked_invltlb(cpuset_t mask, pmap_t pmap)
+smp_masked_invltlb(cpuset_t mask, pmap_t pmap, smp_invl_cb_t curcpu_cb)
 {
 
-	if (smp_started) {
-		smp_targeted_tlb_shootdown(mask, IPI_INVLTLB, pmap, 0, 0);
+	smp_targeted_tlb_shootdown(mask, IPI_INVLTLB, pmap, 0, 0, curcpu_cb);
 #ifdef COUNT_XINVLTLB_HITS
-		ipi_global++;
+	ipi_global++;
 #endif
-	}
 }
 
 void
-smp_masked_invlpg(cpuset_t mask, vm_offset_t addr, pmap_t pmap)
+smp_masked_invlpg(cpuset_t mask, vm_offset_t addr, pmap_t pmap,
+    smp_invl_cb_t curcpu_cb)
 {
 
-	if (smp_started) {
-		smp_targeted_tlb_shootdown(mask, IPI_INVLPG, pmap, addr, 0);
+	smp_targeted_tlb_shootdown(mask, IPI_INVLPG, pmap, addr, 0, curcpu_cb);
 #ifdef COUNT_XINVLTLB_HITS
-		ipi_page++;
+	ipi_page++;
 #endif
-	}
 }
 
 void
 smp_masked_invlpg_range(cpuset_t mask, vm_offset_t addr1, vm_offset_t addr2,
-    pmap_t pmap)
+    pmap_t pmap, smp_invl_cb_t curcpu_cb)
 {
 
-	if (smp_started) {
-		smp_targeted_tlb_shootdown(mask, IPI_INVLRNG, pmap,
-		    addr1, addr2);
+	smp_targeted_tlb_shootdown(mask, IPI_INVLRNG, pmap, addr1, addr2,
+	    curcpu_cb);
 #ifdef COUNT_XINVLTLB_HITS
-		ipi_range++;
-		ipi_range_size += (addr2 - addr1) / PAGE_SIZE;
+	ipi_range++;
+	ipi_range_size += (addr2 - addr1) / PAGE_SIZE;
 #endif
-	}
 }
 
 void
-smp_cache_flush(void)
+smp_cache_flush(smp_invl_cb_t curcpu_cb)
 {
 
-	if (smp_started) {
-		smp_targeted_tlb_shootdown(all_cpus, IPI_INVLCACHE, NULL,
-		    0, 0);
-	}
+	smp_targeted_tlb_shootdown(all_cpus, IPI_INVLCACHE, NULL, 0, 0,
+	    curcpu_cb);
 }
 
 /*

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ntb/ntb.h 351536 2019-08-27 04:13:22Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _NTB_H_
@@ -39,6 +39,7 @@ int ntb_unregister_device(device_t ntb);
 int ntb_child_location_str(device_t dev, device_t child, char *buf,
     size_t buflen);
 int ntb_print_child(device_t dev, device_t child);
+bus_dma_tag_t ntb_get_dma_tag(device_t bus, device_t child);
 
 /*
  * ntb_link_event() - notify driver context of a change in link status

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/fsck_ffs/suj.c 331095 2018-03-17 12:59:55Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/disk.h>
@@ -1544,7 +1544,7 @@ ino_trunc(ino_t ino, off_t size)
 		/* If we freed everything in this indirect free the indir. */
 		if (lastlbn > lbn)
 			continue;
-		blk_free(DIP(ip, di_ib[i]), 0, frags);
+		blk_free(DIP(ip, di_ib[i]), 0, fs->fs_frag);
 		DIP_SET(ip, di_ib[i], 0);
 	}
 	ino_dirty(ino);
@@ -2708,6 +2708,8 @@ suj_check(const char *filesys)
 	jip = ino_read(sujino);
 	printf("** SU+J Recovering %s\n", filesys);
 	if (suj_verifyino(jip) != 0)
+		return (-1);
+	if (!preen && !reply("USE JOURNAL"))
 		return (-1);
 	/*
 	 * Build a list of journal blocks in jblocks before parsing the

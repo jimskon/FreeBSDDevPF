@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.shutdown 339413 2018-10-17 16:49:11Z bz $
+# $FreeBSD$
 #
 
 # Site-specific closing actions for daemons run by init on shutdown,
@@ -42,6 +42,8 @@ trap : 3	# shouldn't be needed
 HOME=/
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin
 export HOME PATH
+
+rc_shutdown=${1:-"unspecified"}
 
 . /etc/rc.subr
 
@@ -70,6 +72,7 @@ if [ -n "$rcshutdown_timeout" ]; then
 		_msg="$rcshutdown_timeout second watchdog"
 		_msg="$_msg timeout expired. Shutdown terminated."
 		logger -t rc.shutdown "$_msg"
+		echo
 		echo "$_msg"
 		date
 		kill -KILL $$ >/dev/null 2>&1

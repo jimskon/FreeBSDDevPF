@@ -24,11 +24,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_sun8i_r.c 350628 2019-08-06 12:12:29Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/clkng/ccu_sun8i_r.c 350628 2019-08-06 12:12:29Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -119,10 +119,10 @@ NM_CLK(r_ccu_ir_clk,
     "ir", r_ccu_ir_parents,		/* names, parents */
     0x54,				/* offset */
     0, 4, 0, 0,				/* N factor */
-    16, 2, 0, 0,			/* M flags */
+    16, 2, 0, 0,			/* M factor */
     24, 2,				/* mux */
     31,					/* gate */
-    AW_CLK_HAS_MUX | AW_CLK_REPARENT);	/* flags */
+    AW_CLK_HAS_MUX | AW_CLK_REPARENT | AW_CLK_HAS_GATE);/* flags */
 
 static const char *a83t_ir_parents[] = {"osc16M", "osc24M"};
 static struct aw_clk_nm_def a83t_ir_clk = {
@@ -215,7 +215,7 @@ DEFINE_CLASS_1(ccu_sun8i_r, ccu_sun8i_r_driver, ccu_sun8i_r_methods,
   sizeof(struct aw_ccung_softc), aw_ccung_driver);
 
 EARLY_DRIVER_MODULE(ccu_sun8i_r, simplebus, ccu_sun8i_r_driver,
-    ccu_sun8i_r_devclass, 0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_LAST);
+    ccu_sun8i_r_devclass, 0, 0, BUS_PASS_RESOURCE + BUS_PASS_ORDER_MIDDLE);
 
 static int
 ccu_a83t_r_probe(device_t dev)
@@ -262,4 +262,4 @@ DEFINE_CLASS_1(ccu_a83t_r, ccu_a83t_r_driver, ccu_a83t_r_methods,
   sizeof(struct aw_ccung_softc), aw_ccung_driver);
 
 EARLY_DRIVER_MODULE(ccu_a83t_r, simplebus, ccu_a83t_r_driver,
-    ccu_a83t_r_devclass, 0, 0, BUS_PASS_BUS + BUS_PASS_ORDER_LAST);
+    ccu_a83t_r_devclass, 0, 0, BUS_PASS_RESOURCE + BUS_PASS_ORDER_MIDDLE);

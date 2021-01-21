@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/epoch.h 349852 2019-07-08 21:33:14Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_EPOCH_H_

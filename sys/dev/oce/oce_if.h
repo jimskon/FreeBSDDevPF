@@ -38,7 +38,7 @@
  * Costa Mesa, CA 92626
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/oce/oce_if.h 343299 2019-01-22 04:20:00Z delphij $ */
+/* $FreeBSD$ */
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -48,6 +48,7 @@
 #include <sys/kernel.h>
 #include <sys/bus.h>
 #include <sys/mbuf.h>
+#include <sys/priv.h>
 #include <sys/rman.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>

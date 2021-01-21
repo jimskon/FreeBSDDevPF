@@ -33,7 +33,7 @@
  * LC_CTYPE database generation routines for localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/localedef/ctype.c 341596 2018-12-05 17:10:06Z yuripv $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/tree.h>
 

@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/msun/src/e_fmodf.c 336663 2018-07-24 10:10:16Z bde $");
+__FBSDID("$FreeBSD$");
 
 /*
  * __ieee754_fmodf(x,y)

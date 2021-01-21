@@ -31,7 +31,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/ndis/ndis_var.h 343819 2019-02-06 02:06:00Z avos $
+ * $FreeBSD$
  */
 
 #ifndef _NDIS_VAR_H_

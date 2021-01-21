@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_peeloff.c 337708 2018-08-13 13:58:45Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_pcb.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_peeloff.c 337708 2018-08-13 13:
 #include <netinet/sctp_peeloff.h>
 #include <netinet/sctputil.h>
 #include <netinet/sctp_auth.h>
-
 
 int
 sctp_can_peel_off(struct socket *head, sctp_assoc_t assoc_id)

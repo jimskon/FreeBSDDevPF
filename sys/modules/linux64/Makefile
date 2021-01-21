@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/linux64/Makefile 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/compat/linux ${SRCTOP}/sys/${MACHINE}/linux
 
@@ -29,7 +29,7 @@ OBJS=	${VDSO}.so
 linux_assym.h: linux_genassym.o
 	sh ${SYSDIR}/kern/genassym.sh linux_genassym.o > ${.TARGET}
 
-linux_locore.o: linux_locore.s linux_assym.h
+linux_locore.o: linux_locore.asm linux_assym.h
 	${CC} -x assembler-with-cpp -DLOCORE -shared -mcmodel=small	\
 	-pipe -I. -I${SYSDIR} ${WERROR} -Wall -fno-common -fPIC -nostdinc	\
 	-Wl,-T${SRCTOP}/sys/${MACHINE}/linux/${VDSO}.lds.s	\
@@ -53,15 +53,6 @@ linux_support.o: assym.inc linux_assym.h
 	    ${.IMPSRC} -o ${.TARGET}
 
 linux_genassym.o: offset.inc
-	${CC} -c ${CFLAGS:N-flto:N-fno-common} ${.IMPSRC}
-
-.if !defined(KERNBUILDDIR)
-.if defined(DEBUG)
-CFLAGS+=-DDEBUG
-.endif
-.if defined(KTR)
-CFLAGS+=-DKTR
-.endif
-.endif
+	${CC} -c ${CFLAGS:N-flto:N-fno-common} -fcommon ${.IMPSRC}
 
 .include <bsd.kmod.mk>

@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sbin/setkey/Makefile 316759 2017-04-13 14:44:17Z ae $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -37,8 +37,6 @@ WARNS?=	1
 
 CFLAGS+= -I${.CURDIR} -I${SRCTOP}/lib/libipsec
 YFLAGS=	-d
-
-LIBADD=	l y
 
 CLEANFILES=	y.tab.c y.tab.h key_test.o keytest
 

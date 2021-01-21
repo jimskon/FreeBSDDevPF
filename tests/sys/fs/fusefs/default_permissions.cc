@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/default_permissions.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 /*
@@ -125,7 +125,7 @@ void expect_getattr(uint64_t ino, mode_t mode, uint64_t attr_valid, int times,
 		out.body.attr.attr.mode = mode;
 		out.body.attr.attr.size = 0;
 		out.body.attr.attr.uid = uid;
-		out.body.attr.attr.uid = gid;
+		out.body.attr.attr.gid = gid;
 		out.body.attr.attr_valid = attr_valid;
 	})));
 }
@@ -749,7 +749,7 @@ TEST_F(Open, eacces)
 	expect_getattr(FUSE_ROOT_ID, S_IFDIR | 0755, UINT64_MAX, 1);
 	expect_lookup(RELPATH, ino, S_IFREG | 0644, UINT64_MAX);
 
-	EXPECT_NE(0, open(FULLPATH, O_RDWR));
+	EXPECT_EQ(-1, open(FULLPATH, O_RDWR));
 	EXPECT_EQ(EACCES, errno);
 }
 

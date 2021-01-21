@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/kern/init_sysent.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -572,7 +572,7 @@ struct sysent sysent[] = {
 	{ AS(pdgetpid_args), (sy_call_t *)sys_pdgetpid, AUE_PDGETPID, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 520 = pdgetpid */
 	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 521 = pdwait4 */
 	{ AS(pselect_args), (sy_call_t *)sys_pselect, AUE_SELECT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 522 = pselect */
-	{ AS(getloginclass_args), (sy_call_t *)sys_getloginclass, AUE_GETLOGINCLASS, NULL, 0, 0, 0, SY_THR_STATIC },	/* 523 = getloginclass */
+	{ AS(getloginclass_args), (sy_call_t *)sys_getloginclass, AUE_GETLOGINCLASS, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 523 = getloginclass */
 	{ AS(setloginclass_args), (sy_call_t *)sys_setloginclass, AUE_SETLOGINCLASS, NULL, 0, 0, 0, SY_THR_STATIC },	/* 524 = setloginclass */
 	{ AS(rctl_get_racct_args), (sy_call_t *)sys_rctl_get_racct, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 525 = rctl_get_racct */
 	{ AS(rctl_get_rules_args), (sy_call_t *)sys_rctl_get_rules, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 526 = rctl_get_rules */
@@ -599,7 +599,7 @@ struct sysent sysent[] = {
 	{ AS(utimensat_args), (sy_call_t *)sys_utimensat, AUE_FUTIMESAT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 547 = utimensat */
 	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 548 = obsolete numa_getaffinity */
 	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 549 = obsolete numa_setaffinity */
-	{ AS(fdatasync_args), (sy_call_t *)sys_fdatasync, AUE_FSYNC, NULL, 0, 0, 0, SY_THR_STATIC },	/* 550 = fdatasync */
+	{ AS(fdatasync_args), (sy_call_t *)sys_fdatasync, AUE_FSYNC, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 550 = fdatasync */
 	{ AS(fstat_args), (sy_call_t *)sys_fstat, AUE_FSTAT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 551 = fstat */
 	{ AS(fstatat_args), (sy_call_t *)sys_fstatat, AUE_FSTATAT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 552 = fstatat */
 	{ AS(fhstat_args), (sy_call_t *)sys_fhstat, AUE_FHSTAT, NULL, 0, 0, 0, SY_THR_STATIC },	/* 553 = fhstat */
@@ -610,11 +610,19 @@ struct sysent sysent[] = {
 	{ AS(fhstatfs_args), (sy_call_t *)sys_fhstatfs, AUE_FHSTATFS, NULL, 0, 0, 0, SY_THR_STATIC },	/* 558 = fhstatfs */
 	{ AS(mknodat_args), (sy_call_t *)sys_mknodat, AUE_MKNODAT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 559 = mknodat */
 	{ AS(kevent_args), (sy_call_t *)sys_kevent, AUE_KEVENT, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 560 = kevent */
-	{ AS(cpuset_getdomain_args), (sy_call_t *)sys_cpuset_getdomain, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 561 = cpuset_getdomain */
-	{ AS(cpuset_setdomain_args), (sy_call_t *)sys_cpuset_setdomain, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 562 = cpuset_setdomain */
+	{ AS(cpuset_getdomain_args), (sy_call_t *)sys_cpuset_getdomain, AUE_NULL, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 561 = cpuset_getdomain */
+	{ AS(cpuset_setdomain_args), (sy_call_t *)sys_cpuset_setdomain, AUE_NULL, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 562 = cpuset_setdomain */
 	{ AS(getrandom_args), (sy_call_t *)sys_getrandom, AUE_NULL, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 563 = getrandom */
 	{ AS(getfhat_args), (sy_call_t *)sys_getfhat, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 564 = getfhat */
 	{ AS(fhlink_args), (sy_call_t *)sys_fhlink, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 565 = fhlink */
 	{ AS(fhlinkat_args), (sy_call_t *)sys_fhlinkat, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 566 = fhlinkat */
 	{ AS(fhreadlink_args), (sy_call_t *)sys_fhreadlink, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 567 = fhreadlink */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 568 = funlinkat */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 569 = copy_file_range */
+	{ AS(__sysctlbyname_args), (sy_call_t *)sys___sysctlbyname, AUE_SYSCTL, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 570 = __sysctlbyname */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 571 = shm_open2 */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 572 = shm_rename */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 573 = sigfastblock */
+	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 574 = __realpathat */
+	{ AS(close_range_args), (sy_call_t *)sys_close_range, AUE_CLOSERANGE, NULL, 0, 0, SYF_CAPENABLED, SY_THR_STATIC },	/* 575 = close_range */
 };

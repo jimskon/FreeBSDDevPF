@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/tests/stdlib/dynthr_mod/Makefile 343599 2019-01-31 02:49:24Z kevans $
+# $FreeBSD$
 
 SHLIB_NAME=	dynthr_mod.so
 SHLIBDIR=	${TESTSDIR}

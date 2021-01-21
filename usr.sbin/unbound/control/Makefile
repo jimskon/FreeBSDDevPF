@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/unbound/control/Makefile 333573 2018-05-12 17:10:36Z des $
+# $FreeBSD$
 
 # Vendor sources and generated files
 LDNSDIR= ${SRCTOP}/contrib/ldns
@@ -9,6 +9,7 @@ UNBOUNDDIR= ${SRCTOP}/contrib/unbound
 PROG=	local-unbound-control
 SRCS=	ub_event.c unbound-control.c worker_cb.c
 CFLAGS+=	-I${UNBOUNDDIR} -I${LDNSDIR}
+CFLAGS+=	-I${.CURDIR:H} -I${.CURDIR}
 LIBADD=	unbound crypto ssl pthread
 MAN=	local-unbound-control.8
 

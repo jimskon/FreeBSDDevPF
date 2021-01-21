@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/secure/Makefile 325705 2017-11-11 07:21:49Z eadler $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -7,6 +7,8 @@ SUBDIR= lib .WAIT \
 SUBDIR_PARALLEL=
 
 SUBDIR.${MK_TESTS}+= tests
+
+SUBDIR.${MK_CAROOT}+= caroot
 
 # These are the programs which depend on crypto, but not Kerberos.
 SPROGS=	lib/libfetch lib/libpam lib/libradius lib/libtelnet	\

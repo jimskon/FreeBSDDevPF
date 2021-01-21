@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/libsa/Makefile 351515 2019-08-26 17:34:07Z kevans $
+# $FreeBSD$
 # Originally from	$NetBSD: Makefile,v 1.21 1997/10/26 22:08:38 lukem Exp $
 #
 # Notes:
@@ -53,7 +53,7 @@ CFLAGS.clang+=	-mno-movt
 .endif
 CFLAGS.clang+=	-mfpu=none
 
-.PATH: ${SRCTOP}/contrib/compiler-rt/lib/builtins/arm/
+.PATH: ${SRCTOP}/contrib/llvm-project/compiler-rt/lib/builtins/arm/
 SRCS+=	aeabi_idivmod.S aeabi_ldivmod.S aeabi_uidivmod.S aeabi_uldivmod.S
 SRCS+=	aeabi_memcmp.S aeabi_memcpy.S aeabi_memmove.S aeabi_memset.S
 .endif
@@ -63,13 +63,18 @@ SRCS+=	aeabi_memcmp.S aeabi_memcpy.S aeabi_memmove.S aeabi_memset.S
 .endif
 
 # Compiler support functions
-.PATH: ${SRCTOP}/contrib/compiler-rt/lib/builtins/
+.PATH: ${SRCTOP}/contrib/llvm-project/compiler-rt/lib/builtins/
 # __clzsi2 and ctzsi2 for various builtin functions
 SRCS+=	clzsi2.c ctzsi2.c
 # Divide and modulus functions called by the compiler
 SRCS+=	divmoddi4.c  divmodsi4.c  divdi3.c  divsi3.c  moddi3.c  modsi3.c
 SRCS+=	udivmoddi4.c udivmodsi4.c udivdi3.c udivsi3.c umoddi3.c umodsi3.c
 SRCS+=	ashldi3.c ashrdi3.c lshrdi3.c
+
+.if ${MACHINE_CPUARCH:Namd64:Ni386} == ""
+.PATH: ${SASRC}/x86
+SRCS+= hypervisor.c
+.endif
 
 .if ${MACHINE_CPUARCH} == "powerpc"
 SRCS+=	syncicache.c
@@ -96,6 +101,11 @@ SRCS+=bzlib.c crctable.c decompress.c huffman.c randtable.c
 CFLAGS+=-DHAVE_MEMCPY -I${SRCTOP}/sys/contrib/zlib
 SRCS+=	adler32.c crc32.c
 SRCS+=	infback.c inffast.c inflate.c inftrees.c zutil.c
+
+# lz4 decompression functionality
+.PATH: ${SRCTOP}/sys/cddl/contrib/opensolaris/common/lz4
+SRCS+=	lz4.c
+CFLAGS.lz4.c+= -I${SRCTOP}/sys/cddl/contrib/opensolaris/common/lz4
 
 # Create a subset of includes that are safe, as well as adjusting those that aren't
 # The lists may drive people nuts, but they are explicitly opt-in
@@ -148,9 +158,9 @@ SRCS+=ffs_subr.c ffs_tables.c
 
 CFLAGS.bzipfs.c+= -I${SRCTOP}/contrib/bzip2
 
-# explicit_bzero
+# explicit_bzero and calculate_crc32c
 .PATH: ${SYSDIR}/libkern
-SRCS+=  explicit_bzero.c
+SRCS+=  explicit_bzero.c crc32_libkern.c
 
 # Maybe GELI
 .if ${MK_LOADER_GELI} == "yes"

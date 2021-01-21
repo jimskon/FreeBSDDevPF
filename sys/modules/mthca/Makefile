@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/mthca/Makefile 329222 2018-02-13 17:04:34Z hselasky $
+# $FreeBSD$
 .PATH:	${SRCTOP}/sys/dev/mthca
 
 KMOD=	mthca
@@ -20,9 +20,9 @@ mthca_provider.c \
 mthca_qp.c \
 mthca_reset.c \
 mthca_srq.c \
-mthca_uar.c \
-device_if.h bus_if.h vnode_if.h pci_if.h \
-        opt_inet.h opt_inet6.h
+mthca_uar.c
+SRCS+=	${LINUXKPI_GENSRCS}
+SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

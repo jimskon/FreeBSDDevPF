@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/commands.c 350312 2019-07-25 00:07:10Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <string.h>

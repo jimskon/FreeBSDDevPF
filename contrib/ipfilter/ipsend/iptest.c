@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/contrib/ipfilter/ipsend/iptest.c 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * ipsend.c (C) 1995-1998 Darren Reed
@@ -34,15 +34,7 @@ char	options[68];
 # ifdef	sun
 char	default_device[] = "le0";
 # else
-#  ifdef	ultrix
-char	default_device[] = "ln0";
-#  else
-#   ifdef	__bsdi__
-char	default_device[] = "ef0";
-#   else
 char	default_device[] = "lan0";
-#   endif
-#  endif
 # endif
 
 static	void	usage __P((char *));

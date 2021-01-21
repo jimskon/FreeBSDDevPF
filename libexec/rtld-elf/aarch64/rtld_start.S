@@ -28,7 +28,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: releng/12.1/libexec/rtld-elf/aarch64/rtld_start.S 342847 2019-01-07 11:03:08Z mmel $");
+__FBSDID("$FreeBSD$");
 
 ENTRY(.rtld_start)
 	mov	x19, x0		/* Put ps_strings in a callee-saved register */

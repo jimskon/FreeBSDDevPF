@@ -23,9 +23,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libc/sys/semctl.2 330299 2018-03-02 22:32:53Z brooks $
+.\" $FreeBSD$
 .\"
-.Dd February 23, 2018
+.Dd July 9, 2020
 .Dt SEMCTL 2
 .Os
 .Sh NAME
@@ -148,7 +148,6 @@ is defined as follows:
 .Bd -literal
 struct semid_ds {
         struct  ipc_perm sem_perm;      /* operation permission struct */
-        struct  sem *__sem_base;  /* kernel data, don't use */
         u_short sem_nsems;      /* number of sems in set */
         time_t  sem_otime;      /* last operation time */
         time_t  sem_ctime;      /* last change time */

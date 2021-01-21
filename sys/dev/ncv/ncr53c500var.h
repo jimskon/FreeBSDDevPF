@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/ncv/ncr53c500var.h 326255 2017-11-27 14:52:40Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$NecBSD: ncr53c500var.h,v 1.11.18.1 2001/06/08 06:27:45 honda Exp $	*/
 /*	$NetBSD$	*/
 

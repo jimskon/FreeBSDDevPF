@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libnv/tests/nvlist_send_recv_test.c 341079 2018-11-27 17:00:47Z markj $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

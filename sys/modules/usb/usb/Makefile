@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/usb/usb/Makefile 348420 2019-05-30 14:40:23Z ian $
+# $FreeBSD$
 #
 # Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
 #

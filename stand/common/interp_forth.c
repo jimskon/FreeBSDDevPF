@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/common/interp_forth.c 346145 2019-04-12 01:03:00Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>		/* to pick up __FreeBSD_version */
 #include <string.h>
@@ -39,9 +39,9 @@ INTERP_DEFINE("4th");
 /* #define BFORTH_DEBUG */
 
 #ifdef BFORTH_DEBUG
-#define	DEBUG(fmt, args...)	printf("%s: " fmt "\n" , __func__ , ## args)
+#define	DPRINTF(fmt, args...)	printf("%s: " fmt "\n" , __func__ , ## args)
 #else
-#define	DEBUG(fmt, args...)
+#define	DPRINTF(fmt, args...)	((void)0)
 #endif
 
 /*
@@ -128,7 +128,7 @@ bf_command(FICL_VM *vm)
 			vmUpdateTib(vm, tail + len);
 		}
 	}
-	DEBUG("cmd '%s'", line);
+	DPRINTF("cmd '%s'", line);
 
 	command_errmsg = command_errbuf;
 	command_errbuf[0] = 0;
@@ -142,6 +142,7 @@ bf_command(FICL_VM *vm)
 	switch (result) {
 	case CMD_CRIT:
 		printf("%s\n", command_errmsg);
+		command_errmsg = NULL;
 		break;
 	case CMD_FATAL:
 		panic("%s", command_errmsg);
@@ -283,7 +284,7 @@ bf_init(void)
 	/* try to load and run init file if present */
 	if ((fd = open("/boot/boot.4th", O_RDONLY)) != -1) {
 #ifdef LOADER_VERIEXEC
-		if (verify_file(fd, "/boot/boot.4th", 0, VE_GUESS) < 0) {
+		if (verify_file(fd, "/boot/boot.4th", 0, VE_GUESS, __func__) < 0) {
 			close(fd);
 			return;
 		}
@@ -310,7 +311,7 @@ bf_run(const char *line)
 	 */
 	result = ficlExec(bf_vm, __DECONST(char *, line));
 
-	DEBUG("ficlExec '%s' = %d", line, result);
+	DPRINTF("ficlExec '%s' = %d", line, result);
 	switch (result) {
 	case VM_OUTOFTEXT:
 	case VM_ABORTQ:
@@ -385,7 +386,7 @@ interp_include(const char *filename)
 	}
 
 #ifdef LOADER_VERIEXEC
-	if (verify_file(fd, filename, 0, VE_GUESS) < 0) {
+	if (verify_file(fd, filename, 0, VE_GUESS, __func__) < 0) {
 		close(fd);
 		sprintf(command_errbuf,"can't verify '%s'", filename);
 		return(CMD_ERROR);

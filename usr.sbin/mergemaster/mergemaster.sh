@@ -8,7 +8,7 @@
 # Copyright (c) 1998-2012 Douglas Barton, All rights reserved
 # Please see detailed copyright below
 
-# $FreeBSD: releng/12.1/usr.sbin/mergemaster/mergemaster.sh 338114 2018-08-20 19:39:49Z imp $
+# $FreeBSD$
 
 PATH=/bin:/usr/bin:/usr/sbin
 
@@ -508,6 +508,7 @@ SOURCEDIR=$(realpath "$SOURCEDIR")
 
 # Setup make to use system files from SOURCEDIR
 MM_MAKE="make ${ARCHSTRING} -m ${SOURCEDIR}/share/mk -DNO_FILEMON"
+MM_MAKE="${MM_MAKE} -j$(/sbin/sysctl -n hw.ncpu)"
 
 # Check DESTDIR against the mergemaster mtree database to see what
 # files the user changed from the reference files.
@@ -882,6 +883,9 @@ mm_install () {
     case "${1#.}" in
     /etc/mail/aliases)
       NEED_NEWALIASES=yes
+      ;;
+    /usr/share/certs/trusted/* | /usr/share/certs/blacklisted/*)
+      NEED_CERTCTL=yes
       ;;
     /etc/login.conf)
       NEED_CAP_MKDB=yes
@@ -1351,6 +1355,23 @@ case "${NEED_PWD_MKDB}" in
     echo "    '/usr/sbin/pwd_mkdb -p /etc/master.passwd'"
     echo "     to rebuild your password files"
     run_it_now '/usr/sbin/pwd_mkdb -p /etc/master.passwd'
+  fi
+  ;;
+esac
+
+case "${NEED_CERTCTL}" in
+'') ;;
+*)
+  echo ''
+  echo "*** You installed files in /etc/ssl/certs, so make sure that you run"
+  if [ -n "${DESTDIR}" ]; then
+    echo "    'env DESTDIR=${DESTDIR} /usr/sbin/certctl rehash'"
+    echo "     to rebuild your certificate authority database"
+    run_it_now "env DESTDIR=${DESTDIR} /usr/sbin/certctl rehash"
+  else
+    echo "    '/usr/sbin/certctl rehash'"
+    echo "     to rebuild your certificate authority database"
+    run_it_now "/usr/sbin/certctl rehash"
   fi
   ;;
 esac

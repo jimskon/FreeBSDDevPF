@@ -1,6 +1,10 @@
-# $FreeBSD: releng/12.1/lib/clang/llvm.build.mk 351916 2019-09-06 00:00:13Z gjb $
+# $FreeBSD$
 
 .include <src.opts.mk>
+
+.ifndef LLVM_BASE
+.error Please define LLVM_BASE before including this file
+.endif
 
 .ifndef LLVM_SRCS
 .error Please define LLVM_SRCS before including this file
@@ -10,14 +14,17 @@
 .error Please define SRCDIR before including this file
 .endif
 
-.PATH:		${LLVM_SRCS}/${SRCDIR}
+.PATH:		${LLVM_BASE}/${SRCDIR}
 
 CFLAGS+=	-I${SRCTOP}/lib/clang/include
 CFLAGS+=	-I${LLVM_SRCS}/include
-CFLAGS+=	-DLLVM_BUILD_GLOBAL_ISEL
-CFLAGS+=	-D__STDC_LIMIT_MACROS
 CFLAGS+=	-D__STDC_CONSTANT_MACROS
+CFLAGS+=	-D__STDC_FORMAT_MACROS
+CFLAGS+=	-D__STDC_LIMIT_MACROS
+CFLAGS+=	-DHAVE_VCS_VERSION_INC
+.if ${MK_LLVM_ASSERTIONS} == "no"
 CFLAGS+=	-DNDEBUG
+.endif
 
 TARGET_ARCH?=	${MACHINE_ARCH}
 BUILD_ARCH?=	${MACHINE_ARCH}
@@ -33,10 +40,10 @@ TARGET_ABI=	-gnueabi
 TARGET_ABI=
 .endif
 VENDOR=		unknown
-OS_VERSION=	freebsd12.1
+OS_VERSION=	freebsd12.2
 
-LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/arm64/aarch64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
-LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/arm64/aarch64/}-${VENDOR}-${OS_VERSION}
+LLVM_TARGET_TRIPLE?=	${TARGET_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}${TARGET_ABI}
+LLVM_BUILD_TRIPLE?=	${BUILD_ARCH:C/amd64/x86_64/:C/[hs]f$//:S/mipsn32/mips64/}-${VENDOR}-${OS_VERSION}
 
 CFLAGS+=	-DLLVM_DEFAULT_TARGET_TRIPLE=\"${LLVM_TARGET_TRIPLE}\"
 CFLAGS+=	-DLLVM_HOST_TRIPLE=\"${LLVM_BUILD_TRIPLE}\"
@@ -101,7 +108,7 @@ CFLAGS+=	-ffunction-sections
 CFLAGS+=	-fdata-sections
 LDFLAGS+=	-Wl,--gc-sections
 
-CXXSTD?=	c++11
+CXXSTD?=	c++14
 CXXFLAGS+=	-fno-exceptions
 CXXFLAGS+=	-fno-rtti
 CXXFLAGS.clang+= -stdlib=libc++

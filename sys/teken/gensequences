@@ -25,7 +25,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/teken/gensequences 333925 2018-05-20 14:21:20Z dumbbell $
+# $FreeBSD$
 
 function die(msg) {
 	print msg;

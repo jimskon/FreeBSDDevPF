@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/lib/libusb/Makefile 302125 2016-06-23 07:12:22Z hselasky $
+# $FreeBSD$
 #
 # Makefile for the FreeBSD specific LibUSB 2.0
 #
@@ -69,6 +69,7 @@ CFLAGS+=	-I ../../sys
 MLINKS += libusb.3 libusb_get_version.3
 MLINKS += libusb.3 libusb_init.3
 MLINKS += libusb.3 libusb_exit.3
+MLINKS += libusb.3 libusb_has_capability.3
 MLINKS += libusb.3 libusb_strerror.3
 MLINKS += libusb.3 libusb_error_name.3
 MLINKS += libusb.3 libusb_set_debug.3
@@ -220,6 +221,7 @@ MLINKS += libusb20.3 libusb20_dev_get_backend_name.3
 MLINKS += libusb20.3 libusb20_dev_get_info.3
 MLINKS += libusb20.3 libusb20_dev_get_iface_desc.3
 MLINKS += libusb20.3 libusb20_dev_get_desc.3
+MLINKS += libusb20.3 libusb20_dev_get_stats.3
 MLINKS += libusb20.3 libusb20_dev_close.3
 MLINKS += libusb20.3 libusb20_dev_detach_kernel_driver.3
 MLINKS += libusb20.3 libusb20_dev_set_config_index.3

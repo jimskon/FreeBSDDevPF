@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/net/mp_ring.h 344092 2019-02-13 13:09:16Z marius $
+ * $FreeBSD$
  *
  */
 

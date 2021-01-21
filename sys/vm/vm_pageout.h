@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_pageout.h 351776 2019-09-03 19:27:59Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _VM_VM_PAGEOUT_H_
@@ -75,7 +75,7 @@
  *	Exported data structures.
  */
 
-extern int vm_page_max_wired;
+extern u_int vm_page_max_user_wired;
 extern int vm_pageout_page_count;
 
 #define	VM_OOM_MEM	1

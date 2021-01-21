@@ -1,9 +1,7 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_BINUTILS 341239 2018-11-29 15:48:36Z emaste $
-Set to not build or install GNU
+.\" $FreeBSD$
+Do not build or install GNU
 .Xr as 1 ,
-.Xr objdump 1 ,
-and for some CPU architectures
-.Xr ld.bfd 1
+.Xr ld.bfd 1 , and
+.Xr objdump 1
 as part
 of the normal system build.
-The resulting system cannot build programs from source.

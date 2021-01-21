@@ -26,8 +26,9 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/mp_machdep.c 338143 2018-08-21 16:43:46Z alc $");
+__FBSDID("$FreeBSD$");
 
+#include "opt_acpi.h"
 #include "opt_apic.h"
 #include "opt_cpu.h"
 #include "opt_kstack_pages.h"
@@ -83,6 +84,11 @@ __FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/mp_machdep.c 338143 2018-08-21 16:
 #include <machine/specialreg.h>
 #include <x86/ucode.h>
 
+#ifdef DEV_ACPI
+#include <contrib/dev/acpica/include/acpi.h>
+#include <dev/acpica/acpivar.h>
+#endif
+
 #define WARMBOOT_TARGET		0
 #define WARMBOOT_OFF		(PMAP_MAP_LOW + 0x0467)
 #define WARMBOOT_SEG		(PMAP_MAP_LOW + 0x0469)
@@ -129,8 +135,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/i386/i386/mp_machdep.c 338143 2018-08-21 16:
 #define CHECK_WRITE(A, D)
 
 #endif				/* CHECK_POINTS */
-
-extern	struct pcpu __pcpu[];
 
 /*
  * Local data and functions.
@@ -184,6 +188,10 @@ cpu_mp_start(void)
 	setidt(IPI_SUSPEND, IDTVEC(cpususpend),
 	       SDT_SYS386IGT, SEL_KPL, GSEL(GCODE_SEL, SEL_KPL));
 
+	/* Install an IPI for calling delayed SWI */
+	setidt(IPI_SWI, IDTVEC(ipi_swi),
+	       SDT_SYS386IGT, SEL_KPL, GSEL(GCODE_SEL, SEL_KPL));
+
 	/* Set boot_cpu_id if needed. */
 	if (boot_cpu_id == -1) {
 		boot_cpu_id = PCPU_GET(apic_id);
@@ -201,6 +209,10 @@ cpu_mp_start(void)
 	start_all_aps();
 
 	set_interrupt_apic_ids();
+
+#if defined(DEV_ACPI) && MAXMEMDOM > 1
+	acpi_pxm_set_cpu_locality();
+#endif
 }
 
 /*

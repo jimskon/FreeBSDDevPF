@@ -32,7 +32,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/pte.h 348644 2019-06-04 17:31:05Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PTE_H_

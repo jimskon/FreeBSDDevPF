@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/grep/tests/grep_freebsd_test.sh 333419 2018-05-09 16:52:28Z kevans $
+# $FreeBSD$
 
 # What grep(1) are we working with?
 # - 0 : bsdgrep
@@ -82,8 +82,34 @@ rgrep_body()
 	atf_check -o file:d_grep_r_implied.out rgrep --exclude="*.out" -e "test" "$(atf_get_srcdir)"
 }
 
+atf_test_case gnuext
+gnuext_body()
+{
+	grep_type
+	_type=$?
+	if [ $_type -eq $GREP_TYPE_BSD ]; then
+		atf_expect_fail "this test requires GNU extensions in regex(3)"
+	elif [ $_type -eq $GREP_TYPE_GNU_FREEBSD ]; then
+		atf_expect_fail "\\s and \\S are known to be buggy in base gnugrep"
+	fi
+
+	atf_check -o save:grep_alnum.out grep -o '[[:alnum:]]' /COPYRIGHT
+	atf_check -o file:grep_alnum.out grep -o '\w' /COPYRIGHT
+
+	atf_check -o save:grep_nalnum.out grep -o '[^[:alnum:]]' /COPYRIGHT
+	atf_check -o file:grep_nalnum.out grep -o '\W' /COPYRIGHT
+
+	atf_check -o save:grep_space.out grep -o '[[:space:]]' /COPYRIGHT
+	atf_check -o file:grep_space.out grep -o '\s' /COPYRIGHT
+
+	atf_check -o save:grep_nspace.out grep -o '[^[:space:]]' /COPYRIGHT
+	atf_check -o file:grep_nspace.out grep -o '\S' /COPYRIGHT
+
+}
+
 atf_init_test_cases()
 {
 	atf_add_test_case grep_r_implied
 	atf_add_test_case rgrep
+	atf_add_test_case gnuext
 }

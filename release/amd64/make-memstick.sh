@@ -7,7 +7,7 @@
 #
 # Usage: make-memstick.sh <directory tree> <image filename>
 #
-# $FreeBSD: releng/12.1/release/amd64/make-memstick.sh 334337 2018-05-29 15:06:13Z emaste $
+# $FreeBSD$
 #
 
 set -e

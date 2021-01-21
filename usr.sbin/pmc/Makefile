@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/usr.sbin/pmc/Makefile 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 #
 
 .include <src.opts.mk>
@@ -9,6 +9,9 @@ WARNS?=	3
 CXXFLAGS+= -O0
 CXXSTD= c++14
 CWARNFLAGS.gcc+= -Wno-redundant-decls
+
+# Does not link when built position-independent.
+MK_PIE=no
 
 LIBADD=	kvm pmc m ncursesw pmcstat elf
 

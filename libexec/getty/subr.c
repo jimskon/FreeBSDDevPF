@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)from: subr.c	8.1 (Berkeley) 6/4/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/libexec/getty/subr.c 329724 2018-02-21 15:57:24Z trasz $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 /*
@@ -89,10 +89,8 @@ gettable(const char *name, char *buf)
 					l = 2;
 				else
 					l = strlen(sp->value) + 1;
-				if ((p = malloc(l)) != NULL) {
-					strncpy(p, sp->value, l);
-					p[l-1] = '\0';
-				}
+				if ((p = malloc(l)) != NULL)
+					strlcpy(p, sp->value, l);
 				/*
 				 * replace, even if NULL, else we'll
 				 * have problems with free()ing static mem

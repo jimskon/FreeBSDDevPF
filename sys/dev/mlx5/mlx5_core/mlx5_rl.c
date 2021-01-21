@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_core/mlx5_rl.c 334332 2018-05-29 14:04:57Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/kernel.h>
@@ -58,16 +58,14 @@ static struct mlx5_rl_entry *find_rl_entry(struct mlx5_rl_table *table,
 static int mlx5_set_rate_limit_cmd(struct mlx5_core_dev *dev,
 				   u32 rate, u32 burst, u16 index)
 {
-	u32 in[MLX5_ST_SZ_DW(set_rate_limit_in)] = {0};
-	u32 out[MLX5_ST_SZ_DW(set_rate_limit_out)] = {0};
+	u32 in[MLX5_ST_SZ_DW(set_rate_limit_in)] = {};
+	u32 out[MLX5_ST_SZ_DW(set_rate_limit_out)] = {};
 
-	MLX5_SET(set_rate_limit_in, in, opcode,
-		 MLX5_CMD_OP_SET_RATE_LIMIT);
+	MLX5_SET(set_rate_limit_in, in, opcode, MLX5_CMD_OP_SET_RATE_LIMIT);
 	MLX5_SET(set_rate_limit_in, in, rate_limit_index, index);
 	MLX5_SET(set_rate_limit_in, in, rate_limit, rate);
-
-	if (MLX5_CAP_QOS(dev, packet_pacing_burst_bound))
-		MLX5_SET(set_rate_limit_in, in, burst_upper_bound, burst);
+	MLX5_SET(set_rate_limit_in, in, burst_upper_bound, burst);
+	MLX5_SET(set_rate_limit_in, in, typical_packet_size, 0 /* use MTU */);
 
 	return mlx5_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
 }

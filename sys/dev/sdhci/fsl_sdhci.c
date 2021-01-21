@@ -25,7 +25,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/sdhci/fsl_sdhci.c 343503 2019-01-27 19:04:02Z marius $");
+__FBSDID("$FreeBSD$");
 
 /*
  * SDHCI driver glue for Freescale i.MX SoC and QorIQ families.

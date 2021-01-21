@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/ipfw/ip_dummynet.c 326272 2017-11-27 15:23:17Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Configuration and internal object management for dummynet.
@@ -2511,7 +2511,6 @@ ip_dn_init(void)
 {
 	if (dn_cfg.init_done)
 		return;
-	printf("DUMMYNET %p with IPv6 initialized (100409)\n", curvnet);
 	dn_cfg.init_done = 1;
 	/* Set defaults here. MSVC does not accept initializers,
 	 * and this is also useful for vimages

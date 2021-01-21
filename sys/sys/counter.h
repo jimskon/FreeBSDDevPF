@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/counter.h 349033 2019-06-14 10:39:05Z ae $
+ * $FreeBSD$
  */
 
 #ifndef __SYS_COUNTER_H__
@@ -73,6 +73,19 @@ struct counter_rate {
 };
 
 int64_t	counter_ratecheck(struct counter_rate *, int64_t);
+
+#define	COUNTER_U64_SYSINIT(c)					\
+	SYSINIT(c##_counter_sysinit, SI_SUB_COUNTER,		\
+	    SI_ORDER_ANY, counter_u64_sysinit, &c);		\
+	SYSUNINIT(c##_counter_sysuninit, SI_SUB_COUNTER,	\
+	    SI_ORDER_ANY, counter_u64_sysuninit, &c)
+
+#define	COUNTER_U64_DEFINE_EARLY(c)				\
+	counter_u64_t __read_mostly c = EARLY_COUNTER;		\
+	COUNTER_U64_SYSINIT(c)
+
+void counter_u64_sysinit(void *);
+void counter_u64_sysuninit(void *);
 
 #endif	/* _KERNEL */
 #endif	/* ! __SYS_COUNTER_H__ */

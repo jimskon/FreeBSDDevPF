@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dts/arm/tegra124-jetson-tk1-fbsd.dts 350818 2019-08-09 10:00:11Z mmel $
+ * $FreeBSD$
  */
 
 #include "tegra124-jetson-tk1.dts"

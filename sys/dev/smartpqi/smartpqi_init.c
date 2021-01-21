@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/smartpqi/smartpqi_init.c 336201 2018-07-11 16:44:14Z sbruno $ */
+/* $FreeBSD$ */
 
 #include "smartpqi_includes.h"
 
@@ -453,7 +453,7 @@ int pqisrc_process_config_table(pqisrc_softstate_t *softs)
 		ret = PQI_STATUS_SUCCESS;
 		break;
 		default:
-		DBG_ERR("unrecognized PQI config table section ID: 0x%x\n",
+		DBG_INFO("unrecognized PQI config table section ID: 0x%x\n",
 					LE_16(section_hdr->section_id));
 		break;
 		}

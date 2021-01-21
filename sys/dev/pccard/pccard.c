@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/pccard/pccard.c 335691 2018-06-27 04:11:14Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -843,6 +843,7 @@ pccard_attach(device_t dev)
 	sc->sc_enabled_count = 0;
 	if ((err = pccard_device_create(sc)) != 0)
 		return  (err);
+	gone_in_dev(dev, 13, "PC Card to be removed.");
 	STAILQ_INIT(&sc->card.pf_head);
 	return (bus_generic_attach(dev));
 }

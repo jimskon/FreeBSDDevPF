@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	From: @(#)systat.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD: releng/12.1/usr.bin/systat/systat.h 326025 2017-11-20 19:49:47Z pfg $
+ * $FreeBSD$
  */
 
 #include <curses.h>
@@ -68,3 +68,7 @@ extern int use_kvm;
 #define NVAL(indx)  namelist[(indx)].n_value
 #define NPTR(indx)  (void *)NVAL((indx))
 #define NREAD(indx, buf, len) kvm_ckread(NPTR((indx)), (buf), (len))
+
+extern void putint(int, int, int, int);
+extern void putfloat(double, int, int, int, int, int);
+extern void putlongdouble(long double, int, int, int, int, int);

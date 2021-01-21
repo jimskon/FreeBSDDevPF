@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/contrib/ipfilter/ipsend/sockraw.c 145519 2005-04-25 18:20:15Z darrenr $	*/
+/*	$FreeBSD$	*/
 
 /*
  * (C)opyright 2000 Darren Reed.

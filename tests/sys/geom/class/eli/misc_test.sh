@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tests/sys/geom/class/eli/misc_test.sh 348460 2019-05-31 16:20:00Z asomers $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/conf.sh
 

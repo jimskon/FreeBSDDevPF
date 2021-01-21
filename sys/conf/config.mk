@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/config.mk 330722 2018-03-10 02:09:36Z bdrewery $
+# $FreeBSD$
 #
 # Common code to marry kernel config(8) goo and module building goo.
 #
@@ -19,6 +19,10 @@ opt_inet.h:
 opt_inet6.h:
 	@echo "#define INET6 1" > ${.TARGET}
 .endif
+.if ${MK_IPSEC_SUPPORT} != "no"
+opt_ipsec.h:
+	@echo "#define IPSEC_SUPPORT 1" > ${.TARGET}
+.endif
 .if ${MK_RATELIMIT} != "no"
 opt_ratelimit.h:
 	@echo "#define RATELIMIT 1" > ${.TARGET}
@@ -29,6 +33,10 @@ opt_printf.h:
 	echo "#define PRINTF_BUFR_SIZE 128" > ${.TARGET}
 opt_scsi.h:
 	echo "#define SCSI_DELAY 15000" > ${.TARGET}
+.if ${MK_SCTP_SUPPORT} != "no"
+opt_sctp.h:
+	@echo "#define SCTP_SUPPORT 1" > ${.TARGET}
+.endif
 opt_wlan.h:
 	echo "#define IEEE80211_DEBUG 1" > ${.TARGET}
 	echo "#define IEEE80211_AMPDU_AGE 1" >> ${.TARGET}
@@ -44,6 +52,12 @@ KERN_OPTS+= INET TCP_OFFLOAD
 .endif
 .if ${MK_INET6_SUPPORT} != "no"
 KERN_OPTS+= INET6
+.endif
+.if ${MK_IPSEC_SUPPORT} != "no"
+KERN_OPTS+= IPSEC_SUPPORT
+.endif
+.if ${MK_SCTP_SUPPORT} != "no"
+KERN_OPTS+= SCTP_SUPPORT
 .endif
 .elif !defined(KERN_OPTS)
 KERN_OPTS!=cat ${KERNBUILDDIR}/opt*.h | awk '{print $$2;}' | sort -u

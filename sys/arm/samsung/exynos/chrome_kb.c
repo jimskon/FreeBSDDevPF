@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/samsung/exynos/chrome_kb.c 302502 2016-07-09 18:43:15Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -52,7 +52,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm/samsung/exynos/chrome_kb.c 302502 2016-0
 
 #include <sys/ioccom.h>
 #include <sys/filio.h>
-#include <sys/tty.h>
 #include <sys/kbio.h>
 
 #include <machine/bus.h>
@@ -663,9 +662,7 @@ keyboard_switch_t ckbdsw = {
 	.clear_state = &ckb_clear_state,
 	.get_state = &ckb_get_state,
 	.set_state = &ckb_set_state,
-	.get_fkeystr = &genkbd_get_fkeystr,
 	.poll = &ckb_poll,
-	.diag = &genkbd_diag,
 };
 
 static int

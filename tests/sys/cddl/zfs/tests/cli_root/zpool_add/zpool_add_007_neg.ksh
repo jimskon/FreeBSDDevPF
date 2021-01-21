@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/cli_root/zpool_add/zpool_add_007_neg.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.
@@ -57,22 +57,14 @@
 
 verify_runnable "global"
 
-function cleanup
-{
-	poolexists "$TESTPOOL" && \
-		destroy_pool "$TESTPOOL"
-	
-	partition_cleanup
-}
+set_disks
 
 log_assert "'zpool add' should return an error with badly-formed parameters."
 
-log_onexit cleanup
-
 set -A args "" "-f" "-n" "-?" "-nf" "-fn" "-f -n" "--f" "-blah" \
-	"-? $TESTPOOL ${disk}p2"
+	"-? $TESTPOOL ${DISK1}"
 
-create_pool "$TESTPOOL" "${disk}p1"
+create_pool "$TESTPOOL" "${DISK0}"
 log_must poolexists "$TESTPOOL"
 
 typeset -i i=0

@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: releng/12.1/sys/i386/conf/NOTES 351536 2019-08-27 04:13:22Z mav $
+# $FreeBSD$
 #
 
 #
@@ -856,11 +856,13 @@ hint.pcf.0.irq="5"
 # amdsbwd: AMD SB7xx watchdog timer
 # viawd: VIA south bridge watchdog timer
 # wbwd: Winbond watchdog timer
+# itwd: ITE Super I/O watchdog timer
 #
 device		ichwd
 device		amdsbwd
 device		viawd
 device		wbwd
+device		itwd
 
 #
 # Temperature sensors:
@@ -876,6 +878,11 @@ device		amdtemp
 # microcode update feature.
 #
 device		cpuctl
+
+#
+# SuperIO driver.
+#
+device		superio
 
 #
 # System Management Bus (SMB)

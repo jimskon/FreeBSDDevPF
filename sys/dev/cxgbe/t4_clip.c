@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/t4_clip.c 345606 2019-03-27 21:34:13Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -273,8 +273,11 @@ update_clip_table(struct adapter *sc)
 
 				inet_ntop(AF_INET6, &ce->lip, &ip[0],
 				    sizeof(ip));
-				log(LOG_ERR, "%s: could not add %s (%d)\n",
-				    __func__, ip, rc);
+				if (sc->active_ulds != 0) {
+					log(LOG_ERR,
+					    "%s: could not add %s (%d)\n",
+					    __func__, ip, rc);
+				}
 				free(ce, M_CXGBE);
 			}
 next:

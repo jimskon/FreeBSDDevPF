@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/fs.h 341849 2018-12-12 10:08:15Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_FS_H_
 #define	_LINUX_FS_H_

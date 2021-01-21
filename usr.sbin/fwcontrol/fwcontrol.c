@@ -36,7 +36,7 @@
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/fwcontrol/fwcontrol.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 #endif
 
 #include <sys/param.h>
@@ -129,7 +129,7 @@ str2node(int fd, const char *nodestr)
 	char *endptr;
 	int i, node;
 
-	if (nodestr == '\0')
+	if (nodestr == NULL || *nodestr == '\0')
 		return (-1);
 
 	/*

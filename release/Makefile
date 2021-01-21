@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/release/Makefile 339980 2018-10-31 23:54:36Z gjb $
+# $FreeBSD$
 #
 # Makefile for building releases and release media.
 #
@@ -54,7 +54,7 @@ TARGET_ARCH=	${TARGET}
 IMAKE=		${MAKE} TARGET_ARCH=${TARGET_ARCH} TARGET=${TARGET}
 DISTDIR=	dist
 
-# Define OSRELEASE by using newvars.sh
+# Define OSRELEASE by using newvers.sh
 .if !defined(OSRELEASE) || empty(OSRELEASE)
 .for _V in TYPE BRANCH REVISION
 ${_V}!=	eval $$(awk '/^${_V}=/{print}' ${.CURDIR}/../sys/conf/newvers.sh); echo $$${_V}

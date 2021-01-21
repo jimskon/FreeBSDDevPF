@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ntb/ntb_hw/ntb_hw_amd.c 351537 2019-08-27 04:14:38Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -101,6 +101,16 @@ static const struct amd_ntb_hw_info amd_ntb_hw_info_list[] = {
 	  .msix_vector_count = 24,
 	  .quirks = 0,
 	  .desc = "AMD Non-Transparent Bridge"},
+
+	{ .vendor_id = NTB_HW_HYGON_VENDOR_ID,
+	  .device_id = NTB_HW_HYGON_DEVICE_ID1,
+	  .mw_count = 3,
+	  .bar_start_idx = 1,
+	  .spad_count = 16,
+	  .db_count = 16,
+	  .msix_vector_count = 24,
+	  .quirks = QUIRK_MW0_32BIT,
+	  .desc = "Hygon Non-Transparent Bridge"},
 };
 
 static const struct pci_device_table amd_ntb_devs[] = {
@@ -109,7 +119,10 @@ static const struct pci_device_table amd_ntb_devs[] = {
 	  PCI_DESCR("AMD Non-Transparent Bridge") },
 	{ PCI_DEV(NTB_HW_AMD_VENDOR_ID, NTB_HW_AMD_DEVICE_ID2),
 	  .driver_data = (uintptr_t)&amd_ntb_hw_info_list[1],
-	  PCI_DESCR("AMD Non-Transparent Bridge") }
+	  PCI_DESCR("AMD Non-Transparent Bridge") },
+	{ PCI_DEV(NTB_HW_HYGON_VENDOR_ID, NTB_HW_HYGON_DEVICE_ID1),
+	  .driver_data = (uintptr_t)&amd_ntb_hw_info_list[0],
+	  PCI_DESCR("Hygon Non-Transparent Bridge") }
 };
 
 static unsigned g_amd_ntb_hw_debug_level;
@@ -1266,6 +1279,7 @@ static device_method_t ntb_amd_methods[] = {
 	/* Bus interface */
 	DEVMETHOD(bus_child_location_str, ntb_child_location_str),
 	DEVMETHOD(bus_print_child,	ntb_print_child),
+	DEVMETHOD(bus_get_dma_tag,	ntb_get_dma_tag),
 
 	/* NTB interface */
 	DEVMETHOD(ntb_port_number,	amd_ntb_port_number),

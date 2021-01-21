@@ -1,4 +1,6 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2019 Ian Lepore.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/iicbus/ads111x.c 352339 2019-09-14 20:26:50Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 

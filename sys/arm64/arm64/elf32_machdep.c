@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/elf32_machdep.c 326165 2017-11-24 13:50:53Z ed $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #define	__ELF_WORD_SIZE	32

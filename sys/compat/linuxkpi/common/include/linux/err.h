@@ -26,10 +26,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/err.h 331433 2018-03-23 15:50:01Z emaste $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_ERR_H_
 #define	_LINUX_ERR_H_
+
+#include <sys/types.h>
 
 #include <linux/compiler.h>
 
@@ -62,9 +64,9 @@ IS_ERR_OR_NULL(const void *ptr)
 }
 
 static inline void *
-ERR_CAST(void *ptr)
+ERR_CAST(const void *ptr)
 {
-	return (void *)ptr;
+	return __DECONST(void *, ptr);
 }
 
 static inline int

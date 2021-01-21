@@ -1,12 +1,12 @@
-# $FreeBSD: releng/12.1/sys/modules/mlxfw/Makefile 347285 2019-05-08 10:49:05Z hselasky $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/dev/mlxfw
 
 KMOD=mlxfw
 SRCS= \
 mlxfw_fsm.c \
 mlxfw_mfa2.c \
-mlxfw_mfa2_tlv_multi.c \
-device_if.h bus_if.h vnode_if.h pci_if.h
+mlxfw_mfa2_tlv_multi.c
+SRCS+=	${LINUXKPI_GENSRCS}
 
 CFLAGS+= \
 	-I${SRCTOP}/sys/ofed/include \

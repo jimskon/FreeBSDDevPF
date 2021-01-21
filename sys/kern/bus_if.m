@@ -23,7 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/sys/kern/bus_if.m 346377 2019-04-19 12:45:45Z kib $
+# $FreeBSD$
 #
 
 #include <sys/types.h>
@@ -74,6 +74,18 @@ CODE {
 
 	static int null_reset_prepare(device_t bus, device_t dev)
 	{
+		return (0);
+	}
+
+	static int
+	null_translate_resource(device_t bus, int type, rman_res_t start,
+		rman_res_t *newstart)
+	{
+		if (device_get_parent(bus) != NULL)
+			return (BUS_TRANSLATE_RESOURCE(device_get_parent(bus),
+			    type, start, newstart));
+
+		*newstart = start;
 		return (0);
 	}
 };
@@ -405,6 +417,23 @@ METHOD int adjust_resource {
 	rman_res_t	_start;
 	rman_res_t	_end;
 };
+
+
+/**
+ * @brief translate a resource value
+ *
+ *
+ * @param _dev		the device associated with the resource
+ * @param _type		the type of resource
+ * @param _start	the starting address of the resource range
+ * @param _newstart	the new starting address of the resource range
+ */
+METHOD int translate_resource {
+	device_t	_dev;
+	int		_type;
+	rman_res_t	_start;
+	rman_res_t	*_newstart;
+} DEFAULT null_translate_resource;
 
 /**
  * @brief Release a resource

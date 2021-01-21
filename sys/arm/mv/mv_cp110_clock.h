@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/mv/mv_cp110_clock.h 350600 2019-08-05 17:43:44Z manu $
+ * $FreeBSD$
  */
 
 #ifndef _MV_CP110_SYSCON_H_

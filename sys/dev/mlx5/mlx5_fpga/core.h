@@ -29,7 +29,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_fpga/core.h 341965 2018-12-12 12:54:21Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef __MLX5_FPGA_CORE_H__

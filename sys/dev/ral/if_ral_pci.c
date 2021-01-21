@@ -16,7 +16,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ral/if_ral_pci.c 338951 2018-09-26 19:41:00Z imp $");
+__FBSDID("$FreeBSD$");
 
 /*
  * PCI/Cardbus front-end for the Ralink RT2560/RT2561/RT2561S/RT2661 driver.
@@ -100,6 +100,7 @@ static const struct ral_pci_ident ral_pci_ids[] = {
 	{ 0x1814, 0x5390, "Ralink Technology RT5390" },
 	{ 0x1814, 0x5392, "Ralink Technology RT5392" },
 	{ 0x1814, 0x539a, "Ralink Technology RT5390" },
+	{ 0x1814, 0x539b, "Ralink Technology RT5390" },
 	{ 0x1814, 0x539f, "Ralink Technology RT5390" },
 	{ 0x1a3b, 0x1059, "AWT RT2890" },
 	{ 0, 0, NULL }

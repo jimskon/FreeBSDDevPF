@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/options.amd64 334523 2018-06-02 06:40:15Z bde $
+# $FreeBSD$
 # Options specific to AMD64 platform kernels
 
 AUTO_EOI_1		opt_auto_eoi.h

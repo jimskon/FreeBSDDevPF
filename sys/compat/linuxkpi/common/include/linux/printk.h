@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/printk.h 347707 2019-05-16 15:36:56Z hselasky $
+ * $FreeBSD$
  */
 #ifndef _LINUX_PRINTK_H_
 #define	_LINUX_PRINTK_H_

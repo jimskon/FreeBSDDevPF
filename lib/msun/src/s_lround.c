@@ -32,7 +32,7 @@
 #include <math.h>
 
 #ifndef type
-__FBSDID("$FreeBSD: releng/12.1/lib/msun/src/s_lround.c 326219 2017-11-26 02:00:33Z pfg $");
+__FBSDID("$FreeBSD$");
 #define type		double
 #define	roundit		round
 #define dtype		long
@@ -49,9 +49,9 @@ __FBSDID("$FreeBSD: releng/12.1/lib/msun/src/s_lround.c 326219 2017-11-26 02:00:
  * that everything is in range.  At compile time, INRANGE(x) should reduce to
  * two floating-point comparisons in the former case, or TRUE otherwise.
  */
-static const type dtype_min = DTYPE_MIN - 0.5;
-static const type dtype_max = DTYPE_MAX + 0.5;
-#define	INRANGE(x)	(dtype_max - DTYPE_MAX != 0.5 || \
+static const type dtype_min = (type)DTYPE_MIN - 0.5;
+static const type dtype_max = (type)DTYPE_MAX + 0.5;
+#define	INRANGE(x)	(dtype_max - (type)DTYPE_MAX != 0.5 || \
 			 ((x) > dtype_min && (x) < dtype_max))
 
 dtype

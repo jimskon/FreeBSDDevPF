@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/brf.c 344565 2019-02-26 06:09:10Z sjg $");
+__FBSDID("$FreeBSD$");
 
 #define NEED_BRSSL_H
 #include "libsecureboot-priv.h"

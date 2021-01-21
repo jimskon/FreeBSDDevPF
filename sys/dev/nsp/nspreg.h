@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/dev/nsp/nspreg.h 326255 2017-11-27 14:52:40Z pfg $	*/
+/*	$FreeBSD$	*/
 /*	$NecBSD: nspreg.h,v 1.4.14.3 2001/06/29 06:27:53 honda Exp $	*/
 /*	$NetBSD$	*/
 

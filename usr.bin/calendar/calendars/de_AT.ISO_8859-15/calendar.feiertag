@@ -1,7 +1,7 @@
 /*
  * Feiertage
  *
- * $FreeBSD: releng/12.1/usr.bin/calendar/calendars/de_AT.ISO_8859-15/calendar.feiertag 344001 2019-02-11 08:55:38Z gonzo $
+ * $FreeBSD$
  */
 
 #ifndef _de_AT_ISO8859_15_feiertag_

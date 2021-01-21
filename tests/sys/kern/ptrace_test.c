@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/tests/sys/kern/ptrace_test.c 352181 2019-09-10 20:18:06Z oshogbo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/cpuset.h>
@@ -260,6 +260,9 @@ ATF_TC_BODY(ptrace__parent_sees_exit_after_child_debugger, tc)
 	pid_t child, debugger, wpid;
 	int cpipe[2], dpipe[2], status;
 	char c;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/239399");
 
 	ATF_REQUIRE(pipe(cpipe) == 0);
 	ATF_REQUIRE((child = fork()) != -1);
@@ -802,6 +805,9 @@ ATF_TC_BODY(ptrace__follow_fork_both_attached_unrelated_debugger, tc)
 	pid_t children[2], fpid, wpid;
 	int cpipe[2], status;
 
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/239397");
+
 	ATF_REQUIRE(pipe(cpipe) == 0);
 	ATF_REQUIRE((fpid = fork()) != -1);
 	if (fpid == 0) {
@@ -870,6 +876,9 @@ ATF_TC_BODY(ptrace__follow_fork_child_detached_unrelated_debugger, tc)
 	pid_t children[2], fpid, wpid;
 	int cpipe[2], status;
 
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/239292");
+
 	ATF_REQUIRE(pipe(cpipe) == 0);
 	ATF_REQUIRE((fpid = fork()) != -1);
 	if (fpid == 0) {
@@ -933,6 +942,9 @@ ATF_TC_BODY(ptrace__follow_fork_parent_detached_unrelated_debugger, tc)
 	pid_t children[2], fpid, wpid;
 	int cpipe[2], status;
 
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/239425");
+
 	ATF_REQUIRE(pipe(cpipe) == 0);
 	ATF_REQUIRE((fpid = fork()) != -1);
 	if (fpid == 0) {
@@ -994,6 +1006,10 @@ ATF_TC_BODY(ptrace__getppid, tc)
 	pid_t child, debugger, ppid, wpid;
 	int cpipe[2], dpipe[2], status;
 	char c;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/240510");
+
 
 	ATF_REQUIRE(pipe(cpipe) == 0);
 	ATF_REQUIRE((child = fork()) != -1);
@@ -2078,6 +2094,9 @@ ATF_TC_BODY(ptrace__PT_KILL_competing_stop, tc)
 	lwpid_t main_lwp;
 	struct ptrace_lwpinfo pl;
 	struct sched_param sched_param;
+
+	if (atf_tc_get_config_var_as_bool_wd(tc, "ci", false))
+		atf_tc_skip("https://bugs.freebsd.org/220841");
 
 	ATF_REQUIRE((fpid = fork()) != -1);
 	if (fpid == 0) {
@@ -3908,6 +3927,162 @@ ATF_TC_BODY(ptrace__PT_LWPINFO_stale_siginfo, tc)
 }
 
 /*
+ * A simple test of PT_GET_SC_ARGS and PT_GET_SC_RET.
+ */
+ATF_TC_WITHOUT_HEAD(ptrace__syscall_args);
+ATF_TC_BODY(ptrace__syscall_args, tc)
+{
+	struct ptrace_lwpinfo pl;
+	struct ptrace_sc_ret psr;
+	pid_t fpid, wpid;
+	register_t args[2];
+	int events, status;
+
+	ATF_REQUIRE((fpid = fork()) != -1);
+	if (fpid == 0) {
+		trace_me();
+		kill(getpid(), 0);
+		close(3);
+		exit(1);
+	}
+
+	/* The first wait() should report the stop from SIGSTOP. */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGSTOP);
+
+	/*
+	 * Continue the process ignoring the signal, but enabling
+	 * syscall traps.
+	 */
+	ATF_REQUIRE(ptrace(PT_SYSCALL, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall entry from getpid().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCE);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_getpid);
+
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall exit from getpid().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCX);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_getpid);
+
+	ATF_REQUIRE(ptrace(PT_GET_SC_RET, wpid, (caddr_t)&psr,
+	    sizeof(psr)) != -1);
+	ATF_REQUIRE(psr.sr_error == 0);
+	ATF_REQUIRE(psr.sr_retval[0] == wpid);
+
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall entry from kill().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCE);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_kill);
+	ATF_REQUIRE(pl.pl_syscall_narg == 2);
+
+	ATF_REQUIRE(ptrace(PT_GET_SC_ARGS, wpid, (caddr_t)args,
+	    sizeof(args)) != -1);
+	ATF_REQUIRE(args[0] == wpid);
+	ATF_REQUIRE(args[1] == 0);
+
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall exit from kill().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCX);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_kill);
+
+	ATF_REQUIRE(ptrace(PT_GET_SC_RET, wpid, (caddr_t)&psr,
+	    sizeof(psr)) != -1);
+	ATF_REQUIRE(psr.sr_error == 0);
+
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall entry from close().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCE);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_close);
+	ATF_REQUIRE(pl.pl_syscall_narg == 1);
+
+	ATF_REQUIRE(ptrace(PT_GET_SC_ARGS, wpid, (caddr_t)args,
+	    sizeof(args)) != -1);
+	ATF_REQUIRE(args[0] == 3);
+
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/*
+	 * The next stop should be the syscall exit from close().
+	 */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(wpid == fpid);
+	ATF_REQUIRE(WIFSTOPPED(status));
+	ATF_REQUIRE(WSTOPSIG(status) == SIGTRAP);
+
+	ATF_REQUIRE(ptrace(PT_LWPINFO, wpid, (caddr_t)&pl, sizeof(pl)) != -1);
+	ATF_REQUIRE(pl.pl_flags & PL_FLAG_SCX);
+	ATF_REQUIRE(pl.pl_syscall_code == SYS_close);
+
+	ATF_REQUIRE(ptrace(PT_GET_SC_RET, wpid, (caddr_t)&psr,
+	    sizeof(psr)) != -1);
+	ATF_REQUIRE(psr.sr_error == EBADF);
+
+	/* Disable syscall tracing and continue the child to let it exit. */
+	ATF_REQUIRE(ptrace(PT_GET_EVENT_MASK, fpid, (caddr_t)&events,
+	    sizeof(events)) == 0);
+	events &= ~PTRACE_SYSCALL;
+	ATF_REQUIRE(ptrace(PT_SET_EVENT_MASK, fpid, (caddr_t)&events,
+	    sizeof(events)) == 0);
+	ATF_REQUIRE(ptrace(PT_CONTINUE, fpid, (caddr_t)1, 0) == 0);
+
+	/* The last event should be for the child process's exit. */
+	wpid = waitpid(fpid, &status, 0);
+	ATF_REQUIRE(WIFEXITED(status));
+	ATF_REQUIRE(WEXITSTATUS(status) == 1);
+
+	wpid = wait(&status);
+	ATF_REQUIRE(wpid == -1);
+	ATF_REQUIRE(errno == ECHILD);
+}
+
+/*
  * Verify that when the process is traced that it isn't reparent
  * to the init process when we close all process descriptors.
  */
@@ -4022,6 +4197,7 @@ ATF_TP_ADD_TCS(tp)
 	ATF_TP_ADD_TC(tp, ptrace__PT_CONTINUE_different_thread);
 #endif
 	ATF_TP_ADD_TC(tp, ptrace__PT_LWPINFO_stale_siginfo);
+	ATF_TP_ADD_TC(tp, ptrace__syscall_args);
 	ATF_TP_ADD_TC(tp, ptrace__proc_reparent);
 
 	return (atf_no_error());

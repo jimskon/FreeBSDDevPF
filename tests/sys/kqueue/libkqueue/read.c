@@ -13,12 +13,11 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/tests/sys/kqueue/libkqueue/read.c 305467 2016-09-06 08:45:29Z ngie $
+ * $FreeBSD$
  */
 
 #include "common.h"
 
-int kqfd;
 int sockfd[2];
 
 static void

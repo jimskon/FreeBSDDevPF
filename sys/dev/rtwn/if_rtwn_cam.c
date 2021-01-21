@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_cam.c 309686 2016-12-07 22:16:07Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -51,7 +51,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_cam.c 309686 2016-12-07 22:
 #include <dev/rtwn/if_rtwn_task.h>
 
 #include <dev/rtwn/rtl8192c/r92c_reg.h>
-
 
 void
 rtwn_init_cam(struct rtwn_softc *sc)

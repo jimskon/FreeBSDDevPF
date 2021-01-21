@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/libusb/libusb_global_linux.h 326219 2017-11-26 02:00:33Z pfg $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -75,6 +75,13 @@
     strncpy(d,s,len);				\
     ((char *)d)[(len) - 1] = 0;			\
 } while (0)
+#endif
+
+#ifndef TAILQ_FOREACH_SAFE
+#define	TAILQ_FOREACH_SAFE(var, head, field, tvar)			\
+	for ((var) = TAILQ_FIRST((head));				\
+	    (var) && ((tvar) = TAILQ_NEXT((var), field), 1);		\
+	    (var) = (tvar))
 #endif
 
 #endif					/* _LIBUSB_GLOBAL_LINUX_H_ */

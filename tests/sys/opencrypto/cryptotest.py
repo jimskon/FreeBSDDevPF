@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tests/sys/opencrypto/cryptotest.py 348203 2019-05-23 21:57:58Z jhb $
+# $FreeBSD$
 #
 
 from __future__ import print_function
@@ -47,9 +47,9 @@ def katg(base, glob):
 		raise unittest.SkipTest("Missing %s test vectors" % (base))
 	return iglob(os.path.join(katdir, base, glob))
 
-aesmodules = [ 'cryptosoft0', 'aesni0', 'ccr0', 'ccp0' ]
+aesmodules = [ 'cryptosoft0', 'aesni0', 'ccr0', 'ccp0', 'safexcel0' ]
 desmodules = [ 'cryptosoft0', ]
-shamodules = [ 'cryptosoft0', 'aesni0', 'ccr0', 'ccp0' ]
+shamodules = [ 'cryptosoft0', 'aesni0', 'ccr0', 'ccp0', 'safexcel0' ]
 
 def GenTestCase(cname):
 	try:
@@ -468,6 +468,7 @@ cryptosoft = GenTestCase('cryptosoft0')
 aesni = GenTestCase('aesni0')
 ccr = GenTestCase('ccr0')
 ccp = GenTestCase('ccp0')
+safexcel = GenTestCase('safexcel0')
 
 if __name__ == '__main__':
 	unittest.main()

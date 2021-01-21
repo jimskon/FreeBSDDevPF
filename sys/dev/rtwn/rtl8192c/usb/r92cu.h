@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu.h 342830 2019-01-07 04:23:06Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8192CU_H
@@ -23,13 +23,11 @@
 
 #include <dev/rtwn/rtl8192c/r92c.h>
 
-
 /*
  * Global definitions.
  */
 #define R92CU_PUBQ_NPAGES	231
 #define R92CU_TX_PAGE_COUNT	248
-
 
 /*
  * Function declarations.

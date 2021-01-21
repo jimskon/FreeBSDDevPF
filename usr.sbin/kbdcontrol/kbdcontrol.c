@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/kbdcontrol/kbdcontrol.c 343937 2019-02-09 14:13:49Z se $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <err.h>

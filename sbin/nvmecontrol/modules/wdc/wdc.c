@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/nvmecontrol/modules/wdc/wdc.c 351913 2019-09-05 23:27:59Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -275,7 +275,7 @@ print_hgst_info_subpage_gen(void *buf, uint16_t subtype __unused, uint32_t size,
 		wsp++;			/* Flags, just ignore */
 		plen = *wsp++;
 		param = 0;
-		for (i = 0; i < plen; i++)
+		for (i = 0; i < plen && wsp < esp; i++)
 			param |= (uint64_t)*wsp++ << (i * 8);
 		printf("  %-30s: %jd\n", kv_lookup(kv, kv_count, ptype), (uintmax_t)param);
 	}

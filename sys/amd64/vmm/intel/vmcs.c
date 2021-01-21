@@ -25,13 +25,13 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/intel/vmcs.c 329162 2018-02-12 14:45:27Z tychon $
+ * $FreeBSD$
  */
 
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/vmm/intel/vmcs.c 329162 2018-02-12 14:45:27Z tychon $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -120,6 +120,8 @@ vmcs_field_encoding(int ident)
 		return (VMCS_GUEST_PDPTE2);
 	case VM_REG_GUEST_PDPTE3:
 		return (VMCS_GUEST_PDPTE3);
+	case VM_REG_GUEST_ENTRY_INST_LENGTH:
+		return (VMCS_ENTRY_INST_LENGTH);
 	default:
 		return (-1);
 	}

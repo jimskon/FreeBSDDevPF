@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)main.c	8.4 (Berkeley) 3/1/94";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/netstat/main.c 331347 2018-03-22 09:40:08Z jtl $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/file.h>
@@ -484,6 +484,9 @@ main(int argc, char *argv[])
 	if (rflag) {
 		xo_open_container("statistics");
 		if (sflag) {
+			if (live) {
+				kresolve_list(nl);
+			}
 			rt_stats();
 		} else
 			routepr(fib, af);

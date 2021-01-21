@@ -2,7 +2,7 @@
  * System call argument to DTrace register array converstion.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/arm64/linux/linux_systrace_args.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  * This file is part of the DTrace syscall provider.
  */
 
@@ -545,7 +545,14 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	}
 	/* linux_splice */
 	case 76: {
-		*n_args = 0;
+		struct linux_splice_args *p = params;
+		iarg[0] = p->fd_in; /* int */
+		uarg[1] = (intptr_t) p->off_in; /* l_loff_t * */
+		iarg[2] = p->fd_out; /* int */
+		uarg[3] = (intptr_t) p->off_out; /* l_loff_t * */
+		iarg[4] = p->len; /* l_size_t */
+		iarg[5] = p->flags; /* l_uint */
+		*n_args = 6;
 		break;
 	}
 	/* linux_tee */
@@ -597,7 +604,12 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	}
 	/* linux_sync_file_range */
 	case 84: {
-		*n_args = 0;
+		struct linux_sync_file_range_args *p = params;
+		iarg[0] = p->fd; /* l_int */
+		iarg[1] = p->offset; /* l_loff_t */
+		iarg[2] = p->nbytes; /* l_loff_t */
+		uarg[3] = p->flags; /* unsigned int */
+		*n_args = 4;
 		break;
 	}
 	/* linux_timerfd_create */
@@ -1761,9 +1773,9 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 		*n_args = 3;
 		break;
 	}
-	/* madvise */
+	/* linux_madvise */
 	case 233: {
-		struct madvise_args *p = params;
+		struct linux_madvise_args *p = params;
 		uarg[0] = (intptr_t) p->addr; /* void * */
 		uarg[1] = p->len; /* size_t */
 		iarg[2] = p->behav; /* int */
@@ -1972,9 +1984,9 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	/* linux_renameat2 */
 	case 276: {
 		struct linux_renameat2_args *p = params;
-		iarg[0] = p->oldfd; /* l_int */
+		iarg[0] = p->olddfd; /* l_int */
 		uarg[1] = (intptr_t) p->oldname; /* const char * */
-		iarg[2] = p->newfd; /* l_int */
+		iarg[2] = p->newdfd; /* l_int */
 		uarg[3] = (intptr_t) p->newname; /* const char * */
 		uarg[4] = p->flags; /* unsigned int */
 		*n_args = 5;
@@ -2948,6 +2960,28 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_splice */
 	case 76:
+		switch(ndx) {
+		case 0:
+			p = "int";
+			break;
+		case 1:
+			p = "userland l_loff_t *";
+			break;
+		case 2:
+			p = "int";
+			break;
+		case 3:
+			p = "userland l_loff_t *";
+			break;
+		case 4:
+			p = "l_size_t";
+			break;
+		case 5:
+			p = "l_uint";
+			break;
+		default:
+			break;
+		};
 		break;
 	/* linux_tee */
 	case 77:
@@ -3025,6 +3059,22 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_sync_file_range */
 	case 84:
+		switch(ndx) {
+		case 0:
+			p = "l_int";
+			break;
+		case 1:
+			p = "l_loff_t";
+			break;
+		case 2:
+			p = "l_loff_t";
+			break;
+		case 3:
+			p = "unsigned int";
+			break;
+		default:
+			break;
+		};
 		break;
 	/* linux_timerfd_create */
 	case 85:
@@ -4877,7 +4927,7 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 			break;
 		};
 		break;
-	/* madvise */
+	/* linux_madvise */
 	case 233:
 		switch(ndx) {
 		case 0:
@@ -5744,6 +5794,9 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 	case 75:
 	/* linux_splice */
 	case 76:
+		if (ndx == 0 || ndx == 1)
+			p = "int";
+		break;
 	/* linux_tee */
 	case 77:
 	/* linux_readlinkat */
@@ -5773,6 +5826,9 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_sync_file_range */
 	case 84:
+		if (ndx == 0 || ndx == 1)
+			p = "int";
+		break;
 	/* linux_timerfd_create */
 	case 85:
 		if (ndx == 0 || ndx == 1)
@@ -6425,7 +6481,7 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		if (ndx == 0 || ndx == 1)
 			p = "int";
 		break;
-	/* madvise */
+	/* linux_madvise */
 	case 233:
 		if (ndx == 0 || ndx == 1)
 			p = "int";

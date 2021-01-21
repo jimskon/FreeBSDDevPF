@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/opencrypto/xform_cbc_mac.c 345124 2019-03-14 02:46:03Z sef $");
+__FBSDID("$FreeBSD$");
 
 #include <opencrypto/cbc_mac.h>
 #include <opencrypto/xform_auth.h>

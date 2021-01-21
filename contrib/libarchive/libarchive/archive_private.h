@@ -22,15 +22,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_private.h 299529 2016-05-12 10:16:16Z mm $
+ * $FreeBSD$
  */
+
+#ifndef ARCHIVE_PRIVATE_H_INCLUDED
+#define ARCHIVE_PRIVATE_H_INCLUDED
 
 #ifndef __LIBARCHIVE_BUILD
 #error This header is only to be used internally to libarchive.
 #endif
-
-#ifndef ARCHIVE_PRIVATE_H_INCLUDED
-#define	ARCHIVE_PRIVATE_H_INCLUDED
 
 #if HAVE_ICONV_H
 #include <iconv.h>
@@ -153,6 +153,11 @@ void	__archive_errx(int retvalue, const char *msg) __LA_DEAD;
 
 void	__archive_ensure_cloexec_flag(int fd);
 int	__archive_mktemp(const char *tmpdir);
+#if defined(_WIN32) && !defined(__CYGWIN__)
+int	__archive_mkstemp(wchar_t *template);
+#else
+int	__archive_mkstemp(char *template);
+#endif
 
 int	__archive_clean(struct archive *);
 

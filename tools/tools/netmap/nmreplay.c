@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tools/tools/netmap/nmreplay.c 342392 2018-12-24 14:49:59Z vmaffione $
+ * $FreeBSD$
  */
 
 

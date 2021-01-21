@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.dep.mk 333397 2018-05-09 10:28:24Z kib $
+# $FreeBSD$
 #
 # The include file <bsd.dep.mk> handles Makefile dependencies.
 #
@@ -108,7 +108,7 @@ OBJS_DEPEND_GUESS.${_S:${OBJS_SRCS_FILTER:ts:}}.o+=	${_S}
 .for _LSRC in ${SRCS:M*.l:N*/*}
 .for _LC in ${_LSRC:R}.c
 ${_LC}: ${_LSRC}
-	${LEX} ${LFLAGS} -o${.TARGET} ${.ALLSRC}
+	${LEX} ${LFLAGS} ${LFLAGS.${_LSRC}} -o${.TARGET} ${.ALLSRC}
 OBJS_DEPEND_GUESS.${_LC:R}.o+=	${_LC}
 SRCS:=	${SRCS:S/${_LSRC}/${_LC}/}
 CLEANFILES+= ${_LC}
@@ -124,7 +124,7 @@ CLEANFILES+= ${_YC}
 .ORDER: ${_YC} y.tab.h
 y.tab.h: .NOMETA
 ${_YC} y.tab.h: ${_YSRC}
-	${YACC} ${YFLAGS} ${.ALLSRC}
+	${YACC} ${YFLAGS} ${YFLAGS.${_YSRC}} ${.ALLSRC}
 	cp y.tab.c ${_YC}
 CLEANFILES+= y.tab.c y.tab.h
 .elif !empty(YFLAGS:M-d)
@@ -132,13 +132,13 @@ CLEANFILES+= y.tab.c y.tab.h
 .ORDER: ${_YC} ${_YH}
 ${_YH}: .NOMETA
 ${_YC} ${_YH}: ${_YSRC}
-	${YACC} ${YFLAGS} -o ${_YC} ${.ALLSRC}
+	${YACC} ${YFLAGS} ${YFLAGS.${_YSRC}} -o ${_YC} ${.ALLSRC}
 SRCS+=	${_YH}
 CLEANFILES+= ${_YH}
 .endfor
 .else
 ${_YC}: ${_YSRC}
-	${YACC} ${YFLAGS} -o ${_YC} ${.ALLSRC}
+	${YACC} ${YFLAGS} ${YFLAGS.${_YSRC}} -o ${_YC} ${.ALLSRC}
 .endif
 OBJS_DEPEND_GUESS.${_YC:R}.o+=	${_YC}
 .endfor
@@ -182,7 +182,7 @@ DEPEND_MP?=	-MP
 # avoid collisions.
 DEPEND_FILTER=	C,/,_,g
 DEPENDSRCS+=	${SRCS:M*.[cSC]} ${SRCS:M*.cxx} ${SRCS:M*.cpp} ${SRCS:M*.cc}
-DEPENDSRCS+=	${DPSRCS:M*.[cSC]} ${SRCS:M*.cxx} ${SRCS:M*.cpp} ${SRCS:M*.cc}
+DEPENDSRCS+=	${DPSRCS:M*.[cSC]} ${DPSRCS:M*.cxx} ${DPSRCS:M*.cpp} ${DPSRCS:M*.cc}
 .if !empty(DEPENDSRCS)
 DEPENDOBJS+=	${DEPENDSRCS:${OBJS_SRCS_FILTER:ts:}:S,$,.o,}
 .endif

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/powerpc/ofw/conf.c 330365 2018-03-03 23:39:07Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include "bootstrap.h"
@@ -97,8 +97,8 @@ struct netif_driver *netif_drivers[] = {
  * rather than reading the file go first.
  */
 
-struct file_format ofw_elf;
-struct file_format ofw_elf64;
+extern struct file_format ofw_elf;
+extern struct file_format ofw_elf64;
 
 struct file_format *file_formats[] = {
     &ofw_elf,

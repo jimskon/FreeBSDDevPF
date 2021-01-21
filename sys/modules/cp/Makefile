@@ -1,5 +1,5 @@
 # $Cronyx: sys.modules.cp.Makefile,v 1.1.2.3 2004/04/28 16:17:57 rik Exp $
-# $FreeBSD: releng/12.1/sys/modules/cp/Makefile 314651 2017-03-04 10:10:17Z ngie $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/cp
 KMOD	= if_cp
@@ -26,3 +26,5 @@ opt_ng_cronyx.h:
 .endif
 
 .include <bsd.kmod.mk>
+
+CWARNFLAGS.cpddk.c+=	${NO_WMISLEADING_INDENTATION}

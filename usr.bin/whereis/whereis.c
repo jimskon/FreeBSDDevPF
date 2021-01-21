@@ -34,7 +34,7 @@
 
 #include <sys/types.h>
 
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/whereis/whereis.c 343938 2019-02-09 14:19:09Z se $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 #include <sys/sysctl.h>

@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/locale/xlocale.c 327343 2017-12-29 14:56:46Z eadler $
+ * $FreeBSD$
  */
 
 #include <pthread.h>
@@ -163,7 +163,7 @@ set_thread_locale(locale_t loc)
 	if (NULL != l) {
 		xlocale_retain((struct xlocale_refcounted*)l);
 	}
-	locale_t old = pthread_getspecific(locale_info_key);
+	locale_t old = get_thread_locale();
 	if ((NULL != old) && (l != old)) {
 		xlocale_release((struct xlocale_refcounted*)old);
 	}

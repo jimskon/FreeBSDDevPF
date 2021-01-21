@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/bugpoint/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	bugpoint
 
-SRCDIR=		tools/bugpoint
+SRCDIR=		llvm/tools/bugpoint
 SRCS+=		BugDriver.cpp
 SRCS+=		CrashDebugger.cpp
 SRCS+=		ExecutionDriver.cpp

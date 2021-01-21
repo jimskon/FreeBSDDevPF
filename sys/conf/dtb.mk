@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/dtb.mk 346304 2019-04-16 21:09:57Z kevans $
+# $FreeBSD$
 #
 # The include file <dtb.mk> handles building and installing dtb files.
 #

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netpfil/pf/Makefile 344962 2019-03-09 10:24:39Z kp $
+# $FreeBSD$
 
 PACKAGE=	tests
 
@@ -16,7 +16,8 @@ ATF_TESTS_SH+=	anchor \
 		route_to \
 		synproxy \
 		set_skip \
-		pfsync
+		pfsync \
+		table
 
 ${PACKAGE}FILES+=	utils.subr \
 			echo_inetd.conf \

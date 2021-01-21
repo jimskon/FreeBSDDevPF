@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5212_keycache.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -244,7 +244,6 @@ ar5212SetKeyCacheEntry(struct ath_hal *ah, uint16_t entry,
 		OS_REG_WRITE(ah, AR_KEYTABLE_KEY4(entry), key4);
 		OS_REG_WRITE(ah, AR_KEYTABLE_TYPE(entry), keyType);
 		(void) ar5212SetKeyCacheEntryMac(ah, entry, mac);
-
 
 		/*
 		 * Write MIC entry according to new or old key layout.

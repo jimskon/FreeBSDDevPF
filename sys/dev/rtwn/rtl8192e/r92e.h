@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192e/r92e.h 312680 2017-01-24 02:35:38Z kevlo $
+ * $FreeBSD$
  */
 
 #ifndef RTL8192E_H
@@ -39,7 +39,6 @@
 #define R92E_RX_DMA_BUFFER_SIZE	0x3d00
 
 #define R92E_MAX_FW_SIZE	0x8000
-
 
 /*
  * Function declarations.

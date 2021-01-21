@@ -23,9 +23,9 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/share/man/man7/ports.7 337905 2018-08-16 13:29:23Z 0mp $
+.\" $FreeBSD$
 .\"
-.Dd August 16, 2018
+.Dd July 17, 2020
 .Dt PORTS 7
 .Os
 .Sh NAME
@@ -390,6 +390,14 @@ Where to find/put distfiles, normally
 .Pa distfiles/
 in
 .Va PORTSDIR .
+.It Va SU_CMD
+Command used to elevate privilege to configure and install a port.
+The unprivileged user must have write access to
+.Va WRKDIRPREFIX
+and
+.Va DISTDIR .
+The default is
+.Ql /usr/bin/su root -c
 .It Va PACKAGES
 Used only for the
 .Cm package

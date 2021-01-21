@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/release/tools/vmimage.subr 347037 2019-05-03 00:45:31Z gjb $
+# $FreeBSD$
 #
 #
 # Common functions for virtual machine image build scripts.
@@ -24,6 +24,7 @@ write_partition_layout() {
 			mkimg -s gpt -f ${VMFORMAT} \
 				-b ${BOOTFILES}/i386/pmbr/pmbr \
 				-p freebsd-boot/bootfs:=${BOOTFILES}/i386/gptboot/gptboot \
+				-p efi:=${BOOTFILES}/efi/boot1/boot1.efifat \
 				${SWAPOPT} \
 				-p freebsd-ufs/rootfs:=${VMBASE} \
 				-o ${VMIMAGE}

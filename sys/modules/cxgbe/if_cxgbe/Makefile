@@ -1,9 +1,9 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/cxgbe/if_cxgbe/Makefile 345604 2019-03-27 21:22:59Z np $
+# $FreeBSD$
 #
 
 CXGBE=	${SRCTOP}/sys/dev/cxgbe
-.PATH: ${CXGBE} ${CXGBE}/common ${CXGBE}/cudbg
+.PATH: ${CXGBE} ${CXGBE}/common ${CXGBE}/crypto ${CXGBE}/cudbg
 
 KMOD=	if_cxgbe
 SRCS=	bus_if.h
@@ -20,6 +20,7 @@ SRCS+=	t4_filter.c
 SRCS+=	t4_hw.c
 SRCS+=	t4_if.c t4_if.h
 SRCS+=	t4_iov.c
+SRCS+=	t4_keyctx.c
 SRCS+=	t4_l2t.c
 SRCS+=	t4_main.c
 SRCS+=	t4_mp_ring.c

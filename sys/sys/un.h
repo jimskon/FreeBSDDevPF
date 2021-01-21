@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)un.h	8.3 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.1/sys/sys/un.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_UN_H_
@@ -53,6 +53,8 @@ struct sockaddr_un {
 };
 
 #if __BSD_VISIBLE
+
+#define	SOL_LOCAL		0	/* Options for local socket */
 
 /* Socket options. */
 #define	LOCAL_PEERCRED		1	/* retrieve peer credentials */

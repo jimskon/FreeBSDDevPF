@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/vmm_util.h 351751 2019-09-03 16:18:07Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef _VMM_UTIL_H_
@@ -34,7 +34,7 @@
 struct trapframe;
 
 bool		vmm_is_intel(void);
-bool		vmm_is_amd(void);
+bool		vmm_is_svm(void);
 bool		vmm_supports_1G_pages(void);
 
 void		dump_trapframe(struct trapframe *tf);

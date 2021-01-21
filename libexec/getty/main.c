@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)from: main.c	8.1 (Berkeley) 6/20/93";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/libexec/getty/main.c 329992 2018-02-25 20:15:06Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -97,7 +97,6 @@ static int crmod, digit, lower, upper;
 
 char	hostname[MAXHOSTNAMELEN];
 static char	name[MAXLOGNAME*3];
-static char	dev[] = _PATH_DEV;
 static char	ttyn[32];
 
 #define	OBUFSIZ		128
@@ -218,8 +217,8 @@ main(int argc, char *argv[])
 	if (argc <= 2 || strcmp(argv[2], "-") == 0)
 	    strcpy(ttyn, ttyname(STDIN_FILENO));
 	else {
-	    strcpy(ttyn, dev);
-	    strncat(ttyn, argv[2], sizeof(ttyn)-sizeof(dev));
+	    strcpy(ttyn, _PATH_DEV);
+	    strlcat(ttyn, argv[2], sizeof(ttyn));
 	    if (strcmp(argv[0], "+") != 0) {
 		chown(ttyn, 0, 0);
 		chmod(ttyn, 0600);

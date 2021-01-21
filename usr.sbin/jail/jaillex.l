@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/jail/jaillex.l 352276 2019-09-13 07:08:43Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <stddef.h>

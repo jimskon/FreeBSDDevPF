@@ -27,7 +27,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.1/sys/net/netmap.h 352355 2019-09-15 14:26:19Z vmaffione $
+ * $FreeBSD$
  *
  * Definitions of constants and the structures used by the netmap
  * framework, for the part visible to both kernel and userspace.

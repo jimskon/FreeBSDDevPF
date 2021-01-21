@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/seq.h 348276 2019-05-25 18:23:32Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SEQ_H_

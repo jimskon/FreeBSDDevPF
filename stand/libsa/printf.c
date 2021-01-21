@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/printf.c 343615 2019-01-31 17:06:59Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Standaloneified version of the FreeBSD kernel printf family.
@@ -247,7 +247,17 @@ ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper)
 static int
 kvprintf(char const *fmt, kvprintf_fn_t *func, void *arg, int radix, va_list ap)
 {
-#define PCHAR(c) {int cc=(c); if (func) (*func)(cc, arg); else *d++ = cc; retval++; }
+#define PCHAR(c) { \
+	int cc = (c);				\
+						\
+	if (func) {				\
+		(*func)(cc, arg);		\
+	} else if (d != NULL) {			\
+		*d++ = cc;			\
+	}					\
+	retval++;				\
+	}
+
 	char nbuf[MAXNBUF];
 	char *d;
 	const char *p, *percent, *q;

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/i386/include/counter.h 344229 2019-02-17 09:57:43Z kib $
+ * $FreeBSD$
  */
 
 #ifndef __MACHINE_COUNTER_H__
@@ -37,8 +37,6 @@
 #endif
 #include <machine/md_var.h>
 #include <machine/specialreg.h>
-
-extern struct pcpu __pcpu[];
 
 #define	EARLY_COUNTER	&__pcpu[0].pc_early_dummy_counter
 

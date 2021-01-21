@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/ping/tests/in_cksum_test.c 351318 2019-08-20 21:59:48Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

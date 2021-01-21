@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ipmi/ipmi.c 337913 2018-08-16 15:59:02Z ambrisko $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,6 +50,10 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/ipmi/ipmi.c 337913 2018-08-16 15:59:02Z 
 #else
 #include <sys/ipmi.h>
 #include <dev/ipmi/ipmivars.h>
+#endif
+
+#ifdef IPMICTL_SEND_COMMAND_32
+#include <sys/abi_compat.h>
 #endif
 
 /*
@@ -310,11 +314,6 @@ ipmi_handle_attn(struct ipmi_softc *sc)
 
 	return (error);
 }
-#endif
-
-#ifdef IPMICTL_SEND_COMMAND_32
-#define	PTRIN(p)	((void *)(uintptr_t)(p))
-#define	PTROUT(p)	((uintptr_t)(p))
 #endif
 
 static int

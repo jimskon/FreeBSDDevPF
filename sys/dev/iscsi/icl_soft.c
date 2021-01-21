@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/iscsi/icl_soft.c 328341 2018-01-24 16:58:26Z trasz $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -913,7 +913,8 @@ icl_conn_send_pdus(struct icl_conn *ic, struct icl_pdu_stailq *queue)
 				    "have %ld, need %ld",
 				    available, size);
 #endif
-				so->so_snd.sb_lowat = size;
+				so->so_snd.sb_lowat = max(size,
+				    so->so_snd.sb_hiwat / 8);
 				SOCKBUF_UNLOCK(&so->so_snd);
 				return;
 			}

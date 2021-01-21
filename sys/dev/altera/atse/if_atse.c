@@ -53,7 +53,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/altera/atse/if_atse.c 348619 2019-06-04 15:28:32Z br $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_device_polling.h"
 

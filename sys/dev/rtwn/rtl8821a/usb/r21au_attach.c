@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_attach.c 335351 2018-06-19 00:38:28Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -69,7 +69,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_attach.c 335351 
 #include <dev/rtwn/rtl8821a/r21a_priv.h>
 
 #include <dev/rtwn/rtl8821a/usb/r21au.h>
-
 
 void	r21au_attach(struct rtwn_usb_softc *);
 

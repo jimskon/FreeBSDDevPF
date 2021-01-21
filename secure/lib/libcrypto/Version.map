@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/secure/lib/libcrypto/Version.map 352192 2019-09-10 21:13:37Z jkim $
+# $FreeBSD$
 
 OPENSSL_1_1_0 {
     global:

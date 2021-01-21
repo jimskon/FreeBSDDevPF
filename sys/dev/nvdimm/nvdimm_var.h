@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/nvdimm/nvdimm_var.h 344680 2019-03-01 02:16:37Z bwidawsk $
+ * $FreeBSD$
  */
 
 #ifndef __DEV_NVDIMM_VAR_H__

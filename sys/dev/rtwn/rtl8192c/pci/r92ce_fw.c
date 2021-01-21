@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_fw.c 308380 2016-11-06 17:24:16Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/pci/r92ce_fw.c 308380 2016
 #include <dev/rtwn/pci/rtwn_pci_var.h>
 
 #include <dev/rtwn/rtl8192c/pci/r92ce.h>
-
 
 #ifndef RTWN_WITHOUT_UCODE
 void

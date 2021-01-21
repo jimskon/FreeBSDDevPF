@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_thr.c 336205 2018-07-11 19:38:42Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_posix.h"
 #include "opt_hwpmc_hooks.h"
@@ -235,6 +235,8 @@ thread_create(struct thread *td, struct rtprio *rtp,
 
 	bzero(&newtd->td_startzero,
 	    __rangeof(struct thread, td_startzero, td_endzero));
+	newtd->td_pflags2 = 0;
+	newtd->td_errno = 0;
 	bcopy(&td->td_startcopy, &newtd->td_startcopy,
 	    __rangeof(struct thread, td_startcopy, td_endcopy));
 	newtd->td_proc = td->td_proc;

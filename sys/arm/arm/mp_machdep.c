@@ -28,7 +28,7 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/mp_machdep.c 338143 2018-08-21 16:43:46Z alc $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
@@ -53,7 +53,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/mp_machdep.c 338143 2018-08-21 16:43
 #include <machine/debug_monitor.h>
 #include <machine/smp.h>
 #include <machine/pcb.h>
-#include <machine/physmem.h>
 #include <machine/intr.h>
 #include <machine/vmparam.h>
 #ifdef VFP
@@ -63,7 +62,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/mp_machdep.c 338143 2018-08-21 16:43
 #include <arm/mv/mvwin.h>
 #endif
 
-extern struct pcpu __pcpu[];
 /* used to hold the AP's until we are ready to release them */
 struct mtx ap_boot_mtx;
 struct pcb stoppcbs[MAXCPU];
@@ -107,8 +105,6 @@ check_ap(void)
 	return (-2);
 }
 
-extern unsigned char _end[];
-
 /* Initialize and fire up non-boot processors */
 void
 cpu_mp_start(void)
@@ -142,7 +138,6 @@ cpu_mp_announce(void)
 
 }
 
-extern vm_paddr_t pmap_pa;
 void
 init_secondary(int cpu)
 {
@@ -206,8 +201,6 @@ init_secondary(int cpu)
 	}
 
 	mtx_unlock_spin(&ap_boot_mtx);
-
-	enable_interrupts(PSR_I);
 
 	loop_counter = 0;
 	while (smp_started == 0) {

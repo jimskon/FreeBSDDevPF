@@ -1,10 +1,11 @@
-/* $FreeBSD: releng/12.1/secure/lib/libcrypto/amd64/keccak1600-x86_64.S 339270 2018-10-09 21:28:26Z gjb $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from keccak1600-x86_64.pl. */
 .text	
 
 .type	__KeccakF1600,@function
 .align	32
 __KeccakF1600:
+.cfi_startproc	
 	movq	60(%rdi),%rax
 	movq	68(%rdi),%rbx
 	movq	76(%rdi),%rcx
@@ -257,6 +258,7 @@ __KeccakF1600:
 
 	leaq	-192(%r15),%r15
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	__KeccakF1600,.-__KeccakF1600
 
 .type	KeccakF1600,@function

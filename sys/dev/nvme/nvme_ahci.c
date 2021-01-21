@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/nvme/nvme_ahci.c 351908 2019-09-05 23:09:50Z imp $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/buf.h>
@@ -96,7 +96,6 @@ nvme_ahci_attach(device_t dev)
 
 	ctrlr->msix_enabled = 0;
 	ctrlr->num_io_queues = 1;
-	ctrlr->num_cpus_per_ioq = mp_ncpus;
 	if (bus_setup_intr(dev, ctrlr->res,
 	    INTR_TYPE_MISC | INTR_MPSAFE, NULL, nvme_ctrlr_intx_handler,
 	    ctrlr, &ctrlr->tag) != 0) {

@@ -1,8 +1,9 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-ar/Makefile 311565 2017-01-06 23:05:29Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-ar
+MAN=		llvm-ar.1 llvm-ranlib.1
 
-SRCDIR=		tools/llvm-ar
+SRCDIR=		llvm/tools/llvm-ar
 SRCS+=		llvm-ar.cpp
 
 LIBADD+=	z

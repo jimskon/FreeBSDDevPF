@@ -1,6 +1,7 @@
 /*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
  * Copyright (c) 2017 Ian Lepore <ian@freebsd.org>
- * All rights reserved.
  *
  * Development sponsored by Microsemi, Inc.
  *
@@ -25,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/iicbus/iic_recover_bus.h 320461 2017-06-29 01:50:58Z ian $
+ * $FreeBSD$
  */
 
 /*

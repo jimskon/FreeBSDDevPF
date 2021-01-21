@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/usr.bin/top/top.1 351846 2019-09-05 09:57:20Z tijl $
+.\" $FreeBSD$
 .Dd October 2, 2018
 .Dt TOP 1
 .Os
@@ -15,7 +15,7 @@
 .Op Fl s Ar time
 .Op Fl o Ar field
 .Op Fl p Ar pid
-.Op Ar count
+.Op Ar number
 .Sh DESCRIPTION
 .Nm
 displays the top
@@ -100,7 +100,7 @@ Toggle displaying thread ID (tid) instead of process id (pid).
 Do not display the
 .Nm
 process itself.
-.It Fl display
+.It Fl m Ar display
 Display either 'cpu' or 'io' statistics.
 Default is 'cpu'.
 .It Fl n
@@ -144,7 +144,7 @@ no information is available about the percentage of time spent by the CPU in eve
 .It Fl s Ar time
 Set the delay between screen updates to
 .Ar time
-seconds.
+seconds, which may be fractional.
 The default delay between updates is 1 second.
 .It Fl o Ar field
 Sort the process display area on the specified field.

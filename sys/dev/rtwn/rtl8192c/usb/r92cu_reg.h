@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/usb/r92cu_reg.h 307529 2016-10-17 20:38:24Z avos $
+ * $FreeBSD$
  */
 
 #ifndef R92CU_REG_H
@@ -23,13 +23,11 @@
 
 #include <dev/rtwn/rtl8192c/r92c_reg.h>
 
-
 /*
  * MAC registers.
  */
 /* System Configuration. */
 #define R92C_USB_SIE_INTF		0x0e0
-
 
 /*
  * USB registers.

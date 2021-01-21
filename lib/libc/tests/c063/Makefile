@@ -1,6 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/tests/c063/Makefile 299094 2016-05-04 23:20:53Z ngie $
-
-#TODO: t_o_search
+# $FreeBSD$
 
 NETBSD_ATF_TESTS_C=	faccessat_test
 NETBSD_ATF_TESTS_C+=	fchmodat_test
@@ -11,6 +9,7 @@ NETBSD_ATF_TESTS_C+=	linkat_test
 NETBSD_ATF_TESTS_C+=	mkdirat_test
 NETBSD_ATF_TESTS_C+=	mkfifoat_test
 NETBSD_ATF_TESTS_C+=	mknodat_test
+NETBSD_ATF_TESTS_C+=	o_search_test
 NETBSD_ATF_TESTS_C+=	openat_test
 NETBSD_ATF_TESTS_C+=	readlinkat_test
 NETBSD_ATF_TESTS_C+=	renameat_test

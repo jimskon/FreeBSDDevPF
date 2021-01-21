@@ -1,17 +1,9 @@
-# $FreeBSD: releng/12.1/lib/clang/clang.build.mk 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
-.ifndef LLVM_SRCS
-.error Please define LLVM_SRCS before including this file
-.endif
-
 .ifndef CLANG_SRCS
 .error Please define CLANG_SRCS before including this file
-.endif
-
-.ifndef SRCDIR
-.error Please define SRCDIR before including this file
 .endif
 
 CFLAGS+=	-I${CLANG_SRCS}/include

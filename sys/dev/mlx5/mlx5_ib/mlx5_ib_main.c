@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_ib/mlx5_ib_main.c 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/module.h>
@@ -199,6 +199,7 @@ static int translate_eth_proto_oper(u32 eth_proto_oper, u8 *active_speed,
 		break;
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_CR2):
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_KR2):
+	case MLX5E_PROT_MASK(MLX5E_50GBASE_KR4):
 	case MLX5E_PROT_MASK(MLX5E_50GBASE_SR2):
 		*active_width = IB_WIDTH_1X;
 		*active_speed = IB_SPEED_HDR;
@@ -3398,5 +3399,5 @@ mlx5_ib_show_version(void __unused *arg)
 }
 SYSINIT(mlx5_ib_show_version, SI_SUB_DRIVERS, SI_ORDER_ANY, mlx5_ib_show_version, NULL);
 
-module_init_order(mlx5_ib_init, SI_ORDER_THIRD);
-module_exit_order(mlx5_ib_cleanup, SI_ORDER_THIRD);
+module_init_order(mlx5_ib_init, SI_ORDER_SEVENTH);
+module_exit_order(mlx5_ib_cleanup, SI_ORDER_SEVENTH);

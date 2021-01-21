@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5312/ar5312_interrupts.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -28,7 +28,6 @@
 #include "ar5312/ar5312.h"
 #include "ar5312/ar5312reg.h"
 #include "ar5312/ar5312phy.h"
-
 
 /*
  * Checks to see if an interrupt is pending on our NIC

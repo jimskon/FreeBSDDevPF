@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sbin/nvmecontrol/nvmecontrol.h 350948 2019-08-12 19:41:35Z mav $
+ * $FreeBSD$
  */
 
 #ifndef __NVMECONTROL_H__
@@ -68,7 +68,7 @@ void logpage_register(struct logpage_function *p);
 #define NVME_CTRLR_PREFIX	"nvme"
 #define NVME_NS_PREFIX		"ns"
 
-int open_dev(const char *str, int *fd, int show_error, int exit_on_error);
+int open_dev(const char *str, int *fd, int write, int exit_on_error);
 void get_nsid(int fd, char **ctrlr_str, uint32_t *nsid);
 void read_controller_data(int fd, struct nvme_controller_data *cdata);
 void read_namespace_data(int fd, uint32_t nsid, struct nvme_namespace_data *nsdata);

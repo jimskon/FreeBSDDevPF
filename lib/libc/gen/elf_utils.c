@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/gen/elf_utils.c 350299 2019-07-24 19:57:11Z brooks $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

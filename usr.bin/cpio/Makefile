@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/cpio/Makefile 349523 2019-06-28 22:31:53Z mm $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -6,7 +6,7 @@ _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 _LIBARCHIVECONFDIR=	${SRCTOP}/lib/libarchive
 
 PROG=	bsdcpio
-BSDCPIO_VERSION_STRING=	3.4.0
+BSDCPIO_VERSION_STRING=	3.4.3
 
 .PATH:	${_LIBARCHIVEDIR}/cpio
 SRCS=	cpio.c cmdline.c

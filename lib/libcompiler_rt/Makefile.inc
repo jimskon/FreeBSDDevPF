@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/lib/libcompiler_rt/Makefile.inc 328768 2018-02-02 05:04:43Z imp $
+# $FreeBSD$
 
 CRTARCH=	${MACHINE_CPUARCH:C/amd64/x86_64/}
 
-CRTSRC=		${SRCTOP}/contrib/compiler-rt/lib/builtins
+CRTSRC=		${SRCTOP}/contrib/llvm-project/compiler-rt/lib/builtins
 
 .PATH:		${CRTSRC}/${CRTARCH}
 .PATH:		${CRTSRC}
@@ -18,6 +18,8 @@ SRCF+=		ashldi3
 SRCF+=		ashlti3
 SRCF+=		ashrdi3
 SRCF+=		ashrti3
+SRCF+=		bswapdi2
+SRCF+=		bswapsi2
 SRCF+=		clear_cache
 SRCF+=		clzdi2
 SRCF+=		clzsi2
@@ -58,7 +60,6 @@ SRCF+=		fixunsxfti
 SRCF+=		fixxfdi
 SRCF+=		fixxfti
 SRCF+=		floatditf
-SRCF+=		floatsitf
 SRCF+=		floattidf
 SRCF+=		floattisf
 SRCF+=		floattixf
@@ -68,7 +69,7 @@ SRCF+=		floatunsisf
 SRCF+=		floatuntidf
 SRCF+=		floatuntisf
 SRCF+=		floatuntixf
-SRCF+=		gcc_personality_v0
+SRCF+=		gcc_personality_v0	# not in upstream
 SRCF+=		int_util
 SRCF+=		lshrdi3
 SRCF+=		lshrti3
@@ -81,11 +82,11 @@ SRCF+=		mulodi4
 SRCF+=		mulosi4
 SRCF+=		muloti4
 SRCF+=		mulsc3
+SRCF+=		multc3
 SRCF+=		multi3
 SRCF+=		mulvdi3
 SRCF+=		mulvsi3
 SRCF+=		mulvti3
-SRCF+=		multc3
 SRCF+=		mulxc3
 SRCF+=		negdf2
 SRCF+=		negdi2
@@ -122,6 +123,13 @@ SRCF+=		umoddi3
 SRCF+=		umodsi3
 SRCF+=		umodti3
 
+# Enable compiler-rt's atomic implementation only for clang, as it uses clang
+# specific builtins, and gcc packages usually come with their own libatomic.
+# Exclude arm which has its own implementations of atomic functions, below.
+.if "${COMPILER_TYPE}" == "clang" && ${MACHINE_CPUARCH} != "arm"
+SRCF+=		atomic
+.endif
+
 # Avoid using SSE2 instructions on i386, if unsupported.
 .if ${MACHINE_CPUARCH} == "i386" && empty(MACHINE_CPU:Msse2)
 SRCS+=		floatdidf.c
@@ -144,6 +152,14 @@ SRCF+=		floatundixf
 SRCF+=		cpu_model
 .endif
 
+# The fp_mode implementation for amd64 and i386 is shared, while other
+# architectures use the regular approach.
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+SRCS+=		i386/fp_mode.c
+.else
+SRCF+=		fp_mode
+.endif
+
 #
 # 128-bit quad precision long double support,
 # only used on some architectures.
@@ -160,7 +176,10 @@ SRCF+=		fixtfti
 SRCF+=		fixunstfdi
 SRCF+=		fixunstfsi
 SRCF+=		fixunstfti
+SRCF+=		floatsitf
+SRCF+=		floattitf
 SRCF+=		floatunsitf
+SRCF+=		floatuntitf
 SRCF+=		multf3
 SRCF+=		subtf3
 SRCF+=		trunctfdf2
@@ -224,17 +243,9 @@ SRCS+=		aeabi_memmove.S
 SRCS+=		aeabi_memset.S
 SRCS+=		aeabi_uidivmod.S
 SRCS+=		aeabi_uldivmod.S
-SRCS+=		bswapdi2.S
-SRCS+=		bswapsi2.S
 SRCS+=		switch16.S
 SRCS+=		switch32.S
 SRCS+=		switch8.S
 SRCS+=		switchu8.S
 SRCS+=		sync_synchronize.S
-.endif
-
-# On some archs GCC-6.3 requires bswap32 built-in.
-.if ${MACHINE_CPUARCH} == "mips" || ${MACHINE_CPUARCH} == "sparc64"
-SRCS+=		bswapdi2.c
-SRCS+=		bswapsi2.c
 .endif

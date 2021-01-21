@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/usbconfig/dump.c 326276 2017-11-27 15:37:16Z pfg $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -482,4 +482,33 @@ dump_string_by_index(struct libusb20_device *pdev, uint8_t str_index)
 		}
 	}
 	free(pbuf);
+}
+
+void
+dump_device_stats(struct libusb20_device *pdev)
+{
+	struct libusb20_device_stats st;
+
+	if (libusb20_dev_get_stats(pdev, &st)) {
+		printf("{}\n");
+	} else {
+		printf("{\n"
+		    "    UE_CONTROL_OK       : %llu\n"
+		    "    UE_ISOCHRONOUS_OK   : %llu\n"
+		    "    UE_BULK_OK          : %llu\n"
+		    "    UE_INTERRUPT_OK     : %llu\n"
+		    "    UE_CONTROL_FAIL     : %llu\n"
+		    "    UE_ISOCHRONOUS_FAIL : %llu\n"
+		    "    UE_BULK_FAIL        : %llu\n"
+		    "    UE_INTERRUPT_FAIL   : %llu\n"
+		    "}\n",
+		    (unsigned long long)st.xfer_ok[0],
+		    (unsigned long long)st.xfer_ok[1],
+		    (unsigned long long)st.xfer_ok[2],
+	            (unsigned long long)st.xfer_ok[3],
+		    (unsigned long long)st.xfer_fail[0],
+		    (unsigned long long)st.xfer_fail[1],
+		    (unsigned long long)st.xfer_fail[2],
+		    (unsigned long long)st.xfer_fail[3]);
+	}
 }

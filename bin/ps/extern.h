@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: releng/12.1/bin/ps/extern.h 330872 2018-03-13 18:30:26Z jhb $
+ * $FreeBSD$
  */
 
 struct kinfo;
@@ -48,6 +48,7 @@ __BEGIN_DECLS
 char	 *arguments(KINFO *, VARENT *);
 char	 *command(KINFO *, VARENT *);
 char	 *cputime(KINFO *, VARENT *);
+char	 *cpunum(KINFO *, VARENT *);
 int	 donlist(void);
 char	 *elapsed(KINFO *, VARENT *);
 char	 *elapseds(KINFO *, VARENT *);

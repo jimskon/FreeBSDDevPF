@@ -1,5 +1,5 @@
 #	@(#)Makefile	8.1 (Berkeley) 6/6/93
-# $FreeBSD: releng/12.1/usr.bin/calendar/Makefile 345577 2019-03-27 14:47:10Z bapt $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

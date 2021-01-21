@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libthr/thread/thr_cancel.c 351451 2019-08-24 12:51:46Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <pthread.h>
@@ -71,7 +71,7 @@ _thr_cancel(pthread_t pthread)
 	 * _thr_find_thread and THR_THREAD_UNLOCK will enter and leave critical
 	 * region automatically.
 	 */
-	if ((ret = _thr_find_thread(curthread, pthread, 0)) == 0) {
+	if ((ret = _thr_find_thread(curthread, pthread, 1)) == 0) {
 		if (!pthread->cancel_pending) {
 			pthread->cancel_pending = 1;
 			if (pthread->state != PS_DEAD)

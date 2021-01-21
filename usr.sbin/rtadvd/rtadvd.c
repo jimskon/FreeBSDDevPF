@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/usr.sbin/rtadvd/rtadvd.c 350289 2019-07-24 14:39:31Z markj $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: rtadvd.c,v 1.82 2003/08/05 12:34:23 itojun Exp $	*/
 
 /*-

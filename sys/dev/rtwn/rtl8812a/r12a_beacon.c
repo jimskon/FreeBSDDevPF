@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_beacon.c 312680 2017-01-24 02:35:38Z kevlo $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -58,7 +58,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_beacon.c 312680 2017-
 #include <dev/rtwn/rtl8812a/r12a.h>
 #include <dev/rtwn/rtl8812a/r12a_reg.h>
 #include <dev/rtwn/rtl8812a/r12a_tx_desc.h>
-
 
 void
 r12a_beacon_init(struct rtwn_softc *sc, void *buf, int id)

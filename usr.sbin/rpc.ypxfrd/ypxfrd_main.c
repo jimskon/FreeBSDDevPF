@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/rpc.ypxfrd/ypxfrd_main.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "ypxfrd.h"
 #include <err.h>
@@ -77,6 +77,8 @@ static int _rpcfdtype;
 #define	_SERVING 2
 
 extern int _rpcsvcstate;	 /* Set when a request is serviced */
+
+int debug;
 
 char *progname = "rpc.ypxfrd";
 char *yp_dir = "/var/yp/";

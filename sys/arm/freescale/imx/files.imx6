@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/freescale/imx/files.imx6 350603 2019-08-05 18:13:13Z manu $
+# $FreeBSD$
 
 #
 # Standard imx6 devices and support.

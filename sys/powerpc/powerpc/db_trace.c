@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/powerpc/powerpc/db_trace.c 349672 2019-07-03 18:53:04Z jhibbits $ */
+/*	$FreeBSD$ */
 /*	$NetBSD: db_trace.c,v 1.20 2002/05/13 20:30:09 matt Exp $	*/
 /*	$OpenBSD: db_trace.c,v 1.3 1997/03/21 02:10:48 niklas Exp $	*/
 

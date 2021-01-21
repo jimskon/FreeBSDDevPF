@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/include/elf.h 334488 2018-06-01 16:31:05Z jhibbits $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_ELF_H_

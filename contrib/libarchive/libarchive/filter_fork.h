@@ -22,18 +22,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/filter_fork.h 248616 2013-03-22 13:36:03Z mm $
+ * $FreeBSD$
  */
+
+#ifndef FILTER_FORK_H
+#define FILTER_FORK_H
 
 #ifndef __LIBARCHIVE_BUILD
 #error This header is only to be used internally to libarchive.
 #endif
 
-#ifndef FILTER_FORK_H
-#define FILTER_FORK_H
-
-pid_t
-__archive_create_child(const char *cmd, int *child_stdin, int *child_stdout);
+int
+__archive_create_child(const char *cmd, int *child_stdin, int *child_stdout,
+#if defined(_WIN32) && !defined(__CYGWIN__)
+	HANDLE *out_child);
+#else
+	pid_t *out_child);
+#endif
 
 void
 __archive_check_child(int in, int out);

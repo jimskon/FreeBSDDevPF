@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/src.sys.mk 325330 2017-11-02 18:09:07Z bdrewery $
+# $FreeBSD$
 
 # Note: This file is also duplicated in the sys/conf/kern.pre.mk so
 # it will always grab SRCCONF, even if it isn't being built in-tree
@@ -33,6 +33,12 @@ __postrcconf_${var}:=	${MK_${var}:U-}${WITHOUT_${var}:Uno:Dyes}${WITH_${var}:Uno
 
 .endif # SRCCONF
 .endif
+
+# The following should be removed no earlier than LLVM11 being imported into the
+# tree, to ensure we don't regress the build.  LLVM11 and GCC10 will switch the
+# default over to -fno-common, making this redundant.
+CFCOMMONFLAG?=	-fno-common
+CFLAGS+=	${CFCOMMONFLAG}
 
 # tempting, but bsd.compiler.mk causes problems this early
 # probably need to remove dependence on bsd.own.mk 

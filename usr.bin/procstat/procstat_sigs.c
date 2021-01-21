@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/procstat/procstat_sigs.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -74,9 +74,10 @@ procstat_close_signame(int sig)
 		for (i = 0; name[i] != 0; i++)
 			name[i] = toupper(name[i]);
 		xo_close_container(name);
-	} else
+	} else {
 		snprintf(name, 12, "%d", sig);
 		xo_close_container(name);
+	}
 }
 
 static void

@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_efuse.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -50,7 +50,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_efuse.c 307529 2016-10-17 2
 #include <dev/rtwn/if_rtwn_efuse.h>
 
 #include <dev/rtwn/rtl8192c/r92c_reg.h>
-
 
 static int
 rtwn_efuse_switch_power(struct rtwn_softc *sc)

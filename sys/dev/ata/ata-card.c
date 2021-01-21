@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ata/ata-card.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -144,6 +144,7 @@ ata_pccard_attach(device_t dev)
     err = ata_probe(dev);
     if (err > 0)
 	return (err);
+    gone_in_dev(dev, 13, "pccard removed");
     return (ata_attach(dev));
 }
 

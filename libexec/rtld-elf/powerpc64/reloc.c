@@ -28,7 +28,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/libexec/rtld-elf/powerpc64/reloc.c 344011 2019-02-11 15:02:02Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -510,6 +510,13 @@ reloc_gnu_ifunc(Obj_Entry *obj __unused, int flags __unused,
 {
 
 	/* XXX not implemented */
+	return (0);
+}
+
+int
+reloc_iresolve_nonplt(Obj_Entry *obj __unused,
+    struct Struct_RtldLockState *lockstate __unused)
+{
 	return (0);
 }
 

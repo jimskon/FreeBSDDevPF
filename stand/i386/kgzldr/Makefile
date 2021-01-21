@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/i386/kgzldr/Makefile 336261 2018-07-13 20:08:18Z imp $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 

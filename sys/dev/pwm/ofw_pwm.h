@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/pwm/ofw_pwm.h 349430 2019-06-26 17:28:55Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _OFW_PWM_H_

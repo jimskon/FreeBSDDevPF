@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/tftp/main.c 338258 2018-08-23 17:00:07Z asomers $");
+__FBSDID("$FreeBSD$");
 
 /* Many bug fixes are from Jim Guyton <guyton@rand-unix> */
 
@@ -491,6 +491,7 @@ put(int argc, char *argv[])
 
 		if (fstat(fd, &sb) < 0) {
 			warn("%s", cp);
+			close(fd);
 			return;
 		}
 		asprintf(&options[OPT_TSIZE].o_request, "%ju", sb.st_size);
@@ -746,7 +747,7 @@ command(bool interactive, EditLine *el, History *hist, HistEvent *hep)
 				exit(0);
 			len = MIN(MAXLINE, num);
 			memcpy(line, bp, len);
-			line[len] = '\0';
+			line[len - 1] = '\0';
 			history(hist, hep, H_ENTER, bp);
 		} else {
 			line[0] = 0;

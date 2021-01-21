@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/powermac/macio.c 333124 2018-04-30 19:37:32Z nwhitehorn $
+ * $FreeBSD$
  */
 
 /*

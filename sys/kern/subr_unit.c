@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/kern/subr_unit.c 342250 2018-12-19 22:42:06Z mjg $
+ * $FreeBSD$
  *
  *
  * Unit number allocation functions.

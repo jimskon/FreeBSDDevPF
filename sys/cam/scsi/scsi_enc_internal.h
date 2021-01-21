@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/cam/scsi/scsi_enc_internal.h 349832 2019-07-08 10:21:38Z mav $
+ * $FreeBSD$
  */
 
 /*
@@ -163,7 +163,7 @@ struct enc_softc {
 
 	struct enc_fsm_state 	*enc_fsm_states;
 
-	struct intr_config_hook  enc_boot_hold_ch;
+	struct root_hold_token	 enc_rootmount;
 
 #define 	ENC_ANNOUNCE_SZ		400
 	char			announce_buf[ENC_ANNOUNCE_SZ];

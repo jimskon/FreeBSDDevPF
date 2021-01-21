@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/amdsbwd/amd_chipset.h 333269 2018-05-05 05:22:11Z avg $
+ * $FreeBSD$
  */
 
 /*
@@ -145,4 +145,6 @@
 #define	AMDFCH41_SMBUS_REVID		0x41
 #define	AMDCZ_SMBUS_DEVID		0x790b1022
 #define	AMDCZ49_SMBUS_REVID		0x49
+
+#define	HYGONCZ_SMBUS_DEVID		0x790b1d94
 

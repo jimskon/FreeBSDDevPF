@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_chan.c 322988 2017-08-28 22:14:16Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -60,7 +60,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_chan.c 322988 2017-08
 #include <dev/rtwn/rtl8812a/r12a.h>
 #include <dev/rtwn/rtl8812a/r12a_reg.h>
 #include <dev/rtwn/rtl8812a/r12a_var.h>
-
 
 static void
 r12a_write_txpower(struct rtwn_softc *sc, int chain,

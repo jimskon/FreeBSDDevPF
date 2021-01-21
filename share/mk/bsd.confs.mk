@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.confs.mk 338361 2018-08-28 22:22:06Z brd $
+# $FreeBSD$
 
 .if !target(__<bsd.init.mk>__)
 .  error bsd.conf.mk cannot be included directly.

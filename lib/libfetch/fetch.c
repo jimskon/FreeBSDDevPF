@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libfetch/fetch.c 334326 2018-05-29 13:07:36Z des $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -325,11 +325,16 @@ fetch_pctdecode(char *dst, const char *src, size_t dlen)
 		    (d2 = fetch_hexval(s[2])) >= 0 && (d1 > 0 || d2 > 0)) {
 			c = d1 << 4 | d2;
 			s += 2;
+		} else if (s[0] == '%') {
+			/* Invalid escape sequence. */
+			return (NULL);
 		} else {
 			c = *s;
 		}
 		if (dlen-- > 0)
 			*dst++ = c;
+		else
+			return (NULL);
 	}
 	return (s);
 }
@@ -377,11 +382,15 @@ fetchParseURL(const char *URL)
 	if (p && *p == '@') {
 		/* username */
 		q = fetch_pctdecode(u->user, URL, URL_USERLEN);
+		if (q == NULL)
+			goto ouch;
 
 		/* password */
-		if (*q == ':')
+		if (*q == ':') {
 			q = fetch_pctdecode(u->pwd, q + 1, URL_PWDLEN);
-
+			if (q == NULL)
+				goto ouch;
+		}
 		p++;
 	} else {
 		p = URL;

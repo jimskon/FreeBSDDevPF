@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ntb/ntb_hw_amd/Makefile 349594 2019-07-02 05:25:18Z mav $
+# $FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/ntb/ntb_hw
 

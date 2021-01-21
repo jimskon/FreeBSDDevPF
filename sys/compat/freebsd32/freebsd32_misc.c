@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/freebsd32/freebsd32_misc.c 352117 2019-09-10 06:45:44Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -1260,78 +1260,90 @@ freebsd32_recvmsg(td, uap)
 static int
 freebsd32_copyin_control(struct mbuf **mp, caddr_t buf, u_int buflen)
 {
+	struct cmsghdr *cm;
 	struct mbuf *m;
-	void *md;
-	u_int idx, len, msglen;
+	void *in, *in1, *md;
+	u_int msglen, outlen;
 	int error;
-
-	buflen = FREEBSD32_ALIGN(buflen);
 
 	if (buflen > MCLBYTES)
 		return (EINVAL);
 
+	in = malloc(buflen, M_TEMP, M_WAITOK);
+	error = copyin(buf, in, buflen);
+	if (error != 0)
+		goto out;
+
 	/*
-	 * Iterate over the buffer and get the length of each message
-	 * in there. This has 32-bit alignment and padding. Use it to
-	 * determine the length of these messages when using 64-bit
-	 * alignment and padding.
+	 * Make a pass over the input buffer to determine the amount of space
+	 * required for 64 bit-aligned copies of the control messages.
 	 */
-	idx = 0;
-	len = 0;
-	while (idx < buflen) {
-		error = copyin(buf + idx, &msglen, sizeof(msglen));
-		if (error)
-			return (error);
-		if (msglen < sizeof(struct cmsghdr))
-			return (EINVAL);
-		msglen = FREEBSD32_ALIGN(msglen);
-		if (idx + msglen > buflen)
-			return (EINVAL);
-		idx += msglen;
-		msglen += CMSG_ALIGN(sizeof(struct cmsghdr)) -
-		    FREEBSD32_ALIGN(sizeof(struct cmsghdr));
-		len += CMSG_ALIGN(msglen);
-	}
-
-	if (len > MCLBYTES)
-		return (EINVAL);
-
-	m = m_get(M_WAITOK, MT_CONTROL);
-	if (len > MLEN)
-		MCLGET(m, M_WAITOK);
-	m->m_len = len;
-
-	md = mtod(m, void *);
+	in1 = in;
+	outlen = 0;
 	while (buflen > 0) {
-		error = copyin(buf, md, sizeof(struct cmsghdr));
-		if (error)
+		if (buflen < sizeof(*cm)) {
+			error = EINVAL;
 			break;
-		msglen = *(u_int *)md;
-		msglen = FREEBSD32_ALIGN(msglen);
-
-		/* Modify the message length to account for alignment. */
-		*(u_int *)md = msglen + CMSG_ALIGN(sizeof(struct cmsghdr)) -
-		    FREEBSD32_ALIGN(sizeof(struct cmsghdr));
-
-		md = (char *)md + CMSG_ALIGN(sizeof(struct cmsghdr));
-		buf += FREEBSD32_ALIGN(sizeof(struct cmsghdr));
-		buflen -= FREEBSD32_ALIGN(sizeof(struct cmsghdr));
-
-		msglen -= FREEBSD32_ALIGN(sizeof(struct cmsghdr));
-		if (msglen > 0) {
-			error = copyin(buf, md, msglen);
-			if (error)
-				break;
-			md = (char *)md + CMSG_ALIGN(msglen);
-			buf += msglen;
-			buflen -= msglen;
 		}
+		cm = (struct cmsghdr *)in1;
+		if (cm->cmsg_len < FREEBSD32_ALIGN(sizeof(*cm))) {
+			error = EINVAL;
+			break;
+		}
+		msglen = FREEBSD32_ALIGN(cm->cmsg_len);
+		if (msglen > buflen || msglen < cm->cmsg_len) {
+			error = EINVAL;
+			break;
+		}
+		buflen -= msglen;
+
+		in1 = (char *)in1 + msglen;
+		outlen += CMSG_ALIGN(sizeof(*cm)) +
+		    CMSG_ALIGN(msglen - FREEBSD32_ALIGN(sizeof(*cm)));
+	}
+	if (error == 0 && outlen > MCLBYTES) {
+		/*
+		 * XXXMJ This implies that the upper limit on 32-bit aligned
+		 * control messages is less than MCLBYTES, and so we are not
+		 * perfectly compatible.  However, there is no platform
+		 * guarantee that mbuf clusters larger than MCLBYTES can be
+		 * allocated.
+		 */
+		error = EINVAL;
+	}
+	if (error != 0)
+		goto out;
+
+	m = m_get2(outlen, M_WAITOK, MT_CONTROL, 0);
+	m->m_len = outlen;
+	md = mtod(m, void *);
+
+	/*
+	 * Make a second pass over input messages, copying them into the output
+	 * buffer.
+	 */
+	in1 = in;
+	while (outlen > 0) {
+		/* Copy the message header and align the length field. */
+		cm = md;
+		memcpy(cm, in1, sizeof(*cm));
+		msglen = cm->cmsg_len - FREEBSD32_ALIGN(sizeof(*cm));
+		cm->cmsg_len = CMSG_ALIGN(sizeof(*cm)) + msglen;
+
+		/* Copy the message body. */
+		in1 = (char *)in1 + FREEBSD32_ALIGN(sizeof(*cm));
+		md = (char *)md + CMSG_ALIGN(sizeof(*cm));
+		memcpy(md, in1, msglen);
+		in1 = (char *)in1 + FREEBSD32_ALIGN(msglen);
+		md = (char *)md + CMSG_ALIGN(msglen);
+		KASSERT(outlen >= CMSG_ALIGN(sizeof(*cm)) + CMSG_ALIGN(msglen),
+		    ("outlen %u underflow, msglen %u", outlen, msglen));
+		outlen -= CMSG_ALIGN(sizeof(*cm)) + CMSG_ALIGN(msglen);
 	}
 
-	if (error)
-		m_free(m);
-	else
-		*mp = m;
+	*mp = m;
+out:
+	free(in, M_TEMP);
 	return (error);
 }
 
@@ -2279,6 +2291,32 @@ freebsd32___sysctl(struct thread *td, struct freebsd32___sysctl_args *uap)
 }
 
 int
+freebsd32___sysctlbyname(struct thread *td,
+    struct freebsd32___sysctlbyname_args *uap)
+{
+	size_t oldlen, rv;
+	int error;
+	uint32_t tmp;
+
+	if (uap->oldlenp != NULL) {
+		error = fueword32(uap->oldlenp, &tmp);
+		oldlen = tmp;
+	} else {
+		error = oldlen = 0;
+	}
+	if (error != 0)
+		return (EFAULT);
+	error = kern___sysctlbyname(td, uap->name, uap->namelen, uap->old,
+	    &oldlen, uap->new, uap->newlen, &rv, SCTL_MASK32, 1);
+	if (error != 0)
+		return (error);
+	if (uap->oldlenp != NULL)
+		error = suword32(uap->oldlenp, rv);
+
+	return (error);
+}
+
+int
 freebsd32_jail(struct thread *td, struct freebsd32_jail_args *uap)
 {
 	uint32_t version;
@@ -2648,7 +2686,7 @@ freebsd32_user_clock_nanosleep(struct thread *td, clockid_t clock_id,
 {
 	struct timespec32 rmt32, rqt32;
 	struct timespec rmt, rqt;
-	int error;
+	int error, error2;
 
 	error = copyin(ua_rqtp, &rqt32, sizeof(rqt32));
 	if (error)
@@ -2657,18 +2695,13 @@ freebsd32_user_clock_nanosleep(struct thread *td, clockid_t clock_id,
 	CP(rqt32, rqt, tv_sec);
 	CP(rqt32, rqt, tv_nsec);
 
-	if (ua_rmtp != NULL && (flags & TIMER_ABSTIME) == 0 &&
-	    !useracc(ua_rmtp, sizeof(rmt32), VM_PROT_WRITE))
-		return (EFAULT);
 	error = kern_clock_nanosleep(td, clock_id, flags, &rqt, &rmt);
 	if (error == EINTR && ua_rmtp != NULL && (flags & TIMER_ABSTIME) == 0) {
-		int error2;
-
 		CP(rmt, rmt32, tv_sec);
 		CP(rmt, rmt32, tv_nsec);
 
 		error2 = copyout(&rmt32, ua_rmtp, sizeof(rmt32));
-		if (error2)
+		if (error2 != 0)
 			error = error2;
 	}
 	return (error);

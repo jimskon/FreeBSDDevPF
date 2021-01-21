@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_allow_001_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -67,8 +67,6 @@ function cleanup
 	if [[ $group_added == "TRUE" ]] ; then
 		del_group everyone
 	fi
-
-	restore_root_datasets
 }
 
 log_assert "everyone' is interpreted as a keyword even if a user " \
@@ -111,7 +109,6 @@ for dtst in $DATASETS ; do
 	log_must $ZFS allow everyone $perms $dtst
 	log_must verify_perm $dtst $perms $EVERYONE
 done
-log_must restore_root_datasets
 if [[ $group_added == "TRUE" ]]; then
 	log_must $GROUPDEL everyone
 fi

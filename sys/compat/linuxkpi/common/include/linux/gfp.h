@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/gfp.h 350032 2019-07-16 15:07:33Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_GFP_H_
 #define	_LINUX_GFP_H_
@@ -56,6 +56,7 @@
 
 #define	__GFP_IO	0
 #define	__GFP_NO_KSWAPD	0
+#define	__GFP_KSWAPD_RECLAIM	0
 #define	__GFP_WAIT	M_WAITOK
 #define	__GFP_DMA32	(1U << 24) /* LinuxKPI only */
 #define	__GFP_BITS_SHIFT 25

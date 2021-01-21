@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_io.h#5 $
- * $FreeBSD: releng/12.1/sys/cam/ctl/ctl_io.h 345113 2019-03-13 20:27:48Z mav $
+ * $FreeBSD$
  */
 /*
  * CAM Target Layer data movement structures/interface.

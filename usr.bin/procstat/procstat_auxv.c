@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/procstat/procstat_auxv.c 349491 2019-06-28 01:03:55Z mhorne $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

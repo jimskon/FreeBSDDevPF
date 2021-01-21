@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/efi/loader_lua/Makefile 337806 2018-08-14 18:44:41Z imp $
+# $FreeBSD$
 
 LOADER_INTERP=lua
 

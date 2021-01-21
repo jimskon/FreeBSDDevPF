@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/makefs/msdos/msdosfsmount.h 352081 2019-09-09 17:34:18Z emaste $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfsmount.h,v 1.17 1997/11/17 15:37:07 ws Exp $	*/
 
 /*-

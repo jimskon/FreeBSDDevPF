@@ -13,14 +13,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/pci/r88ee.h 342682 2019-01-02 06:48:53Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8188EE_H
 #define RTL8188EE_H
 
 #include <dev/rtwn/rtl8188e/r88e.h>
-
 
 /*
  * Global definitions.
@@ -32,7 +31,6 @@
 #define R88EE_TX_PAGE_COUNT	\
 	(R88EE_PUBQ_NPAGES + R88EE_HPQ_NPAGES + \
 	 R88EE_NPQ_NPAGES + R88EE_LPQ_NPAGES)
-
 
 /*
  * Function declarations.
@@ -50,4 +48,3 @@ void	r88ee_start_xfers(struct rtwn_softc *);
 void	r88ee_post_init(struct rtwn_softc *);
 
 #endif	/* RTL8188EE_H */
-

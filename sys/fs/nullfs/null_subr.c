@@ -33,7 +33,7 @@
  *
  *	@(#)null_subr.c	8.7 (Berkeley) 5/14/95
  *
- * $FreeBSD: releng/12.1/sys/fs/nullfs/null_subr.c 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -256,6 +256,9 @@ null_nodeget(mp, lowervp, vpp)
 	error = insmntque1(vp, mp, null_insmntque_dtr, xp);
 	if (error != 0)
 		return (error);
+	if (lowervp == MOUNTTONULLMOUNT(mp)->nullm_lowerrootvp)
+		vp->v_vflag |= VV_ROOT;
+
 	/*
 	 * Atomically insert our new node into the hash or vget existing 
 	 * if someone else has beaten us to it.

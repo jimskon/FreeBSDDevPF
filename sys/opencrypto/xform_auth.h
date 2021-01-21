@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/opencrypto/xform_auth.h 345124 2019-03-14 02:46:03Z sef $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: xform.h,v 1.8 2001/08/28 12:20:43 ben Exp $	*/
 
 /*-

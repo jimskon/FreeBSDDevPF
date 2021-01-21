@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ti/Makefile 349430 2019-06-26 17:28:55Z ian $
+# $FreeBSD$
 # Module for Alteon Networks Tigon PCI gigabit ethernet driver for FreeBSD.
 # Modules for Texas Instruments ARM SoCs are located in sys/modules/arm_ti.
 

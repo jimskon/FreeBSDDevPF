@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libsysdecode/Makefile 351890 2019-09-05 20:26:20Z bdrewery $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -120,6 +120,13 @@ CFLAGS+=-DPF
 # Workaround duplicate declarations in <netinet/ip_compat.h>
 CFLAGS.gcc.ioctl.c+= -Wno-redundant-decls
 
+# Ignore deprecation warning in <sys/pioctl.h>
+CFLAGS.clang.ioctl.c+= -Wno-\#warnings
+.if ${COMPILER_TYPE} == "gcc" && ${COMPILER_VERSION} >= 40700
+CFLAGS.gcc.ioctl.c+= -Wno-cpp
+.endif
+
+CFLAGS.clang+=	${CFLAGS.clang.${.IMPSRC}}
 CFLAGS.gcc+=	${CFLAGS.gcc.${.IMPSRC}}
 
 DEPENDOBJS+=	tables.h

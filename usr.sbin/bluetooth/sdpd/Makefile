@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.1 2004/01/20 21:27:55 max Exp $
-# $FreeBSD: releng/12.1/usr.sbin/bluetooth/sdpd/Makefile 343900 2019-02-08 10:25:42Z hselasky $
+# $FreeBSD$
 
 PROG=		sdpd
 MAN=		sdpd.8

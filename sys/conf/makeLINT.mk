@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/makeLINT.mk 350867 2019-08-11 20:50:41Z ian $
+# $FreeBSD$
 
 # The LINT files need to end up in the kernel source directory.
 .OBJDIR: ${.CURDIR}
@@ -10,6 +10,12 @@ clean:
 	rm -f LINT
 .if ${TARGET} == "amd64" || ${TARGET} == "i386"
 	rm -f LINT-NOINET LINT-NOINET6 LINT-NOIP
+.endif
+.if ${TARGET} == "arm"
+	rm -f LINT-V5 LINT-V7
+.endif
+.if ${TARGET} == "powerpc"
+	rm -f LINT64
 .endif
 
 NOTES=	${.CURDIR}/../../conf/NOTES ${.CURDIR}/NOTES
@@ -48,8 +54,10 @@ LINT: ${NOTES} ${MAKELINT_SED}
 	echo "nodevice netmap"		>> ${.TARGET}-NOIP
 .endif
 .if ${TARGET} == "arm"
-	cat ${.TARGET} ${.CURDIR}/NOTES.armv5 > ${.TARGET}-V5
-	cat ${.TARGET} ${.CURDIR}/NOTES.armv7 > ${.TARGET}-V7
+	cat ${NOTES} ${.CURDIR}/NOTES.armv5 | sed -E -n -f ${MAKELINT_SED} > \
+	    ${.TARGET}-V5
+	cat ${NOTES} ${.CURDIR}/NOTES.armv7 | sed -E -n -f ${MAKELINT_SED} > \
+	    ${.TARGET}-V7
 	rm ${.TARGET}
 .endif
 .if ${TARGET} == "mips"

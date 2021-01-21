@@ -42,7 +42,7 @@ static const char sccsid[] = "@(#)strfile.c   8.1 (Berkeley) 5/31/93";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/fortune/strfile/strfile.c 316500 2017-04-04 19:46:23Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/endian.h>
@@ -295,16 +295,26 @@ getargs(int argc, char **argv)
 
 	if (*argv) {
 		Infile = *argv;
-		if (*++argv)
-			strcpy(Outfile, *argv);
+		if (*++argv) {
+			if (strlcpy(Outfile, *argv, sizeof(Outfile)) >=
+			    sizeof(Outfile)) {
+				fprintf(stderr,
+				    "output_file path is too long\n");
+				exit(1);
+			}
+		}
 	}
 	if (!Infile) {
 		puts("No input file name");
 		usage();
 	}
 	if (*Outfile == '\0') {
-		strlcpy(Outfile, Infile, sizeof(Outfile));
-		strlcat(Outfile, ".dat", sizeof(Outfile));
+		if ((size_t)snprintf(Outfile, sizeof(Outfile), "%s.dat",
+		    Infile) >= sizeof(Outfile)) {
+			fprintf(stderr,
+			    "generated output_file path is too long\n");
+			exit(1);
+		}
 	}
 }
 

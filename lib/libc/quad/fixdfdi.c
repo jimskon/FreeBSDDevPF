@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)fixdfdi.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/quad/fixdfdi.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "quad.h"
 
@@ -50,12 +50,12 @@ __fixdfdi(x)
 	double x;
 {
 	if (x < 0)
-		if (x <= QUAD_MIN)
+		if (x <= (double)QUAD_MIN)
 			return (QUAD_MIN);
 		else
 			return ((quad_t)-(u_quad_t)-x);
 	else
-		if (x >= QUAD_MAX)
+		if (x >= (double)QUAD_MAX)
 			return (QUAD_MAX);
 		else
 			return ((quad_t)(u_quad_t)x);

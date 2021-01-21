@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)restore.h	8.3 (Berkeley) 9/13/94
- * $FreeBSD: releng/12.1/sbin/restore/restore.h 326025 2017-11-20 19:49:47Z pfg $
+ * $FreeBSD$
  */
 
 /*
@@ -103,7 +103,7 @@ struct entry {
 /*
  * The entry describes the next file available on the tape
  */
-struct context {
+extern struct context {
 	short	action;		/* action being taken on this file */
 	mode_t	mode;		/* mode of file */
 	ino_t	ino;		/* inumber of file */

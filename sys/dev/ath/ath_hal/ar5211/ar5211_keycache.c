@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5211/ar5211_keycache.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -162,7 +162,6 @@ ar5211SetKeyCacheEntry(struct ath_hal *ah, uint16_t entry,
 	key4 = LE_READ_4(k->kv_val+12) ^ xorMask;
 	if (k->kv_len <= 104 / NBBY)
 		key4 &= 0xff;
-
 
 	/*
 	 * Note: WEP key cache hardware requires that each double-word

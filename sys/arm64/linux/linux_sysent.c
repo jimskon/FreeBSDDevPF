@@ -2,7 +2,7 @@
  * System call switch table.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/arm64/linux/linux_sysent.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -93,7 +93,7 @@ struct sysent linux_sysent[] = {
 	{ AS(linux_ppoll_args), (sy_call_t *)linux_ppoll, AUE_POLL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 73 = linux_ppoll */
 	{ 0, (sy_call_t *)linux_signalfd4, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 74 = linux_signalfd4 */
 	{ 0, (sy_call_t *)linux_vmsplice, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 75 = linux_vmsplice */
-	{ 0, (sy_call_t *)linux_splice, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 76 = linux_splice */
+	{ AS(linux_splice_args), (sy_call_t *)linux_splice, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 76 = linux_splice */
 	{ 0, (sy_call_t *)linux_tee, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },		/* 77 = linux_tee */
 	{ AS(linux_readlinkat_args), (sy_call_t *)linux_readlinkat, AUE_READLINKAT, NULL, 0, 0, 0, SY_THR_STATIC },	/* 78 = linux_readlinkat */
 	{ AS(linux_newfstatat_args), (sy_call_t *)linux_newfstatat, AUE_FSTATAT, NULL, 0, 0, 0, SY_THR_STATIC },	/* 79 = linux_newfstatat */
@@ -101,7 +101,7 @@ struct sysent linux_sysent[] = {
 	{ 0, (sy_call_t *)nosys, AUE_NULL, NULL, 0, 0, 0, SY_THR_ABSENT },			/* 81 = linux_sync */
 	{ AS(fsync_args), (sy_call_t *)sys_fsync, AUE_FSYNC, NULL, 0, 0, 0, SY_THR_STATIC },	/* 82 = fsync */
 	{ AS(linux_fdatasync_args), (sy_call_t *)linux_fdatasync, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 83 = linux_fdatasync */
-	{ 0, (sy_call_t *)linux_sync_file_range, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 84 = linux_sync_file_range */
+	{ AS(linux_sync_file_range_args), (sy_call_t *)linux_sync_file_range, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 84 = linux_sync_file_range */
 	{ AS(linux_timerfd_create_args), (sy_call_t *)linux_timerfd_create, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 85 = linux_timerfd_create */
 	{ AS(linux_timerfd_settime_args), (sy_call_t *)linux_timerfd_settime, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 86 = linux_timerfd_settime */
 	{ AS(linux_timerfd_gettime_args), (sy_call_t *)linux_timerfd_gettime, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 87 = linux_timerfd_gettime */
@@ -250,7 +250,7 @@ struct sysent linux_sysent[] = {
 	{ AS(mlockall_args), (sy_call_t *)sys_mlockall, AUE_MLOCKALL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 230 = mlockall */
 	{ 0, (sy_call_t *)sys_munlockall, AUE_MUNLOCKALL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 231 = munlockall */
 	{ AS(linux_mincore_args), (sy_call_t *)linux_mincore, AUE_MINCORE, NULL, 0, 0, 0, SY_THR_STATIC },	/* 232 = linux_mincore */
-	{ AS(madvise_args), (sy_call_t *)sys_madvise, AUE_MADVISE, NULL, 0, 0, 0, SY_THR_STATIC },	/* 233 = madvise */
+	{ AS(linux_madvise_args), (sy_call_t *)linux_madvise, AUE_MADVISE, NULL, 0, 0, 0, SY_THR_STATIC },	/* 233 = linux_madvise */
 	{ 0, (sy_call_t *)linux_remap_file_pages, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 234 = linux_remap_file_pages */
 	{ 0, (sy_call_t *)linux_mbind, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 235 = linux_mbind */
 	{ 0, (sy_call_t *)linux_get_mempolicy, AUE_NULL, NULL, 0, 0, 0, SY_THR_STATIC },	/* 236 = linux_get_mempolicy */

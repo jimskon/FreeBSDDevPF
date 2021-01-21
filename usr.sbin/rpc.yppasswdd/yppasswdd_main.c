@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/rpc.yppasswdd/yppasswdd_main.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -83,6 +83,7 @@ static int _rpcfdtype;
 #define	_IDLE 0
 #define	_SERVED 1
 #define	_SERVING 2
+int debug;
 
 static char _localhost[] = "localhost";
 static char _passwd_byname[] = "passwd.byname";
@@ -172,8 +173,6 @@ main(int argc, char *argv[])
 	char *mastername;
 	char myname[MAXHOSTNAMELEN + 2];
 	int maxrec = RPC_MAXDATASIZE;
-
-	extern int debug;
 
 	debug = 1;
 

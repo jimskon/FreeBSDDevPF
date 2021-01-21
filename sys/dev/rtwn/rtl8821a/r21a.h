@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/r21a.h 307529 2016-10-17 20:38:24Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8821A_H
@@ -38,7 +38,6 @@
 	(R21A_TX_PAGE_COUNT + R21A_BCNQ0_PAGE_COUNT + 1)
 
 #define R21A_TX_PAGE_SIZE	256
-
 
 /*
  * Function declarations.

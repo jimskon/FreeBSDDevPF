@@ -60,7 +60,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/netinet6/in6_var.h 349762 2019-07-05 10:31:37Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET6_IN6_VAR_H_
@@ -868,7 +868,7 @@ void	in6m_commit(struct in6_multi *);
 void	in6m_print(const struct in6_multi *);
 int	in6m_record_source(struct in6_multi *, const struct in6_addr *);
 void	in6m_release_list_deferred(struct in6_multi_head *);
-void	in6m_release_wait(void);
+void	in6m_release_wait(void *);
 void	ip6_freemoptions(struct ip6_moptions *);
 int	ip6_getmoptions(struct inpcb *, struct sockopt *);
 int	ip6_setmoptions(struct inpcb *, struct sockopt *);

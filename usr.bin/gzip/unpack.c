@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/usr.bin/gzip/unpack.c 333449 2018-05-10 06:41:08Z delphij $	*/
+/*	$FreeBSD$	*/
 /*	$NetBSD: unpack.c,v 1.3 2017/08/04 07:27:08 mrg Exp $	*/
 
 /*-
@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/gzip/unpack.c 333449 2018-05-10 06:41:08Z delphij $
+ * $FreeBSD$
  */
 
 /* This file is #included by gzip.c */
@@ -155,9 +155,6 @@ unpack_parse_header(int in, int out, char *pre, size_t prelen, off_t *bytes_in,
 	unsigned char hdr[PACK_HEADER_LENGTH];	/* buffer for header */
 	ssize_t bytesread;		/* Bytes read from the file */
 	int i, j, thisbyte;
-
-	if (prelen > sizeof hdr)
-		maybe_err("prelen too long");
 
 	/* Prepend the header buffer if we already read some data */
 	if (prelen != 0)

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ahci/ahci.c 351904 2019-09-05 23:02:08Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/module.h>
@@ -141,7 +141,27 @@ int
 ahci_ctlr_reset(device_t dev)
 {
 	struct ahci_controller *ctlr = device_get_softc(dev);
+	uint32_t v;
 	int timeout;
+
+	/* BIOS/OS Handoff */
+	if ((ATA_INL(ctlr->r_mem, AHCI_VS) >= 0x00010200) &&
+	    (ATA_INL(ctlr->r_mem, AHCI_CAP2) & AHCI_CAP2_BOH) &&
+	    ((v = ATA_INL(ctlr->r_mem, AHCI_BOHC)) & AHCI_BOHC_OOS) == 0) {
+
+		/* Request OS ownership. */
+		ATA_OUTL(ctlr->r_mem, AHCI_BOHC, v | AHCI_BOHC_OOS);
+
+		/* Wait up to 2s for BIOS ownership release. */
+		for (timeout = 0; timeout < 80; timeout++) {
+			DELAY(25000);
+			v = ATA_INL(ctlr->r_mem, AHCI_BOHC);
+			if ((v & AHCI_BOHC_BOS) == 0)
+				break;
+			if ((v & AHCI_BOHC_BB) == 0)
+				break;
+		}
+	}
 
 	/* Enable AHCI mode */
 	ATA_OUTL(ctlr->r_mem, AHCI_GHC, AHCI_GHC_AE);
@@ -362,7 +382,7 @@ ahci_attach(device_t dev)
 		if (child == NULL)
 			device_printf(dev, "failed to add enclosure device\n");
 		else
-			device_set_ivars(child, (void *)(intptr_t)-1);
+			device_set_ivars(child, (void *)(intptr_t)AHCI_EM_UNIT);
 	}
 	bus_generic_attach(dev);
 	return (0);
@@ -562,23 +582,25 @@ ahci_alloc_resource(device_t dev, device_t child, int type, int *rid,
 	struct resource *res;
 	rman_res_t st;
 	int offset, size, unit;
-	bool is_remapped;
+	bool is_em, is_remapped;
 
 	unit = (intptr_t)device_get_ivars(child);
+	is_em = is_remapped = false;
 	if (unit & AHCI_REMAPPED_UNIT) {
-		unit &= ~AHCI_REMAPPED_UNIT;
+		unit &= AHCI_UNIT;
 		unit -= ctlr->channels;
 		is_remapped = true;
-	} else
-		is_remapped = false;
+	} else if (unit & AHCI_EM_UNIT) {
+		unit &= AHCI_UNIT;
+		is_em = true;
+	}
 	res = NULL;
 	switch (type) {
 	case SYS_RES_MEMORY:
 		if (is_remapped) {
 			offset = ctlr->remap_offset + unit * ctlr->remap_size;
 			size = ctlr->remap_size;
-		}
-		else if (unit >= 0) {
+		} else if (!is_em) {
 			offset = AHCI_OFFSET + (unit << 7);
 			size = 128;
 		} else if (*rid == 0) {
@@ -639,7 +661,7 @@ ahci_setup_intr(device_t dev, device_t child, struct resource *irq,
     void *argument, void **cookiep)
 {
 	struct ahci_controller *ctlr = device_get_softc(dev);
-	int unit = (intptr_t)device_get_ivars(child) & ~AHCI_REMAPPED_UNIT;
+	int unit = (intptr_t)device_get_ivars(child) & AHCI_UNIT;
 
 	if (filter != NULL) {
 		printf("ahci.c: we cannot use a filter here\n");
@@ -655,7 +677,7 @@ ahci_teardown_intr(device_t dev, device_t child, struct resource *irq,
     void *cookie)
 {
 	struct ahci_controller *ctlr = device_get_softc(dev);
-	int unit = (intptr_t)device_get_ivars(child) & ~AHCI_REMAPPED_UNIT;
+	int unit = (intptr_t)device_get_ivars(child) & AHCI_UNIT;
 
 	ctlr->interrupt[unit].function = NULL;
 	ctlr->interrupt[unit].argument = NULL;
@@ -665,12 +687,13 @@ ahci_teardown_intr(device_t dev, device_t child, struct resource *irq,
 int
 ahci_print_child(device_t dev, device_t child)
 {
-	int retval, channel;
+	intptr_t ivars;
+	int retval;
 
 	retval = bus_print_child_header(dev, child);
-	channel = (int)(intptr_t)device_get_ivars(child) & ~AHCI_REMAPPED_UNIT;
-	if (channel >= 0)
-		retval += printf(" at channel %d", channel);
+	ivars = (intptr_t)device_get_ivars(child);
+	if ((ivars & AHCI_EM_UNIT) == 0)
+		retval += printf(" at channel %d", (int)ivars & AHCI_UNIT);
 	retval += bus_print_child_footer(dev, child);
 	return (retval);
 }
@@ -679,11 +702,11 @@ int
 ahci_child_location_str(device_t dev, device_t child, char *buf,
     size_t buflen)
 {
-	int channel;
+	intptr_t ivars;
 
-	channel = (int)(intptr_t)device_get_ivars(child) & ~AHCI_REMAPPED_UNIT;
-	if (channel >= 0)
-		snprintf(buf, buflen, "channel=%d", channel);
+	ivars = (intptr_t)device_get_ivars(child);
+	if ((ivars & AHCI_EM_UNIT) == 0)
+		snprintf(buf, buflen, "channel=%d", (int)ivars & AHCI_UNIT);
 	return (0);
 }
 

@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/riscv/include/bus_dma.h 348621 2019-06-04 15:32:56Z br $ */
+/* $FreeBSD$ */
 
 #ifndef _MACHINE_BUS_DMA_H_
 #define	_MACHINE_BUS_DMA_H_

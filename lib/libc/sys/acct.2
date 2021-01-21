@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)acct.2	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: releng/12.1/lib/libc/sys/acct.2 314436 2017-02-28 23:42:47Z imp $
+.\" $FreeBSD$
 .\"
-.Dd April 17, 2004
+.Dd March 30, 2020
 .Dt ACCT 2
 .Os
 .Sh NAME
@@ -119,6 +119,8 @@ argument
 points outside the process's allocated address space.
 .It Bq Er EIO
 An I/O error occurred while reading from or writing to the file system.
+.It Bq Er EINTEGRITY
+Corrupted data was detected while reading from the file system.
 .El
 .Sh SEE ALSO
 .Xr acct 5 ,

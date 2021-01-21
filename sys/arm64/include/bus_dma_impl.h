@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/include/bus_dma_impl.h 320528 2017-07-01 05:35:29Z jah $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_BUS_DMA_IMPL_H_
@@ -58,6 +58,7 @@ struct bus_dma_impl {
 	    bus_size_t maxsegsz, int flags, bus_dma_lock_t *lockfunc,
 	    void *lockfuncarg, bus_dma_tag_t *dmat);
 	int (*tag_destroy)(bus_dma_tag_t dmat);
+	bool (*id_mapped)(bus_dma_tag_t, vm_paddr_t, bus_size_t);
 	int (*map_create)(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp);
 	int (*map_destroy)(bus_dma_tag_t dmat, bus_dmamap_t map);
 	int (*mem_alloc)(bus_dma_tag_t dmat, void** vaddr, int flags,

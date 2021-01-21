@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/bin/csh/dot.login 337849 2018-08-15 14:41:24Z brd $
+# $FreeBSD$
 #
 # .login - csh login script, read by login shell, after `.cshrc' at login.
 #

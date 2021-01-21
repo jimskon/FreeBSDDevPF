@@ -30,12 +30,13 @@
 #include "opt_ddb.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/machdep_boot.c 336283 2018-07-14 16:33:11Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/ctype.h>
 #include <sys/linker.h>
+#include <sys/physmem.h>
 #include <sys/reboot.h>
 #include <sys/sysctl.h>
 #if defined(LINUX_BOOT_ABI)
@@ -46,7 +47,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm/arm/machdep_boot.c 336283 2018-07-14 16:
 #include <machine/cpu.h>
 #include <machine/machdep.h>
 #include <machine/metadata.h>
-#include <machine/physmem.h>
 #include <machine/vmparam.h>	/* For KERNVIRTADDR */
 
 #ifdef FDT
@@ -227,7 +227,7 @@ linux_parse_boot_param(struct arm_boot_params *abp)
 		case ATAG_CORE:
 			break;
 		case ATAG_MEM:
-			arm_physmem_hardware_region(walker->u.tag_mem.start,
+			physmem_hardware_region(walker->u.tag_mem.start,
 			    walker->u.tag_mem.size);
 			break;
 		case ATAG_INITRD2:

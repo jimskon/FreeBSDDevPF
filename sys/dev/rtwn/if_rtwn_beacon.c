@@ -17,7 +17,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_beacon.c 310867 2016-12-30 22:24:01Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/if_rtwn_beacon.c 310867 2016-12-30 
 #include <dev/rtwn/if_rtwn_tx.h>
 
 #include <dev/rtwn/rtl8192c/r92c_reg.h>
-
 
 static void
 rtwn_reset_beacon_valid(struct rtwn_softc *sc, int id)

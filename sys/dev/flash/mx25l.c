@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/flash/mx25l.c 349314 2019-06-23 16:16:55Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 
@@ -150,6 +150,7 @@ static struct mx25l_flash_ident flash_devices[] = {
 
 	/* GigaDevice */
 	{ "gd25q64",	0xc8, 0x4017, 64 * 1024, 128, FL_ERASE_4K },
+	{ "gd25q128",	0xc8, 0x4018, 64 * 1024, 256, FL_ERASE_4K },
 };
 
 static int

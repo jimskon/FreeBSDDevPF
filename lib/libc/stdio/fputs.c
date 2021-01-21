@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fputs.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fputs.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <limits.h>
@@ -51,7 +51,7 @@ __FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fputs.c 326025 2017-11-20 19:49:4
  * Write the given string to the given file.
  */
 int
-fputs(const char * __restrict s, FILE * __restrict fp)
+fputs_unlocked(const char * __restrict s, FILE * __restrict fp)
 {
 	int retval;
 	struct __suio uio;
@@ -61,11 +61,20 @@ fputs(const char * __restrict s, FILE * __restrict fp)
 	uio.uio_resid = iov.iov_len = strlen(s);
 	uio.uio_iov = &iov;
 	uio.uio_iovcnt = 1;
-	FLOCKFILE_CANCELSAFE(fp);
 	ORIENT(fp, -1);
 	retval = __sfvwrite(fp, &uio);
-	FUNLOCKFILE_CANCELSAFE();
 	if (retval == 0)
 		return (iov.iov_len > INT_MAX ? INT_MAX : iov.iov_len);
+	return (retval);
+}
+
+int
+fputs(const char * __restrict s, FILE * __restrict fp)
+{
+	int retval;
+
+	FLOCKFILE_CANCELSAFE(fp);
+	retval = fputs_unlocked(s, fp);
+	FUNLOCKFILE_CANCELSAFE();
 	return (retval);
 }

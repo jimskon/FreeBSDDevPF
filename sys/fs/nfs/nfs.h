@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfs.h 347038 2019-05-03 02:03:29Z rmacklem $
+ * $FreeBSD$
  */
 
 #ifndef _NFS_NFS_H_
@@ -796,6 +796,9 @@ struct nfsslot {
 	uint32_t	nfssl_seq;
 	struct mbuf	*nfssl_reply;
 };
+
+/* Enumerated type for nfsuserd state. */
+typedef enum { NOTRUNNING=0, STARTSTOP=1, RUNNING=2 } nfsuserd_state;
 
 #endif	/* _KERNEL */
 

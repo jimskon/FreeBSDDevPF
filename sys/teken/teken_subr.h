@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/teken/teken_subr.h 333995 2018-05-21 20:35:16Z dumbbell $
+ * $FreeBSD$
  */
 
 static void teken_subr_cursor_up(teken_t *, unsigned int);

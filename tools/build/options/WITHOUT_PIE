@@ -1,3 +1,3 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITHOUT_PIE 352768 2019-09-26 18:37:58Z emaste $
+.\" $FreeBSD$
 Do not build dynamically linked binaries as
 Position-Independent Executable (PIE).

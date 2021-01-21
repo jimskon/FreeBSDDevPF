@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/kern.opts.mk 338643 2018-09-13 14:52:59Z emaste $
+# $FreeBSD$
 
 # Options set in the build system that affect the kernel somehow.
 
@@ -43,6 +43,7 @@ __DEFAULT_YES_OPTIONS = \
     NETGRAPH \
     PF \
     REPRODUCIBLE_BUILD \
+    SCTP_SUPPORT \
     SOURCELESS_HOST \
     SOURCELESS_UCODE \
     TESTS \

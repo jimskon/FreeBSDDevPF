@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/if_ath_tx.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 #ifndef	__IF_ATH_TX_H__
 #define	__IF_ATH_TX_H__
@@ -70,7 +70,6 @@
  */
 #define	ATH_BA_ISSET(_bm, _n)	(((_n) < (WME_BA_BMP_SIZE)) &&		\
 	    ((_bm)[(_n) >> 5] & (1 << ((_n) & 31))))
-
 
 /* extracting the seqno from buffer seqno */
 #define	SEQNO(_a)	((_a) >> IEEE80211_SEQ_SEQ_SHIFT)

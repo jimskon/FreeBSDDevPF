@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/compat/freebsd32/freebsd32_syscall.h 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #define	FREEBSD32_SYS_syscall	0
@@ -494,4 +494,6 @@
 #define	FREEBSD32_SYS_fhlink	565
 #define	FREEBSD32_SYS_fhlinkat	566
 #define	FREEBSD32_SYS_fhreadlink	567
-#define	FREEBSD32_SYS_MAXSYSCALL	568
+#define	FREEBSD32_SYS_freebsd32___sysctlbyname	570
+#define	FREEBSD32_SYS_close_range	575
+#define	FREEBSD32_SYS_MAXSYSCALL	576

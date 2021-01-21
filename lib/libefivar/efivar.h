@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libefivar/efivar.h 351913 2019-09-05 23:27:59Z imp $
+ * $FreeBSD$
  */
 
 #ifndef	_EFIVAR_H_

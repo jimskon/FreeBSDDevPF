@@ -1,4 +1,4 @@
-/*      $FreeBSD: releng/12.1/sys/dev/ipw/if_ipwvar.h 345634 2019-03-28 09:16:00Z avos $	*/
+/*      $FreeBSD$	*/
 
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD

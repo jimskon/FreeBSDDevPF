@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/netwait 298514 2016-04-23 16:10:54Z lme $
+# $FreeBSD$
 #
 # PROVIDE: netwait
-# REQUIRE: devd ipfilter ipfw pf routing
+# REQUIRE: devd ipfw pf routing
 # KEYWORD: nojail
 #
 # The netwait script helps handle two situations:

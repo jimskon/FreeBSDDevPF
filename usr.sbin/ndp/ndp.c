@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/usr.sbin/ndp/ndp.c 338243 2018-08-23 10:38:59Z garga $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ndp.c,v 1.104 2003/06/27 07:48:39 itojun Exp $	*/
 
 /*-

@@ -29,7 +29,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_write_format_zip_file_zip64.c 299529 2016-05-12 10:16:16Z mm $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Detailed byte-for-byte verification of the format of a zip archive
@@ -86,7 +86,7 @@ DEFINE_TEST(test_write_format_zip_file_zip64)
 	unsigned char *central_header, *local_header, *eocd, *eocd_record;
 	unsigned char *extension_start, *extension_end;
 	char file_data[] = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	char *file_name = "file";
+	const char *file_name = "file";
 
 #ifndef HAVE_ZLIB_H
 	zip_compression = 0;

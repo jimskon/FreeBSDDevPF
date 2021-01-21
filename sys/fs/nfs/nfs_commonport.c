@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfs/nfs_commonport.c 346460 2019-04-20 23:46:06Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Functions that need to be different for different versions of BSD
@@ -56,7 +56,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/fs/nfs/nfs_commonport.c 346460 2019-04-20 23
 #include <vm/uma.h>
 
 extern int nfscl_ticks;
-extern int nfsrv_nfsuserd;
+extern nfsuserd_state nfsrv_nfsuserd;
 extern struct nfssockreq nfsrv_nfsuserdsock;
 extern void (*nfsd_call_recall)(struct vnode *, int, struct ucred *,
     struct thread *);
@@ -774,7 +774,7 @@ nfscommon_modevent(module_t mod, int type, void *data)
 		break;
 
 	case MOD_UNLOAD:
-		if (newnfs_numnfsd != 0 || nfsrv_nfsuserd != 0 ||
+		if (newnfs_numnfsd != 0 || nfsrv_nfsuserd != NOTRUNNING ||
 		    nfs_numnfscbd != 0) {
 			error = EBUSY;
 			break;

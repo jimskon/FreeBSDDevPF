@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/pci/rtwn_pci_rx.c 342830 2019-01-07 04:23:06Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -55,7 +55,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/pci/rtwn_pci_rx.c 342830 2019-01-07
 
 #include <dev/rtwn/pci/rtwn_pci_var.h>
 #include <dev/rtwn/pci/rtwn_pci_rx.h>
-
 
 void
 rtwn_pci_dma_map_addr(void *arg, bus_dma_segment_t *segs, int nsegs,

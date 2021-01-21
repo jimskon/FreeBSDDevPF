@@ -4,7 +4,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/drm2/drm_os_freebsd.h 339633 2018-10-23 03:30:14Z imp $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _DRM_OS_FREEBSD_H_
 #define	_DRM_OS_FREEBSD_H_
@@ -154,19 +154,21 @@ typedef void			irqreturn_t;
 	*(volatile u_int64_t *)(((vm_offset_t)(map)->handle) +		\
 	    (vm_offset_t)(offset)) = htole64(val)
 
-#ifdef amd64
-#define DRM_PORT "graphics/drm-kmod"
+#if !defined(__arm__)
+#if defined(__i386__) || defined(__amd64__) || defined(__powerpc__) || defined(__aarch64__)
+#define DRM_MSG "This code is deprecated.  Install the graphics/drm-kmod pkg\n"
 #else
-#define DRM_PORT "graphics/drm-legacy-kmod"
+#define DRM_MSG "This code is deprecated."
 #endif
 
 #define DRM_OBSOLETE(dev)							\
     do {									\
 	device_printf(dev, "=======================================================\n"); \
-	device_printf(dev, "This code is obsolete abandonware. Install the " DRM_PORT " pkg\n"); \
+	device_printf(dev, DRM_MSG);						\
 	device_printf(dev, "=======================================================\n"); \
 	gone_in_dev(dev, 13, "drm2 drivers");					\
     } while (0)
+#endif /* __arm__ */
 
 /* DRM_READMEMORYBARRIER() prevents reordering of reads.
  * DRM_WRITEMEMORYBARRIER() prevents reordering of writes.

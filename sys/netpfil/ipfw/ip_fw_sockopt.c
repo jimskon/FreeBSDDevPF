@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/ipfw/ip_fw_sockopt.c 350582 2019-08-05 07:49:02Z ae $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Control socket and rule management routines for ipfw.

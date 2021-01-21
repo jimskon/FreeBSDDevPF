@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/x86/mca.c 332971 2018-04-24 20:29:40Z kib $");
+__FBSDID("$FreeBSD$");
 
 #ifdef __amd64__
 #define	DEV_APIC
@@ -134,7 +134,8 @@ static int amd_elvt = -1;
 static inline bool
 amd_thresholding_supported(void)
 {
-	if (cpu_vendor_id != CPU_VENDOR_AMD)
+	if (cpu_vendor_id != CPU_VENDOR_AMD &&
+	    cpu_vendor_id != CPU_VENDOR_HYGON)
 		return (false);
 	/*
 	 * The RASCap register is wholly reserved in families 0x10-0x15 (through model 1F).

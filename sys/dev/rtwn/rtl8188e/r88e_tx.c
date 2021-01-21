@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_tx.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_tx.c 307529 2016-10-1
 
 #include <dev/rtwn/rtl8188e/r88e.h>
 #include <dev/rtwn/rtl8188e/r88e_tx_desc.h>
-
 
 void
 r88e_tx_enable_ampdu(void *buf, int enable)

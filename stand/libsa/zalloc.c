@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/libsa/zalloc.c 353543 2019-10-15 06:19:33Z tsoome $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 
@@ -125,7 +125,8 @@ znalloc(MemPool *mp, uintptr_t bytes, size_t align)
 			continue;
 
 		/*
-		 * Cut extra from head and create new memory node from reminder.
+		 * Cut extra from head and create new memory node from
+		 * remainder.
 		 */
 
 		if (extra != 0) {

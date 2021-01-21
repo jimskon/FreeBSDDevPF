@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/usb/r88eu_attach.c 342835 2019-01-07 04:58:10Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -60,7 +60,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/usb/r88eu_attach.c 342835 
 #include <dev/rtwn/rtl8188e/r88e_rom_image.h>	/* for 'macaddr' field */
 
 #include <dev/rtwn/rtl8188e/usb/r88eu.h>
-
 
 static struct rtwn_r88e_txpwr r88e_txpwr;
 

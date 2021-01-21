@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/ctld/uclparse.c 333446 2018-05-10 03:50:20Z araujo $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>
@@ -914,6 +914,7 @@ int
 uclparse_conf(struct conf *newconf, const char *path)
 {
 	struct ucl_parser *parser;
+	ucl_object_t *top;
 	int error; 
 
 	conf = newconf;
@@ -922,10 +923,14 @@ uclparse_conf(struct conf *newconf, const char *path)
 	if (!ucl_parser_add_file(parser, path)) {
 		log_warn("unable to parse configuration file %s: %s", path,
 		    ucl_parser_get_error(parser));
+		ucl_parser_free(parser);
 		return (1);
 	}
 
-	error = uclparse_toplevel(ucl_parser_get_object(parser));
+	top = ucl_parser_get_object(parser);
+	error = uclparse_toplevel(top);
+	ucl_object_unref(top);
+	ucl_parser_free(parser);
 
 	return (error);
 }

@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_map.h 348991 2019-06-12 11:48:04Z kib $
+ * $FreeBSD$
  */
 
 /*
@@ -145,7 +145,7 @@ struct vm_map_entry {
 #define	MAP_ENTRY_GROWS_UP		0x00002000	/* bottom-up stacks */
 
 #define	MAP_ENTRY_WIRE_SKIPPED		0x00004000
-#define	MAP_ENTRY_VN_WRITECNT		0x00008000	/* writeable vnode
+#define	MAP_ENTRY_WRITECNT		0x00008000	/* tracked writeable
 							   mapping */
 #define	MAP_ENTRY_GUARD			0x00010000
 #define	MAP_ENTRY_STACK_GAP_DN		0x00020000
@@ -224,6 +224,8 @@ struct vm_map {
 #define	vm_map_max(map)		vm_map_max_KBI((map))
 #define	vm_map_min(map)		vm_map_min_KBI((map))
 #define	vm_map_pmap(map)	vm_map_pmap_KBI((map))
+#define	vm_map_range_valid(map, start, end)	\
+	vm_map_range_valid_KBI((map), (start), (end))
 #else
 static __inline vm_offset_t
 vm_map_max(const struct vm_map *map)
@@ -250,6 +252,17 @@ vm_map_modflags(vm_map_t map, vm_flags_t set, vm_flags_t clear)
 {
 	map->flags = (map->flags | set) & ~clear;
 }
+
+static inline bool
+vm_map_range_valid(vm_map_t map, vm_offset_t start, vm_offset_t end)
+{
+	if (end < start)
+		return (false);
+	if (start < vm_map_min(map) || end > vm_map_max(map))
+		return (false);
+	return (true);
+}
+
 #endif	/* KLD_MODULE */
 #endif	/* _KERNEL */
 
@@ -314,6 +327,7 @@ void vm_map_wait_busy(vm_map_t map);
 vm_offset_t vm_map_max_KBI(const struct vm_map *map);
 vm_offset_t vm_map_min_KBI(const struct vm_map *map);
 pmap_t vm_map_pmap_KBI(vm_map_t map);
+bool vm_map_range_valid_KBI(vm_map_t map, vm_offset_t start, vm_offset_t end);
 
 #define	vm_map_lock(map)	_vm_map_lock(map, LOCK_FILE, LOCK_LINE)
 #define	vm_map_unlock(map)	_vm_map_unlock(map, LOCK_FILE, LOCK_LINE)
@@ -349,7 +363,7 @@ long vmspace_resident_count(struct vmspace *vmspace);
 #define	MAP_CREATE_GUARD	0x00000080
 #define	MAP_DISABLE_COREDUMP	0x00000100
 #define	MAP_PREFAULT_MADVISE	0x00000200    /* from (user) madvise request */
-#define	MAP_VN_WRITECOUNT	0x00000400
+#define	MAP_WRITECOUNT		0x00000400
 #define	MAP_REMAP		0x00000800
 #define	MAP_STACK_GROWS_DOWN	0x00001000
 #define	MAP_STACK_GROWS_UP	0x00002000
@@ -427,7 +441,8 @@ int vm_map_madvise (vm_map_t, vm_offset_t, vm_offset_t, int);
 int vm_map_stack (vm_map_t, vm_offset_t, vm_size_t, vm_prot_t, vm_prot_t, int);
 int vm_map_unwire(vm_map_t map, vm_offset_t start, vm_offset_t end,
     int flags);
-int vm_map_wire(vm_map_t map, vm_offset_t start, vm_offset_t end,
+int vm_map_wire(vm_map_t map, vm_offset_t start, vm_offset_t end, int flags);
+int vm_map_wire_locked(vm_map_t map, vm_offset_t start, vm_offset_t end,
     int flags);
 long vmspace_swap_count(struct vmspace *vmspace);
 void vm_map_entry_set_vnode_text(vm_map_entry_t entry, bool add);

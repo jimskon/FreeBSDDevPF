@@ -29,7 +29,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/usr.sbin/pw/pw_user.c 330245 2018-03-01 17:47:28Z dab $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -589,7 +589,7 @@ print_user(struct passwd * pwd, bool pretty, bool v7)
 	}
 	if (pwd->pw_expire > (time_t)0 && (tptr = localtime(&pwd->pw_expire)) != NULL)
 		strftime(acexpire, sizeof acexpire, "%c", tptr);
-		if (pwd->pw_change > (time_t)0 && (tptr = localtime(&pwd->pw_change)) != NULL)
+	if (pwd->pw_change > (time_t)0 && (tptr = localtime(&pwd->pw_change)) != NULL)
 		strftime(pwexpire, sizeof pwexpire, "%c", tptr);
 	printf("Login Name: %-15s   #%-12ju Group: %-15s   #%ju\n"
 	       " Full Name: %s\n"
@@ -712,24 +712,24 @@ rmopie(char const * name)
 {
 	char tmp[1014];
 	FILE *fp;
-	int fd;
 	size_t len;
-	off_t	atofs = 0;
-	
+	long atofs;
+	int fd;
+
 	if ((fd = openat(conf.rootfd, "etc/opiekeys", O_RDWR)) == -1)
 		return;
 
 	fp = fdopen(fd, "r+");
 	len = strlen(name);
 
-	while (fgets(tmp, sizeof(tmp), fp) != NULL) {
+	for (atofs = 0; fgets(tmp, sizeof(tmp), fp) != NULL && atofs >= 0;
+	    atofs = ftell(fp)) {
 		if (strncmp(name, tmp, len) == 0 && tmp[len]==' ') {
 			/* Comment username out */
 			if (fseek(fp, atofs, SEEK_SET) == 0)
 				fwrite("#", 1, 1, fp);
 			break;
 		}
-		atofs = ftell(fp);
 	}
 	/*
 	 * If we got an error of any sort, don't update!

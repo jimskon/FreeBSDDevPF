@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/pci_virtio_rnd.c 349961 2019-07-13 00:23:20Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #ifndef WITHOUT_CAPSICUM
@@ -58,6 +58,7 @@ __FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/pci_virtio_rnd.c 349961 2019-07-1
 #include <sysexits.h>
 
 #include "bhyverun.h"
+#include "debug.h"
 #include "pci_emul.h"
 #include "virtio.h"
 
@@ -65,8 +66,8 @@ __FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/pci_virtio_rnd.c 349961 2019-07-1
 
 
 static int pci_vtrnd_debug;
-#define DPRINTF(params) if (pci_vtrnd_debug) printf params
-#define WPRINTF(params) printf params
+#define DPRINTF(params) if (pci_vtrnd_debug) PRINTLN params
+#define WPRINTF(params) PRINTLN params
 
 /*
  * Per-device softc
@@ -102,7 +103,7 @@ pci_vtrnd_reset(void *vsc)
 
 	sc = vsc;
 
-	DPRINTF(("vtrnd: device reset requested !\n"));
+	DPRINTF(("vtrnd: device reset requested !"));
 	vi_reset_dev(&sc->vrsc_vs);
 }
 
@@ -127,7 +128,7 @@ pci_vtrnd_notify(void *vsc, struct vqueue_info *vq)
 
 		len = read(sc->vrsc_fd, iov.iov_base, iov.iov_len);
 
-		DPRINTF(("vtrnd: vtrnd_notify(): %d\r\n", len));
+		DPRINTF(("vtrnd: vtrnd_notify(): %d", len));
 
 		/* Catastrophe if unable to read from /dev/random */
 		assert(len > 0);
@@ -171,6 +172,7 @@ pci_vtrnd_init(struct vmctx *ctx, struct pci_devinst *pi, char *opts)
 	len = read(fd, &v, sizeof(v));
 	if (len <= 0) {
 		WPRINTF(("vtrnd: /dev/random not ready, read(): %d", len));
+		close(fd);
 		return (1);
 	}
 

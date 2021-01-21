@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/include/frame.h 313396 2017-02-07 18:19:11Z andrew $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_FRAME_H_

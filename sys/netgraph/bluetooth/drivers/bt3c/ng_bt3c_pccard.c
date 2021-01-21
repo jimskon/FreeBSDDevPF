@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_bt3c_pccard.c,v 1.5 2003/04/01 18:15:21 max Exp $
- * $FreeBSD: releng/12.1/sys/netgraph/bluetooth/drivers/bt3c/ng_bt3c_pccard.c 326272 2017-11-27 15:23:17Z pfg $
+ * $FreeBSD$
  *
  * XXX XXX XX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
  *
@@ -676,6 +676,8 @@ bt3c_pccard_attach(device_t dev)
 	sc->want = 1;
 
 	NG_NODE_SET_PRIVATE(sc->node, sc);
+
+	gone_in_dev(dev, 13, "pccard removed");
 
 	return (0);
 bad:

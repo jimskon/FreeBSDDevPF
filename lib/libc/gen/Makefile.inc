@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: releng/12.1/lib/libc/gen/Makefile.inc 350632 2019-08-06 14:38:16Z markj $
+# $FreeBSD$
 
 # machine-independent gen sources
 .PATH: ${LIBC_SRCTOP}/${LIBC_ARCH}/gen ${LIBC_SRCTOP}/gen
@@ -90,6 +90,7 @@ SRCS+=	__getosreldate.c \
 	libc_dlopen.c \
 	lockf.c \
 	lrand48.c \
+	memalign.c \
 	mrand48.c \
 	nftw.c \
 	nice.c \
@@ -109,6 +110,7 @@ SRCS+=	__getosreldate.c \
 	recvmmsg.c \
 	rewinddir.c \
 	scandir.c \
+	scandir_b.c \
 	seed48.c \
 	seekdir.c \
 	semctl.c \
@@ -342,7 +344,8 @@ MLINKS+=dlopen.3 fdlopen.3 \
 	dlopen.3 dlclose.3 \
 	dlopen.3 dlerror.3 \
 	dlopen.3 dlfunc.3 \
-	dlopen.3 dlsym.3
+	dlopen.3 dlsym.3 \
+	dlopen.3 dlvsym.3
 MLINKS+=err.3 err_set_exit.3 \
 	err.3 err_set_file.3 \
 	err.3 errc.3 \
@@ -494,10 +497,13 @@ MLINKS+=setjmp.3 _longjmp.3 \
 MLINKS+=setmode.3 getmode.3
 MLINKS+=setproctitle.3 setproctitle_fast.3
 MLINKS+=sigsetops.3 sigaddset.3 \
+	sigsetops.3 sigandset.3 \
 	sigsetops.3 sigdelset.3 \
 	sigsetops.3 sigemptyset.3 \
 	sigsetops.3 sigfillset.3 \
-	sigsetops.3 sigismember.3
+	sigsetops.3 sigisemptyset.3 \
+	sigsetops.3 sigismember.3 \
+	sigsetops.3 sigorset.3
 MLINKS+=statvfs.3 fstatvfs.3
 MLINKS+=stringlist.3 sl_add.3 \
 	stringlist.3 sl_find.3 \

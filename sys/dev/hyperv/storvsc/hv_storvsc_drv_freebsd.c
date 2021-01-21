@@ -35,7 +35,7 @@
  * partition StorVSP driver over the Hyper-V VMBUS.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/hyperv/storvsc/hv_storvsc_drv_freebsd.c 332385 2018-04-10 18:05:02Z dexuan $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/proc.h>
@@ -1915,6 +1915,7 @@ create_storvsc_request(union ccb *ccb, struct hv_storvsc_request *reqp)
 	reqp->sense_info_len = csio->sense_len;
 
 	reqp->ccb = ccb;
+	ccb->ccb_h.spriv_ptr0 = reqp;
 
 	if (0 == csio->dxfer_len) {
 		return (0);
@@ -2277,7 +2278,11 @@ storvsc_io_done(struct hv_storvsc_request *reqp)
 	}
 
 	ccb->csio.scsi_status = (vm_srb->scsi_status & 0xFF);
-	ccb->csio.resid = ccb->csio.dxfer_len - vm_srb->transfer_len;
+	if (srb_status == SRB_STATUS_SUCCESS ||
+	    srb_status == SRB_STATUS_DATA_OVERRUN)
+		ccb->csio.resid = ccb->csio.dxfer_len - vm_srb->transfer_len;
+	else
+		ccb->csio.resid = ccb->csio.dxfer_len;
 
 	if (reqp->sense_info_len != 0) {
 		csio->sense_resid = csio->sense_len - reqp->sense_info_len;

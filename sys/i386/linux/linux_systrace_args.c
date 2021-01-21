@@ -2,7 +2,7 @@
  * System call argument to DTrace register array converstion.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/i386/linux/linux_systrace_args.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  * This file is part of the DTrace syscall provider.
  */
 
@@ -1559,9 +1559,9 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 		*n_args = 3;
 		break;
 	}
-	/* madvise */
+	/* linux_madvise */
 	case 219: {
-		struct madvise_args *p = params;
+		struct linux_madvise_args *p = params;
 		uarg[0] = (intptr_t) p->addr; /* void * */
 		uarg[1] = p->len; /* size_t */
 		iarg[2] = p->behav; /* int */
@@ -2189,12 +2189,24 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	}
 	/* linux_splice */
 	case 313: {
-		*n_args = 0;
+		struct linux_splice_args *p = params;
+		iarg[0] = p->fd_in; /* int */
+		uarg[1] = (intptr_t) p->off_in; /* l_loff_t * */
+		iarg[2] = p->fd_out; /* int */
+		uarg[3] = (intptr_t) p->off_out; /* l_loff_t * */
+		iarg[4] = p->len; /* l_size_t */
+		iarg[5] = p->flags; /* l_uint */
+		*n_args = 6;
 		break;
 	}
 	/* linux_sync_file_range */
 	case 314: {
-		*n_args = 0;
+		struct linux_sync_file_range_args *p = params;
+		iarg[0] = p->fd; /* l_int */
+		iarg[1] = p->offset; /* l_loff_t */
+		iarg[2] = p->nbytes; /* l_loff_t */
+		uarg[3] = p->flags; /* unsigned int */
+		*n_args = 4;
 		break;
 	}
 	/* linux_tee */
@@ -2214,7 +2226,11 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	}
 	/* linux_getcpu */
 	case 318: {
-		*n_args = 0;
+		struct linux_getcpu_args *p = params;
+		uarg[0] = (intptr_t) p->cpu; /* l_uint * */
+		uarg[1] = (intptr_t) p->node; /* l_uint * */
+		uarg[2] = (intptr_t) p->cache; /* void * */
+		*n_args = 3;
 		break;
 	}
 	/* linux_epoll_pwait */
@@ -2500,9 +2516,9 @@ systrace_args(int sysnum, void *params, uint64_t *uarg, int *n_args)
 	/* linux_renameat2 */
 	case 353: {
 		struct linux_renameat2_args *p = params;
-		iarg[0] = p->oldfd; /* l_int */
+		iarg[0] = p->olddfd; /* l_int */
 		uarg[1] = (intptr_t) p->oldname; /* const char * */
-		iarg[2] = p->newfd; /* l_int */
+		iarg[2] = p->newdfd; /* l_int */
 		uarg[3] = (intptr_t) p->newname; /* const char * */
 		uarg[4] = p->flags; /* unsigned int */
 		*n_args = 5;
@@ -5437,7 +5453,7 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 			break;
 		};
 		break;
-	/* madvise */
+	/* linux_madvise */
 	case 219:
 		switch(ndx) {
 		case 0:
@@ -6392,9 +6408,47 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_splice */
 	case 313:
+		switch(ndx) {
+		case 0:
+			p = "int";
+			break;
+		case 1:
+			p = "userland l_loff_t *";
+			break;
+		case 2:
+			p = "int";
+			break;
+		case 3:
+			p = "userland l_loff_t *";
+			break;
+		case 4:
+			p = "l_size_t";
+			break;
+		case 5:
+			p = "l_uint";
+			break;
+		default:
+			break;
+		};
 		break;
 	/* linux_sync_file_range */
 	case 314:
+		switch(ndx) {
+		case 0:
+			p = "l_int";
+			break;
+		case 1:
+			p = "l_loff_t";
+			break;
+		case 2:
+			p = "l_loff_t";
+			break;
+		case 3:
+			p = "unsigned int";
+			break;
+		default:
+			break;
+		};
 		break;
 	/* linux_tee */
 	case 315:
@@ -6407,6 +6461,19 @@ systrace_entry_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_getcpu */
 	case 318:
+		switch(ndx) {
+		case 0:
+			p = "userland l_uint *";
+			break;
+		case 1:
+			p = "userland l_uint *";
+			break;
+		case 2:
+			p = "userland void *";
+			break;
+		default:
+			break;
+		};
 		break;
 	/* linux_epoll_pwait */
 	case 319:
@@ -8605,7 +8672,7 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		if (ndx == 0 || ndx == 1)
 			p = "int";
 		break;
-	/* madvise */
+	/* linux_madvise */
 	case 219:
 		if (ndx == 0 || ndx == 1)
 			p = "int";
@@ -8930,8 +8997,14 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 		break;
 	/* linux_splice */
 	case 313:
+		if (ndx == 0 || ndx == 1)
+			p = "int";
+		break;
 	/* linux_sync_file_range */
 	case 314:
+		if (ndx == 0 || ndx == 1)
+			p = "int";
+		break;
 	/* linux_tee */
 	case 315:
 	/* linux_vmsplice */
@@ -8940,6 +9013,9 @@ systrace_return_setargdesc(int sysnum, int ndx, char *desc, size_t descsz)
 	case 317:
 	/* linux_getcpu */
 	case 318:
+		if (ndx == 0 || ndx == 1)
+			p = "int";
+		break;
 	/* linux_epoll_pwait */
 	case 319:
 		if (ndx == 0 || ndx == 1)

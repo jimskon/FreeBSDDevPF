@@ -8,7 +8,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.1/usr.sbin/ctm/ctm/ctm_pass3.c 326408 2017-11-30 20:33:45Z pfg $
+ * $FreeBSD$
  *
  */
 

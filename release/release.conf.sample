@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/release/release.conf.sample 339435 2018-10-19 00:24:23Z gjb $
+# $FreeBSD$
 #
 
 ## Redefine environment variables here to override prototypes

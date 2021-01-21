@@ -62,7 +62,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ufs/ffs/ffs_alloc.c 350460 2019-07-31 00:16:12Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_quota.h"
 
@@ -3248,7 +3248,7 @@ sysctl_ffs_fsck(SYSCTL_HANDLER_ARGS)
 			break;
 		ip = VTOI(vp);
 		DIP_SET(ip, i_size, cmd.size);
-		ip->i_flag |= IN_CHANGE | IN_MODIFIED;
+		ip->i_flag |= IN_SIZEMOD | IN_CHANGE | IN_MODIFIED;
 		error = ffs_update(vp, 1);
 		vput(vp);
 		break;

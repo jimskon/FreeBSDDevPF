@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/rockchip/rk_gpio.c 335444 2018-06-20 14:46:07Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -50,9 +50,9 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm64/rockchip/rk_gpio.c 335444 2018-06-20 1
 #include <dev/ofw/ofw_bus_subr.h>
 #include <dev/extres/clk/clk.h>
 
-#include "opt_soc.h"
-
 #include "gpio_if.h"
+
+#include "fdt_pinctrl_if.h"
 
 #define	RK_GPIO_SWPORTA_DR	0x00	/* Data register */
 #define	RK_GPIO_SWPORTA_DDR	0x04	/* Data direction register */
@@ -71,6 +71,9 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm64/rockchip/rk_gpio.c 335444 2018-06-20 1
 
 #define	RK_GPIO_LS_SYNC		0x60	/* Level sensitive syncronization enable register */
 
+#define	RK_GPIO_DEFAULT_CAPS	(GPIO_PIN_INPUT | GPIO_PIN_OUTPUT |	\
+    GPIO_PIN_PULLUP | GPIO_PIN_PULLDOWN)
+
 struct rk_gpio_softc {
 	device_t		sc_dev;
 	device_t		sc_busdev;
@@ -79,6 +82,7 @@ struct rk_gpio_softc {
 	bus_space_tag_t		sc_bst;
 	bus_space_handle_t	sc_bsh;
 	clk_t			clk;
+	device_t		pinctrl;
 };
 
 static struct ofw_compat_data compat_data[] = {
@@ -126,6 +130,7 @@ rk_gpio_attach(device_t dev)
 
 	sc = device_get_softc(dev);
 	sc->sc_dev = dev;
+	sc->pinctrl = device_get_parent(dev);
 
 	node = ofw_bus_get_node(sc->sc_dev);
 	if (!OF_hasprop(node, "gpio-controller"))
@@ -196,7 +201,8 @@ rk_gpio_pin_max(device_t dev, int *maxpin)
 {
 
 	/* Each bank have always 32 pins */
-	*maxpin = 32;
+	/* XXX not true*/
+	*maxpin = 31;
 	return (0);
 }
 
@@ -222,17 +228,30 @@ rk_gpio_pin_getflags(device_t dev, uint32_t pin, uint32_t *flags)
 {
 	struct rk_gpio_softc *sc;
 	uint32_t reg;
+	int rv;
+	bool is_gpio;
 
 	sc = device_get_softc(dev);
+
+	rv = FDT_PINCTRL_IS_GPIO(sc->pinctrl, dev, pin, &is_gpio);
+	if (rv != 0)
+		return (rv);
+	if (!is_gpio)
+		return (EINVAL);
+
+	*flags = 0;
+	rv = FDT_PINCTRL_GET_FLAGS(sc->pinctrl, dev, pin, flags);
+	if (rv != 0)
+		return (rv);
 
 	RK_GPIO_LOCK(sc);
 	reg = RK_GPIO_READ(sc, RK_GPIO_SWPORTA_DDR);
 	RK_GPIO_UNLOCK(sc);
 
 	if (reg & (1 << pin))
-		*flags = GPIO_PIN_OUTPUT;
+		*flags |= GPIO_PIN_OUTPUT;
 	else
-		*flags = GPIO_PIN_INPUT;
+		*flags |= GPIO_PIN_INPUT;
 
 	return (0);
 }
@@ -241,8 +260,7 @@ static int
 rk_gpio_pin_getcaps(device_t dev, uint32_t pin, uint32_t *caps)
 {
 
-	/* Caps are managed by the pinctrl device */
-	*caps = 0;
+	*caps = RK_GPIO_DEFAULT_CAPS;
 	return (0);
 }
 
@@ -251,8 +269,20 @@ rk_gpio_pin_setflags(device_t dev, uint32_t pin, uint32_t flags)
 {
 	struct rk_gpio_softc *sc;
 	uint32_t reg;
+	int rv;
+	bool is_gpio;
 
 	sc = device_get_softc(dev);
+
+	rv = FDT_PINCTRL_IS_GPIO(sc->pinctrl, dev, pin, &is_gpio);
+	if (rv != 0)
+		return (rv);
+	if (!is_gpio)
+		return (EINVAL);
+
+	rv = FDT_PINCTRL_SET_FLAGS(sc->pinctrl, dev, pin, flags);
+	if (rv != 0)
+		return (rv);
 
 	RK_GPIO_LOCK(sc);
 
@@ -388,10 +418,18 @@ rk_gpio_map_gpios(device_t bus, phandle_t dev, phandle_t gparent, int gcells,
     pcell_t *gpios, uint32_t *pin, uint32_t *flags)
 {
 
-	/* The gpios are mapped as <gpio-phandle pin flags> */
-	*pin = gpios[1];
-	*flags = gpios[2];
+	/* The gpios are mapped as <pin flags> */
+	*pin = gpios[0];
+	*flags = gpios[1];
 	return (0);
+}
+
+static phandle_t
+rk_gpio_get_node(device_t bus, device_t dev)
+{
+
+	/* We only have one child, the GPIO bus, which needs our own node. */
+	return (ofw_bus_get_node(bus));
 }
 
 static device_method_t rk_gpio_methods[] = {
@@ -414,6 +452,9 @@ static device_method_t rk_gpio_methods[] = {
 	DEVMETHOD(gpio_pin_config_32,	rk_gpio_pin_config_32),
 	DEVMETHOD(gpio_map_gpios,	rk_gpio_map_gpios),
 
+	/* ofw_bus interface */
+	DEVMETHOD(ofw_bus_get_node,	rk_gpio_get_node),
+
 	DEVMETHOD_END
 };
 
@@ -425,5 +466,10 @@ static driver_t rk_gpio_driver = {
 
 static devclass_t rk_gpio_devclass;
 
+/*
+ * GPIO driver is always a child of rk_pinctrl driver and should be probed
+ * and attached within rk_pinctrl_attach function. Due to this, bus pass order
+ * must be same as bus pass order of rk_pinctrl driver.
+ */
 EARLY_DRIVER_MODULE(rk_gpio, simplebus, rk_gpio_driver,
-    rk_gpio_devclass, 0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_LATE);
+    rk_gpio_devclass, 0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);

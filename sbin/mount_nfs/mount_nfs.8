@@ -26,7 +26,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)mount_nfs.8	8.3 (Berkeley) 3/29/95
-.\" $FreeBSD: releng/12.1/sbin/mount_nfs/mount_nfs.8 316793 2017-04-13 22:05:24Z rmacklem $
+.\" $FreeBSD$
 .\"
 .Dd April 13, 2017
 .Dt MOUNT_NFS 8
@@ -157,7 +157,16 @@ should be specified without instance or domain and is typically
 .Dq "host" ,
 .Dq "nfs"
 or
-.Dq "root" .
+.Dq "root" ,
+although the form
+.Sm off
+.Aq Ar service
+@
+.Aq Ar fqdn
+.Sm on
+can also be used if the local system's
+.Xr gethostname 3
+value does not match the host-based principal in the keytab.
 .It Cm hard
 Same as not specifying
 .Cm soft .

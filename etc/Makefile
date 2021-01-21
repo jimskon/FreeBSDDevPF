@@ -1,5 +1,5 @@
 #	from: @(#)Makefile	5.11 (Berkeley) 5/21/91
-# $FreeBSD: releng/12.1/etc/Makefile 338887 2018-09-22 13:17:30Z brd $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -25,11 +25,10 @@ BIN1=	\
 BIN1+=	rc.sendmail
 .endif
 
-.if ${MK_SENDMAIL} == "no"
-ETCMAIL=mailer.conf aliases
-.else
-ETCMAIL=Makefile README mailer.conf access.sample virtusertable.sample \
-	mailertable.sample aliases
+ETCMAIL=aliases
+.if ${MK_SENDMAIL} != "no"
+ETCMAIL+=Makefile README access.sample virtusertable.sample \
+	mailertable.sample
 .endif
 
 # Special top level files for FreeBSD
@@ -82,6 +81,8 @@ distribution:
 	${_+_}cd ${.CURDIR}/mtree; ${MAKE} install
 	${_+_}cd ${SRCTOP}/share/termcap; ${MAKE} etc-termcap
 	${_+_}cd ${SRCTOP}/usr.sbin/rmt; ${MAKE} etc-rmt
+	${INSTALL_SYMLINK} ../var/run/os-release \
+		${DESTDIR}/etc/os-release
 .if ${MK_UNBOUND} != "no"
 	if [ ! -e ${DESTDIR}/etc/unbound ]; then \
 		${INSTALL_SYMLINK} ../var/unbound ${DESTDIR}/etc/unbound; \

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/amd64/sys/amd64_get_fsbase.c 340608 2018-11-19 05:56:46Z kib $");
+__FBSDID("$FreeBSD$");
 
 #define	IN_RTLD	1
 #include <sys/param.h>

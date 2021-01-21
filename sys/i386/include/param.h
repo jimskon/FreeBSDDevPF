@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	from: @(#)param.h	5.8 (Berkeley) 6/28/91
- * $FreeBSD: releng/12.1/sys/i386/include/param.h 332489 2018-04-13 20:30:49Z kib $
+ * $FreeBSD$
  */
 
 

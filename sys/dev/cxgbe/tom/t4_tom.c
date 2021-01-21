@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/tom/t4_tom.c 352271 2019-09-13 01:12:17Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -186,6 +186,8 @@ init_toepcb(struct vi_info *vi, struct toepcb *toep)
 	if (ulp_mode(toep) == ULP_MODE_TCPDDP)
 		ddp_init_toep(toep);
 
+	toep->flags |= TPF_INITIALIZED;
+
 	return (0);
 }
 
@@ -209,9 +211,11 @@ free_toepcb(struct toepcb *toep)
 	KASSERT(!(toep->flags & TPF_CPL_PENDING),
 	    ("%s: CPL pending", __func__));
 
-	if (ulp_mode(toep) == ULP_MODE_TCPDDP)
-		ddp_uninit_toep(toep);
-	tls_uninit_toep(toep);
+	if (toep->flags & TPF_INITIALIZED) {
+		if (ulp_mode(toep) == ULP_MODE_TCPDDP)
+			ddp_uninit_toep(toep);
+		tls_uninit_toep(toep);
+	}
 	free(toep, M_CXGBE);
 }
 
@@ -951,7 +955,7 @@ calc_options0(struct vi_info *vi, struct conn_params *cp)
 	MPASS(cp->opt0_bufsize >= 0 && cp->opt0_bufsize <= M_RCV_BUFSIZ);
 	opt0 |= V_RCV_BUFSIZ(cp->opt0_bufsize);
 
-	MPASS(cp->l2t_idx >= 0 && cp->l2t_idx < vi->pi->adapter->vres.l2t.size);
+	MPASS(cp->l2t_idx >= 0 && cp->l2t_idx < vi->adapter->vres.l2t.size);
 	opt0 |= V_L2T_IDX(cp->l2t_idx);
 
 	opt0 |= V_SMAC_SEL(vi->smt_idx);
@@ -1026,7 +1030,7 @@ calc_options2(struct vi_info *vi, struct conn_params *cp)
 uint64_t
 select_ntuple(struct vi_info *vi, struct l2t_entry *e)
 {
-	struct adapter *sc = vi->pi->adapter;
+	struct adapter *sc = vi->adapter;
 	struct tp_params *tp = &sc->params.tp;
 	uint64_t ntuple = 0;
 
@@ -1131,7 +1135,7 @@ init_conn_params(struct vi_info *vi , struct offload_settings *s,
 		cp->nagle = tp->t_flags & TF_NODELAY ? 0 : 1;
 
 	/* TCP Keepalive. */
-	if (tcp_always_keepalive || so_options_get(so) & SO_KEEPALIVE)
+	if (V_tcp_always_keepalive || so_options_get(so) & SO_KEEPALIVE)
 		cp->keepalive = 1;
 	else
 		cp->keepalive = 0;

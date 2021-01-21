@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)fs.h	8.13 (Berkeley) 3/21/95
- * $FreeBSD: releng/12.1/sys/ufs/ffs/fs.h 351164 2019-08-17 06:06:50Z mckusick $
+ * $FreeBSD$
  */
 
 #ifndef _UFS_FFS_FS_H_

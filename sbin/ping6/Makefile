@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/ping6/Makefile 352252 2019-09-12 16:23:22Z asomers $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

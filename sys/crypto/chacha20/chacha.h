@@ -5,7 +5,7 @@ chacha-merged.c version 20080118
 D. J. Bernstein
 Public domain.
 
- $FreeBSD: releng/12.1/sys/crypto/chacha20/chacha.h 338059 2018-08-19 17:40:50Z delphij $
+ $FreeBSD$
 */
 
 #ifndef CHACHA_H

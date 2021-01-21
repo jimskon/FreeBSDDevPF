@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/mkimg/gpt.c 345428 2019-03-22 23:55:35Z marcel $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/errno.h>
 #include <stddef.h>

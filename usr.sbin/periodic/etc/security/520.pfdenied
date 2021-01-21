@@ -24,7 +24,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.sbin/periodic/etc/security/520.pfdenied 306696 2016-10-04 23:12:35Z lidl $
+# $FreeBSD$
 #
 
 # If there is a global system configuration file, suck it in.
@@ -46,7 +46,7 @@ then
 	TMP=`mktemp -t security`
 	for _a in "" $(pfctl -a "blacklistd" -sA 2>/dev/null)
 	do
-		pfctl -a ${_a} -sr -v -z 2>/dev/null | \
+		pfctl -a "${_a}" -sr -v -z 2>/dev/null | \
 		nawk '{if (/^block/) {buf=$0; getline; gsub(" +"," ",$0); if ($5 > 0) print buf$0;} }' >> ${TMP}
 	done
 	if [ -s ${TMP} ]; then

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/ip_icmp.c 345687 2019-03-29 13:37:29Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 

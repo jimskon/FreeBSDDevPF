@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libbearssl/Makefile.libsa.inc 344564 2019-02-26 05:59:22Z sjg $
+# $FreeBSD$
 
 # This file is included by libsa
 # It contains SRCS needed for loader

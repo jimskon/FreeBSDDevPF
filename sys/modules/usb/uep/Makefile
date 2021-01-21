@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/usb/uep/Makefile 337348 2018-08-05 11:14:13Z wulf $
+# $FreeBSD$
 
 S=     ${SRCTOP}/sys
 

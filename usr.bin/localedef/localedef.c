@@ -32,7 +32,7 @@
  * POSIX localedef.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/localedef/localedef.c 339825 2018-10-27 21:17:01Z yuripv $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/stat.h>
@@ -273,7 +273,9 @@ main(int argc, char **argv)
 	init_numeric();
 	init_time();
 
+#if YYDEBUG
 	yydebug = 0;
+#endif
 
 	(void) setlocale(LC_ALL, "");
 

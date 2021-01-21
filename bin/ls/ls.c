@@ -44,7 +44,7 @@ static char sccsid[] = "@(#)ls.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/bin/ls/ls.c 338028 2018-08-18 21:03:19Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -152,7 +152,7 @@ static int f_timesort;		/* sort by time vice name */
        int f_type;		/* add type character for non-regular files */
 static int f_whiteout;		/* show whiteout entries */
 #ifdef COLORLS
-       int colorflag = COLORFLAG_AUTO;		/* passed in colorflag */
+       int colorflag = COLORFLAG_NEVER;		/* passed in colorflag */
        int f_color;		/* add type in color for non-regular files */
        bool explicitansi;	/* Explicit ANSI sequences, no termcap(5) */
 char *ansi_bgcol;		/* ANSI sequence to set background colour */
@@ -265,6 +265,15 @@ main(int argc, char *argv[])
 	fts_options = FTS_PHYSICAL;
 	if (getenv("LS_SAMESORT"))
 		f_samesort = 1;
+
+	/*
+	 * For historical compatibility, we'll use our autodetection if CLICOLOR
+	 * is set.
+	 */
+#ifdef COLORLS
+	if (getenv("CLICOLOR"))
+		colorflag = COLORFLAG_AUTO;
+#endif
 	while ((ch = getopt_long(argc, argv,
 	    "+1ABCD:FGHILPRSTUWXZabcdfghiklmnopqrstuwxy,", long_opts,
 	    NULL)) != -1) {
@@ -342,7 +351,15 @@ main(int argc, char *argv[])
 			f_slash = 0;
 			break;
 		case 'G':
+			/*
+			 * We both set CLICOLOR here and set colorflag to
+			 * COLORFLAG_AUTO, because -G should not force color if
+			 * stdout isn't a tty.
+			 */
 			setenv("CLICOLOR", "", 1);
+#ifdef COLORLS
+			colorflag = COLORFLAG_AUTO;
+#endif
 			break;
 		case 'H':
 			fts_options |= FTS_COMFOLLOW;

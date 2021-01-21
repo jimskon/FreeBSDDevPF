@@ -25,7 +25,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.1/stand/lua/screen.lua 338108 2018-08-20 16:44:09Z imp $
+-- $FreeBSD$
 --
 
 local color = require("color")
@@ -47,14 +47,14 @@ end
 
 function screen.setforeground(color_value)
 	if color.disabled then
-		return color_value
+		return
 	end
 	printc(color.escapefg(color_value))
 end
 
 function screen.setbackground(color_value)
 	if color.disabled then
-		return color_value
+		return
 	end
 	printc(color.escapebg(color_value))
 end

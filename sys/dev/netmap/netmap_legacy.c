@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/netmap/netmap_legacy.c 345762 2019-04-01 10:51:24Z vmaffione $ */
+/* $FreeBSD$ */
 
 #if defined(__FreeBSD__)
 #include <sys/cdefs.h> /* prerequisite */
@@ -76,9 +76,9 @@ nmreq_register_from_legacy(struct nmreq *nmr, struct nmreq_header *hdr,
 		/* Convert the older nmr->nr_ringid (original
 		 * netmap control API) to nmr->nr_flags. */
 		u_int regmode = NR_REG_DEFAULT;
-		if (req->nr_ringid & NETMAP_SW_RING) {
+		if (nmr->nr_ringid & NETMAP_SW_RING) {
 			regmode = NR_REG_SW;
-		} else if (req->nr_ringid & NETMAP_HW_RING) {
+		} else if (nmr->nr_ringid & NETMAP_HW_RING) {
 			regmode = NR_REG_ONE_NIC;
 		} else {
 			regmode = NR_REG_ALL_NIC;
@@ -100,7 +100,7 @@ nmreq_register_from_legacy(struct nmreq *nmr, struct nmreq_header *hdr,
 			/* No space for the pipe suffix. */
 			return ENOBUFS;
 		}
-		strncat(hdr->nr_name, suffix, strlen(suffix));
+		strlcat(hdr->nr_name, suffix, sizeof(hdr->nr_name));
 		req->nr_mode = NR_REG_ALL_NIC;
 		req->nr_ringid = 0;
 	}

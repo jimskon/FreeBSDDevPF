@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/a10_sramc.c 326258 2017-11-27 15:04:10Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/a10_sramc.c 326258 2017-11-27 15:04:10Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -116,7 +116,7 @@ static driver_t a10_sramc_driver = {
 static devclass_t a10_sramc_devclass;
 
 EARLY_DRIVER_MODULE(a10_sramc, simplebus, a10_sramc_driver, a10_sramc_devclass,
-    0, 0, BUS_PASS_RESOURCE + BUS_PASS_ORDER_EARLY);
+    0, 0, BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_FIRST);
 
 int
 a10_map_to_emac(void)

@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)wc.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/wc/wc.c 337203 2018-08-02 23:45:14Z cem $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -218,7 +218,7 @@ cnt(const char *file)
 	 */
 	if (doline == 0 && dolongline == 0) {
 		if (fstat(fd, &sb)) {
-			xo_warn("%s: fstat", file);
+			xo_warn("%s: fstat", file != NULL ? file : "stdin");
 			(void)close(fd);
 			return (1);
 		}
@@ -239,7 +239,7 @@ cnt(const char *file)
 	 */
 	while ((len = read(fd, buf, MAXBSIZE))) {
 		if (len == -1) {
-			xo_warn("%s: read", file);
+			xo_warn("%s: read", file != NULL ? file : "stdin");
 			(void)close(fd);
 			return (1);
 		}

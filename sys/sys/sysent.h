@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/sysent.h 351024 2019-08-14 09:56:58Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSENT_H_

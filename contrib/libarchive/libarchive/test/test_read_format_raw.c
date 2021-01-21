@@ -26,7 +26,7 @@
  */
 
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_read_format_raw.c 348605 2019-06-04 10:20:56Z mm $");
+__FBSDID("$FreeBSD$");
 
 DEFINE_TEST(test_read_format_raw)
 {
@@ -36,7 +36,9 @@ DEFINE_TEST(test_read_format_raw)
 	const char *reffile1 = "test_read_format_raw.data";
 	const char *reffile2 = "test_read_format_raw.data.Z";
 	const char *reffile3 = "test_read_format_raw.bufr";
+#ifdef HAVE_ZLIB_H
 	const char *reffile4 = "test_read_format_raw.data.gz";
+#endif
 
 	/* First, try pulling data out of an uninterpretable file. */
 	extract_reference_file(reffile1);
@@ -119,6 +121,7 @@ DEFINE_TEST(test_read_format_raw)
 	assertEqualIntA(a, ARCHIVE_OK, archive_read_close(a));
 	assertEqualInt(ARCHIVE_OK, archive_read_free(a));
 
+#ifdef HAVE_ZLIB_H
 	/* Fourth, try with gzip which has metadata. */
 	extract_reference_file(reffile4);
 	assert((a = archive_read_new()) != NULL);
@@ -144,4 +147,5 @@ DEFINE_TEST(test_read_format_raw)
 	assertEqualIntA(a, ARCHIVE_EOF, archive_read_next_header(a, &ae));
 	assertEqualIntA(a, ARCHIVE_OK, archive_read_close(a));
 	assertEqualInt(ARCHIVE_OK, archive_read_free(a));
+#endif
 }

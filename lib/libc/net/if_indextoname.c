@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/net/if_indextoname.c 326823 2017-12-13 16:13:17Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -65,6 +65,11 @@ if_indextoname(unsigned int ifindex, char *ifname)
 {
 	struct ifaddrs *ifaddrs, *ifa;
 	int error = 0;
+
+	if (ifindex == 0) {
+		errno = ENXIO;
+		return(NULL);
+	}
 
 	if (getifaddrs(&ifaddrs) < 0)
 		return(NULL);	/* getifaddrs properly set errno */

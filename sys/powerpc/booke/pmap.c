@@ -75,7 +75,7 @@
   */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/booke/pmap.c 349680 2019-07-03 19:25:57Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_kstack_pages.h"
@@ -3686,6 +3686,7 @@ mmu_booke_unmapdev(mmu_t mmu, vm_offset_t va, vm_size_t size)
 		base = trunc_page(va);
 		offset = va & PAGE_MASK;
 		size = roundup(offset + size, PAGE_SIZE);
+		mmu_booke_qremove(base, atop(size));
 		kva_free(base, size);
 	}
 #endif

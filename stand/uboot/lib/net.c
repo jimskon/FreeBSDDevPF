@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/uboot/lib/net.c 342165 2018-12-17 15:13:58Z sobomax $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -187,7 +187,7 @@ get_env_net_params()
 			rootip.s_addr = 0;
 			return;
 		}
-		if ((gateip.s_addr = inet_addr(envstr) == INADDR_NONE)) {
+		if ((gateip.s_addr = inet_addr(envstr)) == INADDR_NONE) {
 			printf("Could not parse gatewayip '%s'\n", envstr);
 			rootip.s_addr = 0;
 			return;

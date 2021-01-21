@@ -1,6 +1,6 @@
 #!/bin/sh -
 #
-# $FreeBSD: releng/12.1/usr.sbin/periodic/etc/weekly/340.noid 342365 2018-12-22 10:55:40Z eugen $
+# $FreeBSD$
 #
 
 # If there is a global system configuration file, suck it in.

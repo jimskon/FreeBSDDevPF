@@ -16,10 +16,9 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5312/ar5312_eeprom.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
-
 
 #ifdef AH_SUPPORT_AR5312
 
@@ -39,7 +38,7 @@ ar5312EepromRead(struct ath_hal *ah, u_int off, uint16_t *dataIn)
         int i,offset;
 	const char *eepromAddr = AR5312_RADIOCONFIG(ah);
 	uint8_t *data;
-	
+
 	data = (uint8_t *) dataIn;
 	for (i=0,offset=2*off; i<2; i++,offset++) {
 		data[i] = eepromAddr[offset];

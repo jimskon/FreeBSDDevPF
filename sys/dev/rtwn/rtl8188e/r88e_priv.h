@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_priv.h 342833 2019-01-07 04:38:50Z avos $
+ * $FreeBSD$
  */
 
 #ifndef R88E_PRIV_H
@@ -32,7 +32,6 @@ struct rtwn_r88e_txpwr {
 	int8_t		ofdm_tx_pwr_diff;
 	int8_t		bw20_tx_pwr_diff;
 };
-
 
 /*
  * MAC initialization values.

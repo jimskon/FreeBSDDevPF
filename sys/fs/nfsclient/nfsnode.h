@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfsclient/nfsnode.h 328417 2018-01-25 22:25:13Z cem $
+ * $FreeBSD$
  */
 
 #ifndef _NFSCLIENT_NFSNODE_H_
@@ -163,6 +163,7 @@ struct nfsnode {
 #define	NWRITEOPENED	0x00040000  /* Has been opened for writing */
 #define	NHASBEENLOCKED	0x00080000  /* Has been file locked. */
 #define	NDSCOMMIT	0x00100000  /* Commit is done via the DS. */
+#define	NVNSETSZSKIP	0x00200000  /* Skipped vnode_pager_setsize() */
 
 /*
  * Convert between nfsnode pointers and vnode pointers

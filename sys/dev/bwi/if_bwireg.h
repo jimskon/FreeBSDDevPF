@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  * 
  * $DragonFly: src/sys/dev/netif/bwi/if_bwireg.h,v 1.4 2007/10/19 14:27:04 sephe Exp $
- * $FreeBSD: releng/12.1/sys/dev/bwi/if_bwireg.h 326022 2017-11-20 19:36:21Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _IF_BWIREG_H
@@ -76,7 +76,6 @@
 #define BWI_CONF_LO_SERVTO		2
 #define BWI_CONF_LO_REQTO_MASK		__BITS(6, 4)	/* request timeout */
 #define BWI_CONF_LO_REQTO		3
-
 
 #define BWI_ID_LO			0xff8
 #define BWI_ID_LO_BUSREV_MASK		__BITS(31, 28)

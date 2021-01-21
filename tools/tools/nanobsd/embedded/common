@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tools/tools/nanobsd/embedded/common 336136 2018-07-09 18:02:35Z imp $
+# $FreeBSD$
 
 #-
 # Copyright (c) 2015 M. Warner Losh.

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/jail/Makefile 352276 2019-09-13 07:08:43Z bapt $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -23,5 +23,8 @@ CFLAGS+= -DINET
 .endif
 
 CLEANFILES= y.output
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

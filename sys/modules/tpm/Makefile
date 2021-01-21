@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/tpm/Makefile 350062 2019-07-16 18:39:59Z eugen $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/dev/tpm
 

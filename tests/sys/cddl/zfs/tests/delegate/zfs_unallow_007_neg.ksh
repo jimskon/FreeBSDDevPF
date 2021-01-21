@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_unallow_007_neg.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -62,7 +62,7 @@ log_assert "zfs unallow won't remove those permissions which inherited from " \
 	"its parent dataset."
 log_onexit restore_root_datasets
 
-perm1="atime,devices"; perm2="compression,checksum"
+perm1="atime"; perm2="compression,checksum"
 log_must $ZFS create $SUBFS
 log_must $ZFS allow $STAFF1 $perm1 $ROOT_TESTFS
 log_must $ZFS allow $STAFF1 $perm2 $SUBFS

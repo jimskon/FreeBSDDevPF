@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fputc.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fputc.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -44,14 +44,24 @@ __FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fputc.c 326025 2017-11-20 19:49:4
 #include "local.h"
 #include "libc_private.h"
 
+#undef fputc_unlocked
+
+int
+fputc_unlocked(int c, FILE *fp)
+{
+
+	/* Orientation set by __sputc() when buffer is full. */
+	/* ORIENT(fp, -1); */
+	return (__sputc(c, fp));
+}
+
 int
 fputc(int c, FILE *fp)
 {
 	int retval;
+
 	FLOCKFILE_CANCELSAFE(fp);
-	/* Orientation set by __sputc() when buffer is full. */
-	/* ORIENT(fp, -1); */
-	retval = __sputc(c, fp);
+	retval = fputc_unlocked(c, fp);
 	FUNLOCKFILE_CANCELSAFE();
 	return (retval);
 }

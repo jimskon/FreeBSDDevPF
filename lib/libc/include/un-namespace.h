@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libc/include/un-namespace.h 337983 2018-08-17 18:34:07Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _UN_NAMESPACE_H_
@@ -119,6 +119,7 @@
 #undef		pthread_getaffinity_np
 #undef		pthread_getconcurrency
 #undef		pthread_getcpuclockid
+#undef		pthread_getname_np
 #undef		pthread_getprio
 #undef		pthread_getschedparam
 #undef		pthread_getspecific
@@ -172,6 +173,7 @@
 #undef		pthread_setcancelstate
 #undef		pthread_setcanceltype
 #undef		pthread_setconcurrency
+#undef		pthread_setname_np
 #undef		pthread_setprio
 #undef		pthread_setschedparam
 #undef		pthread_setspecific

@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/efi/loader/autoload.c 338250 2018-08-23 13:38:38Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #if defined(LOADER_FDT_SUPPORT)
 #include <sys/param.h>
@@ -50,7 +50,8 @@ efi_autoload(void)
 	 * imply that we're on a platform where FDT is a requirement.  If we
 	 * fix this, then the error handling here should be fixed accordingly.
 	 */
-	fdt_setup_fdtp();
+	if (fdt_is_setup() == 0)
+		fdt_setup_fdtp();
 #endif
 	return (0);
 }

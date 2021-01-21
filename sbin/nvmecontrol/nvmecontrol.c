@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/nvmecontrol/nvmecontrol.c 350946 2019-08-12 19:39:31Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioccom.h>
@@ -142,18 +142,17 @@ read_namespace_data(int fd, uint32_t nsid, struct nvme_namespace_data *nsdata)
 }
 
 int
-open_dev(const char *str, int *fd, int show_error, int exit_on_error)
+open_dev(const char *str, int *fd, int write, int exit_on_error)
 {
 	char		full_path[64];
 
 	snprintf(full_path, sizeof(full_path), _PATH_DEV"%s", str);
-	*fd = open(full_path, O_RDWR);
+	*fd = open(full_path, write ? O_RDWR : O_RDONLY);
 	if (*fd < 0) {
-		if (show_error)
-			warn("could not open %s", full_path);
-		if (exit_on_error)
-			exit(1);
-		else
+		if (exit_on_error) {
+			err(1, "could not open %s%s", full_path,
+			    write ? " for write" : "");
+		} else
 			return (errno);
 	}
 

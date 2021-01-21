@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/nvme/nvme_private.h 351914 2019-09-05 23:40:38Z imp $
+ * $FreeBSD$
  */
 
 #ifndef __NVME_PRIVATE_H__
@@ -141,7 +141,7 @@ struct nvme_request {
 	} u;
 	uint32_t			type;
 	uint32_t			payload_size;
-	boolean_t			timeout;
+	bool				timeout;
 	nvme_cb_fn_t			cb_fn;
 	void				*cb_arg;
 	int32_t				retries;
@@ -175,7 +175,8 @@ struct nvme_qpair {
 
 	struct nvme_controller	*ctrlr;
 	uint32_t		id;
-	uint32_t		phase;
+	int			domain;
+	int			cpu;
 
 	uint16_t		vector;
 	int			rid;
@@ -187,6 +188,7 @@ struct nvme_qpair {
 	uint32_t		sq_tdbl_off;
 	uint32_t		cq_hdbl_off;
 
+	uint32_t		phase;
 	uint32_t		sq_head;
 	uint32_t		sq_tail;
 	uint32_t		cq_head;
@@ -212,7 +214,7 @@ struct nvme_qpair {
 
 	struct nvme_tracker	**act_tr;
 
-	boolean_t		is_enabled;
+	bool			is_enabled;
 
 	struct mtx		lock __aligned(CACHE_LINE_SIZE);
 
@@ -238,7 +240,7 @@ struct nvme_controller {
 	device_t		dev;
 
 	struct mtx		lock;
-
+	int			domain;
 	uint32_t		ready_timeout_in_ms;
 	uint32_t		quirks;
 #define	QUIRK_DELAY_B4_CHK_RDY	1		/* Can't touch MMIO on disable */
@@ -258,11 +260,9 @@ struct nvme_controller {
 	struct resource		*bar4_resource;
 
 	uint32_t		msix_enabled;
-	uint32_t		force_intx;
 	uint32_t		enable_aborts;
 
 	uint32_t		num_io_queues;
-	uint32_t		num_cpus_per_ioq;
 	uint32_t		max_hw_pend_io;
 
 	/* Fields for tracking progress during controller initialization. */
@@ -279,9 +279,6 @@ struct nvme_controller {
 	struct resource		*res;
 	void			*tag;
 
-	bus_dma_tag_t		hw_desc_tag;
-	bus_dmamap_t		hw_desc_map;
-
 	/** maximum i/o size in bytes */
 	uint32_t		max_xfer_size;
 
@@ -296,6 +293,9 @@ struct nvme_controller {
 
 	/** timeout period in seconds */
 	uint32_t		timeout_period;
+
+	/** doorbell stride */
+	uint32_t		dstrd;
 
 	struct nvme_qpair	adminq;
 	struct nvme_qpair	*ioq;
@@ -319,8 +319,22 @@ struct nvme_controller {
 	uint32_t			is_initialized;
 	uint32_t			notification_sent;
 
-	boolean_t			is_failed;
+	bool				is_failed;
 	STAILQ_HEAD(, nvme_request)	fail_req;
+
+	/* Host Memory Buffer */
+	int				hmb_nchunks;
+	size_t				hmb_chunk;
+	bus_dma_tag_t			hmb_tag;
+	struct nvme_hmb_chunk {
+		bus_dmamap_t		hmbc_map;
+		void			*hmbc_vaddr;
+		uint64_t		hmbc_paddr;
+	} *hmb_chunks;
+	bus_dma_tag_t			hmb_desc_tag;
+	bus_dmamap_t			hmb_desc_map;
+	struct nvme_hmb_desc		*hmb_desc_vaddr;
+	uint64_t			hmb_desc_paddr;
 };
 
 #define nvme_mmio_offsetof(reg)						       \
@@ -374,7 +388,7 @@ void	nvme_ctrlr_cmd_get_firmware_page(struct nvme_controller *ctrlr,
 					 nvme_cb_fn_t cb_fn,
 					 void *cb_arg);
 void	nvme_ctrlr_cmd_create_io_cq(struct nvme_controller *ctrlr,
-				    struct nvme_qpair *io_que, uint16_t vector,
+				    struct nvme_qpair *io_que,
 				    nvme_cb_fn_t cb_fn, void *cb_arg);
 void	nvme_ctrlr_cmd_create_io_sq(struct nvme_controller *ctrlr,
 				    struct nvme_qpair *io_que,
@@ -410,9 +424,8 @@ void	nvme_ctrlr_submit_io_request(struct nvme_controller *ctrlr,
 void	nvme_ctrlr_post_failed_request(struct nvme_controller *ctrlr,
 				       struct nvme_request *req);
 
-int	nvme_qpair_construct(struct nvme_qpair *qpair, uint32_t id,
-			     uint16_t vector, uint32_t num_entries,
-			     uint32_t num_trackers,
+int	nvme_qpair_construct(struct nvme_qpair *qpair,
+			     uint32_t num_entries, uint32_t num_trackers,
 			     struct nvme_controller *ctrlr);
 void	nvme_qpair_submit_tracker(struct nvme_qpair *qpair,
 				  struct nvme_tracker *tr);
@@ -450,20 +463,22 @@ int	nvme_detach(device_t dev);
  * Wait for a command to complete using the nvme_completion_poll_cb.
  * Used in limited contexts where the caller knows it's OK to block
  * briefly while the command runs. The ISR will run the callback which
- * will set status->done to true.usually within microseconds. A 1s
- * pause means something is seriously AFU and we should panic to
- * provide the proper context to diagnose.
+ * will set status->done to true, usually within microseconds. If not,
+ * then after one second timeout handler should reset the controller
+ * and abort all outstanding requests including this polled one. If
+ * still not after ten seconds, then something is wrong with the driver,
+ * and panic is the only way to recover.
  */
 static __inline
 void
 nvme_completion_poll(struct nvme_completion_poll_status *status)
 {
-	int sanity = hz * 1;
+	int sanity = hz * 10;
 
 	while (!atomic_load_acq_int(&status->done) && --sanity > 0)
 		pause("nvme", 1);
 	if (sanity <= 0)
-		panic("NVME polled command failed to complete within 1s.");
+		panic("NVME polled command failed to complete within 10s.");
 }
 
 static __inline void
@@ -485,7 +500,7 @@ _nvme_allocate_request(nvme_cb_fn_t cb_fn, void *cb_arg)
 	if (req != NULL) {
 		req->cb_fn = cb_fn;
 		req->cb_arg = cb_arg;
-		req->timeout = TRUE;
+		req->timeout = true;
 	}
 	return (req);
 }

@@ -17,7 +17,7 @@
 
 /* cron.h - header for vixie's cron
  *
- * $FreeBSD: releng/12.1/usr.sbin/cron/cron/cron.h 334817 2018-06-07 22:38:40Z glebius $
+ * $FreeBSD$
  *
  * vix 14nov88 [rest of log is in RCS]
  * vix 14jan87 [0 or 7 can be sunday; thanks, mwm@berkeley]
@@ -191,6 +191,8 @@ typedef	struct _entry {
 #define	NOT_UNTIL	0x10
 #define	SEC_RES		0x20
 #define	INTERVAL	0x40
+#define	DONT_LOG	0x80
+#define	MAIL_WHEN_ERR	0x100
 	time_t	lastrun;
 } entry;
 
@@ -257,7 +259,7 @@ user		*load_user(int, struct passwd *, char *),
 entry		*load_entry(FILE *, void (*)(char *),
 				 struct passwd *, char **);
 
-FILE		*cron_popen(char *, char *, entry *);
+FILE		*cron_popen(char *, char *, entry *, PID_T *);
 
 
 				/* in the C tradition, we only create

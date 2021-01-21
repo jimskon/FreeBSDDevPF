@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/secure/lib/libcrypto/amd64/poly1305-x86_64.S 339270 2018-10-09 21:28:26Z gjb $ */
+/* $FreeBSD$ */
 /* Do not modify. This file is auto-generated from poly1305-x86_64.pl. */
 .text	
 
@@ -14,6 +14,7 @@
 .type	poly1305_init,@function
 .align	32
 poly1305_init:
+.cfi_startproc	
 	xorq	%rax,%rax
 	movq	%rax,0(%rdi)
 	movq	%rax,8(%rdi)
@@ -44,6 +45,7 @@ poly1305_init:
 	movl	$1,%eax
 .Lno_key:
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	poly1305_init,.-poly1305_init
 
 .type	poly1305_blocks,@function
@@ -164,6 +166,7 @@ poly1305_blocks:
 .type	poly1305_emit,@function
 .align	32
 poly1305_emit:
+.cfi_startproc	
 .Lemit:
 	movq	0(%rdi),%r8
 	movq	8(%rdi),%r9
@@ -184,10 +187,12 @@ poly1305_emit:
 	movq	%rcx,8(%rsi)
 
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	poly1305_emit,.-poly1305_emit
 .type	__poly1305_block,@function
 .align	32
 __poly1305_block:
+.cfi_startproc	
 	mulq	%r14
 	movq	%rax,%r9
 	movq	%r11,%rax
@@ -227,11 +232,13 @@ __poly1305_block:
 	adcq	$0,%rbx
 	adcq	$0,%rbp
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	__poly1305_block,.-__poly1305_block
 
 .type	__poly1305_init_avx,@function
 .align	32
 __poly1305_init_avx:
+.cfi_startproc	
 	movq	%r11,%r14
 	movq	%r12,%rbx
 	xorq	%rbp,%rbp
@@ -389,6 +396,7 @@ __poly1305_init_avx:
 
 	leaq	-48-64(%rdi),%rdi
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	__poly1305_init_avx,.-__poly1305_init_avx
 
 .type	poly1305_blocks_avx,@function
@@ -1229,6 +1237,7 @@ poly1305_blocks_avx:
 .type	poly1305_emit_avx,@function
 .align	32
 poly1305_emit_avx:
+.cfi_startproc	
 	cmpl	$0,20(%rdi)
 	je	.Lemit
 
@@ -1279,6 +1288,7 @@ poly1305_emit_avx:
 	movq	%rcx,8(%rsi)
 
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	poly1305_emit_avx,.-poly1305_emit_avx
 .type	poly1305_blocks_avx2,@function
 .align	32
@@ -1961,6 +1971,7 @@ poly1305_blocks_avx2:
 .type	xor128_encrypt_n_pad,@function
 .align	16
 xor128_encrypt_n_pad:
+.cfi_startproc	
 	subq	%rdx,%rsi
 	subq	%rdx,%rdi
 	movq	%rcx,%r10
@@ -2002,12 +2013,14 @@ xor128_encrypt_n_pad:
 .Ldone_enc:
 	movq	%rdx,%rax
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	xor128_encrypt_n_pad,.-xor128_encrypt_n_pad
 
 .globl	xor128_decrypt_n_pad
 .type	xor128_decrypt_n_pad,@function
 .align	16
 xor128_decrypt_n_pad:
+.cfi_startproc	
 	subq	%rdx,%rsi
 	subq	%rdx,%rdi
 	movq	%rcx,%r10
@@ -2053,4 +2066,5 @@ xor128_decrypt_n_pad:
 .Ldone_dec:
 	movq	%rdx,%rax
 	.byte	0xf3,0xc3
+.cfi_endproc	
 .size	xor128_decrypt_n_pad,.-xor128_decrypt_n_pad

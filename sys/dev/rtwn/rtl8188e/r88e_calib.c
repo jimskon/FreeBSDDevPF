@@ -15,7 +15,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_calib.c 342829 2019-01-07 04:10:54Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -46,7 +46,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8188e/r88e_calib.c 342829 2019-0
 
 #include <dev/rtwn/rtl8188e/r88e.h>
 #include <dev/rtwn/rtl8188e/r88e_reg.h>
-
 
 /* Registers to save and restore during IQ calibration. */
 struct r88e_iq_cal_reg_vals {

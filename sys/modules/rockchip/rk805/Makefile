@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/rockchip/rk805/Makefile 341142 2018-11-28 13:53:43Z manu $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm64/rockchip
 

@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/rockchip/clk/rk3399_pmucru.c 350687 2019-08-07 18:26:32Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/rockchip/clk/rk3399_pmucru.c 350687 2019-08-07 18:26:32Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -58,6 +58,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/arm64/rockchip/clk/rk3399_pmucru.c 350687 20
 #define	PCLK_I2C0_PMU		27
 #define	PCLK_I2C4_PMU		28
 #define	PCLK_I2C8_PMU		29
+#define	PCLK_RKPWM_PMU		30
 
 static struct rk_cru_gate rk3399_pmu_gates[] = {
 	/* PMUCRU_CLKGATE_CON1 */
@@ -67,8 +68,8 @@ static struct rk_cru_gate rk3399_pmu_gates[] = {
 	CRU_GATE(PCLK_I2C0_PMU, "pclk_i2c0_pmu", "pclk_pmu_src", 0x104, 7)
 	CRU_GATE(PCLK_I2C4_PMU, "pclk_i2c4_pmu", "pclk_pmu_src", 0x104, 8)
 	CRU_GATE(PCLK_I2C8_PMU, "pclk_i2c8_pmu", "pclk_pmu_src", 0x104, 9)
+	CRU_GATE(PCLK_RKPWM_PMU, "pclk_rkpwm_pmu", "pclk_pmu_src", 0x104, 10)
 };
-
 
 /*
  * PLLs
@@ -845,6 +846,9 @@ rk3399_pmucru_attach(device_t dev)
 
 	sc->clks = rk3399_pmu_clks;
 	sc->nclks = nitems(rk3399_pmu_clks);
+
+	sc->reset_offset = 0x110;
+	sc->reset_num = 30;
 
 	return (rk_cru_attach(dev));
 }

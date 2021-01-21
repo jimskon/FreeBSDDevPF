@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/nfsd/Makefile 346773 2019-04-27 01:58:51Z rmacklem $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/fs/nfsserver ${SRCTOP}/sys/nfs
 KMOD=	nfsd

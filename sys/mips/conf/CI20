@@ -1,6 +1,6 @@
 # CI20 -- Kernel config for Creator CI20 board
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/CI20 310333 2016-12-20 18:27:53Z br $
+# $FreeBSD$
 
 #NO_UNIVERSE
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/powerpc/uboot/Makefile 342783 2019-01-05 05:20:36Z jhibbits $
+# $FreeBSD$
 
 LOADER_UFS_SUPPORT?=	yes
 LOADER_CD9660_SUPPORT?=	no

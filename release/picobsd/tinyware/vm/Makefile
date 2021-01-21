@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/release/picobsd/tinyware/vm/Makefile 264400 2014-04-13 05:21:56Z imp $
+# $FreeBSD$
 #
 PROG=vm
 #CFLAGS+=

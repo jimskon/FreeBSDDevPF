@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/googletest.test.mk 348138 2019-05-23 01:09:10Z ngie $
+# $FreeBSD$
 #
 # You must include bsd.test.mk instead of this file from your Makefile.
 #

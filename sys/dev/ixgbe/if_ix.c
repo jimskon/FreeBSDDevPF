@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.1/sys/dev/ixgbe/if_ix.c 353665 2019-10-16 21:46:49Z erj $*/
+/*$FreeBSD$*/
 
 
 #include "opt_inet.h"
@@ -139,6 +139,7 @@ static void ixgbe_if_update_admin_status(if_ctx_t ctx);
 static void ixgbe_if_vlan_register(if_ctx_t ctx, u16 vtag);
 static void ixgbe_if_vlan_unregister(if_ctx_t ctx, u16 vtag);
 static int  ixgbe_if_i2c_req(if_ctx_t ctx, struct ifi2creq *req);
+static bool ixgbe_if_needs_restart(if_ctx_t ctx, enum iflib_restart_event event);
 int ixgbe_intr(void *arg);
 
 /************************************************************************
@@ -273,6 +274,7 @@ static device_method_t ixgbe_if_methods[] = {
 	DEVMETHOD(ifdi_vlan_unregister, ixgbe_if_vlan_unregister),
 	DEVMETHOD(ifdi_get_counter, ixgbe_if_get_counter),
 	DEVMETHOD(ifdi_i2c_req, ixgbe_if_i2c_req),
+	DEVMETHOD(ifdi_needs_restart, ixgbe_if_needs_restart),
 #ifdef PCI_IOV
 	DEVMETHOD(ifdi_iov_init, ixgbe_if_iov_init),
 	DEVMETHOD(ifdi_iov_uninit, ixgbe_if_iov_uninit),
@@ -1233,6 +1235,25 @@ ixgbe_if_i2c_req(if_ctx_t ctx, struct ifi2creq *req)
 	return (0);
 } /* ixgbe_if_i2c_req */
 
+/* ixgbe_if_needs_restart - Tell iflib when the driver needs to be reinitialized
+ * @ctx: iflib context
+ * @event: event code to check
+ *
+ * Defaults to returning true for unknown events.
+ *
+ * @returns true if iflib needs to reinit the interface
+ */
+static bool
+ixgbe_if_needs_restart(if_ctx_t ctx __unused, enum iflib_restart_event event)
+{
+	switch (event) {
+	case IFLIB_RESTART_VLAN_CONFIG:
+		return (false);
+	default:
+		return (true);
+	}
+}
+
 /************************************************************************
  * ixgbe_add_media_types
  ************************************************************************/
@@ -1392,6 +1413,7 @@ ixgbe_update_stats_counters(struct adapter *adapter)
 	struct ixgbe_hw       *hw = &adapter->hw;
 	struct ixgbe_hw_stats *stats = &adapter->stats.pf;
 	u32                   missed_rx = 0, bprc, lxon, lxoff, total;
+	u32                   lxoffrxc;
 	u64                   total_missed_rx = 0;
 
 	stats->crcerrs += IXGBE_READ_REG(hw, IXGBE_CRCERRS);
@@ -1421,15 +1443,24 @@ ixgbe_update_stats_counters(struct adapter *adapter)
 		stats->tor += IXGBE_READ_REG(hw, IXGBE_TORL) +
 		    ((u64)IXGBE_READ_REG(hw, IXGBE_TORH) << 32);
 		stats->lxonrxc += IXGBE_READ_REG(hw, IXGBE_LXONRXCNT);
-		stats->lxoffrxc += IXGBE_READ_REG(hw, IXGBE_LXOFFRXCNT);
+		lxoffrxc = IXGBE_READ_REG(hw, IXGBE_LXOFFRXCNT);
+		stats->lxoffrxc += lxoffrxc;
 	} else {
 		stats->lxonrxc += IXGBE_READ_REG(hw, IXGBE_LXONRXC);
-		stats->lxoffrxc += IXGBE_READ_REG(hw, IXGBE_LXOFFRXC);
+		lxoffrxc = IXGBE_READ_REG(hw, IXGBE_LXOFFRXC);
+		stats->lxoffrxc += lxoffrxc;
 		/* 82598 only has a counter in the high register */
 		stats->gorc += IXGBE_READ_REG(hw, IXGBE_GORCH);
 		stats->gotc += IXGBE_READ_REG(hw, IXGBE_GOTCH);
 		stats->tor += IXGBE_READ_REG(hw, IXGBE_TORH);
 	}
+
+	/*
+	 * For watchdog management we need to know if we have been paused
+	 * during the last interval, so capture that here.
+	*/
+	if (lxoffrxc)
+		adapter->shared->isc_pause_frames = 1;
 
 	/*
 	 * Workaround: mprc hardware is incorrectly counting

@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/systat/ifcmds.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>
@@ -74,6 +74,8 @@ ifcmd(const char *cmd, const char *args)
 		}
 	} else if (prefix(cmd, "pps"))
 		showpps = !showpps;
+	else
+		return (0);
 
 	return (1);
 }

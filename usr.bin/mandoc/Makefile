@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/mandoc/Makefile 349024 2019-06-13 20:16:26Z lwhsu $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfsserver/nfs_nfsdkrpc.c 342561 2018-12-28 00:10:31Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet6.h"
 #include "opt_kgssapi.h"
@@ -394,8 +394,7 @@ nfs_proc(struct nfsrv_descript *nd, u_int32_t xid, SVCXPRT *xprt,
 			} else
 				m = NULL;
 			if ((nd->nd_flag & ND_HASSEQUENCE) != 0)
-				nfsrv_cache_session(nd->nd_sessionid,
-				    nd->nd_slotid, nd->nd_repstat, &m);
+				nfsrv_cache_session(nd, &m);
 			if (nd->nd_repstat == NFSERR_REPLYFROMCACHE)
 				nd->nd_repstat = 0;
 			cacherep = RC_REPLY;

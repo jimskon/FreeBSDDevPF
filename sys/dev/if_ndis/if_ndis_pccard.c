@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/if_ndis/if_ndis_pccard.c 343819 2019-02-06 02:06:00Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/ctype.h>
 #include <sys/param.h>
@@ -303,6 +303,8 @@ ndis_attach_pccard(dev)
 	}
 
 	error = ndis_attach(dev);
+	if (error == 0)
+		gone_in_dev(dev, 13, "pccard removed");
 
 fail:
 	return(error);

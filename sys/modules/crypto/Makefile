@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/crypto/Makefile 345124 2019-03-14 02:46:03Z sef $
+# $FreeBSD$
 
 LIBSODIUM=${SRCTOP}/sys/contrib/libsodium/src/libsodium
 

@@ -22,12 +22,17 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/csu/common/crtend.c 352394 2019-09-16 13:41:24Z andrew $");
+__FBSDID("$FreeBSD$");
 
 #include "crt.h"
 
-#ifdef HAVE_CTORS
 typedef void (*crt_func)(void);
+
+static crt_func __JCR_LIST__[] __section(".jcr") __used = {
+	(crt_func)0
+};
+
+#ifdef HAVE_CTORS
 
 /*
  * On some architectures and toolchains we may need to call the .ctors.
@@ -39,9 +44,6 @@ static crt_func __CTOR_END__[] __section(".ctors") __used = {
 	(crt_func)0
 };
 static crt_func __DTOR_END__[] __section(".dtors") __used = {
-	(crt_func)0
-};
-static crt_func __JCR_LIST__[] __section(".jcr") __used = {
 	(crt_func)0
 };
 

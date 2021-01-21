@@ -1,5 +1,5 @@
 /*	$NetBSD: ibcs2_stat.h,v 1.2 1994/10/26 02:53:03 cgd Exp $	*/
-/* $FreeBSD: releng/12.1/sys/i386/ibcs2/ibcs2_stat.h 326260 2017-11-27 15:08:52Z pfg $ */
+/* $FreeBSD$ */
 
 /*-
  * SPDX-License-Identifier: BSD-4-Clause

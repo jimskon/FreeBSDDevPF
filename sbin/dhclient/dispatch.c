@@ -42,7 +42,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/dhclient/dispatch.c 336195 2018-07-11 09:41:50Z eugen $");
+__FBSDID("$FreeBSD$");
 
 #include "dhcpd.h"
 #include "privsep.h"
@@ -474,13 +474,16 @@ add_protocol(const char *name, int fd, void (*handler)(struct protocol *),
 void
 remove_protocol(struct protocol *proto)
 {
-	struct protocol *p, *next;
+	struct protocol *p, *prev;
 
-	for (p = protocols; p; p = next) {
-		next = p->next;
+	for (p = protocols, prev = NULL; p != NULL; prev = p, p = p->next) {
 		if (p == proto) {
-			protocols = p->next;
+			if (prev == NULL)
+				protocols = p->next;
+			else
+				prev->next = p->next;
 			free(p);
+			break;
 		}
 	}
 }

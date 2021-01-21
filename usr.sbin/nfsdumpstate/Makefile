@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/nfsdumpstate/Makefile 346772 2019-04-27 01:50:09Z rmacklem $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

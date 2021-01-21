@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/Makefile.inc 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
 
 WARNS?=		0
 
@@ -10,6 +10,11 @@ MK_PIE:=	no	# Explicit libXXX.a references
 DEBUG_FILES_CFLAGS= -gline-tables-only
 .else
 DEBUG_FILES_CFLAGS= -g1
+.endif
+
+.if ${MACHINE_ARCH:Mmips*} && ${MACHINE_ARCH:Mmips64*} == ""
+CFLAGS+= -mxgot
+CXXFLAGS+= -mxgot
 .endif
 
 .include "../Makefile.inc"

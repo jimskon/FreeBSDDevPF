@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/cli_root/zpool_get/zpool_get_002_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -96,10 +96,10 @@ done
 # increment the counter to include the header line
 i=$(( $i + 1 ))
 
-COUNT=$($WC $TMPDIR/values.${TESTCASE_ID} | $AWK '{print $1}')
+COUNT=$($WC $TMPDIR/values.${TESTCASE_ID})
 if [ $i -ne $COUNT ]
 then
-	log_fail "Length of output $COUNT was not equal to number of props + 1."
+	log_fail "Length of output $COUNT was not equal to number of props + 1 ($i)."
 fi
 
 

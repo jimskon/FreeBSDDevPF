@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.1/sys/sys/_sigset.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS__SIGSET_H_
@@ -47,7 +47,7 @@
 #define	_SIG_MAXSIG	128
 #define	_SIG_IDX(sig)	((sig) - 1)
 #define	_SIG_WORD(sig)	(_SIG_IDX(sig) >> 5)
-#define	_SIG_BIT(sig)	(1 << (_SIG_IDX(sig) & 31))
+#define	_SIG_BIT(sig)	(1U << (_SIG_IDX(sig) & 31))
 #define	_SIG_VALID(sig)	((sig) <= _SIG_MAXSIG && (sig) > 0)
 
 typedef struct __sigset {

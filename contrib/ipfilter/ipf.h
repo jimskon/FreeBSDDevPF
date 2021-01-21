@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/contrib/ipfilter/ipf.h 344833 2019-03-06 02:37:25Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -191,7 +191,7 @@ typedef	int	(* addfunc_t) __P((int, ioctlfunc_t, void *));
 typedef	int	(* copyfunc_t) __P((void *, void *, size_t));
 
 
-extern	char	thishost[];
+extern	char	thishost[MAXHOSTNAMELEN];
 extern	char	flagset[];
 extern	u_char	flags[];
 extern	struct ipopt_names ionames[];

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_sysctl.h 339867 2018-10-29 19:01:47Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_SYSCTL_H_
 #define _NETINET_SCTP_SYSCTL_H_
@@ -116,11 +116,9 @@ struct sctp_sysctl {
 	uint32_t sctp_buffer_splitting;
 	uint32_t sctp_initial_cwnd;
 	uint32_t sctp_blackhole;
+	uint32_t sctp_sendall_limit;
 #if defined(SCTP_DEBUG)
 	uint32_t sctp_debug_on;
-#endif
-#if defined(__APPLE__) || defined(SCTP_SO_LOCK_TESTING)
-	uint32_t sctp_output_unlocked;
 #endif
 };
 
@@ -538,6 +536,12 @@ struct sctp_sysctl {
 #define SCTPCTL_BLACKHOLE_MAX		2
 #define SCTPCTL_BLACKHOLE_DEFAULT	SCTPCTL_BLACKHOLE_MIN
 
+/* sendall_limit: Maximum message with SCTP_SENDALL */
+#define SCTPCTL_SENDALL_LIMIT_DESC	"Maximum size of a message send with SCTP_SENDALL"
+#define SCTPCTL_SENDALL_LIMIT_MIN	0
+#define SCTPCTL_SENDALL_LIMIT_MAX	0xFFFFFFFF
+#define SCTPCTL_SENDALL_LIMIT_DEFAULT	1432
+
 #define SCTPCTL_DIAG_INFO_CODE_DESC	"Diagnostic information error cause code"
 #define SCTPCTL_DIAG_INFO_CODE_MIN	0
 #define SCTPCTL_DIAG_INFO_CODE_MAX	65535
@@ -552,12 +556,6 @@ struct sctp_sysctl {
 #endif
 
 
-#if defined(__APPLE__) || defined(SCTP_SO_LOCK_TESTING)
-#define SCTPCTL_OUTPUT_UNLOCKED_DESC	"Unlock socket when sending packets down to IP"
-#define SCTPCTL_OUTPUT_UNLOCKED_MIN	0
-#define SCTPCTL_OUTPUT_UNLOCKED_MAX	1
-#define SCTPCTL_OUTPUT_UNLOCKED_DEFAULT	SCTPCTL_OUTPUT_UNLOCKED_MIN
-#endif
 
 
 #if defined(_KERNEL) || defined(__Userspace__)

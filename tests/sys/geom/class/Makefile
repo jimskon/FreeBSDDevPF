@@ -1,13 +1,18 @@
-# $FreeBSD: releng/12.1/tests/sys/geom/class/Makefile 329275 2018-02-14 20:26:09Z asomers $
+# $FreeBSD$
+
+.include <src.opts.mk>
 
 PACKAGE=	tests
 
 TESTSDIR=	${TESTSBASE}/sys/geom/class
 
 TESTS_SUBDIRS+=	concat
+.if ${MK_OPENSSL} != "no"
 TESTS_SUBDIRS+=	eli
+.endif
 TESTS_SUBDIRS+=	gate
 TESTS_SUBDIRS+=	mirror
+TESTS_SUBDIRS+=	multipath
 TESTS_SUBDIRS+=	nop
 TESTS_SUBDIRS+=	part
 TESTS_SUBDIRS+=	raid3

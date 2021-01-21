@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/usb_freebsd_loader.h 326255 2017-11-27 14:52:40Z pfg $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -53,6 +53,7 @@
 #define	USB_HAVE_FIXED_CONFIG 0
 #define	USB_HAVE_FIXED_PORT 0
 #define	USB_HAVE_DISABLE_ENUM 0
+#define	USB_HAVE_MALLOC_WAITOK 0
 
 #define	USB_CALLOUT_ZERO_TICKS 1
 

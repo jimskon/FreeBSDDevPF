@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5212_reset.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -692,7 +692,7 @@ done:
 	HALDEBUG(ah, HAL_DEBUG_RESET, "%s: done\n", __func__);
 
 	RESTORE_CCK(ah, chan, isBmode);
-	
+
 	OS_MARK(ah, AH_MARK_RESET_DONE, 0);
 
 	return AH_TRUE;
@@ -1191,7 +1191,6 @@ ar5212MacStop(struct ath_hal *ah)
 
 	return status;
 }
-
 
 /*
  * Write the given reset bit mask into the reset register
@@ -1922,7 +1921,6 @@ ar5212SetSpurMitigation(struct ath_hal *ah,
 	}
 #undef CHAN_TO_SPUR
 }
-
 
 /*
  * Delta slope coefficient computation.

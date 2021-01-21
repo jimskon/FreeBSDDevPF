@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * $FreeBSD: releng/12.1/lib/libsecureboot/libsecureboot-priv.h 349894 2019-07-10 21:35:55Z sjg $
+ * $FreeBSD$
  */
 #ifndef _LIBSECUREBOOT_PRIV_H_
 #define _LIBSECUREBOOT_PRIV_H_

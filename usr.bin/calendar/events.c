@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/calendar/events.c 345577 2019-03-27 14:47:10Z bapt $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/time.h>
 #include <err.h>

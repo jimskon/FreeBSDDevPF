@@ -31,7 +31,7 @@
  *
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2835_fbd.c 331229 2018-03-20 00:03:49Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -85,7 +85,13 @@ bcm_fb_init(struct bcmsc_softc *sc, struct bcm2835_fb_config *fb)
 	memset(fb, 0, sizeof(*fb));
 	if (bcm2835_mbox_fb_get_w_h(fb) != 0)
 		return (ENXIO);
-	fb->bpp = FB_DEPTH;
+	if (bcm2835_mbox_fb_get_bpp(fb) != 0)
+		return (ENXIO);
+	if (fb->bpp < FB_DEPTH) {
+		device_printf(sc->dev, "changing fb bpp from %d to %d\n", fb->bpp, FB_DEPTH);
+		fb->bpp = FB_DEPTH;
+	} else
+		device_printf(sc->dev, "keeping existing fb bpp of %d\n", fb->bpp);
 
 	fb->vxres = fb->xres;
 	fb->vyres = fb->yres;

@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/usb_fdt_support.c 348420 2019-05-30 14:40:23Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/condvar.h>

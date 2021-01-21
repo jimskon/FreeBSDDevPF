@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/stdlib/jemalloc/Makefile.inc 333477 2018-05-11 00:32:31Z jasone $
+# $FreeBSD$
 
 .PATH: ${LIBC_SRCTOP}/stdlib/jemalloc
 
@@ -44,6 +44,6 @@ MLINKS+= \
 	jemalloc.3 nallocx.3 \
 	jemalloc.3 malloc.conf.5
 
-.if defined(MALLOC_PRODUCTION)
+.if ${MK_MALLOC_PRODUCTION} != "no" || defined(MALLOC_PRODUCTION)
 CFLAGS+=	-DMALLOC_PRODUCTION
 .endif

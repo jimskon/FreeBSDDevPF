@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-/* $FreeBSD: releng/12.1/tools/tools/vhba/rptluns/vhba_rptluns.c 208926 2010-06-08 22:26:47Z mjacob $ */
+/* $FreeBSD$ */
 /*
  * A VHBA device to test REPORT LUN functionality.
  */

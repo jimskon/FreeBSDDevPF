@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ah_osdep.c 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -444,7 +444,6 @@ ath_hal_modevent(module_t mod __unused, int type, void *data __unused)
 	default:
 		error = EOPNOTSUPP;
 		break;
-
 	}
 	return (error);
 }

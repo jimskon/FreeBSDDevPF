@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/i386/btx/Makefile 50477 1999-08-28 01:08:13Z peter $
+# $FreeBSD$
 
 SUBDIR=	btx btxldr lib
 

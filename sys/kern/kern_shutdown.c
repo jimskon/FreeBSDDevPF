@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_shutdown.c 344905 2019-03-08 00:20:37Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ekcd.h"
@@ -115,9 +115,9 @@ SYSCTL_INT(_kern, OID_AUTO, panic_reboot_wait_time, CTLFLAG_RWTUN,
 
 #ifdef KDB
 #ifdef KDB_UNATTENDED
-static int debugger_on_panic = 0;
+int debugger_on_panic = 0;
 #else
-static int debugger_on_panic = 1;
+int debugger_on_panic = 1;
 #endif
 SYSCTL_INT(_debug, OID_AUTO, debugger_on_panic,
     CTLFLAG_RWTUN | CTLFLAG_SECURE,
@@ -205,9 +205,9 @@ SYSCTL_INT(_kern, OID_AUTO, kerneldump_gzlevel, CTLFLAG_RWTUN,
  * Variable panicstr contains argument to first call to panic; used as flag
  * to indicate that the kernel has already called panic.
  */
-const char *panicstr;
+const char __read_mostly *panicstr;
 
-int dumping;				/* system is dumping */
+int __read_mostly dumping;		/* system is dumping */
 int rebooting;				/* system is rebooting */
 static struct dumperinfo dumper;	/* our selected dumper */
 
@@ -564,6 +564,9 @@ shutdown_halt(void *junk, int howto)
 		printf("\n");
 		printf("The operating system has halted.\n");
 		printf("Please press any key to reboot.\n\n");
+
+		wdog_kern_pat(WD_TO_NEVER);
+
 		switch (cngetc()) {
 		case -1:		/* No console, just die */
 			cpu_halt();
@@ -682,7 +685,7 @@ SYSCTL_INT(_debug_kassert, OID_AUTO, do_log, KASSERT_RWTUN,
     &kassert_do_log, 0,
     "If warn_only is enabled, log (1) or do not log (0) assertion violations");
 
-SYSCTL_INT(_debug_kassert, OID_AUTO, warnings, KASSERT_RWTUN,
+SYSCTL_INT(_debug_kassert, OID_AUTO, warnings, CTLFLAG_RD | CTLFLAG_STATS,
     &kassert_warnings, 0, "number of KASSERTs that have been triggered");
 
 SYSCTL_INT(_debug_kassert, OID_AUTO, log_panic_at, KASSERT_RWTUN,
@@ -1299,6 +1302,7 @@ kerneldumpcomp_write_cb(void *base, size_t length, off_t offset, void *arg)
 		}
 		resid = length - rlength;
 		memmove(di->blockbuf, (uint8_t *)base + rlength, resid);
+		bzero((uint8_t *)di->blockbuf + resid, di->blocksize - resid);
 		di->kdcomp->kdc_resid = resid;
 		return (EAGAIN);
 	}
@@ -1515,9 +1519,10 @@ dump_finish(struct dumperinfo *di, struct kerneldumpheader *kdh)
 		error = compressor_flush(di->kdcomp->kdc_stream);
 		if (error == EAGAIN) {
 			/* We have residual data in di->blockbuf. */
-			error = dump_write(di, di->blockbuf, 0, di->dumpoff,
-			    di->blocksize);
-			di->dumpoff += di->kdcomp->kdc_resid;
+			error = _dump_append(di, di->blockbuf, 0, di->blocksize);
+			if (error == 0)
+				/* Compensate for _dump_append()'s adjustment. */
+				di->dumpoff -= di->blocksize - di->kdcomp->kdc_resid;
 			di->kdcomp->kdc_resid = 0;
 		}
 		if (error != 0)

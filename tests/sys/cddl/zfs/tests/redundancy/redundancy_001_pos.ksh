@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/redundancy/redundancy_001_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -62,7 +62,6 @@
 verify_runnable "global"
 
 log_assert "Verify raidz pool can withstand one device is failing."
-log_onexit cleanup
 
 for cnt in 3 2; do
 	setup_test_env $TESTPOOL raidz $cnt

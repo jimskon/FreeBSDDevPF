@@ -20,7 +20,7 @@
  *
  * Portions Copyright 2008 John Birrell <jb@freebsd.org>
  *
- * $FreeBSD: releng/12.1/sys/cddl/dev/dtrace/amd64/dtrace_asm.S 342267 2018-12-19 23:29:44Z mjg $
+ * $FreeBSD$
  *
  */
 /*
@@ -148,22 +148,6 @@ bp_ret:
 	/*NOTREACHED*/
 
 	END(dtrace_invop_start)
-
-/*
-void dtrace_invop_init(void)
-*/
-	ENTRY(dtrace_invop_init)
-	movq	$dtrace_invop_start, dtrace_invop_jump_addr(%rip)
-	ret
-	END(dtrace_invop_init)
-
-/*
-void dtrace_invop_uninit(void)
-*/
-	ENTRY(dtrace_invop_uninit)
-	movq	$0, dtrace_invop_jump_addr(%rip)
-	ret
-	END(dtrace_invop_uninit)
 
 /*
 greg_t dtrace_getfp(void)

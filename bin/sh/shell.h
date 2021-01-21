@@ -32,7 +32,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)shell.h	8.2 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.1/bin/sh/shell.h 345117 2019-03-13 21:53:10Z jilles $
+ * $FreeBSD$
  */
 
 #ifndef SHELL_H_

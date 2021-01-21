@@ -38,7 +38,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/ctl/ctl_backend.c 333446 2018-05-10 03:50:20Z araujo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -83,7 +83,6 @@ ctl_backend_register(struct ctl_backend_driver *be)
 #ifdef CS_BE_CONFIG_MOVE_DONE_IS_NOT_USED
 	be->config_move_done = ctl_config_move_done;
 #endif
-	be->num_luns = 0;
 
 	/* Call the backend's initialization routine. */
 	if (be->init != NULL) {

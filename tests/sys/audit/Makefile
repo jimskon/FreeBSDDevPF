@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/audit/Makefile 344136 2019-02-14 20:29:33Z asomers $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/audit
 

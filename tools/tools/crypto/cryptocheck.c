@@ -55,7 +55,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/tools/tools/crypto/cryptocheck.c 345124 2019-03-14 02:46:03Z sef $
+ * $FreeBSD$
  */
 
 /*

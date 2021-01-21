@@ -6,7 +6,7 @@
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *
- * $FreeBSD: releng/12.1/usr.bin/top/utils.c 344382 2019-02-20 20:28:48Z dim $
+ * $FreeBSD$
  */
 
 /*
@@ -291,13 +291,14 @@ format_time(long seconds)
 char *
 format_k(int64_t amt)
 {
-    static char retarray[NUM_STRINGS][16];
-    static int index_ = 0;
-    char *ret;
+	static char retarray[NUM_STRINGS][16];
+	static int index_ = 0;
+	char *ret;
 
-    ret = retarray[index_];
+	ret = retarray[index_];
 	index_ = (index_ + 1) % NUM_STRINGS;
-	humanize_number(ret, 6, amt * 1024, "", HN_AUTOSCALE, HN_NOSPACE);
+	humanize_number(ret, 6, amt * 1024, "", HN_AUTOSCALE, HN_NOSPACE |
+	    HN_B);
 	return (ret);
 }
 

@@ -26,9 +26,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)unix.4	8.1 (Berkeley) 6/9/93
-.\" $FreeBSD: releng/12.1/share/man/man4/unix.4 338060 2018-08-19 17:42:49Z 0mp $
+.\" $FreeBSD$
 .\"
-.Dd August 19, 2018
+.Dd August 3, 2020
 .Dt UNIX 4
 .Os
 .Sh NAME
@@ -195,7 +195,9 @@ The sending process could have exited and its process ID already been
 reused for a new process.
 .Sh SOCKET OPTIONS
 .Tn UNIX
-domain sockets support a number of socket options which can be set with
+domain sockets support a number of socket options for the options level
+.Dv SOL_LOCAL ,
+which can be set with
 .Xr setsockopt 2
 and tested with
 .Xr getsockopt 2 :

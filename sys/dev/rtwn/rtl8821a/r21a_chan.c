@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/r21a_chan.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -59,7 +59,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/r21a_chan.c 307529 2016-10
 
 #include <dev/rtwn/rtl8821a/r21a.h>
 #include <dev/rtwn/rtl8821a/r21a_reg.h>
-
 
 static void
 r21a_bypass_ext_lna_2ghz(struct rtwn_softc *sc)

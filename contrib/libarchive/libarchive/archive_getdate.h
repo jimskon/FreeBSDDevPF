@@ -22,15 +22,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_getdate.h 299529 2016-05-12 10:16:16Z mm $
+ * $FreeBSD$
  */
+
+#ifndef ARCHIVE_GETDATE_H_INCLUDED
+#define ARCHIVE_GETDATE_H_INCLUDED
 
 #ifndef __LIBARCHIVE_BUILD
 #error This header is only to be used internally to libarchive.
 #endif
-
-#ifndef ARCHIVE_GETDATE_H_INCLUDED
-#define	ARCHIVE_GETDATE_H_INCLUDED
 
 #include <time.h>
 

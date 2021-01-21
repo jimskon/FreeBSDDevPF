@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/fuse/fuse_node.c 352351 2019-09-15 04:14:31Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/systm.h>
@@ -449,7 +449,8 @@ fuse_vnode_size(struct vnode *vp, off_t *filesize, struct ucred *cred,
 	int error = 0;
 
 	if (!(fvdat->flag & FN_SIZECHANGE) &&
-		(VTOVA(vp) == NULL || fvdat->cached_attrs.va_size == VNOVAL)) 
+		(!fuse_vnode_attr_cache_valid(vp) ||
+		  fvdat->cached_attrs.va_size == VNOVAL)) 
 		error = fuse_internal_do_getattr(vp, NULL, cred, td);
 
 	if (!error)

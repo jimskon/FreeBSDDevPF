@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/local.dirdeps.mk 337186 2018-08-02 21:33:45Z sjg $
+# $FreeBSD$
 .if !target(_DIRDEP_USE)
 # we are the 1st makefile
 
@@ -75,7 +75,7 @@ DIRDEPS_FILTER.xtras+= Nusr.bin/clang/clang.host
 .if ${DEP_RELDIR} == "lib/libc"
 DIRDEPS += lib/libc_nonshared
 .if ${MK_SSP:Uno} != "no" 
-DIRDEPS += gnu/lib/libssp/libssp_nonshared
+DIRDEPS += lib/libssp_nonshared
 .endif
 .else
 DIRDEPS_FILTER.xtras+= Nlib/libc_nonshared
@@ -148,7 +148,6 @@ _SRCS= ${SRCS} ${_PROGS_SRCS}
 
 # Has C files. The C_DIRDEPS are shared with C++ files as well.
 C_DIRDEPS= \
-	gnu/lib/csu \
 	include \
 	include/arpa \
 	include/protocols \
@@ -220,6 +219,11 @@ DIRDEPS+= ${_lib${_lib}reldir}
 .if ${DEP_RELDIR} != "targets/pseudo/stage"
 DIRDEPS += targets/pseudo/stage
 .endif
+.endif
+
+# this one is too pervasive
+.if ${MK_BSD_CRTBEGIN} == "no" && ${DEP_RELDIR:N.:Ngnu/lib/csu:Ninclude*:Ntargets/*} != ""
+DIRDEPS+= gnu/lib/csu
 .endif
 
 DEP_MACHINE_ARCH = ${MACHINE_ARCH.${DEP_MACHINE}}

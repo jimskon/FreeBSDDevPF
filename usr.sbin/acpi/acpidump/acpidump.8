@@ -27,9 +27,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/usr.sbin/acpi/acpidump/acpidump.8 336185 2018-07-11 01:37:01Z bwidawsk $
+.\" $FreeBSD$
 .\"
-.Dd July 10, 2018
+.Dd June 29, 2020
 .Dt ACPIDUMP 8
 .Os
 .Sh NAME
@@ -97,11 +97,15 @@ flag, the
 utility dumps contents of the following tables:
 .Pp
 .Bl -tag -offset indent -width 12345 -compact
+.It BERT
 .It DMAR
 .It DSDT
 .It ECDT
+.It EINJ
+.It ERST
 .It FACS
 .It FADT
+.It HEST
 .It HPET
 .It LPIT
 .It MADT
@@ -109,6 +113,10 @@ utility dumps contents of the following tables:
 .It NFIT
 .It RSD PTR
 .It RSDT
+.It SLIT
+.It SRAT
+.It TCPA
+.It TPM2
 .It WDDT
 .El
 .Pp

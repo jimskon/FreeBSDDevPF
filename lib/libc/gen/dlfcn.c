@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/dlfcn.c 326193 2017-11-25 17:12:48Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #if !defined(IN_LIBDL) || defined(PIC)
 
@@ -42,6 +42,7 @@ __FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/dlfcn.c 326193 2017-11-25 17:12:48Z
 #include <pthread.h>
 #include "un-namespace.h"
 #include "libc_private.h"
+#include "reentrant.h"
 
 static char sorry[] = "Service unavailable";
 
@@ -164,6 +165,7 @@ _rtld_thread_init(void *li __unused)
 #ifndef IN_LIBDL
 static pthread_once_t dl_phdr_info_once = PTHREAD_ONCE_INIT;
 static struct dl_phdr_info phdr_info;
+static mutex_t dl_phdr_info_lock = MUTEX_INITIALIZER;
 
 static void
 dl_init_phdr_info(void)
@@ -204,13 +206,17 @@ int
 dl_iterate_phdr(int (*callback)(struct dl_phdr_info *, size_t, void *) __unused,
     void *data __unused)
 {
-
 #ifndef IN_LIBDL
+	int ret;
+
 	__init_elf_aux_vector();
 	if (__elf_aux_vector == NULL)
 		return (1);
 	_once(&dl_phdr_info_once, dl_init_phdr_info);
-	return (callback(&phdr_info, sizeof(phdr_info), data));
+	mutex_lock(&dl_phdr_info_lock);
+	ret = callback(&phdr_info, sizeof(phdr_info), data);
+	mutex_unlock(&dl_phdr_info_lock);
+	return (ret);
 #else
 	return (0);
 #endif

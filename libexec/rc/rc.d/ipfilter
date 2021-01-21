@@ -1,11 +1,12 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/ipfilter 298514 2016-04-23 16:10:54Z lme $
+# $FreeBSD$
 #
 
 # PROVIDE: ipfilter
 # REQUIRE: FILESYSTEMS
-# KEYWORD: nojail
+# BEFORE: ipmon ipnat netif netwait securelevel
+# KEYWORD: nojailvnet
 
 . /etc/rc.subr
 

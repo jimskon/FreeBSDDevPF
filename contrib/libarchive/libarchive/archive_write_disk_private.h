@@ -23,15 +23,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_write_disk_private.h 315636 2017-03-20 13:02:27Z mm $
+ * $FreeBSD$
  */
+
+#ifndef ARCHIVE_WRITE_DISK_PRIVATE_H_INCLUDED
+#define ARCHIVE_WRITE_DISK_PRIVATE_H_INCLUDED
 
 #ifndef __LIBARCHIVE_BUILD
 #error This header is only to be used internally to libarchive.
 #endif
-
-#ifndef ARCHIVE_WRITE_DISK_PRIVATE_H_INCLUDED
-#define ARCHIVE_WRITE_DISK_PRIVATE_H_INCLUDED
 
 #include "archive_platform_acl.h"
 #include "archive_acl_private.h"

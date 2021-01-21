@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/contrib/ipfilter/netinet/ip_fil_freebsd.c 350668 2019-08-07 01:08:57Z cy $	*/
+/*	$FreeBSD$	*/
 
 /*
  * Copyright (C) 2012 by Darren Reed.
@@ -710,7 +710,6 @@ ipf_fastroute(m0, mpp, fin, fdp)
 	struct ifnet *ifp, *sifp;
 	struct sockaddr_in dst;
 	struct nhop4_extended nh4;
-	int has_nhop = 0;
 	u_long fibnum = 0;
 	u_short ip_off;
 	frdest_t node;
@@ -793,7 +792,6 @@ ipf_fastroute(m0, mpp, fin, fdp)
 		goto bad;
 	}
 
-	has_nhop = 1;
 	if (ifp == NULL)
 		ifp = nh4.nh_ifp;
 	if (nh4.nh_flags & NHF_GATEWAY)
@@ -937,9 +935,6 @@ done:
 	else
 		V_ipfmain.ipf_frouteok[1]++;
 
-	if (has_nhop)
-		fib4_free_nh_ext(fibnum, &nh4);
-
 	return 0;
 bad:
 	if (error == EMSGSIZE) {
@@ -979,7 +974,7 @@ ipf_ifpaddr(softc, v, atype, ifptr, inp, inpmask)
 	i6addr_t *inp, *inpmask;
 {
 #ifdef USE_INET6
-	struct in6_addr *inp6 = NULL;
+	struct in6_addr *ia6 = NULL;
 #endif
 	struct sockaddr *sock, *mask;
 	struct sockaddr_in *sin;
@@ -1007,9 +1002,9 @@ ipf_ifpaddr(softc, v, atype, ifptr, inp, inpmask)
 			break;
 #ifdef USE_INET6
 		if ((v == 6) && (sin->sin_family == AF_INET6)) {
-			inp6 = &((struct sockaddr_in6 *)sin)->sin6_addr;
-			if (!IN6_IS_ADDR_LINKLOCAL(inp6) &&
-			    !IN6_IS_ADDR_LOOPBACK(inp6))
+			ia6 = &((struct sockaddr_in6 *)sin)->sin6_addr;
+			if (!IN6_IS_ADDR_LINKLOCAL(ia6) &&
+			    !IN6_IS_ADDR_LOOPBACK(ia6))
 				break;
 		}
 #endif
@@ -1451,3 +1446,46 @@ ipf_pcksum(fin, hlen, sum)
 	sum2 = ~sum & 0xffff;
 	return sum2;
 }
+
+#ifdef	USE_INET6
+u_int
+ipf_pcksum6(m, ip6, off, len)
+	struct mbuf *m;
+	ip6_t *ip6;
+	u_int32_t off;
+	u_int32_t len;
+{
+#ifdef	_KERNEL
+	int sum;
+
+	if (m->m_len < sizeof(struct ip6_hdr)) {
+		return 0xffff;
+	}
+
+	sum = in6_cksum(m, ip6->ip6_nxt, off, len);
+	return(sum);
+#else
+	u_short *sp;
+	u_int sum;
+
+	sp = (u_short *)&ip6->ip6_src;
+	sum = *sp++;   /* ip6_src */
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;   /* ip6_dst */
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	sum += *sp++;
+	return(ipf_pcksum(fin, off, sum));
+#endif
+}
+#endif

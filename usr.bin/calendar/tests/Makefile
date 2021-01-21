@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/calendar/tests/Makefile 306338 2016-09-26 13:59:18Z br $
+# $FreeBSD$
 
 PACKAGE=	tests
 
@@ -21,6 +21,7 @@ ${PACKAGE}FILES+=		regress.s1.out
 ${PACKAGE}FILES+=		regress.s2.out
 ${PACKAGE}FILES+=		regress.s3.out
 ${PACKAGE}FILES+=		regress.s4.out
+${PACKAGE}FILES+=		regress.s5.out
 ${PACKAGE}FILES+=		regress.sh
 ${PACKAGE}FILES+=		regress.w0-1.out
 ${PACKAGE}FILES+=		regress.w0-2.out

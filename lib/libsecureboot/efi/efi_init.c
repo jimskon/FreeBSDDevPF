@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/efi/efi_init.c 344840 2019-03-06 06:39:42Z mw $");
+__FBSDID("$FreeBSD$");
 
 #define NEED_BRSSL_H
 #include "../libsecureboot-priv.h"

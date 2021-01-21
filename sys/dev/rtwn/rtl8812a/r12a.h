@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a.h 312315 2017-01-17 00:35:23Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8812A_H
@@ -51,7 +51,6 @@ static const uint8_t r12a_chan_5ghz_1[] =
 	{ 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144 };
 static const uint8_t r12a_chan_5ghz_2[] =
 	{ 149, 153, 157, 161, 165, 169, 173, 177 };
-
 
 /*
  * Function declarations.

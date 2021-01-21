@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/cpufunc.h 344466 2019-02-22 12:26:28Z kib $
+ * $FreeBSD$
  */
 
 /*
@@ -167,7 +167,8 @@ enable_intr(void)
 static __inline __pure2 int
 ffsl(long mask)
 {
-	return (mask == 0 ? mask : (int)bsfq((u_long)mask) + 1);
+
+	return (__builtin_ffsl(mask));
 }
 
 #define	HAVE_INLINE_FFSLL

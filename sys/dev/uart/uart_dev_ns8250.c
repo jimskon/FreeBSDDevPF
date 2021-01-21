@@ -31,7 +31,7 @@
 #include "opt_uart.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/uart/uart_dev_ns8250.c 338074 2018-08-19 21:10:21Z mmacy $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,7 +139,7 @@ ns8250_divisor(int rclk, int baudrate)
 	actual_baud = rclk / (divisor << 4);
 
 	/* 10 times error in percent: */
-	error = ((actual_baud - baudrate) * 2000 / baudrate + 1) >> 1;
+	error = ((actual_baud - baudrate) * 2000 / baudrate + 1) / 2;
 
 	/* enforce maximum error tolerance: */
 	if (error < -UART_DEV_TOLERANCE_PCT || error > UART_DEV_TOLERANCE_PCT)
@@ -1026,13 +1026,8 @@ ns8250_bus_transmit(struct uart_softc *sc)
 
 	bas = &sc->sc_bas;
 	uart_lock(sc->sc_hwmtx);
-	if (sc->sc_txdatasz > 1) {
-		if ((uart_getreg(bas, REG_LSR) & LSR_TEMT) == 0)
-			ns8250_drain(bas, UART_DRAIN_TRANSMITTER);
-	} else {
-		while ((uart_getreg(bas, REG_LSR) & LSR_THRE) == 0)
-			DELAY(4);
-	}
+	while ((uart_getreg(bas, REG_LSR) & LSR_THRE) == 0)
+		DELAY(4);
 	for (i = 0; i < sc->sc_txdatasz; i++) {
 		uart_setreg(bas, REG_DATA, sc->sc_txbuf[i]);
 		uart_barrier(bas);

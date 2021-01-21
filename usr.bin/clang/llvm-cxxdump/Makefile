@@ -1,9 +1,9 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-cxxdump/Makefile 327952 2018-01-14 00:08:34Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-cxxdump
 MAN=
 
-SRCDIR=		tools/llvm-cxxdump
+SRCDIR=		llvm/tools/llvm-cxxdump
 SRCS+=		Error.cpp
 SRCS+=		llvm-cxxdump.cpp
 

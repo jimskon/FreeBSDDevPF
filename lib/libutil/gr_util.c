@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libutil/gr_util.c 326219 2017-11-26 02:00:33Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -108,11 +108,11 @@ gr_lock(void)
 			if (errno == EWOULDBLOCK) {
 				errx(1, "the group file is busy");
 			} else {
-				err(1, "could not lock the group file: ");
+				err(1, "could not lock the group file");
 			}
 		}
 		if (fstat(lockfd, &st) == -1)
-			err(1, "fstat() failed: ");
+			err(1, "fstat() failed");
 		if (st.st_nlink != 0)
 			break;
 		close(lockfd);

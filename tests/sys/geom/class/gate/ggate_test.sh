@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/geom/class/gate/ggate_test.sh 322214 2017-08-08 04:59:16Z ngie $
+# $FreeBSD$
 
 PIDFILE=ggated.pid
 PLAINFILES=plainfiles
@@ -194,7 +194,11 @@ common_cleanup()
 
 	if [ -f "md.devs" ]; then
 		while read test_md; do
-			mdconfig -d -u $test_md 2>/dev/null
+			# ggatec destroy doesn't release the provider
+			# synchronously, so we may need to retry destroying it.
+			while ! mdconfig -d -u $test_md; do
+				sleep 0.1
+			done
 		done < md.devs
 		rm md.devs
 	fi

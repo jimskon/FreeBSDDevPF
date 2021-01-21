@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/msun/tests/Makefile 334445 2018-05-31 20:22:47Z dim $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 

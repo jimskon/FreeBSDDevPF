@@ -1,5 +1,5 @@
 /*
- * $FreeBSD: releng/12.1/sys/security/mac_veriexec/veriexec_fingerprint.c 335430 2018-06-20 06:54:38Z stevek $
+ * $FreeBSD$
  *
  * Copyright (c) 2011, 2012, 2013, 2015, 2016, Juniper Networks, Inc.
  * All rights reserved.
@@ -214,7 +214,7 @@ mac_veriexec_fingerprint_check_vnode(struct vnode *vp,
 	int error;
 
 	/* reject fingerprint if writers are active */
-	if (vp->v_writecount)
+	if (vp->v_writecount > 0)
 		return (ETXTBSY);
 
 	if ((vp->v_mount->mnt_flag & MNT_VERIFIED) != 0) {

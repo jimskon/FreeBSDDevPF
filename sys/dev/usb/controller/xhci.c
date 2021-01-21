@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dev/usb/controller/xhci.c 353280 2019-10-07 15:29:37Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -94,6 +94,10 @@ static SYSCTL_NODE(_hw_usb, OID_AUTO, xhci, CTLFLAG_RW, 0, "USB XHCI");
 static int xhcistreams;
 SYSCTL_INT(_hw_usb_xhci, OID_AUTO, streams, CTLFLAG_RWTUN,
     &xhcistreams, 0, "Set to enable streams mode support");
+
+static int xhcictlquirk = 1;
+SYSCTL_INT(_hw_usb_xhci, OID_AUTO, ctlquirk, CTLFLAG_RWTUN,
+    &xhcictlquirk, 0, "Set to enable control endpoint quirk");
 
 #ifdef USB_DEBUG
 static int xhcidebug;
@@ -602,7 +606,7 @@ xhci_init(struct xhci_softc *sc, device_t self, uint8_t dma32)
 	    sc->sc_ctx_is_64_byte ? 64 : 32, (int)sc->sc_bus.dma_bits);
 
 	/* enable 64Kbyte control endpoint quirk */
-	sc->sc_bus.control_ep_quirk = 1;
+	sc->sc_bus.control_ep_quirk = (xhcictlquirk ? 1 : 0);
 
 	temp = XREAD4(sc, capa, XHCI_HCSPARAMS1);
 
@@ -2660,23 +2664,6 @@ xhci_configure_device(struct usb_device *udev)
 		    sc->sc_hw.devs[index].nports);
 	}
 
-	switch (udev->speed) {
-	case USB_SPEED_SUPER:
-		switch (sc->sc_hw.devs[index].state) {
-		case XHCI_ST_ADDRESSED:
-		case XHCI_ST_CONFIGURED:
-			/* enable power save */
-			temp |= XHCI_SCTX_1_MAX_EL_SET(sc->sc_exit_lat_max);
-			break;
-		default:
-			/* disable power save */
-			break;
-		}
-		break;
-	default:
-		break;
-	}
-
 	xhci_ctx_set_le32(sc, &pinp->ctx_slot.dwSctx1, temp);
 
 	temp = XHCI_SCTX_2_IRQ_TARGET_SET(0);
@@ -3586,13 +3573,10 @@ xhci_roothub_exec(struct usb_device *udev,
 			i |= UPS_OVERCURRENT_INDICATOR;
 		if (v & XHCI_PS_PR)
 			i |= UPS_RESET;
-		if (v & XHCI_PS_PP) {
-			/*
-			 * The USB 3.0 RH is using the
-			 * USB 2.0's power bit
-			 */
-			i |= UPS_PORT_POWER;
-		}
+#if 0
+		if (v & XHCI_PS_PP)
+			/* XXX undefined */
+#endif
 		USETW(sc->sc_hub_desc.ps.wPortStatus, i);
 
 		i = 0;
@@ -3823,6 +3807,28 @@ alloc_dma_set:
 	}
 }
 
+static uint8_t
+xhci_get_endpoint_state(struct usb_device *udev, uint8_t epno)
+{
+	struct xhci_softc *sc = XHCI_BUS2SC(udev->bus);
+	struct usb_page_search buf_dev;
+	struct xhci_hw_dev *hdev;
+	struct xhci_dev_ctx *pdev;
+	uint32_t temp;
+
+	MPASS(epno != 0);
+
+	hdev =	&sc->sc_hw.devs[udev->controller_slot_id];
+
+	usbd_get_page(&hdev->device_pc, 0, &buf_dev);
+	pdev = buf_dev.buffer;
+	usb_pc_cpu_invalidate(&hdev->device_pc);
+
+	temp = xhci_ctx_get_le32(sc, &pdev->ctx_ep[epno - 1].dwEpCtx0);
+
+	return (XHCI_EPCTX_0_EPSTATE_GET(temp));
+}
+
 static usb_error_t
 xhci_configure_reset_endpoint(struct usb_xfer *xfer)
 {
@@ -3834,6 +3840,7 @@ xhci_configure_reset_endpoint(struct usb_xfer *xfer)
 	struct usb_page_cache *pcinp;
 	usb_error_t err;
 	usb_stream_t stream_id;
+	uint32_t mask;
 	uint8_t index;
 	uint8_t epno;
 
@@ -3875,16 +3882,20 @@ xhci_configure_reset_endpoint(struct usb_xfer *xfer)
 	 * Get the endpoint into the stopped state according to the
 	 * endpoint context state diagram in the XHCI specification:
 	 */
-
-	err = xhci_cmd_stop_ep(sc, 0, epno, index);
-
-	if (err != 0)
-		DPRINTF("Could not stop endpoint %u\n", epno);
-
-	err = xhci_cmd_reset_ep(sc, 0, epno, index);
-
-	if (err != 0)
-		DPRINTF("Could not reset endpoint %u\n", epno);
+	switch (xhci_get_endpoint_state(udev, epno)) {
+	case XHCI_EPCTX_0_EPSTATE_STOPPED:
+		break;
+	case XHCI_EPCTX_0_EPSTATE_HALTED:
+		err = xhci_cmd_reset_ep(sc, 0, epno, index);
+		if (err != 0)
+			DPRINTF("Could not reset endpoint %u\n", epno);
+		break;
+	default:
+		err = xhci_cmd_stop_ep(sc, 0, epno, index);
+		if (err != 0)
+			DPRINTF("Could not stop endpoint %u\n", epno);
+		break;
+	}
 
 	err = xhci_cmd_set_tr_dequeue_ptr(sc,
 	    (pepext->physaddr + (stream_id * sizeof(struct xhci_trb) *
@@ -3899,16 +3910,20 @@ xhci_configure_reset_endpoint(struct usb_xfer *xfer)
 	 * endpoint context state diagram in the XHCI specification:
 	 */
 
-	xhci_configure_mask(udev, (1U << epno) | 1U, 0);
+	mask = (1U << epno);
+	xhci_configure_mask(udev, mask | 1U, 0);
 
-	if (epno > 1)
+	if (!(sc->sc_hw.devs[index].ep_configured & mask)) {
+		sc->sc_hw.devs[index].ep_configured |= mask;
 		err = xhci_cmd_configure_ep(sc, buf_inp.physaddr, 0, index);
-	else
+	} else {
 		err = xhci_cmd_evaluate_ctx(sc, buf_inp.physaddr, index);
+	}
 
-	if (err != 0)
-		DPRINTF("Could not configure endpoint %u\n", epno);
-
+	if (err != 0) {
+		DPRINTF("Could not configure "
+		    "endpoint %u at slot %u.\n", epno, index);
+	}
 	XHCI_CMD_UNLOCK(sc);
 
 	return (0);
@@ -4269,6 +4284,7 @@ xhci_device_state_change(struct usb_device *udev)
 
 		/* set default state */
 		sc->sc_hw.devs[index].state = XHCI_ST_DEFAULT;
+		sc->sc_hw.devs[index].ep_configured = 3U;
 
 		/* reset number of contexts */
 		sc->sc_hw.devs[index].context_num = 0;
@@ -4286,6 +4302,7 @@ xhci_device_state_change(struct usb_device *udev)
 			break;
 
 		sc->sc_hw.devs[index].state = XHCI_ST_ADDRESSED;
+		sc->sc_hw.devs[index].ep_configured = 3U;
 
 		/* set configure mask to slot only */
 		xhci_configure_mask(udev, 1, 0);
@@ -4300,11 +4317,19 @@ xhci_device_state_change(struct usb_device *udev)
 		break;
 
 	case USB_STATE_CONFIGURED:
-		if (sc->sc_hw.devs[index].state == XHCI_ST_CONFIGURED)
-			break;
+		if (sc->sc_hw.devs[index].state == XHCI_ST_CONFIGURED) {
+			/* deconfigure all endpoints, except EP0 */
+			err = xhci_cmd_configure_ep(sc, 0, 1, index);
+
+			if (err) {
+				DPRINTF("Failed to deconfigure "
+				    "slot %u.\n", index);
+			}
+		}
 
 		/* set configured state */
 		sc->sc_hw.devs[index].state = XHCI_ST_CONFIGURED;
+		sc->sc_hw.devs[index].ep_configured = 3U;
 
 		/* reset number of contexts */
 		sc->sc_hw.devs[index].context_num = 0;

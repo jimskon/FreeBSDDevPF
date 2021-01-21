@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/usr.sbin/sesutil/eltsub.c 320478 2017-06-29 18:52:36Z bapt $ */
+/* $FreeBSD$ */
 /*
  * Copyright (c) 2000 by Matthew Jacob
  * All rights reserved.
@@ -65,11 +65,11 @@ geteltnm(int type)
 	case ELMTYP_FAN:
 		return ("Cooling");
 	case ELMTYP_THERM:
-		return ("Temperature Sensors");
+		return ("Temperature Sensor");
 	case ELMTYP_DOORLOCK:
 		return ("Door Lock");
 	case ELMTYP_ALARM:
-		return ("Audible alarm");
+		return ("Audible Alarm");
 	case ELMTYP_ESCC:
 		return ("Enclosure Services Controller Electronics");
 	case ELMTYP_SCC:

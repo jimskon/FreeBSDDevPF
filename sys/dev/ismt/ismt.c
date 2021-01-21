@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ismt/ismt.c 293369 2016-01-07 21:16:44Z jimharris $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -72,7 +72,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/ismt/ismt.c 293369 2016-01-07 21:16:44Z 
 #define ISMT_DESC_LPR	0x80	/* Large Packet Received */
 
 /* Macros */
-#define ISMT_DESC_ADDR_RW(addr, is_read) ((addr << 1) | (is_read))
+#define ISMT_DESC_ADDR_RW(addr, is_read) ((addr) | (is_read))
 
 /* iSMT General Register address offsets (SMBBAR + <addr>) */
 #define ISMT_GR_GCTRL		0x000	/* General Control */
@@ -717,6 +717,7 @@ fail:
 #define ID_INTEL_S1200_SMT0		0x0c598086
 #define ID_INTEL_S1200_SMT1		0x0c5a8086
 #define ID_INTEL_C2000_SMT		0x1f158086
+#define ID_INTEL_C3000_SMT		0x19ac8086
 
 static int
 ismt_probe(device_t dev)
@@ -732,6 +733,9 @@ ismt_probe(device_t dev)
 		break;
 	case ID_INTEL_C2000_SMT:
 		desc = "Atom Processor C2000 SMBus 2.0";
+		break;
+	case ID_INTEL_C3000_SMT:
+		desc = "Atom Processor C3000 SMBus 2.0";
 		break;
 	default:
 		return (ENXIO);

@@ -347,7 +347,7 @@ dsl_dataset_evict_async(void *dbu)
 	mutex_destroy(&ds->ds_opening_lock);
 	mutex_destroy(&ds->ds_sendstream_lock);
 	mutex_destroy(&ds->ds_remap_deadlist_lock);
-	refcount_destroy(&ds->ds_longholds);
+	zfs_refcount_destroy(&ds->ds_longholds);
 	rrw_destroy(&ds->ds_bp_rwlock);
 
 	kmem_free(ds, sizeof (dsl_dataset_t));
@@ -485,7 +485,7 @@ dsl_dataset_hold_obj(dsl_pool_t *dp, uint64_t dsobj, void *tag,
 		mutex_init(&ds->ds_remap_deadlist_lock,
 		    NULL, MUTEX_DEFAULT, NULL);
 		rrw_init(&ds->ds_bp_rwlock, B_FALSE);
-		refcount_create(&ds->ds_longholds);
+		zfs_refcount_create(&ds->ds_longholds);
 
 		bplist_create(&ds->ds_pending_deadlist);
 
@@ -573,10 +573,14 @@ dsl_dataset_hold_obj(dsl_pool_t *dp, uint64_t dsobj, void *tag,
 			if (ds->ds_prev)
 				dsl_dataset_rele(ds->ds_prev, ds);
 			dsl_dir_rele(ds->ds_dir, ds);
+			list_destroy(&ds->ds_prop_cbs);
+			list_destroy(&ds->ds_sendstreams);
 			mutex_destroy(&ds->ds_lock);
 			mutex_destroy(&ds->ds_opening_lock);
 			mutex_destroy(&ds->ds_sendstream_lock);
-			refcount_destroy(&ds->ds_longholds);
+			mutex_destroy(&ds->ds_remap_deadlist_lock);
+			zfs_refcount_destroy(&ds->ds_longholds);
+			rrw_destroy(&ds->ds_bp_rwlock);
 			kmem_free(ds, sizeof (dsl_dataset_t));
 			if (err != 0) {
 				dmu_buf_rele(dbuf, tag);
@@ -701,20 +705,20 @@ void
 dsl_dataset_long_hold(dsl_dataset_t *ds, void *tag)
 {
 	ASSERT(dsl_pool_config_held(ds->ds_dir->dd_pool));
-	(void) refcount_add(&ds->ds_longholds, tag);
+	(void) zfs_refcount_add(&ds->ds_longholds, tag);
 }
 
 void
 dsl_dataset_long_rele(dsl_dataset_t *ds, void *tag)
 {
-	(void) refcount_remove(&ds->ds_longholds, tag);
+	(void) zfs_refcount_remove(&ds->ds_longholds, tag);
 }
 
 /* Return B_TRUE if there are any long holds on this dataset. */
 boolean_t
 dsl_dataset_long_held(dsl_dataset_t *ds)
 {
-	return (!refcount_is_zero(&ds->ds_longholds));
+	return (!zfs_refcount_is_zero(&ds->ds_longholds));
 }
 
 void
@@ -1568,6 +1572,9 @@ dsl_dataset_snapshot_sync(void *arg, dmu_tx_t *tx)
 			dsl_props_set_sync_impl(ds->ds_prev,
 			    ZPROP_SRC_LOCAL, ddsa->ddsa_props, tx);
 		}
+#if defined(__FreeBSD__) && defined(_KERNEL)
+		zvol_create_minors(dp->dp_spa, name);
+#endif
 		dsl_dataset_rele(ds, FTAG);
 	}
 }
@@ -1642,17 +1649,6 @@ dsl_dataset_snapshot(nvlist_t *snaps, nvlist_t *props, nvlist_t *errors)
 		fnvlist_free(suspended);
 	}
 
-#ifdef __FreeBSD__
-#ifdef _KERNEL
-	if (error == 0) {
-		for (pair = nvlist_next_nvpair(snaps, NULL); pair != NULL;
-		    pair = nvlist_next_nvpair(snaps, pair)) {
-			char *snapname = nvpair_name(pair);
-			zvol_create_minors(snapname);
-		}
-	}
-#endif
-#endif
 	return (error);
 }
 
@@ -2196,7 +2192,10 @@ dsl_get_mountpoint(dsl_dataset_t *ds, const char *dsname, char *value,
 		return (error);
 	}
 
-	/* Process the dsname and source to find the full mountpoint string */
+	/*
+	 * Process the dsname and source to find the full mountpoint string.
+	 * Can be skipped for 'legacy' or 'none'.
+	 */
 	if (value[0] == '/') {
 		char *buf = kmem_alloc(ZAP_MAXVALUELEN, KM_SLEEP);
 		char *root = buf;
@@ -2247,10 +2246,8 @@ dsl_get_mountpoint(dsl_dataset_t *ds, const char *dsname, char *value,
 			    relpath);
 		}
 		kmem_free(buf, ZAP_MAXVALUELEN);
-	} else {
-		/* 'legacy' or 'none' */
-		(void) snprintf(value, ZAP_MAXVALUELEN, "%s", value);
 	}
+
 	return (0);
 }
 
@@ -2523,16 +2520,16 @@ dsl_dataset_rename_snapshot_sync_impl(dsl_pool_t *dp,
 
 #ifdef __FreeBSD__
 #ifdef _KERNEL
-	oldname = kmem_alloc(MAXPATHLEN, KM_SLEEP);
-	newname = kmem_alloc(MAXPATHLEN, KM_SLEEP);
-	snprintf(oldname, MAXPATHLEN, "%s@%s", ddrsa->ddrsa_fsname,
-	    ddrsa->ddrsa_oldsnapname);
-	snprintf(newname, MAXPATHLEN, "%s@%s", ddrsa->ddrsa_fsname,
-	    ddrsa->ddrsa_newsnapname);
+	oldname = kmem_alloc(ZFS_MAX_DATASET_NAME_LEN, KM_SLEEP);
+	newname = kmem_alloc(ZFS_MAX_DATASET_NAME_LEN, KM_SLEEP);
+	snprintf(oldname, ZFS_MAX_DATASET_NAME_LEN, "%s@%s",
+	    ddrsa->ddrsa_fsname, ddrsa->ddrsa_oldsnapname);
+	snprintf(newname, ZFS_MAX_DATASET_NAME_LEN, "%s@%s",
+	    ddrsa->ddrsa_fsname, ddrsa->ddrsa_newsnapname);
 	zfsvfs_update_fromname(oldname, newname);
-	zvol_rename_minors(oldname, newname);
-	kmem_free(newname, MAXPATHLEN);
-	kmem_free(oldname, MAXPATHLEN);
+	zvol_rename_minors(dp->dp_spa, oldname, newname);
+	kmem_free(newname, ZFS_MAX_DATASET_NAME_LEN);
+	kmem_free(oldname, ZFS_MAX_DATASET_NAME_LEN);
 #endif
 #endif
 	dsl_dataset_rele(ds, FTAG);
@@ -3082,11 +3079,8 @@ dsl_dataset_promote_sync(void *arg, dmu_tx_t *tx)
 	}
 
 #if defined(__FreeBSD__) && defined(_KERNEL)
-	/* Take the spa_namespace_lock early so zvol renames don't deadlock. */
-	mutex_enter(&spa_namespace_lock);
-
-	oldname = kmem_alloc(MAXPATHLEN, KM_SLEEP);
-	newname = kmem_alloc(MAXPATHLEN, KM_SLEEP);
+	oldname = kmem_alloc(ZFS_MAX_DATASET_NAME_LEN, KM_SLEEP);
+	newname = kmem_alloc(ZFS_MAX_DATASET_NAME_LEN, KM_SLEEP);
 #endif
 
 	/* move snapshots to this dir */
@@ -3103,6 +3097,10 @@ dsl_dataset_promote_sync(void *arg, dmu_tx_t *tx)
 			dmu_objset_evict(ds->ds_objset);
 			ds->ds_objset = NULL;
 		}
+
+#if defined(__FreeBSD__) && defined(_KERNEL)
+		dsl_dataset_name(ds, oldname);
+#endif
 
 		/* move snap name entry */
 		VERIFY0(dsl_dataset_get_snapname(ds));
@@ -3126,7 +3124,7 @@ dsl_dataset_promote_sync(void *arg, dmu_tx_t *tx)
 #if defined(__FreeBSD__) && defined(_KERNEL)
 		dsl_dataset_name(ds, newname);
 		zfsvfs_update_fromname(oldname, newname);
-		zvol_rename_minors(oldname, newname);
+		zvol_rename_minors(dp->dp_spa, oldname, newname);
 #endif
 
 		/* move any clone references */
@@ -3168,10 +3166,8 @@ dsl_dataset_promote_sync(void *arg, dmu_tx_t *tx)
 	}
 
 #if defined(__FreeBSD__) && defined(_KERNEL)
-	mutex_exit(&spa_namespace_lock);
-
-	kmem_free(newname, MAXPATHLEN);
-	kmem_free(oldname, MAXPATHLEN);
+	kmem_free(newname, ZFS_MAX_DATASET_NAME_LEN);
+	kmem_free(oldname, ZFS_MAX_DATASET_NAME_LEN);
 #endif
 	/*
 	 * Change space accounting.

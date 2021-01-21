@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/mem.c 335050 2018-06-13 11:49:34Z araujo $
+ * $FreeBSD$
  */
 
 /*
@@ -35,7 +35,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/mem.c 335050 2018-06-13 11:49:34Z araujo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/errno.h>
@@ -251,30 +251,43 @@ emulate_mem(struct vmctx *ctx, int vcpu, uint64_t paddr, struct vie *vie,
 	return (access_memory(ctx, vcpu, paddr, emulate_mem_cb, &ema));
 }
 
-struct read_mem_args {
-	uint64_t *rval;
+struct rw_mem_args {
+	uint64_t *val;
 	int size;
+	int operation;
 };
 
 static int
-read_mem_cb(struct vmctx *ctx, int vcpu, uint64_t paddr, struct mem_range *mr,
+rw_mem_cb(struct vmctx *ctx, int vcpu, uint64_t paddr, struct mem_range *mr,
     void *arg)
 {
-	struct read_mem_args *rma;
+	struct rw_mem_args *rma;
 
 	rma = arg;
-	return (mr->handler(ctx, vcpu, MEM_F_READ, paddr, rma->size,
-	    rma->rval, mr->arg1, mr->arg2));
+	return (mr->handler(ctx, vcpu, rma->operation, paddr, rma->size,
+	    rma->val, mr->arg1, mr->arg2));
 }
 
 int
 read_mem(struct vmctx *ctx, int vcpu, uint64_t gpa, uint64_t *rval, int size)
 {
-	struct read_mem_args rma;
+	struct rw_mem_args rma;
 
-	rma.rval = rval;
+	rma.val = rval;
 	rma.size = size;
-	return (access_memory(ctx, vcpu, gpa, read_mem_cb, &rma));
+	rma.operation = MEM_F_READ;
+	return (access_memory(ctx, vcpu, gpa, rw_mem_cb, &rma));
+}
+
+int
+write_mem(struct vmctx *ctx, int vcpu, uint64_t gpa, uint64_t wval, int size)
+{
+	struct rw_mem_args rma;
+
+	rma.val = &wval;
+	rma.size = size;
+	rma.operation = MEM_F_WRITE;
+	return (access_memory(ctx, vcpu, gpa, rw_mem_cb, &rma));
 }
 
 static int

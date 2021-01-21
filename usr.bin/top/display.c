@@ -8,7 +8,7 @@
  *  Copyright (c) 1984, 1989, William LeFebvre, Rice University
  *  Copyright (c) 1989, 1990, 1992, William LeFebvre, Northwestern University
  *
- * $FreeBSD: releng/12.1/usr.bin/top/display.c 345953 2019-04-05 16:12:31Z dim $
+ * $FreeBSD$
  */
 
 /*
@@ -675,6 +675,9 @@ i_swap(int *stats)
 {
     swap_buffer = setup_buffer(swap_buffer, 0);
 
+    if (swap_names == NULL)
+	    return;
+
     fputs("\nSwap: ", stdout);
     lastline++;
 
@@ -689,6 +692,9 @@ u_swap(int *stats)
     static char *new = NULL;
 
     new = setup_buffer(new, 0);
+
+    if (swap_names == NULL)
+	    return;
 
     /* format the new line */
     summary_format(new, stats, swap_names);

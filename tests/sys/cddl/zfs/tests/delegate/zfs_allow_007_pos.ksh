@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_allow_007_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -65,7 +65,6 @@
 verify_runnable "both"
 
 log_assert "Verify permission set can be masked on descendent dataset."
-log_onexit restore_root_datasets
 
 typeset perms1="snapshot,reservation,compression"
 eval set -A dataset $DATASETS

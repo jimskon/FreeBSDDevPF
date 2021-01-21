@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/cli_root/zpool_import/zpool_import_all_001_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -183,9 +183,9 @@ while (( number <= $GROUP_NUM )); do
 			continue
 		fi
 	fi
-	set_partition $number "" $PART_SIZE ${ZFS_DISK2}
+	set_partition $number "" $PART_SIZE ${DISK1}
 
-	setup_single_disk "${ZFS_DISK2}p${number}" \
+	setup_single_disk "${DISK1}p${number}" \
 		"${TESTPOOL}-$number" \
 		"$TESTFS" \
 		"$TESTDIR.$number"

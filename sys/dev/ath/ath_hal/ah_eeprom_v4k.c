@@ -17,7 +17,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ah_eeprom_v4k.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -200,7 +200,7 @@ static uint16_t
 v4kEepromGetSpurChan(struct ath_hal *ah, int ix, HAL_BOOL is2GHz)
 { 
 	HAL_EEPROM_v4k *ee = AH_PRIVATE(ah)->ah_eeprom;
-	
+
 	HALASSERT(0 <= ix && ix <  AR5416_EEPROM_MODAL_SPURS);
 	HALASSERT(is2GHz);
 	return ee->ee_base.modalHeader.spurChans[ix].spurChan;
@@ -236,7 +236,7 @@ v4kEepromReadCTLInfo(struct ath_hal *ah, HAL_EEPROM_v4k *ee)
 {
 	RD_EDGES_POWER *rep = ee->ee_rdEdgesPower;
 	int i, j;
-	
+
 	HALASSERT(AR5416_4K_NUM_CTLS <= sizeof(ee->ee_rdEdgesPower)/NUM_EDGES);
 
 	for (i = 0; ee->ee_base.ctlIndex[i] != 0 && i < AR5416_4K_NUM_CTLS; i++) {
@@ -347,7 +347,7 @@ ath_hal_v4kEepromAttach(struct ath_hal *ah)
 		len = ee->ee_base.baseEepHeader.length;
 	}
 	len = AH_MIN(len, sizeof(struct ar5416eeprom_4k)) / sizeof(uint16_t);
-	
+
 	/* Apply the checksum, done in native eeprom format */
 	/* XXX - Need to check to make sure checksum calculation is done
 	 * in the correct endian format.  Right now, it seems it would

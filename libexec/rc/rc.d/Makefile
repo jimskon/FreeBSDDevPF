@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/Makefile 345899 2019-04-05 01:22:30Z cy $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -11,7 +11,6 @@ CONFS=	DAEMON \
 	LOGIN \
 	NETWORKING \
 	SERVERS \
-	abi \
 	addswap \
 	adjkerntz \
 	archdep \
@@ -54,6 +53,7 @@ CONFS=	DAEMON \
 	kldxref \
 	${_kpasswdd} \
 	ldconfig \
+	linux \
 	local \
 	localpkg \
 	lockd \
@@ -80,6 +80,7 @@ CONFS=	DAEMON \
 	nsswitch \
 	ntpdate \
 	${_opensm} \
+	os-release \
 	pf \
 	pflog \
 	pfsync \
@@ -110,6 +111,7 @@ CONFS=	DAEMON \
 	swaplate \
 	sysctl \
 	syslogd \
+	sysvipc \
 	tmp \
 	${_ubthidhci} \
 	ugidfw \

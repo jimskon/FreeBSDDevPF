@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/drm2/ttm/ttm_bo_vm.c 349701 2019-07-03 20:17:26Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_vm.h"
 

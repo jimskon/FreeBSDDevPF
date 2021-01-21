@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/sdhci/sdhci_pci.c 343503 2019-01-27 19:04:02Z marius $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mmccam.h"
 
@@ -90,6 +90,9 @@ static const struct sdhci_device {
 	    SDHCI_QUIRK_LOWER_FREQUENCY },
 	{ 0x8034104c,	0xffff, "TI XX21/XX11 SD",
 	    SDHCI_QUIRK_FORCE_DMA },
+	{ 0x803c104c,	0xffff, "TI XX12 SD",
+	    SDHCI_QUIRK_FORCE_DMA |
+	    SDHCI_QUIRK_WAITFOR_RESET_ASSERTED },
 	{ 0x05501524,	0xffff, "ENE CB712 SD",
 	    SDHCI_QUIRK_BROKEN_TIMINGS },
 	{ 0x05511524,	0xffff, "ENE CB712 SD 2",

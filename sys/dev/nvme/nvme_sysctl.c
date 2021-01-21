@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/nvme/nvme_sysctl.c 350937 2019-08-12 18:55:36Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_nvme.h"
 
@@ -145,16 +145,17 @@ static int
 nvme_sysctl_timeout_period(SYSCTL_HANDLER_ARGS)
 {
 	struct nvme_controller *ctrlr = arg1;
-	uint32_t oldval = ctrlr->timeout_period;
-	int error = sysctl_handle_int(oidp, &ctrlr->timeout_period, 0, req);
+	uint32_t newval = ctrlr->timeout_period;
+	int error = sysctl_handle_int(oidp, &newval, 0, req);
 
-	if (error)
+	if (error || (req->newptr == NULL))
 		return (error);
 
-	if (ctrlr->timeout_period > NVME_MAX_TIMEOUT_PERIOD ||
-	    ctrlr->timeout_period < NVME_MIN_TIMEOUT_PERIOD) {
-		ctrlr->timeout_period = oldval;
+	if (newval > NVME_MAX_TIMEOUT_PERIOD ||
+	    newval < NVME_MIN_TIMEOUT_PERIOD) {
 		return (EINVAL);
+	} else {
+		ctrlr->timeout_period = newval;
 	}
 
 	return (0);
@@ -306,9 +307,9 @@ nvme_sysctl_initialize_ctrlr(struct nvme_controller *ctrlr)
 	ctrlr_tree = device_get_sysctl_tree(ctrlr->dev);
 	ctrlr_list = SYSCTL_CHILDREN(ctrlr_tree);
 
-	SYSCTL_ADD_UINT(ctrlr_ctx, ctrlr_list, OID_AUTO, "num_cpus_per_ioq",
-	    CTLFLAG_RD, &ctrlr->num_cpus_per_ioq, 0,
-	    "Number of CPUs assigned per I/O queue pair");
+	SYSCTL_ADD_UINT(ctrlr_ctx, ctrlr_list, OID_AUTO, "num_io_queues",
+	    CTLFLAG_RD, &ctrlr->num_io_queues, 0,
+	    "Number of I/O queue pairs");
 
 	SYSCTL_ADD_PROC(ctrlr_ctx, ctrlr_list, OID_AUTO,
 	    "int_coal_time", CTLTYPE_UINT | CTLFLAG_RW, ctrlr, 0,

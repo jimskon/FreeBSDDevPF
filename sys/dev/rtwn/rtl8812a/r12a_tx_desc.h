@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_tx_desc.h 307529 2016-10-17 20:38:24Z avos $
+ * $FreeBSD$
  */
 
 #ifndef R12A_TX_DESC_H
@@ -129,7 +129,6 @@ struct r12a_tx_desc {
 #define R12A_TXDW9_SEQ_M	0x00fff000
 #define R12A_TXDW9_SEQ_S	12
 } __packed __attribute__((aligned(4)));
-
 
 /* Rate adaptation modes. */
 #define R12A_RAID_11BGN_2_40	0

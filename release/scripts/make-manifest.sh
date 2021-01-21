@@ -7,7 +7,7 @@
 # The output file looks like this (tab-delimited):
 #  foo1.txz SHA256-checksum Number-of-files foo1 Description Install-by-default
 #
-# $FreeBSD: releng/12.1/release/scripts/make-manifest.sh 340457 2018-11-15 16:42:59Z gjb $
+# $FreeBSD$
 
 base="Base system"
 doc="Additional Documentation"

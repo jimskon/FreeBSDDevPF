@@ -36,7 +36,7 @@
 static char sccsid[] = "@(#)fread.c	8.2 (Berkeley) 12/11/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/stdio/fread.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <errno.h>
@@ -115,3 +115,5 @@ __fread(void * __restrict buf, size_t size, size_t count, FILE * __restrict fp)
 	fp->_p += resid;
 	return (count);
 }
+
+__weak_reference(__fread, fread_unlocked);

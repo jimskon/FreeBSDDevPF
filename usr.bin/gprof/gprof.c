@@ -42,13 +42,14 @@ static char sccsid[] = "@(#)gprof.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/gprof/gprof.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <limits.h>
 #include <stdint.h>
 #include <string.h>
 
+#define	EXTERN
 #include "gprof.h"
 
 static int valcmp(const void *, const void *);
@@ -160,8 +161,11 @@ main(int argc, char **argv)
 	 *	get information from the executable file.
 	 */
     if ((Kflag && kernel_getnfile(a_outname, &defaultEs) == -1) ||
-      (!Kflag && elf_getnfile(a_outname, &defaultEs) == -1 &&
-      aout_getnfile(a_outname, &defaultEs) == -1))
+      (!Kflag && elf_getnfile(a_outname, &defaultEs) == -1
+#ifdef WITH_AOUT
+      && aout_getnfile(a_outname, &defaultEs) == -1
+#endif
+      ))
 	errx(1, "%s: bad format", a_outname);
 	/*
 	 *	sort symbol table.

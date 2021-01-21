@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/fifolog/lib/fifolog_write_poll.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <assert.h>
@@ -239,6 +239,14 @@ fifolog_write_output(struct fifolog_writer *f, int fl, time_t now)
 	 */
 	f->seq++;
 	f->recno++;
+
+	/*
+	 * Ensure we wrap recno once we hit the file size (in records.)
+	 */
+	if (f->recno >= f->ff->logsize)
+		/* recno 0 is header; skip */
+		f->recno = 1;
+
 	f->flag = 0;
 
 	memset(f->obuf, 0, f->obufsize);

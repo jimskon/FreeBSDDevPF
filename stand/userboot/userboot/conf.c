@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/stand/userboot/userboot/conf.c 336085 2018-07-08 07:42:58Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 
@@ -70,6 +70,11 @@ struct fs_ops *file_system[] = {
 #endif
 	&gzipfs_fsops,
 	&bzipfs_fsops,
+	NULL
+};
+
+/* to keep libsa happy */
+struct netif_driver *netif_drivers[] = {
 	NULL
 };
 

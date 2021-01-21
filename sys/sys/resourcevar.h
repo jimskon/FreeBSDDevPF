@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)resourcevar.h	8.4 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.1/sys/sys/resourcevar.h 339187 2018-10-05 05:50:56Z mmacy $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_RESOURCEVAR_H_
@@ -108,9 +108,6 @@ struct uidinfo {
 	struct racct *ui_racct;		/* (a) resource accounting */
 #endif
 };
-
-#define	UIDINFO_VMSIZE_LOCK(ui)		mtx_lock(&((ui)->ui_vmsize_mtx))
-#define	UIDINFO_VMSIZE_UNLOCK(ui)	mtx_unlock(&((ui)->ui_vmsize_mtx))
 
 struct proc;
 struct rusage_ext;

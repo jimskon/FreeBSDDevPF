@@ -43,7 +43,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/nexus.c 345874 2019-04-04 12:02:48Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -292,9 +292,11 @@ nexus_config_intr(device_t dev, int irq, enum intr_trigger trig,
     enum intr_polarity pol)
 {
 
-	/* TODO: This is wrong, it's needed for ACPI */
-	device_printf(dev, "bus_config_intr is obsolete and not supported!\n");
-	return (EOPNOTSUPP);
+	/*
+	 * On arm64 (due to INTRNG), ACPI interrupt configuration is 
+	 * done in nexus_acpi_map_intr().
+	 */
+	return (0);
 }
 
 static int

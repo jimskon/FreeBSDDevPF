@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/netmap/if_ptnet.c 348517 2019-06-02 20:03:00Z vmaffione $
+ * $FreeBSD$
  */
 
 /* Driver for ptnet paravirtualized network device. */
@@ -86,6 +86,8 @@
 #include <net/netmap_virt.h>
 #include <dev/netmap/netmap_mem2.h>
 #include <dev/virtio/network/virtio_net.h>
+
+#ifdef WITH_PTNETMAP
 
 #ifndef INET
 #error "INET not defined, cannot support offloadings"
@@ -2291,3 +2293,4 @@ ptnet_poll(if_t ifp, enum poll_cmd cmd, int budget)
 	return count;
 }
 #endif /* DEVICE_POLLING */
+#endif /* WITH_PTNETMAP */

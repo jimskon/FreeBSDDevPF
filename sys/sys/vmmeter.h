@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vmmeter.h	8.2 (Berkeley) 7/10/94
- * $FreeBSD: releng/12.1/sys/sys/vmmeter.h 338919 2018-09-24 19:24:17Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_VMMETER_H_
@@ -152,6 +152,8 @@ extern domainset_t vm_severe_domains;
 #define	VM_CNT_ADD(var, x)	counter_u64_add(vm_cnt.var, x)
 #define	VM_CNT_INC(var)		VM_CNT_ADD(var, 1)
 #define	VM_CNT_FETCH(var)	counter_u64_fetch(vm_cnt.var)
+
+extern u_long vm_user_wire_count;
 
 static inline void
 vm_wire_add(int cnt)

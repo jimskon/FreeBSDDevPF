@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm64/arm64/trap.c 352452 2019-09-17 17:28:44Z alc $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -138,11 +138,10 @@ cpu_fetch_syscall_args(struct thread *td)
 static void
 svc_handler(struct thread *td, struct trapframe *frame)
 {
-	int error;
 
 	if ((frame->tf_esr & ESR_ELx_ISS_MASK) == 0) {
-		error = syscallenter(td);
-		syscallret(td, error);
+		syscallenter(td);
+		syscallret(td);
 	} else {
 		call_trapsignal(td, SIGILL, ILL_ILLOPN, (void *)frame->tf_elr);
 		userret(td, frame);
@@ -157,7 +156,6 @@ data_abort(struct thread *td, struct trapframe *frame, uint64_t esr,
 	struct proc *p;
 	struct pcb *pcb;
 	vm_prot_t ftype;
-	vm_offset_t va;
 	int error, sig, ucode;
 #ifdef KDB
 	bool handled;
@@ -213,7 +211,6 @@ data_abort(struct thread *td, struct trapframe *frame, uint64_t esr,
 		panic("data abort in critical section or under mutex");
 	}
 
-	va = trunc_page(far);
 	if (exec)
 		ftype = VM_PROT_EXECUTE;
 	else
@@ -221,14 +218,9 @@ data_abort(struct thread *td, struct trapframe *frame, uint64_t esr,
 		    VM_PROT_READ | VM_PROT_WRITE;
 
 	/* Fault in the page. */
-	error = vm_fault(map, va, ftype, VM_FAULT_NORMAL);
+	error = vm_fault_trap(map, far, ftype, VM_FAULT_NORMAL, &sig, &ucode);
 	if (error != KERN_SUCCESS) {
 		if (lower) {
-			sig = SIGSEGV;
-			if (error == KERN_PROTECTION_FAILURE)
-				ucode = SEGV_ACCERR;
-			else
-				ucode = SEGV_MAPERR;
 			call_trapsignal(td, sig, ucode, (void *)far);
 		} else {
 			if (td->td_intr_nesting_level == 0 &&

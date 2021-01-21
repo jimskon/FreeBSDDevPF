@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/sched.h 352264 2019-09-12 20:15:04Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_SCHED_H_
 #define	_LINUX_SCHED_H_
@@ -76,8 +76,9 @@ struct task_struct {
 	unsigned bsd_ioctl_len;
 	struct completion parked;
 	struct completion exited;
-	TAILQ_ENTRY(task_struct) rcu_entry;
-	int rcu_recurse;
+#define	TS_RCU_TYPE_MAX 2
+	TAILQ_ENTRY(task_struct) rcu_entry[TS_RCU_TYPE_MAX];
+	int rcu_recurse[TS_RCU_TYPE_MAX];
 	int bsd_interrupt_value;
 	struct work_struct *work;	/* current work struct, if set */
 	struct task_struct *group_leader;

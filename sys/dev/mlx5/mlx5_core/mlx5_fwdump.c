@@ -24,7 +24,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_core/mlx5_fwdump.c 353272 2019-10-07 13:13:06Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -111,6 +111,10 @@ mlx5_fwdump_prep(struct mlx5_core_dev *mdev)
 			sz++;
 		addr = next_addr;
 	}
+	if (sz == 1) {
+		mlx5_core_warn(mdev, "no output from scan space\n");
+		goto unlock_vsc;
+	}
 	mdev->dump_rege = malloc(sz * sizeof(struct mlx5_crspace_regmap),
 	    M_MLX5_DUMP, M_WAITOK | M_ZERO);
 
@@ -137,9 +141,11 @@ mlx5_fwdump_prep(struct mlx5_core_dev *mdev)
 			mdev->dump_rege[++i].addr = next_addr;
 		addr = next_addr;
 	}
-	KASSERT(i + 1 == sz,
-	    ("inconsistent hw crspace reads: sz %u i %u addr %#lx",
-	    sz, i, (unsigned long)addr));
+	if (i + 1 != sz) {
+		mlx5_core_err(mdev,
+		    "Inconsistent hw crspace reads: sz %u i %u addr %#lx",
+		    sz, i, (unsigned long)addr);
+	}
 
 	mdev->dump_size = mlx5_fwdump_getsize(mdev->dump_rege);
 	mdev->dump_data = malloc(mdev->dump_size * sizeof(uint32_t),

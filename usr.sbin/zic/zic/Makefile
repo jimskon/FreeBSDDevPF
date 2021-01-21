@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/zic/zic/Makefile 323572 2017-09-14 03:39:42Z rlibby $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

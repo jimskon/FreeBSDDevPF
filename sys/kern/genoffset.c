@@ -24,14 +24,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/kern/genoffset.c 349763 2019-07-05 12:26:30Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef OFFSET_TEST
 #define GENOFFSET
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/genoffset.c 349763 2019-07-05 12:26:30Z hselasky $");
+__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/assym.h>
 #include <sys/proc.h>

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/tty_pts.c 331621 2018-03-27 15:20:03Z brooks $");
+__FBSDID("$FreeBSD$");
 
 /* Add compatibility bits for FreeBSD. */
 #define PTS_COMPAT
@@ -50,6 +50,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/tty_pts.c 331621 2018-03-27 15:20:03Z b
 #include <sys/kernel.h>
 #include <sys/limits.h>
 #include <sys/malloc.h>
+#include <sys/mutex.h>
 #include <sys/poll.h>
 #include <sys/proc.h>
 #include <sys/racct.h>

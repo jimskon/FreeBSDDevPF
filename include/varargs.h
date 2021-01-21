@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/include/varargs.h 329164 2018-02-12 14:48:14Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _VARARGS_H_

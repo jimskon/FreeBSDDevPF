@@ -1,5 +1,5 @@
 /*	$OpenBSD: ypldap.h,v 1.16 2015/01/16 06:40:22 deraadt Exp $ */
-/*	$FreeBSD: releng/12.1/usr.sbin/ypldap/ypldap.h 297907 2016-04-13 03:36:34Z araujo $ */
+/*	$FreeBSD$ */
 
 /*
  * Copyright (c) 2008 Pierre-Yves Ritschard <pyr@openbsd.org>
@@ -47,10 +47,11 @@ struct ypldap_addr {
 };
 TAILQ_HEAD(ypldap_addr_list, ypldap_addr);
 
-enum {
+enum ypldap_process_type {
 	PROC_MAIN,
 	PROC_CLIENT
-} ypldap_process;
+};
+extern enum ypldap_process_type		ypldap_process;
 
 struct userent {
 	RB_ENTRY(userent)		 ue_name_node;

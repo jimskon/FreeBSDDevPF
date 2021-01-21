@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/mpsutil/mpsutil.h 330790 2018-03-12 05:03:32Z scottl $
+ * $FreeBSD$
  */
 
 #ifndef __MPSUTIL_H__
@@ -128,6 +128,7 @@ int	mps_map_btdh(int fd, uint16_t *devhandle, uint16_t *bus,
 const char *mps_ioc_status(U16 IOCStatus);
 int	mps_firmware_send(int fd, unsigned char *buf, uint32_t len, bool bios);
 int	mps_firmware_get(int fd, unsigned char **buf, bool bios);
+int	mps_set_slot_status(int fd, U16 handle, U16 slot, U32 status);
 
 static __inline void *
 mps_read_man_page(int fd, U8 PageNumber, U16 *IOCStatus)

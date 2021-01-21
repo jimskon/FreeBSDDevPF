@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_sendfile.c 352039 2019-09-08 20:37:42Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -36,12 +36,11 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_sendfile.c 352039 2019-09-08 20:37
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/mutex.h>
-#include <sys/sysproto.h>
 #include <sys/malloc.h>
-#include <sys/proc.h>
 #include <sys/mman.h>
 #include <sys/mount.h>
 #include <sys/mbuf.h>
+#include <sys/proc.h>
 #include <sys/protosw.h>
 #include <sys/rwlock.h>
 #include <sys/sf_buf.h>
@@ -49,9 +48,12 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_sendfile.c 352039 2019-09-08 20:37
 #include <sys/socketvar.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysctl.h>
+#include <sys/sysproto.h>
 #include <sys/vnode.h>
 
 #include <net/vnet.h>
+
+#include <netinet/in.h>
 
 #include <security/audit/audit.h>
 #include <security/mac/mac_framework.h>
@@ -59,6 +61,8 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_sendfile.c 352039 2019-09-08 20:37
 #include <vm/vm.h>
 #include <vm/vm_object.h>
 #include <vm/vm_pager.h>
+
+static MALLOC_DEFINE(M_SENDFILE, "sendfile", "sendfile dynamic memory");
 
 #define	EXT_FLAG_SYNC		EXT_FLAG_VENDOR1
 #define	EXT_FLAG_NOCACHE	EXT_FLAG_VENDOR2
@@ -93,7 +97,35 @@ struct sendfile_sync {
 	struct mtx	mtx;
 	struct cv	cv;
 	unsigned	count;
+	bool		waiting;
 };
+
+static void
+sendfile_sync_destroy(struct sendfile_sync *sfs)
+{
+	KASSERT(sfs->count == 0, ("sendfile sync %p still busy", sfs));
+
+	cv_destroy(&sfs->cv);
+	mtx_destroy(&sfs->mtx);
+	free(sfs, M_SENDFILE);
+}
+
+static void
+sendfile_sync_signal(struct sendfile_sync *sfs)
+{
+	mtx_lock(&sfs->mtx);
+	KASSERT(sfs->count > 0, ("sendfile sync %p not busy", sfs));
+	if (--sfs->count == 0) {
+		if (!sfs->waiting) {
+			/* The sendfile() waiter was interrupted by a signal. */
+			sendfile_sync_destroy(sfs);
+			return;
+		} else {
+			cv_signal(&sfs->cv);
+		}
+	}
+	mtx_unlock(&sfs->mtx);
+}
 
 counter_u64_t sfstat[sizeof(struct sfstat) / sizeof(uint64_t)];
 
@@ -138,12 +170,7 @@ sendfile_free_mext(struct mbuf *m)
 
 	if (m->m_ext.ext_flags & EXT_FLAG_SYNC) {
 		struct sendfile_sync *sfs = m->m_ext.ext_arg2;
-
-		mtx_lock(&sfs->mtx);
-		KASSERT(sfs->count > 0, ("Sendfile sync botchup count == 0"));
-		if (--sfs->count == 0)
-			cv_signal(&sfs->cv);
-		mtx_unlock(&sfs->mtx);
+		sendfile_sync_signal(sfs);
 	}
 }
 
@@ -255,7 +282,7 @@ sendfile_iodone(void *arg, vm_page_t *pg, int count, int error)
 	SOCK_LOCK(so);
 	sorele(so);
 	CURVNET_RESTORE();
-	free(sfio, M_TEMP);
+	free(sfio, M_SENDFILE);
 }
 
 /*
@@ -483,6 +510,12 @@ sendfile_getsock(struct thread *td, int s, struct file **sock_fp,
 	*so = (*sock_fp)->f_data;
 	if ((*so)->so_type != SOCK_STREAM)
 		return (EINVAL);
+	/*
+	 * SCTP one-to-one style sockets currently don't work with
+	 * sendfile(). So indicate EINVAL for now.
+	 */
+	if ((*so)->so_proto->pr_protocol == IPPROTO_SCTP)
+		return (EINVAL);
 	if (SOLISTENING(*so))
 		return (ENOTCONN);
 	return (0);
@@ -530,9 +563,10 @@ vn_sendfile(struct file *fp, int sockfd, struct uio *hdr_uio,
 	SFSTAT_ADD(sf_rhpages_requested, SF_READAHEAD(flags));
 
 	if (flags & SF_SYNC) {
-		sfs = malloc(sizeof *sfs, M_TEMP, M_WAITOK | M_ZERO);
+		sfs = malloc(sizeof(*sfs), M_SENDFILE, M_WAITOK | M_ZERO);
 		mtx_init(&sfs->mtx, "sendfile", NULL, MTX_DEF);
 		cv_init(&sfs->cv, "sendfile");
+		sfs->waiting = true;
 	}
 
 	rem = nbytes ? omin(nbytes, obj_size - offset) : obj_size - offset;
@@ -695,7 +729,7 @@ retry_space:
 		    npages, rhpages);
 
 		sfio = malloc(sizeof(struct sf_io) +
-		    npages * sizeof(vm_page_t), M_TEMP, M_WAITOK);
+		    npages * sizeof(vm_page_t), M_SENDFILE, M_WAITOK);
 		refcount_init(&sfio->nios, 1);
 		sfio->so = so;
 		sfio->error = 0;
@@ -705,7 +739,7 @@ retry_space:
 		if (error != 0) {
 			if (vp != NULL)
 				VOP_UNLOCK(vp, 0);
-			free(sfio, M_TEMP);
+			free(sfio, M_SENDFILE);
 			goto done;
 		}
 
@@ -817,7 +851,7 @@ prepend_header:
 		if (m == NULL) {
 			KASSERT(softerr, ("%s: m NULL, no error", __func__));
 			error = softerr;
-			free(sfio, M_TEMP);
+			free(sfio, M_SENDFILE);
 			goto done;
 		}
 
@@ -834,7 +868,7 @@ prepend_header:
 			 * we can send data right now without the
 			 * PRUS_NOTREADY flag.
 			 */
-			free(sfio, M_TEMP);
+			free(sfio, M_SENDFILE);
 			error = (*so->so_proto->pr_usrreqs->pru_send)
 			    (so, 0, m, NULL, NULL, td);
 		} else {
@@ -894,11 +928,13 @@ out:
 	if (sfs != NULL) {
 		mtx_lock(&sfs->mtx);
 		if (sfs->count != 0)
-			cv_wait(&sfs->cv, &sfs->mtx);
-		KASSERT(sfs->count == 0, ("sendfile sync still busy"));
-		cv_destroy(&sfs->cv);
-		mtx_destroy(&sfs->mtx);
-		free(sfs, M_TEMP);
+			error = cv_wait_sig(&sfs->cv, &sfs->mtx);
+		if (sfs->count == 0) {
+			sendfile_sync_destroy(sfs);
+		} else {
+			sfs->waiting = false;
+			mtx_unlock(&sfs->mtx);
+		}
 	}
 
 	if (error == ERESTART)

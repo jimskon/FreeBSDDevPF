@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/fdc/fdc_pccard.c 327085 2017-12-22 17:13:54Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -111,9 +111,10 @@ fdc_pccard_attach(device_t dev)
 		device_set_flags(child, 0x24);
 		error = bus_generic_attach(dev);
 	}
-	if (error == 0)
+	if (error == 0) {
+		gone_in_dev(dev, 13, "pccard removed");
 		fdc_start_worker(dev);
-	else
+	} else
 		fdc_release_resources(fdc);
 	return (error);
 }

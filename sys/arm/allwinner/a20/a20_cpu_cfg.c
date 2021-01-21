@@ -29,7 +29,7 @@
 /* CPU configuration module for Allwinner A20 */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/a20/a20_cpu_cfg.c 326258 2017-11-27 15:04:10Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -119,7 +119,7 @@ static driver_t a20_cpu_cfg_driver = {
 static devclass_t a20_cpu_cfg_devclass;
 
 EARLY_DRIVER_MODULE(a20_cpu_cfg, simplebus, a20_cpu_cfg_driver, a20_cpu_cfg_devclass, 0, 0,
-    BUS_PASS_RESOURCE + BUS_PASS_ORDER_MIDDLE);
+    BUS_PASS_CPU + BUS_PASS_ORDER_FIRST);
 
 uint64_t
 a20_read_counter64(void)

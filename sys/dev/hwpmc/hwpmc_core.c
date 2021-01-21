@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/hwpmc/hwpmc_core.c 345300 2019-03-19 17:00:03Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -220,15 +220,6 @@ iaf_reload_count_to_perfctr_value(pmc_value_t rlc)
 	return (1ULL << core_iaf_width) - rlc;
 }
 
-static void
-tweak_tsx_force_abort(void *arg)
-{
-	u_int val;
-
-	val = (uintptr_t)arg;
-	wrmsr(MSR_TSX_FORCE_ABORT, val);
-}
-
 static int
 iaf_allocate_pmc(int cpu, int ri, struct pmc *pm,
     const struct pmc_op_pmcallocate *a)
@@ -270,7 +261,8 @@ iaf_allocate_pmc(int cpu, int ri, struct pmc *pm,
 	if ((cpu_stdext_feature3 & CPUID_STDEXT3_TSXFA) != 0 &&
 	    !pmc_tsx_force_abort_set) {
 		pmc_tsx_force_abort_set = true;
-		smp_rendezvous(NULL, tweak_tsx_force_abort, NULL, (void *)1);
+		x86_msr_op(MSR_TSX_FORCE_ABORT, MSR_OP_RENDEZVOUS |
+		    MSR_OP_WRITE, 1);
 	}
 
 	flags = 0;
@@ -411,7 +403,8 @@ iaf_release_pmc(int cpu, int ri, struct pmc *pmc)
 	MPASS(pmc_alloc_refs > 0);
 	if (pmc_alloc_refs-- == 1 && pmc_tsx_force_abort_set) {
 		pmc_tsx_force_abort_set = false;
-		smp_rendezvous(NULL, tweak_tsx_force_abort, NULL, (void *)0);
+		x86_msr_op(MSR_TSX_FORCE_ABORT, MSR_OP_RENDEZVOUS |
+		    MSR_OP_WRITE, 0);
 	}
 
 	return (0);

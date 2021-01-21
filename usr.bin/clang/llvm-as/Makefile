@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-as/Makefile 327952 2018-01-14 00:08:34Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-as
 
-SRCDIR=		tools/llvm-as
+SRCDIR=		llvm/tools/llvm-as
 SRCS+=		llvm-as.cpp
 
 .include "../llvm.prog.mk"

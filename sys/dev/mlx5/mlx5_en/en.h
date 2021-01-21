@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_en/en.h 353407 2019-10-10 16:04:43Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _MLX5_EN_H_
@@ -624,6 +624,7 @@ struct mlx5e_rq_stats {
   m(+1, u64, csum_offload_none, "csum_offload_none", "Transmitted packets")	\
   m(+1, u64, defragged, "defragged", "Transmitted packets")		\
   m(+1, u64, dropped, "dropped", "Transmitted packets")			\
+  m(+1, u64, enobuf, "enobuf", "Transmitted packets")			\
   m(+1, u64, nop, "nop", "Transmitted packets")
 
 #define	MLX5E_SQ_STATS_NUM (0 MLX5E_SQ_STATS(MLX5E_STATS_COUNT))
@@ -723,6 +724,8 @@ struct mlx5e_params_ethtool {
 	u8	fec_avail_10x_25x[MLX5E_MAX_FEC_10X_25X];
 	u16	fec_avail_50x[MLX5E_MAX_FEC_50X];
 	u32	fec_mode_active;
+	s32	hw_val_temp[MLX5_MAX_TEMPERATURE];
+	u32	hw_num_temp;
 };
 
 struct mlx5e_cq {
@@ -821,7 +824,6 @@ struct mlx5e_sq {
 
 	/* pointers to per packet info: write@xmit, read@completion */
 	struct	mlx5e_sq_mbuf *mbuf;
-	struct	buf_ring *br;
 
 	/* read only */
 	struct	mlx5_wq_cyc wq;
@@ -1187,5 +1189,6 @@ void	mlx5e_update_sq_inline(struct mlx5e_sq *sq);
 void	mlx5e_refresh_sq_inline(struct mlx5e_priv *priv);
 int	mlx5e_update_buf_lossy(struct mlx5e_priv *priv);
 int	mlx5e_fec_update(struct mlx5e_priv *priv);
+int	mlx5e_hw_temperature_update(struct mlx5e_priv *priv);
 
 #endif					/* _MLX5_EN_H_ */

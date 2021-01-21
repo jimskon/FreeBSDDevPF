@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/bwi/bwirf.c 326022 2017-11-20 19:36:21Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_bwi.h"
@@ -54,7 +54,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/bwi/bwirf.c 326022 2017-11-20 19:36:21Z 
 #include <sys/sockio.h>
 #include <sys/sysctl.h>
 #include <sys/systm.h>
- 
+
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_dl.h>

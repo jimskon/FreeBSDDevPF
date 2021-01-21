@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/fuse/fuse_io.c 352351 2019-09-15 04:14:31Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #include <sys/module.h>
@@ -291,6 +291,7 @@ fuse_io_dispatch(struct vnode *vp, struct uio *uio, int ioflag,
 		fuse_vnode_update(vp, FN_MTIMECHANGE | FN_CTIMECHANGE);
 		if (directio) {
 			off_t start, end, filesize;
+			bool pages = (ioflag & IO_VMIO) != 0;
 
 			SDT_PROBE2(fusefs, , io, trace, 1,
 				"direct write of vnode");
@@ -301,15 +302,14 @@ fuse_io_dispatch(struct vnode *vp, struct uio *uio, int ioflag,
 
 			start = uio->uio_offset;
 			end = start + uio->uio_resid;
-			KASSERT((ioflag & (IO_VMIO | IO_DIRECT)) !=
-				(IO_VMIO | IO_DIRECT),
-			    ("IO_DIRECT used for a cache flush?"));
-			/* Invalidate the write cache when writing directly */
-			err = fuse_inval_buf_range(vp, filesize, start, end);
-			if (err)
-				return (err);
+			if (!pages) {
+				err = fuse_inval_buf_range(vp, filesize, start,
+				    end);
+				if (err)
+					return (err);
+			}
 			err = fuse_write_directbackend(vp, uio, cred, fufh,
-				filesize, ioflag, false);
+				filesize, ioflag, pages);
 		} else {
 			SDT_PROBE2(fusefs, , io, trace, 1,
 				"buffered write of vnode");

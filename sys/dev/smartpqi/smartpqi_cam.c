@@ -24,7 +24,7 @@
  * SUCH DAMAGE.
  */
 
-/* $FreeBSD: releng/12.1/sys/dev/smartpqi/smartpqi_cam.c 346375 2019-04-19 12:38:48Z kib $ */
+/* $FreeBSD$ */
 /*
  * CAM interface for smartpqi driver
  */

@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/hwpmc/hwpmc_amd.h 340718 2018-11-21 01:24:27Z mmacy $
+ * $FreeBSD$
  */
 
 /* Machine dependent interfaces */
@@ -76,6 +76,7 @@
 #define	AMD_PMC_PERFCTR_EP_DF_3	0xC0010247
 
 #define	AMD_NPMCS		16
+#define	AMD_CORE_NPMCS		6
 
 
 #define	AMD_PMC_COUNTERMASK	0xFF000000

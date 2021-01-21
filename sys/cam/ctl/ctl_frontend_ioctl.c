@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/ctl/ctl_frontend_ioctl.c 345113 2019-03-13 20:27:48Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -226,7 +226,7 @@ cfi_ioctl_port_create(struct ctl_req *req)
 		req->status = CTL_LUN_ERROR;
 		snprintf(req->error_str, sizeof(req->error_str),
 		    "ctl_port_register() failed with error %d", retval);
-		free(port, M_CTL);
+		free(cfi, M_CTL);
 		return;
 	}
 
@@ -247,7 +247,9 @@ cfi_ioctl_port_create(struct ctl_req *req)
 		req->status = CTL_LUN_ERROR;
 		snprintf(req->error_str, sizeof(req->error_str),
 		    "make_dev_s() failed with error %d", retval);
-		free(port, M_CTL);
+		ctl_port_offline(port);
+		ctl_port_deregister(port);
+		free(cfi, M_CTL);
 		return;
 	}
 

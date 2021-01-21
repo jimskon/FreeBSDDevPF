@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/nvmecontrol/devlist.c 350946 2019-08-12 19:39:31Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 
@@ -122,8 +122,10 @@ devlist(const struct cmd *f, int argc, char *argv[])
 		close(fd);
 	}
 
-	if (found == 0)
+	if (found == 0) {
 		printf("No NVMe controllers found.\n");
+		exit(1);
+	}
 
-	exit(1);
+	exit(0);
 }

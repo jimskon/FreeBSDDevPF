@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/taskqueue.h 341152 2018-11-28 16:52:41Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TASKQUEUE_H_
@@ -42,6 +42,7 @@
 
 struct taskqueue;
 struct taskqgroup;
+struct proc;
 struct thread;
 
 struct timeout_task {
@@ -75,7 +76,9 @@ struct taskqueue *taskqueue_create(const char *name, int mflags,
 				    taskqueue_enqueue_fn enqueue,
 				    void *context);
 int	taskqueue_start_threads(struct taskqueue **tqp, int count, int pri,
-				const char *name, ...) __printflike(4, 5);
+	    const char *name, ...) __printflike(4, 5);
+int	taskqueue_start_threads_in_proc(struct taskqueue **tqp, int count,
+	    int pri, struct proc *p, const char *name, ...) __printflike(5, 6);
 int	taskqueue_start_threads_cpuset(struct taskqueue **tqp, int count,
 	    int pri, cpuset_t *mask, const char *name, ...) __printflike(5, 6);
 int	taskqueue_enqueue(struct taskqueue *queue, struct task *task);

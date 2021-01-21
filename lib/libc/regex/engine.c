@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/regex/engine.c 341745 2018-12-08 19:45:05Z yuripv $");
+__FBSDID("$FreeBSD$");
 
 #include <stdbool.h>
 

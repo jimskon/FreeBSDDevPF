@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/gnu/usr.bin/binutils/Makefile 341239 2018-11-29 15:48:36Z emaste $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

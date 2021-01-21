@@ -1,6 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
-/* $FreeBSD: releng/12.1/usr.sbin/ntp/config.h 338126 2018-08-21 02:38:07Z delphij $ */
+/* $FreeBSD$ */
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
@@ -287,7 +287,7 @@
 #define DEFAULT_HZ 100
 
 /* Default number of megabytes for RLIMIT_MEMLOCK */
-#define DFLT_RLIMIT_MEMLOCK 32
+#define DFLT_RLIMIT_MEMLOCK -1
 
 /* Default number of 4k pages for RLIMIT_STACK */
 #define DFLT_RLIMIT_STACK 50
@@ -1468,7 +1468,7 @@
 #define PACKAGE_NAME "ntp"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ntp 4.2.8p12"
+#define PACKAGE_STRING "ntp 4.2.8p15"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "ntp"
@@ -1477,7 +1477,7 @@
 #define PACKAGE_URL "http://www.ntp.org./"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.2.8p12"
+#define PACKAGE_VERSION "4.2.8p15"
 
 /* data dir */
 #define PERLLIBDIR "/usr/share/ntp/lib"
@@ -1658,7 +1658,7 @@ typedef unsigned int	uintptr_t;
 /* #undef USE_UDP_SIGPOLL */
 
 /* Version number of package */
-#define VERSION "4.2.8p12"
+#define VERSION "4.2.8p15"
 
 /* vsnprintf expands "%m" to strerror(errno) */
 #define VSNPRINTF_PERCENT_M 1

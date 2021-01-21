@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libproc/proc_sym.c 350542 2019-08-02 20:24:04Z brooks $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifndef NO_CTF

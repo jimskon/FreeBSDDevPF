@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libc/tests/gen/Makefile 331279 2018-03-21 01:15:45Z cem $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 
@@ -17,11 +17,21 @@ ATF_TESTS_C+=		makecontext_test
 ATF_TESTS_C+=		popen_test
 ATF_TESTS_C+=		posix_spawn_test
 ATF_TESTS_C+=		realpath2_test
+ATF_TESTS_C+=		sigsetops_test
 ATF_TESTS_C+=		wordexp_test
 
 # TODO: t_closefrom, t_cpuset, t_fmtcheck, t_randomid,
 # TODO: t_siginfo (fixes require further inspection)
 # TODO: t_sethostname_test (consistently screws up the hostname)
+
+FILESGROUPS+=		posix_spawn_test_FILES
+
+posix_spawn_test_FILES=	spawnp_enoexec.sh
+posix_spawn_test_FILESDIR=	${TESTSDIR}
+posix_spawn_test_FILESMODE= 0755
+posix_spawn_test_FILESOWN= root
+posix_spawn_test_FILESGRP= wheel
+posix_spawn_test_FILESPACKAGE=	${PACKAGE}
 
 CFLAGS+=	-DTEST_LONG_DOUBLE
 

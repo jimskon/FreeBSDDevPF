@@ -44,7 +44,7 @@
 #include <dev/sound/pci/hda/hdaa.h>
 #include <dev/sound/pci/hda/hda_reg.h>
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.1/sys/dev/sound/pci/hda/hdaa_patches.c 351814 2019-09-04 14:05:04Z jkim $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 static const struct {
 	uint32_t model;
@@ -390,7 +390,8 @@ hdac_pin_patch(struct hdaa_widget *w)
 			break;
 		}
 	} else if (id == HDA_CODEC_ALC285 &&
-	    subid == LENOVO_X120KH_SUBVENDOR) {
+	    (subid == LENOVO_X120KH_SUBVENDOR ||
+	    subid == LENOVO_X120QD_SUBVENDOR)) {
 		switch (nid) {
 		case 33:
 			patch = "as=1 seq=15";
@@ -429,6 +430,15 @@ hdac_pin_patch(struct hdaa_widget *w)
 			patch = "as=1 seq=15";
 			break;
 		}
+	} else if (id == HDA_CODEC_ALC298 && HDA_DEV_MATCH(LENOVO_ALL_SUBVENDOR, subid)) {
+		switch (nid) {
+		case 23:
+			config = 0x03a1103f;
+			break;
+		case 33:
+			config = 0x2121101f;
+			break;
+		}
 	} else if (id == HDA_CODEC_ALC298 && subid == DELL_XPS9560_SUBVENDOR) {
 		switch (nid) {
 		case 24:
@@ -438,7 +448,8 @@ hdac_pin_patch(struct hdaa_widget *w)
 			config = 0x01a1913d;
 			break;
 		}
-	} else if (id == HDA_CODEC_ALC256 && subid == DELL_I7577_SUBVENDOR ) {
+	} else if (id == HDA_CODEC_ALC256 && (subid == DELL_I7577_SUBVENDOR ||
+	    subid == DELL_L7480_SUBVENDOR)) {
 		switch (nid) {
 		case 20:
 			patch = "as=1 seq=0";

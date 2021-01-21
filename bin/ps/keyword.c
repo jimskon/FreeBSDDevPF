@@ -35,7 +35,7 @@ static char sccsid[] = "@(#)keyword.c	8.5 (Berkeley) 4/2/94";
 #endif /* not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/bin/ps/keyword.c 330872 2018-03-13 18:30:26Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -83,8 +83,7 @@ static VAR var[] = {
 	    CHAR, NULL, 0},
 	{"cow", "COW", NULL, "copy-on-write-faults", 0, kvar, KOFF(ki_cow),
 	    UINT, "u", 0},
-	{"cpu", "CPU", NULL, "cpu-usage", 0, kvar, KOFF(ki_estcpu), UINT, "d",
-	    0},
+	{"cpu", "C", NULL, "on-cpu", 0, cpunum, 0, CHAR, NULL, 0},
 	{"cputime", "", "time", NULL, 0, NULL, 0, CHAR, NULL, 0},
 	{"dsiz", "DSIZ", NULL, "data-size", 0, kvar, KOFF(ki_dsize), PGTOK,
 	    "ld", 0},

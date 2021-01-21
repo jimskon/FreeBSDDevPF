@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/compiler.h 348087 2019-05-22 04:02:10Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_COMPILER_H_
 #define	_LINUX_COMPILER_H_
@@ -110,5 +110,8 @@
 #define	lockless_dereference(p) READ_ONCE(p)
 
 #define	_AT(T,X)	((T)(X))
+
+#define	__same_type(a, b)	__builtin_types_compatible_p(typeof(a), typeof(b))
+#define	__must_be_array(a)	__same_type(a, &(a)[0])
 
 #endif	/* _LINUX_COMPILER_H_ */

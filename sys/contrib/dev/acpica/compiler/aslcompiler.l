@@ -9,7 +9,7 @@
  *
  * 1. Copyright Notice
  *
- * Some or all of this work - Copyright (c) 1999 - 2018, Intel Corp.
+ * Some or all of this work - Copyright (c) 1999 - 2020, Intel Corp.
  * All rights reserved.
  *
  * 2. License
@@ -156,7 +156,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-YYSTYPE AslCompilerlval;
 
 /*
  * Generation:  Use the following command line:
@@ -195,6 +194,7 @@ count (int type);
 
 LeadNameChar                [A-Za-z_]
 DigitChar                   [0-9]
+ErrorCode                   [(][ ]*[1-9][0-9][0-9][0-9][ ]*[)]
 OctalChar                   [0-7]
 HexDigitChar                [A-Fa-f0-9]
 RootChar                    [\\]
@@ -810,12 +810,35 @@ NamePathTail                [.]{NameSeg}
 "__LINE__"                  { count (0); return (PARSEOP___LINE__); }
 "__PATH__"                  { count (0); return (PARSEOP___PATH__); }
 "__METHOD__"                { count (0); return (PARSEOP___METHOD__); }
+"__EXPECT__"{ErrorCode}     { char *s;
+                                int index = 0;
+                                count (0);
+                                while (!isdigit (AslCompilertext[index]))
+                                {
+                                    index++;
+                                }
+
+                                /*
+                                 * The error code is contained inside the
+                                 * {ErrorCode} pattern. Extract it and log it
+                                 * as the expected error code.
+                                 */
+                                s = UtLocalCacheCalloc (ASL_ERROR_CODE_LENGTH + 1);
+                                memcpy (s, AslCompilertext + index, ASL_ERROR_CODE_LENGTH);
+                                AslLogExpectedExceptionByLine (s); }
 
 {NameSeg}                   { char *s;
                                 count (0);
-                                s=UtLocalCacheCalloc (ACPI_NAME_SIZE + 1);
+                                s=UtLocalCacheCalloc (ACPI_NAMESEG_SIZE + 1);
                                 if (strcmp (AslCompilertext, "\\"))
                                 {
+                                    /*
+                                     * According to the ACPI specification,
+                                     * NameSegments must have length of 4. If
+                                     * the NameSegment has length less than 4,
+                                     * they are padded with underscores to meet
+                                     * the required length.
+                                     */
                                     strcpy (s, "____");
                                     AcpiUtStrupr (AslCompilertext);
                                 }

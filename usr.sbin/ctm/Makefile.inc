@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/ctm/Makefile.inc 314659 2017-03-04 11:38:03Z ngie $
+# $FreeBSD$
 
 .if exists(${.CURDIR:H:H}/Makefile.inc)
 .include "${.CURDIR:H:H}/Makefile.inc"

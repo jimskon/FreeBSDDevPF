@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/tests/sys/opencrypto/runtests.sh 348140 2019-05-23 01:25:34Z ngie $
+# $FreeBSD$
 #
 
 : ${PYTHON=python2}

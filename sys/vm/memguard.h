@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/vm/memguard.h 326272 2017-11-27 15:23:17Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _VM_MEMGUARD_H_
@@ -43,6 +43,7 @@ void	memguard_init(struct vmem *);
 void 	*memguard_alloc(unsigned long, int);
 void	*memguard_realloc(void *, unsigned long, struct malloc_type *, int);
 void	memguard_free(void *);
+unsigned long	memguard_get_req_size(const void *);
 int	memguard_cmp_mtp(struct malloc_type *, unsigned long);
 int	memguard_cmp_zone(uma_zone_t);
 int	is_memguard_addr(void *);
@@ -52,6 +53,7 @@ int	is_memguard_addr(void *);
 #define	memguard_alloc(size, flags)	NULL
 #define	memguard_realloc(a, s, mtp, f)	NULL
 #define	memguard_free(addr)		do { } while (0)
+#define	memguard_get_req_size(addr)	0
 #define	memguard_cmp_mtp(mtp, size)	0
 #define	memguard_cmp_zone(zone)		0
 #define	is_memguard_addr(addr)		0

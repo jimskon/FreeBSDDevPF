@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/include/bus_dma.h 320528 2017-07-01 05:35:29Z jah $
+ * $FreeBSD$
  */
 
 #ifndef _X86_BUS_DMA_H_
@@ -34,6 +34,18 @@
 #include <sys/_null.h>
 
 #include <x86/busdma_impl.h>
+
+/*
+ * Is DMA address 1:1 mapping of physical address
+ */
+static inline bool
+bus_dma_id_mapped(bus_dma_tag_t dmat, vm_paddr_t buf, bus_size_t buflen)
+{
+	struct bus_dma_tag_common *tc;
+
+	tc = (struct bus_dma_tag_common *)dmat;
+	return (tc->impl->id_mapped(dmat, buf, buflen));
+}
 
 /*
  * Allocate a handle for mapping from kva/uva/physical
@@ -178,6 +190,12 @@ _bus_dmamap_complete(bus_dma_tag_t dmat, bus_dmamap_t map,
 	tc = (struct bus_dma_tag_common *)dmat;
 	return (tc->impl->map_complete(dmat, map, segs, nsegs, error));
 }
+
+#ifdef _KERNEL
+bool bus_dma_dmar_set_buswide(device_t dev);
+int bus_dma_dmar_load_ident(bus_dma_tag_t dmat, bus_dmamap_t map,
+    vm_paddr_t start, vm_size_t length, int flags);
+#endif
 
 #endif /* !_X86_BUS_DMA_H_ */
 

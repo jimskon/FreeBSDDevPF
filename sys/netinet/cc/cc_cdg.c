@@ -49,7 +49,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/cc/cc_cdg.c 344514 2019-02-25 12:25:44Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/hhook.h>
@@ -714,5 +714,5 @@ SYSCTL_UINT(_net_inet_tcp_cc_cdg, OID_AUTO, loss_compete_hold_backoff,
     "the window backoff for loss based CC compatibility");
 
 DECLARE_CC_MODULE(cdg, &cdg_cc_algo);
-
+MODULE_VERSION(cdg, 1);
 MODULE_DEPEND(cdg, ertt, 1, 1, 1);

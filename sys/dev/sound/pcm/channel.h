@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/sound/pcm/channel.h 352324 2019-09-14 13:30:22Z hselasky $
+ * $FreeBSD$
  */
 
 struct pcmchan_caps {

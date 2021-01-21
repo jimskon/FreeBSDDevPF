@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/i386/bios/apm.c 333806 2018-05-18 17:58:09Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -1213,6 +1213,8 @@ apm_attach(device_t dev)
 	sc->sc_resume.ah_fun = apm_rtc_resume;
 	sc->sc_resume.ah_arg = sc;
 	apm_hook_establish(APM_HOOK_RESUME, &sc->sc_resume);
+
+	gone_in_dev(dev, 13, "APM support has been removed.");
 
 	return 0;
 }

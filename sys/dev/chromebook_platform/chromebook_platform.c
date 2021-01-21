@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/chromebook_platform/chromebook_platform.c 314271 2017-02-25 15:55:46Z avg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -69,7 +69,7 @@ chromebook_i2c_identify(driver_t *driver, device_t bus)
 	 * See http://lxr.free-electrons.com/source/drivers/platform/chrome/chromeos_laptop.c
 	 */
 	controller = device_get_parent(bus);
-	if (strcmp(device_get_name(controller), "ig4iic_pci") != 0)
+	if (strcmp(device_get_name(controller), "ig4iic") != 0)
 		return;
 
 	for (i = 0; i < nitems(slaves); i++) {

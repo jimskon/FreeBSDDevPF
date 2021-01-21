@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/kern/syscalls.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 const char *syscallnames[] = {
@@ -574,4 +574,12 @@ const char *syscallnames[] = {
 	"fhlink",			/* 565 = fhlink */
 	"fhlinkat",			/* 566 = fhlinkat */
 	"fhreadlink",			/* 567 = fhreadlink */
+	"#568",			/* 568 = funlinkat */
+	"#569",			/* 569 = copy_file_range */
+	"__sysctlbyname",			/* 570 = __sysctlbyname */
+	"#571",			/* 571 = shm_open2 */
+	"#572",			/* 572 = shm_rename */
+	"#573",			/* 573 = sigfastblock */
+	"#574",			/* 574 = __realpathat */
+	"close_range",			/* 575 = close_range */
 };

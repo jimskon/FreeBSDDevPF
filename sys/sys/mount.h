@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mount.h	8.21 (Berkeley) 5/20/95
- * $FreeBSD: releng/12.1/sys/sys/mount.h 351777 2019-09-03 19:30:02Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MOUNT_H_
@@ -52,9 +52,14 @@
 
 typedef struct fsid { int32_t val[2]; } fsid_t;	/* filesystem id type */
 
+#define fsidcmp(a, b) memcmp((a), (b), sizeof(fsid_t))
+
 /*
  * File identifier.
  * These are unique per filesystem on a single machine.
+ *
+ * Note that the offset of fid_data is 4 bytes, so care must be taken to avoid
+ * undefined behavior accessing unaligned fields within an embedded struct.
  */
 #define	MAXFIDSZ	16
 
@@ -396,6 +401,7 @@ void          __mnt_vnode_markerfree_active(struct vnode **mvp, struct mount *);
 #define	MNTK_UNMAPPED_BUFS	0x00002000
 #define	MNTK_USES_BCACHE	0x00004000 /* FS uses the buffer cache. */
 #define	MNTK_TEXT_REFS		0x00008000 /* Keep use ref for text */
+#define	MNTK_VMSETSIZE_BUG	0x00010000
 #define MNTK_NOASYNC	0x00800000	/* disable async */
 #define MNTK_UNMOUNT	0x01000000	/* unmount in progress */
 #define	MNTK_MWAIT	0x02000000	/* waiting for unmount to finish */

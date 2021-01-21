@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mxge/if_mxge.c 335973 2018-07-05 02:43:10Z gallatin $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -4246,13 +4246,15 @@ mxge_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 		mask = ifr->ifr_reqcap ^ ifp->if_capenable;
 		if (mask & IFCAP_TXCSUM) {
 			if (IFCAP_TXCSUM & ifp->if_capenable) {
+				mask &= ~IFCAP_TSO4;
 				ifp->if_capenable &= ~(IFCAP_TXCSUM|IFCAP_TSO4);
 				ifp->if_hwassist &= ~(CSUM_TCP | CSUM_UDP);
 			} else {
 				ifp->if_capenable |= IFCAP_TXCSUM;
 				ifp->if_hwassist |= (CSUM_TCP | CSUM_UDP);
 			}
-		} else if (mask & IFCAP_RXCSUM) {
+		}
+		if (mask & IFCAP_RXCSUM) {
 			if (IFCAP_RXCSUM & ifp->if_capenable) {
 				ifp->if_capenable &= ~IFCAP_RXCSUM;
 			} else {
@@ -4274,6 +4276,7 @@ mxge_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 #if IFCAP_TSO6
 		if (mask & IFCAP_TXCSUM_IPV6) {
 			if (IFCAP_TXCSUM_IPV6 & ifp->if_capenable) {
+				mask &= ~IFCAP_TSO6;
 				ifp->if_capenable &= ~(IFCAP_TXCSUM_IPV6
 						       | IFCAP_TSO6);
 				ifp->if_hwassist &= ~(CSUM_TCP_IPV6
@@ -4283,7 +4286,8 @@ mxge_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 				ifp->if_hwassist |= (CSUM_TCP_IPV6
 						     | CSUM_UDP_IPV6);
 			}
-		} else if (mask & IFCAP_RXCSUM_IPV6) {
+		}
+		if (mask & IFCAP_RXCSUM_IPV6) {
 			if (IFCAP_RXCSUM_IPV6 & ifp->if_capenable) {
 				ifp->if_capenable &= ~IFCAP_RXCSUM_IPV6;
 			} else {
@@ -4349,7 +4353,7 @@ mxge_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 		err = mxge_fetch_i2c(sc, &i2c);
 		mtx_unlock(&sc->driver_mtx);
 		if (err == 0)
-			err = copyout(&i2c, ifr->ifr_ifru.ifru_data,
+			err = copyout(&i2c, ifr_data_get_ptr(ifr),
 			    sizeof(i2c));
 		break;
 	default:

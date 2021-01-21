@@ -33,7 +33,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/ctype.h 345942 2019-04-05 11:35:02Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_CTYPE_H_

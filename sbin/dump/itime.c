@@ -34,7 +34,7 @@
 static char sccsid[] = "@(#)itime.c	8.1 (Berkeley) 6/5/93";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/sbin/dump/itime.c 326025 2017-11-20 19:49:47Z pfg $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -60,8 +60,10 @@ struct dumptime {
 	SLIST_ENTRY(dumptime) dt_list;
 };
 SLIST_HEAD(dthead, dumptime) dthead = SLIST_HEAD_INITIALIZER(dthead);
-struct	dumpdates **ddatev = NULL;
-int	nddates = 0;
+int	nddates = 0;		/* number of records (might be zero) */
+struct	dumpdates **ddatev;	/* the arrayfied version */
+char	*dumpdates;		/* name of the file containing dump date info */
+int	lastlevel;		/* dump level of previous dump */
 
 static	void dumprecout(FILE *, const struct dumpdates *);
 static	int getrecord(FILE *, struct dumpdates *);

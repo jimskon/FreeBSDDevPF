@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/BCM 345301 2019-03-19 17:16:37Z kib $
+# $FreeBSD$
 #
 # The Broadcom 470x/471x/535x series of processors and boards is very commonly
 # used in COTS hardware including the ASUS RT-N12, RT-N16, RT-N53.

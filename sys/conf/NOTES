@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/NOTES 351940 2019-09-06 17:21:21Z asomers $
+# $FreeBSD$
 #
 # NOTES -- Lines that can be cut/pasted into kernel and hints configs.
 #
@@ -692,7 +692,12 @@ options 	LIBALIAS
 # the V6 and V4.. since an association can span
 # both a V6 and V4 address at the SAME time :-)
 #
+# The SCTP_SUPPORT option does not enable SCTP, but provides the necessary
+# support for loading SCTP as a loadable kernel module.
+#
 options 	SCTP
+options 	SCTP_SUPPORT
+
 # There are bunches of options:
 # this one turns on all sorts of
 # nastily printing that you can
@@ -705,6 +710,7 @@ options 	SCTP
 # bits and prints.. which makes the code run
 # faster.. if you are not debugging don't use.
 options 	SCTP_DEBUG
+
 #
 # All that options after that turn on specific types of
 # logging. You can monitor CWND growth, flight size
@@ -727,7 +733,6 @@ options 	SCTP_MBCNT_LOGGING
 options 	SCTP_PACKET_LOGGING
 options 	SCTP_LTRACE_CHUNKS
 options 	SCTP_LTRACE_ERRORS
-
 
 # altq(9). Enable the base part of the hooks with the ALTQ option.
 # Individual disciplines must be built into the base system and can not be
@@ -895,11 +900,9 @@ device		epair
 #  which discards all packets sent and receives none.
 device		edsc
 
-#  The `tap' device is a pty-like virtual Ethernet interface
-device		tap
-
-#  The `tun' device implements (user-)ppp and nos-tun(8)
-device		tun
+#  The `tuntap' device implements (user-)ppp, nos-tun(8) and a pty-like virtual
+#  Ethernet interface
+device		tuntap
 
 #  The `gif' device implements IPv6 over IP4 tunneling,
 #  IPv4 over IPv6 tunneling, IPv4 over IPv4 tunneling and
@@ -1358,6 +1361,7 @@ device		ctl		#CAM Target Layer
 # CAM_DEBUG_TARGET	Limit debugging to the given target.
 # CAM_DEBUG_LUN		Limit debugging to the given lun.
 # CAM_DEBUG_DELAY	Delay in us after printing each debug line.
+# CAM_IO_STATS		Publish additional CAM device statics by sysctl
 #
 # CAM_MAX_HIGHPOWER: Maximum number of concurrent high power (start unit) cmds
 # SCSI_NO_SENSE_STRINGS: When defined disables sense descriptions
@@ -1379,6 +1383,7 @@ options 	SCSI_NO_SENSE_STRINGS
 options 	SCSI_NO_OP_STRINGS
 options 	SCSI_DELAY=5000	# Be pessimistic about Joe SCSI device
 options 	CAM_IOSCHED_DYNAMIC
+options		CAM_IO_STATS
 options		CAM_TEST_FAILURE
 
 # Options for the CAM CDROM driver:
@@ -1535,9 +1540,9 @@ options		VT_ALT_TO_ESC_HACK=1	# Prepend ESC sequence to ALT keys
 options		VT_MAXWINDOWS=16	# Number of virtual consoles
 options		VT_TWOBUTTON_MOUSE	# Use right mouse button to paste
 
-# The following options set the default framebuffer size.
-options		VT_FB_DEFAULT_HEIGHT=480
-options		VT_FB_DEFAULT_WIDTH=640
+# The following options set the maximum framebuffer size.
+options		VT_FB_MAX_HEIGHT=480
+options		VT_FB_MAX_WIDTH=640
 
 # The following options will let you change the default vt terminal colors.
 options		TERMINAL_NORM_ATTR=(FG_GREEN|BG_BLACK)
@@ -2515,12 +2520,17 @@ device		jedec_dimm
 # iicbb	generic I2C bit-banging code (needed by lpbb, bktr)
 #
 device		iicbus		# Bus support, required for ic/iic/iicsmb below.
-device		iicbb
+device		iicbb		# bitbang driver; implements i2c on a pair of gpio pins
 
 device		ic
-device		iic
+device		iic		# userland access to i2c slave devices via ioctl(8)
 device		iicsmb		# smb over i2c bridge
 device		iicoc		# OpenCores I2C controller support
+
+# I2C bus multiplexer (mux) devices
+device		iicmux		# i2c mux core driver
+device		iic_gpiomux	# i2c mux hardware controlled via gpio pins
+device		ltc430x		# LTC4305 and LTC4306 i2c mux chips
 
 # I2C peripheral devices
 #

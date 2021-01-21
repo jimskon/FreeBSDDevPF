@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/contrib/rdma/krping/krping.c 353269 2019-10-07 12:51:36Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include <linux/module.h>
 #include <linux/moduleparam.h>
@@ -736,7 +736,7 @@ static u32 krping_rdma_rkey(struct krping_cb *cb, u64 buf, int post_inv)
 		post_inv,
 		cb->reg_mr_wr.key,
 		cb->reg_mr->page_size,
-		cb->reg_mr->length,
+		(unsigned)cb->reg_mr->length,
 	        (unsigned long long)cb->reg_mr->iova);
 
 	if (post_inv)

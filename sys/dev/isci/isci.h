@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/isci/isci.h 345530 2019-03-26 11:03:09Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _ISCI_H
@@ -74,6 +74,9 @@
 
 #define ISCI_NUM_PCI_BARS  2
 #define ISCI_MAX_LUN		 8
+
+/* This device cannot DMA across a 4GB boundary */
+#define	ISCI_DMA_BOUNDARY		((bus_addr_t)((uint64_t)1 << 32))
 
 MALLOC_DECLARE(M_ISCI);
 

@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netipsec/key.c 351116 2019-08-16 12:27:19Z ae $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: key.c,v 1.191 2001/06/27 10:46:49 sakane Exp $	*/
 
 /*-

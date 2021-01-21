@@ -29,7 +29,7 @@
 /* Driver for VirtIO SCSI devices. */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/virtio/scsi/virtio_scsi.c 349691 2019-07-03 19:52:24Z vangyzen $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -940,7 +940,7 @@ vtscsi_cam_path_inquiry(struct vtscsi_softc *sc, struct cam_sim *sim,
 
 	cpi->max_target = sc->vtscsi_max_target;
 	cpi->max_lun = sc->vtscsi_max_lun;
-	cpi->initiator_id = VTSCSI_INITIATOR_ID;
+	cpi->initiator_id = cpi->max_target + 1;
 
 	strlcpy(cpi->sim_vid, "FreeBSD", SIM_IDLEN);
 	strlcpy(cpi->hba_vid, "VirtIO", HBA_IDLEN);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libutil/pidfile.c 345738 2019-03-30 17:42:27Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -196,7 +196,7 @@ pidfile_open(const char *pathp, mode_t mode, pid_t *pidptr)
 	}
 
 	if (cap_rights_limit(fd, cap_rights_init(&caprights, CAP_PWRITE,
-	    CAP_FSTAT, CAP_FTRUNCATE)) < 0 &&
+	    CAP_FSTAT, CAP_FTRUNCATE, CAP_EVENT)) < 0 &&
 	    errno != ENOSYS) {
 		goto failed;
 	}

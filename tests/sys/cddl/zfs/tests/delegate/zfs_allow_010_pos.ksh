@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_allow_010_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2007 Sun Microsystems, Inc.  All rights reserved.
@@ -60,7 +60,6 @@ verify_runnable "both"
 
 log_assert "Verify privileged user has correct permissions once which was "\
 	"delegated to him in datasets"
-log_onexit restore_root_datasets
 
 #
 #				Results in	Results in
@@ -79,7 +78,6 @@ set -A perms	create		true		false	\
 		compression	true		true	\
 		canmount	true		false	\
 		atime		true		false	\
-		devices		true		false	\
 		exec		true		false	\
 		volsize		false		true	\
 		setuid		true		false	\
@@ -92,16 +90,14 @@ set -A perms	create		true		false	\
 		clone		true		true	\
 		rename		true		true	\
 		promote		true		true	\
-		zoned		true		false	\
-		shareiscsi	true		true	\
-		xattr		true		false	\
 		receive		true		false	\
 		destroy		true		true
-if is_global_zone; then
-	typeset -i n=${#perms[@]}
-	perms[((n))]="sharenfs"; perms[((n+1))]="true"; perms[((n+2))]="false"
-	perms[((n+3))]="share"; perms[((n+4))]="true"; perms[((n+5))]="false"
-fi
+		# TODO: shareiscsi is not yet supported on FreeBSD
+		# shareiscsi	true		true
+# the sharenfs test is Solaris-specific.  TODO: port it to FreeBSD.
+#typeset -i n=${#perms[@]}
+#perms[((n))]="sharenfs"; perms[((n+1))]="true"; perms[((n+2))]="false"
+#perms[((n+3))]="share"; perms[((n+4))]="true"; perms[((n+5))]="false"
 
 for dtst in $DATASETS; do
 	typeset -i k=1

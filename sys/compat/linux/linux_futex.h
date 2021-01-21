@@ -32,14 +32,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_futex.h 332930 2018-04-24 12:50:21Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_FUTEX_H
 #define _LINUX_FUTEX_H
-
-extern LIST_HEAD(futex_list, futex) futex_list;
-extern struct mtx futex_mtx;
 
 #define LINUX_FUTEX_WAIT		 0
 #define LINUX_FUTEX_WAKE		 1

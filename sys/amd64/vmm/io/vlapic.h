@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/io/vlapic.h 326257 2017-11-27 15:03:07Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _VLAPIC_H_
@@ -74,6 +74,8 @@ void vlapic_post_intr(struct vlapic *vlapic, int hostcpu, int ipinum);
 void vlapic_set_error(struct vlapic *vlapic, uint32_t mask);
 void vlapic_fire_cmci(struct vlapic *vlapic);
 int vlapic_trigger_lvt(struct vlapic *vlapic, int vector);
+
+void vlapic_sync_tpr(struct vlapic *vlapic);
 
 uint64_t vlapic_get_apicbase(struct vlapic *vlapic);
 int vlapic_set_apicbase(struct vlapic *vlapic, uint64_t val);

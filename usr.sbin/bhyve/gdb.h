@@ -25,13 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/gdb.h 333140 2018-05-01 15:17:46Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef __GDB_H__
 #define	__GDB_H__
 
 void	gdb_cpu_add(int vcpu);
+void	gdb_cpu_breakpoint(int vcpu, struct vm_exit *vmexit);
 void	gdb_cpu_mtrap(int vcpu);
 void	gdb_cpu_suspend(int vcpu);
 void	init_gdb(struct vmctx *ctx, int sport, bool wait);

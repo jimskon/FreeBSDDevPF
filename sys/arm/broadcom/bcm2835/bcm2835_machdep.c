@@ -42,7 +42,7 @@
 #include "opt_platform.h"
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/broadcom/bcm2835/bcm2835_machdep.c 335611 2018-06-24 23:19:31Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -139,7 +139,7 @@ FDT_PLATFORM_DEF2(bcm2835, bcm2835_legacy, "bcm2835 (legacy)", 0, "raspberrypi,m
 FDT_PLATFORM_DEF2(bcm2835, bcm2835, "bcm2835", 0, "brcm,bcm2835", 100);
 #endif
 
-#ifdef SOC_BCM2836
+#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
 static platform_method_t bcm2836_methods[] = {
 	PLATFORMMETHOD(platform_devmap_init,	bcm2836_devmap_init),
 	PLATFORMMETHOD(platform_late_init,	bcm2835_late_init),
@@ -155,4 +155,4 @@ static platform_method_t bcm2836_methods[] = {
 FDT_PLATFORM_DEF2(bcm2836, bcm2836_legacy, "bcm2836 (legacy)", 0, "brcm,bcm2709", 100);
 FDT_PLATFORM_DEF2(bcm2836, bcm2836, "bcm2836", 0, "brcm,bcm2836", 100);
 FDT_PLATFORM_DEF2(bcm2836, bcm2837, "bcm2837", 0, "brcm,bcm2837", 100);
-#endif
+#endif	/* defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837) */

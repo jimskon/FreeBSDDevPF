@@ -33,7 +33,7 @@
 #  totally clean, fresh trees.
 # Based on release/generate-release.sh written by Nathan Whitehorn
 #
-# $FreeBSD: releng/12.1/release/release.sh 349232 2019-06-20 14:34:45Z gjb $
+# $FreeBSD$
 #
 
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin"
@@ -368,7 +368,7 @@ efi_boot_name()
 			echo "bootaa64.efi"
 			;;
 		amd64)
-			echo "bootx86.efi"
+			echo "bootx64.efi"
 			;;
 	esac
 }

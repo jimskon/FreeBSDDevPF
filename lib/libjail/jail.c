@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libjail/jail.c 351940 2019-09-06 17:21:21Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -263,7 +263,10 @@ jailparam_all(struct jailparam **jpp)
 			goto error;
 		mib1[1] = 2;
 	}
-	jp = reallocarray(jp, njp, sizeof(*jp));
+	/* Just return the untrimmed buffer if reallocarray() somehow fails. */
+	tjp = reallocarray(jp, njp, sizeof(*jp));
+	if (tjp != NULL)
+		jp = tjp;
 	*jpp = jp;
 	return (njp);
 

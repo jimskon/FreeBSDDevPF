@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/mk/bsd.init.mk 335452 2018-06-20 17:20:39Z bdrewery $
+# $FreeBSD$
 
 # The include file <bsd.init.mk> includes <bsd.opts.mk>,
 # ../Makefile.inc and <bsd.own.mk>; this is used at the
@@ -58,11 +58,12 @@ $xGRP=	${_gid}
 #   things like 'make all install' or 'make foo install'.
 # - non-build targets are called
 .if ${MK_DIRDEPS_BUILD} == "yes" && ${.MAKE.LEVEL:U1} == 0 && \
-    ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*)
+    ${BUILD_AT_LEVEL0:Uyes:tl} == "no" && !make(clean*) && !make(*clean)
 _SKIP_BUILD=	not building at level 0
 .elif !empty(.MAKEFLAGS:M-V${_V_DO_BUILD}) || \
     ${.TARGETS:M*install*} == ${.TARGETS} || \
     ${.TARGETS:Mclean*} == ${.TARGETS} || \
+    ${.TARGETS:M*clean} == ${.TARGETS} || \
     ${.TARGETS:Mdestroy*} == ${.TARGETS} || \
     ${.TARGETS:Mobj} == ${.TARGETS} || \
     make(analyze) || make(print-dir)

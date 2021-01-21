@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/coretemp/coretemp.c 335186 2018-06-15 02:28:36Z mmacy $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -165,7 +165,7 @@ coretemp_attach(device_t dev)
 	sc->sc_dev = dev;
 	pdev = device_get_parent(dev);
 	cpu_model = CPUID_TO_MODEL(cpu_id);
-	cpu_stepping = cpu_id & CPUID_STEPPING;
+	cpu_stepping = CPUID_TO_STEPPING(cpu_id);
 
 	/*
 	 * Some CPUs, namely the PIII, don't have thermal sensors, but

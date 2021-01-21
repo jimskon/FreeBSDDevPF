@@ -29,12 +29,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/nvdimm/nvdimm.c 352108 2019-09-09 20:49:37Z scottph $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_acpi.h"
 #include "opt_ddb.h"
 
 #include <sys/param.h>
+#include <sys/systm.h>
 #include <sys/bio.h>
 #include <sys/bitstring.h>
 #include <sys/bus.h>
@@ -235,7 +236,7 @@ read_label(struct nvdimm_dev *nv, int num)
 			return (0);
 		}
 	}
-	__unreachable();
+	__assert_unreachable();
 }
 
 static int

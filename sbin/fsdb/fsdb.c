@@ -32,7 +32,7 @@
 
 #ifndef lint
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/sbin/fsdb/fsdb.c 344885 2019-03-07 13:51:18Z kib $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -69,9 +69,6 @@ usage(void)
 	fprintf(stderr, "usage: fsdb [-d] [-f] [-r] fsname\n");
 	exit(1);
 }
-
-int returntosingle;
-char nflag;
 
 /*
  * We suck in lots of fsck code, and just pick & choose the stuff we want.

@@ -33,7 +33,7 @@
 static char sccsid[] = "@(#)rcmd.c	8.3 (Berkeley) 3/26/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/net/rcmd.c 327619 2018-01-06 12:46:04Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -438,8 +438,8 @@ iruserok_sa(const void *ra, int rlen, int superuser, const char *ruser,
 	struct sockaddr_storage ss;
 
 	/* avoid alignment issue */
-	if (rlen > sizeof(ss)) 
-		return(-1);
+	if (rlen <= 0 || rlen > sizeof(ss))
+		return (-1);
 	memcpy(&ss, ra, rlen);
 	raddr = (struct sockaddr *)&ss;
 

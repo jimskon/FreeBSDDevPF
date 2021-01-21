@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5211/ar5211reg.h 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #ifndef _DEV_ATH_AR5211REG_H
 #define _DEV_ATH_AR5211REG_H
@@ -807,7 +807,6 @@
 #define	AR5211_USEC_TX_LAT_S	14
 #define	AR5211_USEC_RX_LAT_M	0x1F800000	/* Rx latency */
 #define	AR5211_USEC_RX_LAT_S	23
-
 
 #define	AR_BEACON_PERIOD	0x0000FFFF	/* Beacon period in TU/msec */
 #define	AR_BEACON_PERIOD_S	0		/* Byte offset of PERIOD start*/

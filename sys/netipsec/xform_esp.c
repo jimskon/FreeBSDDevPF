@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netipsec/xform_esp.c 351358 2019-08-21 22:42:08Z jhb $	*/
+/*	$FreeBSD$	*/
 /*	$OpenBSD: ip_esp.c,v 1.69 2001/06/26 06:18:59 angelos Exp $ */
 /*-
  * The authors of this code are John Ioannidis (ji@tla.org),
@@ -37,6 +37,7 @@
  */
 #include "opt_inet.h"
 #include "opt_inet6.h"
+#include "opt_ipsec.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -94,7 +95,7 @@ SYSCTL_VNET_PCPUSTAT(_net_inet_esp, IPSECCTL_STATS, stats,
     struct espstat, espstat,
     "ESP statistics (struct espstat, netipsec/esp_var.h");
 
-static struct timeval deswarn, blfwarn, castwarn, camelliawarn;
+static struct timeval deswarn, blfwarn, castwarn, camelliawarn, tdeswarn;
 
 static int esp_input_cb(struct cryptop *op);
 static int esp_output_cb(struct cryptop *crp);
@@ -163,6 +164,10 @@ esp_init(struct secasvar *sav, struct xformsw *xsp)
 	case SADB_EALG_DESCBC:
 		if (ratecheck(&deswarn, &ipsec_warn_interval))
 			gone_in(13, "DES cipher for IPsec");
+		break;
+	case SADB_EALG_3DESCBC:
+		if (ratecheck(&tdeswarn, &ipsec_warn_interval))
+			gone_in(13, "3DES cipher for IPsec");
 		break;
 	case SADB_X_EALG_BLOWFISHCBC:
 		if (ratecheck(&blfwarn, &ipsec_warn_interval))
@@ -307,8 +312,17 @@ esp_input(struct mbuf *m, struct secasvar *sav, int skip, int protoff)
 		ESPSTAT_INC(esps_badilen);
 		goto bad;
 	}
-	/* XXX don't pullup, just copy header */
-	IP6_EXTHDR_GET(esp, struct newesp *, m, skip, sizeof (struct newesp));
+
+	if (m->m_len < skip + sizeof(*esp)) {
+		m = m_pullup(m, skip + sizeof(*esp));
+		if (m == NULL) {
+			DPRINTF(("%s: cannot pullup header\n", __func__));
+			ESPSTAT_INC(esps_hdrops);	/*XXX*/
+			error = ENOBUFS;
+			goto bad;
+		}
+	}
+	esp = (struct newesp *)(mtod(m, caddr_t) + skip);
 
 	esph = sav->tdb_authalgxform;
 	espx = sav->tdb_encalgxform;
@@ -606,6 +620,13 @@ esp_input_cb(struct cryptop *crp)
 			goto bad;
 		}
 	}
+
+	/*
+	 * RFC4303 2.6:
+	 * Silently drop packet if next header field is IPPROTO_NONE.
+	 */
+	if (lastthree[2] == IPPROTO_NONE)
+		goto bad;
 
 	/* Trim the mbuf chain to remove trailing authenticator and padding */
 	m_adj(m, -(lastthree[1] + 2));

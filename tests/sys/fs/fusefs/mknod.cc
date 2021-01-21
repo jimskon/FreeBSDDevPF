@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/mknod.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {
@@ -55,8 +55,11 @@ const static mode_t c_umask = 022;
 
 public:
 
-virtual void SetUp() {
+Mknod() {
 	m_oldmask = umask(c_umask);
+}
+
+virtual void SetUp() {
 	if (geteuid() != 0) {
 		GTEST_SKIP() << "Only root may use most mknod(2) variations";
 	}

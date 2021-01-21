@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/bktr/bktr/Makefile 314651 2017-03-04 10:10:17Z ngie $
+# $FreeBSD$
 
 # Makefile for the bktr Brooktree Bt848/Bt878 PCI video capture device
 

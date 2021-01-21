@@ -32,7 +32,7 @@
  * those of the authors and should not be interpreted as representing official
  * policies, either expressed or implied, of the FreeBSD Project.
  *
- * $FreeBSD: releng/12.1/sys/dev/sfxge/common/efsys.h 350407 2019-07-29 09:34:47Z arybchik $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_EFSYS_H

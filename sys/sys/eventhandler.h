@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/eventhandler.h 326256 2017-11-27 15:01:59Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_EVENTHANDLER_H_
@@ -334,5 +334,10 @@ typedef void (*device_attach_fn)(void *, device_t);
 typedef void (*device_detach_fn)(void *, device_t, enum evhdev_detach);
 EVENTHANDLER_DECLARE(device_attach, device_attach_fn);
 EVENTHANDLER_DECLARE(device_detach, device_detach_fn);
+
+/* Interface address addition and removal event */
+struct ifaddr;
+typedef void (*rt_addrmsg_fn)(void *, struct ifaddr *, int);
+EVENTHANDLER_DECLARE(rt_addrmsg, rt_addrmsg_fn);
 
 #endif /* _SYS_EVENTHANDLER_H_ */

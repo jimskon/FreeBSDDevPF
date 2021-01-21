@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/linux/linux_machdep.c 346841 2019-04-28 14:30:25Z dchagin $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/capsicum.h>
@@ -138,6 +138,13 @@ linux_mprotect(struct thread *td, struct linux_mprotect_args *uap)
 {
 
 	return (linux_mprotect_common(td, PTROUT(uap->addr), uap->len, uap->prot));
+}
+
+int
+linux_madvise(struct thread *td, struct linux_madvise_args *uap)
+{
+
+	return (linux_madvise_common(td, PTROUT(uap->addr), uap->len, uap->behav));
 }
 
 int

@@ -27,14 +27,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/samsung/exynos/exynos_uart.c 281438 2015-04-11 17:16:23Z andrew $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/bus.h>
 #include <sys/conf.h>
 #include <sys/cons.h>
-#include <sys/tty.h>
 #include <sys/rman.h>
 #include <machine/bus.h>
 #include <machine/intr.h>

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_common.h 348092 2019-05-22 05:32:39Z dchagin $
+ * $FreeBSD$
  */
 
 #ifndef _LINUX_COMMON_H_
@@ -34,5 +34,12 @@ struct ifnet	*ifname_linux_to_bsd(struct thread *td,
 		    const char *lxname, char *bsdname);
 void		linux_ifflags(struct ifnet *ifp, short *flags);
 int		linux_ifhwaddr(struct ifnet *ifp, struct l_sockaddr *lsa);
+
+int		linux_to_bsd_domain(int domain);
+int		bsd_to_linux_domain(int domain);
+int		bsd_to_linux_sockaddr(const struct sockaddr *sa,
+		    struct l_sockaddr **lsa, socklen_t len);
+int		linux_to_bsd_sockaddr(const struct l_sockaddr *lsa,
+		    struct sockaddr **sap, socklen_t *len);
 
 #endif /* _LINUX_COMMON_H_ */

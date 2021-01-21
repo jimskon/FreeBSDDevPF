@@ -28,10 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/if_ath_lna_div.c 327500 2018-01-02 19:34:23Z emaste $
+ * $FreeBSD$
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ath/if_ath_lna_div.c 327500 2018-01-02 19:34:23Z emaste $");
+__FBSDID("$FreeBSD$");
 
 /*
  * This module handles LNA diversity for those chips which implement LNA
@@ -55,7 +55,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/ath/if_ath_lna_div.c 327500 2018-01-02 1
 #include <sys/bus.h>
 
 #include <sys/socket.h>
- 
+
 #include <net/if.h>
 #include <net/if_var.h>
 #include <net/if_media.h>
@@ -1018,4 +1018,3 @@ div_comb_done:
 	antcomb->main_recv_cnt = 0;
 	antcomb->alt_recv_cnt = 0;
 }
-

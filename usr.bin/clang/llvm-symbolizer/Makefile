@@ -1,10 +1,13 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-symbolizer/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-symbolizer
+MAN=		llvm-symbolizer.1 llvm-addr2line.1
 
-SRCDIR=		tools/llvm-symbolizer
+SRCDIR=		llvm/tools/llvm-symbolizer
 SRCS+=		llvm-symbolizer.cpp
 
 LIBADD+=	z
+
+LINKS+=		${BINDIR}/llvm-symbolizer ${BINDIR}/llvm-addr2line
 
 .include "../llvm.prog.mk"

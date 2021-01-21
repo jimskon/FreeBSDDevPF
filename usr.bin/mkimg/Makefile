@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/mkimg/Makefile 322515 2017-08-14 19:21:37Z ngie $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -18,6 +18,7 @@ SRCS+= \
 	qcow.c \
 	raw.c \
 	vhd.c \
+	vhdx.c \
 	vmdk.c
 
 # List of schemes to support

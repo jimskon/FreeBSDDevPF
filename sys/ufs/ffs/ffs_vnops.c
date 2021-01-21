@@ -64,7 +64,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ufs/ffs/ffs_vnops.c 345240 2019-03-17 06:05:19Z jah $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -387,6 +387,8 @@ next:
 			error = ffs_update(vp, 1);
 		if (DOINGSUJ(vp))
 			softdep_journal_fsync(VTOI(vp));
+	} else if ((ip->i_flags & (IN_SIZEMOD | IN_IBLKDATA)) != 0) {
+		error = ffs_update(vp, 1);
 	}
 	return (error);
 }
@@ -782,6 +784,7 @@ ffs_write(ap)
 		if (uio->uio_offset + xfersize > ip->i_size) {
 			ip->i_size = uio->uio_offset + xfersize;
 			DIP_SET(ip, i_size, ip->i_size);
+			ip->i_flag |= IN_SIZEMOD | IN_CHANGE;
 		}
 
 		size = blksize(fs, ip, lbn) - bp->b_resid;
@@ -1062,8 +1065,10 @@ ffs_extwrite(struct vnode *vp, struct uio *uio, int ioflag, struct ucred *ucred)
 		if ((bp->b_flags & B_CACHE) == 0 && fs->fs_bsize <= xfersize)
 			vfs_bio_clrbuf(bp);
 
-		if (uio->uio_offset + xfersize > dp->di_extsize)
+		if (uio->uio_offset + xfersize > dp->di_extsize) {
 			dp->di_extsize = uio->uio_offset + xfersize;
+			ip->i_flag |= IN_SIZEMOD | IN_CHANGE;
+		}
 
 		size = sblksize(fs, dp->di_extsize, lbn) - bp->b_resid;
 		if (size < xfersize)
@@ -1749,18 +1754,25 @@ ffs_getpages_async(struct vop_getpages_async_args *ap)
 {
 	struct vnode *vp;
 	struct ufsmount *um;
+	bool do_iodone;
 	int error;
 
 	vp = ap->a_vp;
 	um = VFSTOUFS(vp->v_mount);
+	do_iodone = true;
 
-	if (um->um_devvp->v_bufobj.bo_bsize <= PAGE_SIZE)
-		return (vnode_pager_generic_getpages(vp, ap->a_m, ap->a_count,
-		    ap->a_rbehind, ap->a_rahead, ap->a_iodone, ap->a_arg));
-
-	error = vfs_bio_getpages(vp, ap->a_m, ap->a_count, ap->a_rbehind,
-	    ap->a_rahead, ffs_gbp_getblkno, ffs_gbp_getblksz);
-	ap->a_iodone(ap->a_arg, ap->a_m, ap->a_count, error);
+	if (um->um_devvp->v_bufobj.bo_bsize <= PAGE_SIZE) {
+		error = vnode_pager_generic_getpages(vp, ap->a_m, ap->a_count,
+		    ap->a_rbehind, ap->a_rahead, ap->a_iodone, ap->a_arg);
+		if (error == 0)
+			do_iodone = false;
+	} else {
+		error = vfs_bio_getpages(vp, ap->a_m, ap->a_count,
+		    ap->a_rbehind, ap->a_rahead, ffs_gbp_getblkno,
+		    ffs_gbp_getblksz);
+	}
+	if (do_iodone && ap->a_iodone != NULL)
+		ap->a_iodone(ap->a_arg, ap->a_m, ap->a_count, error);
 
 	return (error);
 }

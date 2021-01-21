@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar9002/ar9287_reset.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 
 #include "opt_ah.h"
@@ -112,7 +112,6 @@ ar9287SetPowerCalTable(struct ath_hal *ah,
 
 	*pTxPowerIndexOffset = 0;
 }
-
 
 /* XXX hard-coded values? */
 #define REDUCE_SCALED_POWER_BY_TWO_CHAIN     6

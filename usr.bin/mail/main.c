@@ -41,7 +41,7 @@ static char sccsid[] = "@(#)main.c	8.2 (Berkeley) 4/20/95";
 #endif
 #endif /* not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/mail/main.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "rcv.h"
 #include <fcntl.h>
@@ -52,6 +52,49 @@ __FBSDID("$FreeBSD: releng/12.1/usr.bin/mail/main.c 326025 2017-11-20 19:49:47Z 
  *
  * Startup -- interface with user.
  */
+int	msgCount;
+int	rcvmode;
+int	sawcom;
+char	*Tflag;
+int	senderr;
+int	edit;
+int	readonly;
+int	noreset;
+int	sourcing;
+int	loading;
+int	cond;
+FILE	*itf;
+FILE	*otf;
+int	image;
+FILE	*input;
+char	mailname[PATHSIZE];
+char	prevfile[PATHSIZE];
+char	*homedir;
+char	*myname;
+off_t	mailsize;
+int	lexnumber;
+char	lexstring[STRINGLEN];
+int	regretp;
+int	regretstack[REGDEP];
+char	*string_stack[REGDEP];
+int	numberstack[REGDEP];
+struct	message	*dot;
+struct	message	*message;
+struct	var	*variables[HSHSIZE];
+struct	grouphead	*groups[HSHSIZE];
+struct	ignoretab	ignore[2];
+
+struct	ignoretab	saveignore[2];
+
+struct	ignoretab	ignoreall[2];
+char	**altnames;
+int	debug;
+int	screenwidth;
+int	screenheight;
+
+int	realscreenheight;
+
+jmp_buf	srbuf;
 
 static jmp_buf	hdrjmp;
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/rtwn_pci/Makefile 342835 2019-01-07 04:58:10Z avos $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/dev/rtwn/pci
 

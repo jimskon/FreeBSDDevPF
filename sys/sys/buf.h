@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)buf.h	8.9 (Berkeley) 3/30/95
- * $FreeBSD: releng/12.1/sys/sys/buf.h 333576 2018-05-13 09:47:28Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_BUF_H_
@@ -450,7 +450,7 @@ buf_countdeps(struct buf *bp, int i)
 }
 
 static __inline void
-buf_track(struct buf *bp, const char *location)
+buf_track(struct buf *bp __unused, const char *location __unused)
 {
 
 #if defined(FULL_BUF_TRACKING)

@@ -1,12 +1,12 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/tcp/rack/Makefile 334815 2018-06-07 20:57:12Z rrs $
+# $FreeBSD$
 #
 
 .PATH: ${.CURDIR}/../../../netinet/tcp_stacks
 
 STACKNAME=	rack
 KMOD=	tcp_${STACKNAME}
-SRCS=	rack.c sack_filter.c
+SRCS=	rack.c sack_filter.c rack_bbr_common.c
 
 SRCS+=	opt_inet.h opt_inet6.h opt_ipsec.h
 SRCS+=	opt_tcpdebug.h

@@ -1,9 +1,8 @@
-# $FreeBSD: releng/12.1/sys/modules/mlx4/Makefile 326169 2017-11-24 14:50:28Z hselasky $
+# $FreeBSD$
 .PATH:  ${SRCTOP}/sys/dev/mlx4/mlx4_core
 
 KMOD=	mlx4
-SRCS=	device_if.h bus_if.h vnode_if.h pci_if.h \
-	opt_inet.h opt_inet6.h \
+SRCS= \
 	mlx4_alloc.c \
 	mlx4_catas.c \
 	mlx4_cmd.c \
@@ -24,6 +23,8 @@ SRCS=	device_if.h bus_if.h vnode_if.h pci_if.h \
 	mlx4_sense.c \
 	mlx4_srq.c \
 	mlx4_resource_tracker.c
+SRCS+=	${LINUXKPI_GENSRCS}
+SRCS+=	opt_inet.h opt_inet6.h
 
 CFLAGS+= -I${SRCTOP}/sys/ofed/include
 CFLAGS+= -I${SRCTOP}/sys/ofed/include/uapi

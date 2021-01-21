@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/cpucontrol/cpucontrol.c 343140 2019-01-18 09:41:17Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <assert.h>
 #include <err.h>
@@ -307,7 +307,7 @@ do_msr(const char *cmdarg, const char *dev)
 	}
 	error = ioctl(fd, command, &args);
 	if (error < 0) {
-		WARN(0, "ioctl(%s, CPUCTL_%s (%lu))", dev, command_name, command);
+		WARN(0, "ioctl(%s, CPUCTL_%s (%#x))", dev, command_name, msr);
 		close(fd);
 		return (1);
 	}

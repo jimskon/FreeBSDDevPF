@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/x86/acpica/acpi_wakeup.c 337715 2018-08-13 17:13:09Z markj $");
+__FBSDID("$FreeBSD$");
 
 #if defined(__amd64__)
 #define DEV_APIC
@@ -245,7 +245,7 @@ acpi_sleep_machdep(struct acpi_softc *sc, int state)
 		}
 #endif
 #ifdef __amd64__
-		hw_ibrs_active = 0;
+		hw_ibrs_ibpb_active = 0;
 		hw_ssb_active = 0;
 		cpu_stdext_feature3 = 0;
 		CPU_FOREACH(i) {

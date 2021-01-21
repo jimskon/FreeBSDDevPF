@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/conf/options.arm64 350687 2019-08-07 18:26:32Z manu $
+# $FreeBSD$
 
 ARM64				opt_global.h
 INTRNG				opt_global.h
@@ -16,7 +16,9 @@ EFIRT				opt_efirt.h
 # SoC Support
 SOC_ALLWINNER_A64		opt_soc.h
 SOC_ALLWINNER_H5		opt_soc.h
+SOC_ALLWINNER_H6		opt_soc.h
 SOC_BRCM_BCM2837		opt_soc.h
+SOC_BRCM_BCM2838		opt_soc.h
 SOC_CAVM_THUNDERX		opt_soc.h
 SOC_HISI_HI6220			opt_soc.h
 SOC_MARVELL_8K			opt_soc.h

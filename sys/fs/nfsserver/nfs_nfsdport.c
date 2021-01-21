@@ -34,7 +34,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/nfsserver/nfs_nfsdport.c 347044 2019-05-03 02:58:33Z rmacklem $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/extattr.h>
@@ -277,7 +277,8 @@ nfsvno_getattr(struct vnode *vp, struct nfsvattr *nvap,
 	}
 
 	/*
-	 * Acquire the Change, Size and TimeModify attributes, as required.
+	 * Acquire the Change, Size, TimeAccess, TimeModify and SpaceUsed
+	 * attributes, as required.
 	 * This needs to be done for regular files if:
 	 * - non-NFSv4 RPCs or
 	 * - when attrbitp == NULL or
@@ -292,7 +293,8 @@ nfsvno_getattr(struct vnode *vp, struct nfsvattr *nvap,
 	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_CHANGE) ||
 	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_SIZE) ||
 	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_TIMEACCESS) ||
-	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_TIMEMODIFY))) {
+	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_TIMEMODIFY) ||
+	    NFSISSET_ATTRBIT(attrbitp, NFSATTRBIT_SPACEUSED))) {
 		error = nfsrv_proxyds(nd, vp, 0, 0, nd->nd_cred, p,
 		    NFSPROC_GETATTR, NULL, NULL, NULL, &na, NULL);
 		if (error == 0)
@@ -312,6 +314,7 @@ nfsvno_getattr(struct vnode *vp, struct nfsvattr *nvap,
 		nvap->na_mtime = na.na_mtime;
 		nvap->na_filerev = na.na_filerev;
 		nvap->na_size = na.na_size;
+		nvap->na_bytes = na.na_bytes;
 	}
 	NFSD_DEBUG(4, "nfsvno_getattr: gotattr=%d err=%d chg=%ju\n", gotattr,
 	    error, (uintmax_t)na.na_filerev);
@@ -3012,6 +3015,11 @@ nfsvno_checkexp(struct mount *mp, struct sockaddr *nam, struct nfsexstuff *exp,
 			exp->nes_numsecflavor = 0;
 			error = 0;
 		}
+	} else if (exp->nes_numsecflavor < 1 || exp->nes_numsecflavor >
+	    MAXSECFLAVORS) {
+		printf("nfsvno_checkexp: numsecflavors out of range\n");
+		exp->nes_numsecflavor = 0;
+		error = EACCES;
 	} else {
 		/* Copy the security flavors. */
 		for (i = 0; i < exp->nes_numsecflavor; i++)
@@ -3048,6 +3056,12 @@ nfsvno_fhtovp(struct mount *mp, fhandle_t *fhp, struct sockaddr *nam,
 			} else {
 				vput(*vpp);
 			}
+		} else if (exp->nes_numsecflavor < 1 || exp->nes_numsecflavor >
+		    MAXSECFLAVORS) {
+			printf("nfsvno_fhtovp: numsecflavors out of range\n");
+			exp->nes_numsecflavor = 0;
+			error = EACCES;
+			vput(*vpp);
 		} else {
 			/* Copy the security flavors. */
 			for (i = 0; i < exp->nes_numsecflavor; i++)
@@ -3880,6 +3894,7 @@ nfsrv_dscreate(struct vnode *dvp, struct vattr *vap, struct vattr *nvap,
 					dsa->dsa_size = va.va_size;
 					dsa->dsa_atime = va.va_atime;
 					dsa->dsa_mtime = va.va_mtime;
+					dsa->dsa_bytes = va.va_bytes;
 				}
 			}
 			if (error == 0) {
@@ -3954,11 +3969,8 @@ nfsrv_pnfscreate(struct vnode *vp, struct vattr *vap, struct ucred *cred,
 		if (tds->nfsdev_nmp != NULL) {
 			if (tds->nfsdev_mdsisset == 0 && ds == NULL)
 				ds = tds;
-			else if (tds->nfsdev_mdsisset != 0 &&
-			    mp->mnt_stat.f_fsid.val[0] ==
-			    tds->nfsdev_mdsfsid.val[0] &&
-			    mp->mnt_stat.f_fsid.val[1] ==
-			    tds->nfsdev_mdsfsid.val[1]) {
+			else if (tds->nfsdev_mdsisset != 0 && fsidcmp(
+			    &mp->mnt_stat.f_fsid, &tds->nfsdev_mdsfsid) == 0) {
 				ds = fds = tds;
 				break;
 			}
@@ -3978,10 +3990,8 @@ nfsrv_pnfscreate(struct vnode *vp, struct vattr *vap, struct ucred *cred,
 			if (tds->nfsdev_nmp != NULL &&
 			    ((tds->nfsdev_mdsisset == 0 && fds == NULL) ||
 			     (tds->nfsdev_mdsisset != 0 && fds != NULL &&
-			      mp->mnt_stat.f_fsid.val[0] ==
-			      tds->nfsdev_mdsfsid.val[0] &&
-			      mp->mnt_stat.f_fsid.val[1] ==
-			      tds->nfsdev_mdsfsid.val[1]))) {
+			      fsidcmp(&mp->mnt_stat.f_fsid,
+			      &tds->nfsdev_mdsfsid) == 0))) {
 				dsdir[mirrorcnt] = i;
 				dvp[mirrorcnt] = tds->nfsdev_dsdir[i];
 				mirrorcnt++;
@@ -4404,6 +4414,7 @@ nfsrv_proxyds(struct nfsrv_descript *nd, struct vnode *vp, off_t off, int cnt,
 	struct vnode *dvp[NFSDEV_MAXMIRRORS];
 	struct nfsdevice *ds;
 	struct pnfsdsattr dsattr;
+	struct opnfsdsattr odsattr;
 	char *buf;
 	int buflen, error, failpos, i, mirrorcnt, origmircnt, trycnt;
 
@@ -4428,15 +4439,31 @@ nfsrv_proxyds(struct nfsrv_descript *nd, struct vnode *vp, off_t off, int cnt,
 		error = vn_extattr_get(vp, IO_NODELOCKED,
 		    EXTATTR_NAMESPACE_SYSTEM, "pnfsd.dsattr", &buflen, buf,
 		    p);
-		if (error == 0 && buflen != sizeof(dsattr))
-			error = ENXIO;
 		if (error == 0) {
-			NFSBCOPY(buf, &dsattr, buflen);
-			nap->na_filerev = dsattr.dsa_filerev;
-			nap->na_size = dsattr.dsa_size;
-			nap->na_atime = dsattr.dsa_atime;
-			nap->na_mtime = dsattr.dsa_mtime;
-
+			if (buflen == sizeof(odsattr)) {
+				NFSBCOPY(buf, &odsattr, buflen);
+				nap->na_filerev = odsattr.dsa_filerev;
+				nap->na_size = odsattr.dsa_size;
+				nap->na_atime = odsattr.dsa_atime;
+				nap->na_mtime = odsattr.dsa_mtime;
+				/*
+				 * Fake na_bytes by rounding up na_size.
+				 * Since we don't know the block size, just
+				 * use BLKDEV_IOSIZE.
+				 */
+				nap->na_bytes = (odsattr.dsa_size +
+				    BLKDEV_IOSIZE - 1) & ~(BLKDEV_IOSIZE - 1);
+			} else if (buflen == sizeof(dsattr)) {
+				NFSBCOPY(buf, &dsattr, buflen);
+				nap->na_filerev = dsattr.dsa_filerev;
+				nap->na_size = dsattr.dsa_size;
+				nap->na_atime = dsattr.dsa_atime;
+				nap->na_mtime = dsattr.dsa_mtime;
+				nap->na_bytes = dsattr.dsa_bytes;
+			} else
+				error = ENXIO;
+		}
+		if (error == 0) {
 			/*
 			 * If nfsrv_pnfsgetdsattr is 0 or nfsrv_checkdsattr()
 			 * returns 0, just return now.  nfsrv_checkdsattr()
@@ -4679,10 +4706,8 @@ nfsrv_dsgetsockmnt(struct vnode *vp, int lktype, char *buf, int *buflenp,
 					      fndds->nfsdev_mdsisset == 0) ||
 					     (tds->nfsdev_mdsisset != 0 &&
 					      fndds->nfsdev_mdsisset != 0 &&
-					      tds->nfsdev_mdsfsid.val[0] ==
-					      mp->mnt_stat.f_fsid.val[0] &&
-					      tds->nfsdev_mdsfsid.val[1] ==
-					      mp->mnt_stat.f_fsid.val[1]))) {
+					      fsidcmp(&tds->nfsdev_mdsfsid,
+					      &mp->mnt_stat.f_fsid) == 0))) {
 						*newnmpp = tds->nfsdev_nmp;
 						break;
 					}
@@ -4808,6 +4833,7 @@ nfsrv_setextattr(struct vnode *vp, struct nfsvattr *nap, NFSPROC_T *p)
 	dsattr.dsa_size = nap->na_size;
 	dsattr.dsa_atime = nap->na_atime;
 	dsattr.dsa_mtime = nap->na_mtime;
+	dsattr.dsa_bytes = nap->na_bytes;
 	error = vn_extattr_set(vp, IO_NODELOCKED, EXTATTR_NAMESPACE_SYSTEM,
 	    "pnfsd.dsattr", sizeof(dsattr), (char *)&dsattr, p);
 	if (error != 0)
@@ -4983,12 +5009,13 @@ nfsrv_writedsdorpc(struct nfsmount *nmp, fhandle_t *fhp, off_t off, int len,
 	nd->nd_bpos = mtod(m, char *) + m->m_len;
 	NFSD_DEBUG(4, "nfsrv_writedsdorpc: lastmb len=%d\n", m->m_len);
 
-	/* Do a Getattr for Size, Change and Modify Time. */
+	/* Do a Getattr for the attributes that change upon writing. */
 	NFSZERO_ATTRBIT(&attrbits);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SIZE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_CHANGE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEACCESS);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEMODIFY);
+	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SPACEUSED);
 	NFSM_BUILD(tl, u_int32_t *, NFSX_UNSIGNED);
 	*tl = txdr_unsigned(NFSV4OP_GETATTR);
 	(void) nfsrv_putattrbit(nd, &attrbits);
@@ -5167,12 +5194,13 @@ nfsrv_setattrdsdorpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 	nfsm_stateidtom(nd, &st, NFSSTATEID_PUTSTATEID);
 	nfscl_fillsattr(nd, &nap->na_vattr, vp, NFSSATTR_FULL, 0);
 
-	/* Do a Getattr for Size, Change, Access Time and Modify Time. */
+	/* Do a Getattr for the attributes that change due to writing. */
 	NFSZERO_ATTRBIT(&attrbits);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SIZE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_CHANGE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEACCESS);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEMODIFY);
+	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SPACEUSED);
 	NFSM_BUILD(tl, u_int32_t *, NFSX_UNSIGNED);
 	*tl = txdr_unsigned(NFSV4OP_GETATTR);
 	(void) nfsrv_putattrbit(nd, &attrbits);
@@ -5469,7 +5497,7 @@ nfsrv_setacldsrpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 }
 
 /*
- * Getattr call to the DS for the Modify, Size and Change attributes.
+ * Getattr call to the DS for the attributes that change due to writing.
  */
 static int
 nfsrv_getattrdsrpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
@@ -5488,6 +5516,7 @@ nfsrv_getattrdsrpc(fhandle_t *fhp, struct ucred *cred, NFSPROC_T *p,
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_CHANGE);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEACCESS);
 	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_TIMEMODIFY);
+	NFSSETBIT_ATTRBIT(&attrbits, NFSATTRBIT_SPACEUSED);
 	(void) nfsrv_putattrbit(nd, &attrbits);
 	error = newnfs_request(nd, nmp, NULL, &nmp->nm_sockreq, NULL, p, cred,
 	    NFS_PROG, NFS_VER4, NULL, 1, NULL, NULL);
@@ -5653,8 +5682,7 @@ nfsrv_pnfsstatfs(struct statfs *sf, struct mount *mp)
 	/* First, search for matches for same file system. */
 	TAILQ_FOREACH(ds, &nfsrv_devidhead, nfsdev_list) {
 		if (ds->nfsdev_nmp != NULL && ds->nfsdev_mdsisset != 0 &&
-		    ds->nfsdev_mdsfsid.val[0] == mp->mnt_stat.f_fsid.val[0] &&
-		    ds->nfsdev_mdsfsid.val[1] == mp->mnt_stat.f_fsid.val[1]) {
+		    fsidcmp(&ds->nfsdev_mdsfsid, &mp->mnt_stat.f_fsid) == 0) {
 			if (++i > nfsrv_devidcnt)
 				break;
 			*tdvpp++ = ds->nfsdev_dvp;

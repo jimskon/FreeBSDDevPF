@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/include/pmap.h 344848 2019-03-06 17:33:05Z kib $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PMAP_H_

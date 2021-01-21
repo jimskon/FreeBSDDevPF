@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/ia32/ia32_sysvec.c 351024 2019-08-14 09:56:58Z kib $");
+__FBSDID("$FreeBSD$");
 
 #define __ELF_WORD_SIZE 32
 

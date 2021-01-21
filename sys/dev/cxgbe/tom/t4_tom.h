@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/tom/t4_tom.h 352271 2019-09-13 01:12:17Z np $
+ * $FreeBSD$
  *
  */
 
@@ -72,6 +72,7 @@ enum {
 	TPF_SYNQE	   = (1 << 8),	/* synq_entry, not really a toepcb */
 	TPF_SYNQE_EXPANDED = (1 << 9),	/* toepcb ready, tid context updated */
 	TPF_FORCE_CREDITS  = (1 << 10), /* always send credits */
+	TPF_INITIALIZED    = (1 << 12), /* init_toepcb has been called */
 };
 
 enum {
@@ -186,11 +187,11 @@ struct aiotx_buffer {
 };
 
 struct toepcb {
-	TAILQ_ENTRY(toepcb) link; /* toep_list */
-	u_int flags;		/* miscellaneous flags */
-	int refcount;
 	struct tom_data *td;
 	struct inpcb *inp;	/* backpointer to host stack's PCB */
+	u_int flags;		/* miscellaneous flags */
+	TAILQ_ENTRY(toepcb) link; /* toep_list */
+	int refcount;
 	struct vnet *vnet;
 	struct vi_info *vi;	/* virtual interface */
 	struct sge_wrq *ofld_txq;

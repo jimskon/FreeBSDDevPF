@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/if_ath_pci_devlist.h 336067 2018-07-07 15:25:16Z imp $
+ * $FreeBSD$
  */
 
 static const struct pci_device_table ath_pci_id_table[] = {
@@ -663,7 +663,5 @@ static const struct pci_device_table ath_pci_id_table[] = {
 	/* PCI-E AR9565 (WB335) */
 	{ PCI_VDEVICE(PCI_VENDOR_ID_ATHEROS, 0x0036),
 	  .driver_data = ATH_PCI_BT_ANT_DIV },
-
 	{ 0 }
 };
-

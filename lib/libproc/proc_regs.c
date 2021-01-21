@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libproc/proc_regs.c 351792 2019-09-03 20:19:43Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #define	_WANT_MIPS_REGNUM

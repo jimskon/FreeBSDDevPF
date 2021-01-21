@@ -1,10 +1,10 @@
-# $FreeBSD: releng/12.1/usr.bin/tar/Makefile 349523 2019-06-28 22:31:53Z mm $
+# $FreeBSD$
 .include <src.opts.mk>
 
 _LIBARCHIVEDIR=	${SRCTOP}/contrib/libarchive
 
 PROG=	bsdtar
-BSDTAR_VERSION_STRING=	3.4.0
+BSDTAR_VERSION_STRING=	3.4.3
 
 .PATH: ${_LIBARCHIVEDIR}/tar
 SRCS=	bsdtar.c	\

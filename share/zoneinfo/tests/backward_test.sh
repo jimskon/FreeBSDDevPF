@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/share/zoneinfo/tests/backward_test.sh 346918 2019-04-29 19:34:09Z ngie $
+# $FreeBSD$
 
 atf_test_case links
 links_head()

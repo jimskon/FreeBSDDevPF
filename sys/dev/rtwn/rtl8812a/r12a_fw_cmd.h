@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/r12a_fw_cmd.h 307529 2016-10-17 20:38:24Z avos $
+ * $FreeBSD$
  */
 
 #ifndef R12A_FW_CMD_H
@@ -76,7 +76,6 @@ struct r12a_fw_cmd_iq_calib {
 #define RTWN_CMD_IQ_EXT_PA_5G(pa)	(pa)
 #define RTWN_CMD_IQ_EXT_LNA_5G(lna)	((lna) << 1)
 } __packed;
-
 
 /*
  * C2H event types.

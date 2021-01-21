@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_allow_002_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -65,8 +65,6 @@ function cleanup
 	if $ID $STAFF_GROUP > /dev/null 2>&1; then
 		log_must del_user $STAFF_GROUP 
 	fi
-
-	restore_root_datasets
 }
 
 log_assert "<user|group> is interpreted as user if possible, then as group."

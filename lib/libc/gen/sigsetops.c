@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)sigsetops.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/sigsetops.c 335898 2018-07-03 17:31:45Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <errno.h>
 #include <signal.h>
@@ -78,6 +78,37 @@ sigfillset(sigset_t *set)
 	for (i = 0; i < _SIG_WORDS; i++)
 		set->__bits[i] = ~0U;
 	return (0);
+}
+
+int
+sigorset(sigset_t *dest, const sigset_t *left, const sigset_t *right)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		dest->__bits[i] = left->__bits[i] | right->__bits[i];
+	return (0);
+}
+
+int
+sigandset(sigset_t *dest, const sigset_t *left, const sigset_t *right)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		dest->__bits[i] = left->__bits[i] & right->__bits[i];
+	return (0);
+}
+
+int
+sigisemptyset(const sigset_t *set)
+{
+	int i;
+
+	for (i = 0; i < _SIG_WORDS; i++)
+		if (set->__bits[i] != 0)
+			return (0);
+	return (1);
 }
 
 int

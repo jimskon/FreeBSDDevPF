@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libz/Versions.def 311285 2017-01-04 16:09:08Z delphij $
+# $FreeBSD$
 
 ZLIB_1.2.4.0 {
 };

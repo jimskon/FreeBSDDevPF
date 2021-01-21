@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/hyperv/storvsc/hv_vstorage.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef __HV_VSTORAGE_H__
@@ -245,7 +245,8 @@ struct vstor_packet {
 #define SRB_STATUS_SUCCESS		0x01
 #define SRB_STATUS_ABORTED		0x02
 #define SRB_STATUS_ERROR 		0x04
-#define SRB_STATUS_INVALID_LUN          0x20
+#define SRB_STATUS_DATA_OVERRUN		0x12
+#define SRB_STATUS_INVALID_LUN		0x20
 /**
  * SRB Status Masks (can be combined with above status codes)
  */

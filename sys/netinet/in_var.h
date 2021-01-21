@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)in_var.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.1/sys/netinet/in_var.h 349762 2019-07-05 10:31:37Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _NETINET_IN_VAR_H_
@@ -449,6 +449,7 @@ void	inm_print(const struct in_multi *);
 int	inm_record_source(struct in_multi *inm, const in_addr_t);
 void	inm_release_deferred(struct in_multi *);
 void	inm_release_list_deferred(struct in_multi_head *);
+void	inm_release_wait(void *);
 struct	in_multi *
 in_addmulti(struct in_addr *, struct ifnet *);
 int	in_joingroup(struct ifnet *, const struct in_addr *,

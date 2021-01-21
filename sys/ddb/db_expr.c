@@ -31,9 +31,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/ddb/db_expr.c 326403 2017-11-30 15:48:35Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
+#include <sys/systm.h>
 
 #include <ddb/ddb.h>
 #include <ddb/db_lex.h>
@@ -229,7 +230,7 @@ db_add_expr(db_expr_t *valuep)
 		lhs |= rhs;
 		break;
 	    default:
-		__unreachable();
+		__assert_unreachable();
 	    }
 	    t = db_read_token();
 	}
@@ -313,7 +314,7 @@ db_logical_relation_expr(
 		    lhs = (lhs <= rhs);
 		    break;
 		default:
-		    __unreachable();
+		    __assert_unreachable();
 	    }
 	    t = db_read_token();
 	}

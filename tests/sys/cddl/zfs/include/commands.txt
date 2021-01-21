@@ -19,7 +19,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/include/commands.txt 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #!/usr/local/bin/ksh93 -p
 #
@@ -65,6 +65,7 @@
 /usr/bin/dirname
 /usr/bin/du
 #%%STFSUITEDIR%%/bin/dumpadm
+/sbin/dumpon
 /bin/echo
 /usr/bin/egrep
 /usr/bin/env
@@ -131,7 +132,6 @@
 /bin/pkill
 /bin/ps
 #/usr/sbin/psrinfo
-/bin/pwd
 /usr/sbin/quotaon
 /bin/rcp
 /sbin/reboot

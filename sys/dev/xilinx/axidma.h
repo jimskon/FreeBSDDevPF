@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/xilinx/axidma.h 348625 2019-06-04 15:39:28Z br $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_XILINX_AXIDMA_H_

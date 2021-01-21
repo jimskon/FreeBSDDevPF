@@ -57,7 +57,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/powerpc/exec_machdep.c 347496 2019-05-11 18:31:05Z jhibbits $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_fpu_emu.h"
 

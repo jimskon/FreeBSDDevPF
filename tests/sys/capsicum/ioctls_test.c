@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/tests/sys/capsicum/ioctls_test.c 332657 2018-04-17 18:07:40Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/filio.h>
@@ -37,6 +37,8 @@ __FBSDID("$FreeBSD: releng/12.1/tests/sys/capsicum/ioctls_test.c 332657 2018-04-
 #include <unistd.h>
 
 #include <atf-c.h>
+
+#include "freebsd_test_suite/macros.h"
 
 /*
  * A variant of ATF_REQUIRE that is suitable for use in child
@@ -73,6 +75,8 @@ ATF_TC_BODY(cap_ioctls__listen_copy, tc)
 	pid_t pid;
 	char dummy;
 	int s[2], status;
+
+	ATF_REQUIRE_FEATURE("security_capabilities");
 
 	s[0] = socket(AF_INET, SOCK_STREAM, 0);
 	ATF_REQUIRE(s[0] > 0);

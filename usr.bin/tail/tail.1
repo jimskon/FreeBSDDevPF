@@ -29,9 +29,9 @@
 .\" SUCH DAMAGE.
 .\"
 .\"	@(#)tail.1	8.1 (Berkeley) 6/6/93
-.\" $FreeBSD: releng/12.1/usr.bin/tail/tail.1 332373 2018-04-10 14:42:24Z kevans $
+.\" $FreeBSD$
 .\"
-.Dd April 10, 2018
+.Dd March 22, 2020
 .Dt TAIL 1
 .Os
 .Sh NAME
@@ -157,7 +157,7 @@ Keep
 .Pa /var/log/messages
 open, displaying to the standard output anything appended to the file:
 .Pp
-.Dl $ tail -f /var/log/messages
+.Dl $ tail -F /var/log/messages
 .Sh SEE ALSO
 .Xr cat 1 ,
 .Xr head 1 ,

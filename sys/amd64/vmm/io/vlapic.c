@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/io/vlapic.c 351756 2019-09-03 16:26:35Z emaste $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/vmm/io/vlapic.c 351756 2019-09-03 16:26:35Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -547,6 +547,12 @@ vlapic_update_ppr(struct vlapic *vlapic)
 
 	vlapic->apic_page->ppr = ppr;
 	VLAPIC_CTR1(vlapic, "vlapic_update_ppr 0x%02x", ppr);
+}
+
+void
+vlapic_sync_tpr(struct vlapic *vlapic)
+{
+	vlapic_update_ppr(vlapic);
 }
 
 static VMM_STAT(VLAPIC_GRATUITOUS_EOI, "EOI without any in-service interrupt");
@@ -1094,6 +1100,8 @@ vlapic_pending_intr(struct vlapic *vlapic, int *vecptr)
 	int	  	 idx, i, bitpos, vector;
 	uint32_t	*irrptr, val;
 
+	vlapic_update_ppr(vlapic);
+
 	if (vlapic->ops.pending_intr)
 		return ((*vlapic->ops.pending_intr)(vlapic, vecptr));
 
@@ -1151,7 +1159,6 @@ vlapic_intr_accepted(struct vlapic *vlapic, int vector)
 		panic("isrvec_stk_top overflow %d", stk_top);
 
 	vlapic->isrvec_stk[stk_top] = vector;
-	vlapic_update_ppr(vlapic);
 }
 
 void

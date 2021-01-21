@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/arm/mv/files.arm7 350603 2019-08-05 18:13:13Z manu $
+# $FreeBSD$
 arm/mv/armada38x/armada38x.c	standard
 arm/mv/armadaxp/armadaxp.c	standard
 

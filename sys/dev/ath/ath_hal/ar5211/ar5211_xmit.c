@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5211/ar5211_xmit.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -192,7 +192,6 @@ setTxQInterrupts(struct ath_hal *ah, HAL_TX_QUEUE_INFO *qi)
 	OS_REG_RMW_FIELD(ah, AR_IMR_S2,
 		AR_IMR_S2_QCU_TXURN, ahp->ah_txUrnInterruptMask);
 }
-
 
 /*
  * Free a tx DCU/QCU combination.
@@ -676,7 +675,6 @@ ar5211GetTxCompletionRates(struct ath_hal *ah, const struct ath_desc *ds0, int *
 {
 	return AH_FALSE;
 }
-
 
 void
 ar5211SetTxDescLink(struct ath_hal *ah, void *ds, uint32_t link)

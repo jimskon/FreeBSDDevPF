@@ -22,13 +22,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/contrib/libarchive/libarchive/archive_platform_acl.h 315636 2017-03-20 13:02:27Z mm $
+ * $FreeBSD$
  */
 
 /* !!ONLY FOR USE INTERNALLY TO LIBARCHIVE!! */
 
 #ifndef ARCHIVE_PLATFORM_ACL_H_INCLUDED
 #define ARCHIVE_PLATFORM_ACL_H_INCLUDED
+
+#ifndef __LIBARCHIVE_BUILD
+#ifndef __LIBARCHIVE_TEST_COMMON
+#error This header is only to be used internally to libarchive.
+#endif
+#endif
 
 /*
  * Determine what ACL types are supported

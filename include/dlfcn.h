@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/include/dlfcn.h 326024 2017-11-20 19:45:28Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _DLFCN_H_
@@ -47,6 +47,8 @@
 #define	RTLD_TRACE	0x200	/* Trace loaded objects and exit. */
 #define	RTLD_NODELETE	0x01000	/* Do not remove members. */
 #define	RTLD_NOLOAD	0x02000	/* Do not load if not already loaded. */
+#define	RTLD_DEEPBIND	0x04000	/* Put symbols from the dso ahead of
+				   the global list */
 
 /*
  * Request arguments for dlinfo().

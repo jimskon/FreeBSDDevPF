@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/ndiscvt/Makefile 352276 2019-09-13 07:08:43Z bapt $
+# $FreeBSD$
 
 .PATH:	${SRCTOP}/sys/compat/ndis
 

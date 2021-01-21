@@ -35,7 +35,7 @@
  *
  *	@(#)dumprestore.h	8.2 (Berkeley) 1/21/94
  *
- * $FreeBSD: releng/12.1/include/protocols/dumprestore.h 326024 2017-11-20 19:45:28Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _PROTOCOLS_DUMPRESTORE_H_
@@ -76,7 +76,7 @@
  */
 typedef uint32_t dump_ino_t;
 
-union u_spcl {
+extern union u_spcl {
 	char dummy[TP_BSIZE];
 	struct	s_spcl {
 		int32_t	c_type;		    /* record type (see below) */

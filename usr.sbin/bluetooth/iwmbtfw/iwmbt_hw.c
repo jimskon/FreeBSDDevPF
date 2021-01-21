@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bluetooth/iwmbtfw/iwmbt_hw.c 352102 2019-09-09 18:57:17Z wulf $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

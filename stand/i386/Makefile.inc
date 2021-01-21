@@ -1,6 +1,8 @@
 # Common defines for all of stand/i386/
 #
-# $FreeBSD: releng/12.1/stand/i386/Makefile.inc 352768 2019-09-26 18:37:58Z emaste $
+# $FreeBSD$
+
+.include "bsd.linker.mk"
 
 LOADER_ADDRESS?=0x200000
 LDFLAGS+=	-nostdlib
@@ -20,10 +22,12 @@ CFLAGS+=	-I${BTXLIB}
 
 # compact binary with no padding between text, data, bss
 LDSCRIPT=	${BOOTSRC}/i386/boot.ldscript
-# LDFLAGS_BIN=-e start -Ttext ${ORG} -Wl,-T,${LDSCRIPT},-S,--oformat,binary
-# LD_FLAGS_BIN=-static -T ${LDSCRIPT} --gc-sections
-LDFLAGS_BIN=-e start -Ttext ${ORG} -Wl,-N,-S,--oformat,binary
-LD_FLAGS_BIN=-static -N --gc-sections
+LDFLAGS_ORG=	-Wl,--defsym,ORG=${ORG},-T,${LDSCRIPT}
+LDFLAGS_BIN=	-e start ${LDFLAGS_ORG} -Wl,-N,-S,--oformat,binary
+.if ${LINKER_FEATURES:Mbuild-id} != ""
+LDFLAGS_BIN+=	-Wl,--build-id=none
+.endif
+LD_FLAGS_BIN=	-static -N --gc-sections
 
 .if ${MACHINE_CPUARCH} == "amd64"
 DO32=1

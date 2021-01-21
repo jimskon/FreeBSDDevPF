@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/usb/input/uep.c 337720 2018-08-13 19:00:42Z wulf $
+ * $FreeBSD$
  */
 
 /*
@@ -57,7 +57,6 @@
 #else
 #include <sys/ioccom.h>
 #include <sys/fcntl.h>
-#include <sys/tty.h>
 #endif
 
 #define USB_DEBUG_VAR uep_debug

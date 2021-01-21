@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/linker.h 338211 2018-08-22 20:44:30Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LINKER_H_
@@ -97,6 +97,11 @@ struct linker_file {
      */
     int			nenabled;	/* number of enabled probes. */
     int			fbt_nentries;	/* number of fbt entries created. */
+
+#ifdef __arm__
+    caddr_t		exidx_addr;	/* Unwind data index table start */
+    size_t		exidx_size;	/* Unwind data index table size */
+#endif
 };
 
 /*

@@ -11,7 +11,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/trm/trm.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
  *	HISTORY:					
@@ -3376,7 +3376,9 @@ trm_attach(device_t dev)
 	PACB	pACB = 0;
 	int	rid = 0;
 	int unit = device_get_unit(dev);
-	
+
+	gone_in(13, "Giant locked CAM drivers");
+
 	device_id = pci_get_devid(dev);
 	/*
 	 * These cards do not allow memory mapped accesses

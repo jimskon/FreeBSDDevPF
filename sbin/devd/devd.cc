@@ -65,7 +65,7 @@
 //	  - devd.conf needs more details on the supported statements.
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/devd/devd.cc 338888 2018-09-22 15:32:53Z imp $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -682,15 +682,15 @@ config::expand_one(const char *&src, string &dst, bool is_shell)
 	// This is the escape hatch for passing down shell subcommands
 	if (*src == '(') {
 		dst += '$';
-		count = 1;
+		count = 0;
 		/* If the string ends before ) is matched , return. */
-		while (count > 0 && *src) {
+		do {
 			if (*src == ')')
 				count--;
 			else if (*src == '(')
 				count++;
 			dst += *src++;
-		}
+		} while (count > 0 && *src);
 		return;
 	}
 

@@ -39,7 +39,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_phys.c 343424 2019-01-25 11:14:20Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_vm.h"
@@ -622,6 +622,26 @@ vm_phys_register_domains(int ndomains, struct mem_affinity *affinity,
 	(void)affinity;
 	(void)locality;
 #endif
+}
+
+int
+_vm_phys_domain(vm_paddr_t pa)
+{
+#ifdef NUMA
+	int i;
+
+	if (vm_ndomains == 1 || mem_affinity == NULL)
+		return (0);
+
+	/*
+	 * Check for any memory that overlaps.
+	 */
+	for (i = 0; mem_affinity[i].end != 0; i++)
+		if (mem_affinity[i].start <= pa &&
+		    mem_affinity[i].end >= pa)
+			return (mem_affinity[i].domain);
+#endif
+	return (0);
 }
 
 /*

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/ralfw/Makefile.inc 351875 2019-09-05 17:20:20Z bdrewery $
+# $FreeBSD$
 
 #
 # Common rules for building firmware.  Note this gets auto-included

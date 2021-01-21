@@ -27,12 +27,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/opendir.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {
 #include <dirent.h>
+
 #include <fcntl.h>
+#include <semaphore.h>
 }
 
 #include "mockfs.hh"
@@ -82,12 +84,21 @@ TEST_F(Opendir, enoent)
 	const char FULLPATH[] = "mountpoint/some_dir";
 	const char RELPATH[] = "some_dir";
 	uint64_t ino = 42;
+	sem_t sem;
+
+	ASSERT_EQ(0, sem_init(&sem, 0, 0)) << strerror(errno);
 
 	expect_lookup(RELPATH, ino);
 	expect_opendir(ino, O_RDONLY, ReturnErrno(ENOENT));
+	// Since FUSE_OPENDIR returns ENOENT, the kernel will reclaim the vnode
+	// and send a FUSE_FORGET
+	expect_forget(ino, 1, &sem);
 
 	ASSERT_EQ(-1, open(FULLPATH, O_DIRECTORY));
 	EXPECT_EQ(ENOENT, errno);
+
+	sem_wait(&sem);
+	sem_destroy(&sem);
 }
 
 /* 
@@ -103,7 +114,7 @@ TEST_F(Opendir, eperm)
 	expect_lookup(RELPATH, ino);
 	expect_opendir(ino, O_RDONLY, ReturnErrno(EPERM));
 
-	EXPECT_NE(0, open(FULLPATH, O_DIRECTORY));
+	EXPECT_EQ(-1, open(FULLPATH, O_DIRECTORY));
 	EXPECT_EQ(EPERM, errno);
 }
 

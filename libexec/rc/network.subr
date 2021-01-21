@@ -22,7 +22,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/libexec/rc/network.subr 349725 2019-07-04 13:20:32Z eugen $
+# $FreeBSD$
 #
 IFCONFIG_CMD="/sbin/ifconfig"
 : ${netif_ipexpand_max:=2048}
@@ -1364,9 +1364,6 @@ clone_up()
 			fi
 		esac
 	done
-	if [ -n "$gif_interfaces" ]; then
-		warn "\$gif_interfaces is obsolete.  Use \$cloned_interfaces instead."
-	fi
 	for ifn in ${gif_interfaces}; do
 		# Parse ifn:ifopt.
 		OIFS=$IFS; IFS=:; set -- $ifn; ifn=$1; ifopt=$2; IFS=$OIFS

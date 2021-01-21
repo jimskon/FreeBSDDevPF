@@ -14,7 +14,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/subr_disk.c 344071 2019-02-13 00:33:01Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_geom.h"
 

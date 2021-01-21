@@ -42,7 +42,7 @@ static char sccsid[] = "@(#)io.c	8.1 (Berkeley) 6/6/93";
 #endif
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/indent/io.c 334927 2018-06-10 16:44:18Z pstef $");
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <err.h>
@@ -51,6 +51,15 @@ __FBSDID("$FreeBSD: releng/12.1/usr.bin/indent/io.c 334927 2018-06-10 16:44:18Z 
 #include <string.h>
 #include "indent_globs.h"
 #include "indent.h"
+
+/* Globals */
+int	found_err;
+int	n_real_blanklines;
+int	prefix_blankline_requested, postfix_blankline_requested;
+int	code_lines;
+int	had_eof;
+int	inhibit_formatting;
+int	suppress_blanklines;
 
 int         comment_open;
 static int  paren_target;

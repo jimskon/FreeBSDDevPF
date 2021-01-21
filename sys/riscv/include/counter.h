@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/counter.h 336020 2018-07-06 02:06:03Z mmacy $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_COUNTER_H_
@@ -33,8 +33,6 @@
 #ifdef INVARIANTS
 #include <sys/proc.h>
 #endif
-
-extern struct pcpu __pcpu[];
 
 #define	EARLY_COUNTER	&__pcpu[0].pc_early_dummy_counter
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/fs/Makefile 352356 2019-09-15 14:37:50Z kevans $
+# $FreeBSD$
 
 .include <src.opts.mk>
 .include <bsd.compiler.mk>

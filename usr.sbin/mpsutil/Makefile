@@ -1,7 +1,7 @@
-# $FreeBSD: releng/12.1/usr.sbin/mpsutil/Makefile 330790 2018-03-12 05:03:32Z scottl $
+# $FreeBSD$
 
 PROG=	mpsutil
-SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_show.c mpsutil.c
+SRCS=	mps_cmd.c mps_debug.c mps_flash.c mps_show.c mps_slot.c mpsutil.c
 MAN=	mpsutil.8
 
 WARNS?= 3

@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/vm/vm_meter.c 338278 2018-08-23 21:03:45Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -96,6 +96,8 @@ struct vmmeter __read_mostly vm_cnt = {
 	.v_kthreadpages = EARLY_COUNTER,
 	.v_wire_count = EARLY_COUNTER,
 };
+
+u_long __exclusive_cache_line vm_user_wire_count;
 
 static void
 vmcounter_startup(void)
@@ -394,6 +396,8 @@ sysctl_handle_vmstat_proc(SYSCTL_HANDLER_ARGS)
 
 #define	VM_STATS_UINT(var, descr)	\
     SYSCTL_UINT(_vm_stats_vm, OID_AUTO, var, CTLFLAG_RD, &vm_cnt.var, 0, descr)
+#define	VM_STATS_ULONG(var, descr)	\
+    SYSCTL_ULONG(_vm_stats_vm, OID_AUTO, var, CTLFLAG_RD, &vm_cnt.var, 0, descr)
 
 VM_STATS_UINT(v_page_size, "Page size in bytes");
 VM_STATS_UINT(v_page_count, "Total number of pages in system");
@@ -410,6 +414,9 @@ VM_STATS_PROC(v_laundry_count, "Pages eligible for laundering",
 VM_STATS_UINT(v_pageout_free_min, "Min pages reserved for kernel");
 VM_STATS_UINT(v_interrupt_free_min, "Reserved pages for interrupt code");
 VM_STATS_UINT(v_free_severe, "Severe page depletion point");
+
+SYSCTL_ULONG(_vm_stats_vm, OID_AUTO, v_user_wire_count, CTLFLAG_RD,
+    &vm_user_wire_count, 0, "User-wired virtual memory");
 
 #ifdef COMPAT_FREEBSD11
 /*

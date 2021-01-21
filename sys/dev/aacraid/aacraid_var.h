@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	$FreeBSD: releng/12.1/sys/dev/aacraid/aacraid_var.h 326255 2017-11-27 14:52:40Z pfg $
+ *	$FreeBSD$
  */
 
 #include <sys/bio.h>
@@ -49,7 +49,7 @@
 
 #define	AAC_DRIVER_MAJOR_VERSION	3
 #define	AAC_DRIVER_MINOR_VERSION	2
-#define	AAC_DRIVER_BUGFIX_LEVEL		5
+#define	AAC_DRIVER_BUGFIX_LEVEL		10
 #define	AAC_DRIVER_TYPE			AAC_TYPE_RELEASE
 
 #ifndef AAC_DRIVER_BUILD
@@ -481,9 +481,12 @@ struct aac_softc
 	u_int32_t	aac_feature_bits;		/* feature bits from suppl. info */
 	u_int32_t	aac_support_opt2;		/* supp. options from suppl. info */
 	u_int32_t	aac_max_aif;			/* max. AIF count */
+	u_int32_t	doorbell_mask;			/* for IOP reset */
 	u_int32_t	aac_max_msix;			/* max. MSI-X vectors */
 	u_int32_t	aac_vector_cap;			/* MSI-X vector capab.*/
 	int		msi_enabled;			/* MSI/MSI-X enabled */
+	int		msi_tupelo;		/* Series 6 support for */
+						/* single MSI interrupt */
 #define AAC_CAM_TARGET_WILDCARD ~0
 	void			(*cam_rescan_cb)(struct aac_softc *, uint32_t,
 				    uint32_t);

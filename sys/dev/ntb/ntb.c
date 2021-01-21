@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ntb/ntb.c 351536 2019-08-27 04:13:22Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -203,6 +203,13 @@ ntb_print_child(device_t dev, device_t child)
 	retval += bus_print_child_footer(dev, child);
 
 	return (retval);
+}
+
+bus_dma_tag_t
+ntb_get_dma_tag(device_t bus, device_t child)
+{
+
+	return (bus_get_dma_tag(bus));
 }
 
 void

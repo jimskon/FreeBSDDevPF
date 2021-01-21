@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/cxgbe/t4_ioctl.h 345595 2019-03-27 19:37:50Z np $
+ * $FreeBSD$
  *
  */
 

@@ -36,7 +36,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ichsmb/ichsmb.c 352415 2019-09-16 16:10:44Z yuripv $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Support for the SMBus controller logical device which is part of the
@@ -131,11 +131,8 @@ ichsmb_attach(device_t dev)
 		goto fail;
 	}
 
-	/* Probe and attach the smbus when interrupts are available */
-	config_intrhook_oneshot((ich_func_t)bus_generic_attach, dev);
-
-	return (0);
-
+	/* Attach children when interrupts are available */
+	return (bus_delayed_attach_children(dev));
 fail:
 	mtx_destroy(&sc->mutex);
 	return (error);

@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/usr.bin/cmp/tests/cmp_test2.sh 348460 2019-05-31 16:20:00Z asomers $
+# $FreeBSD$
 
 atf_test_case special
 special_head() {
@@ -36,6 +36,8 @@ special_body() {
 	atf_check -s exit:0 -o empty -e empty -x "cat a | cmp - a"
 	atf_check -s exit:1 -o not-empty -e empty -x "cat b | cmp a -"
 	atf_check -s exit:1 -o not-empty -e empty -x "cat b | cmp - a"
+
+	atf_check -s exit:0 -o empty -e empty -x "cmp a a <&-"
 }
 
 atf_test_case symlink

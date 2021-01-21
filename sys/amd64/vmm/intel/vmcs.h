@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/intel/vmcs.h 346706 2019-04-25 21:04:38Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _VMCS_H_

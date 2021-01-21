@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/usb/rtwn_usb_tx.c 320640 2017-07-04 07:07:08Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -67,11 +67,9 @@ static struct rtwn_data * rtwn_usb_getbuf(struct rtwn_usb_softc *);
 static void		rtwn_usb_txeof(struct rtwn_usb_softc *,
 			    struct rtwn_data *, int);
 
-
 static const uint8_t wme2qid[] =
 	{ RTWN_BULK_TX_BE, RTWN_BULK_TX_BK,
 	  RTWN_BULK_TX_VI, RTWN_BULK_TX_VO };
-
 
 static struct rtwn_data *
 _rtwn_usb_getbuf(struct rtwn_usb_softc *uc)

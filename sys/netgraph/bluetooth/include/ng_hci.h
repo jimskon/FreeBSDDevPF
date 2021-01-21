@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: ng_hci.h,v 1.2 2003/03/18 00:09:37 max Exp $
- * $FreeBSD: releng/12.1/sys/netgraph/bluetooth/include/ng_hci.h 326272 2017-11-27 15:23:17Z pfg $
+ * $FreeBSD$
  */
 
 /*
@@ -1673,12 +1673,12 @@ typedef struct {
 }__attribute__ ((packed)) ng_hci_le_long_term_key_request_negative_reply_rp;
 
 
-#define NG_HCI_OCF_LE_READ_SUPPORTED_STATUS		0x001c
+#define NG_HCI_OCF_LE_READ_SUPPORTED_STATES		0x001c
 /*No command parameter*/
 typedef struct {
 	u_int8_t status;
-	u_int64_t le_status;
-}__attribute__ ((packed)) ng_hci_le_read_supported_status_rp;
+	u_int64_t le_states;
+}__attribute__ ((packed)) ng_hci_le_read_supported_states_rp;
 
 #define NG_HCI_OCF_LE_RECEIVER_TEST			0x001d
 typedef struct{
@@ -1955,7 +1955,7 @@ typedef struct {
 	u_int16_t 	interval;
 	u_int8_t	latency;
 	u_int16_t	supervision_timeout;
-	u_int8_t	master_clock_accracy;
+	u_int8_t	master_clock_accuracy;
 	
 } __attribute__ ((packed)) ng_hci_le_connection_complete_ep;
 

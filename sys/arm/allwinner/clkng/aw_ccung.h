@@ -24,15 +24,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/aw_ccung.h 350629 2019-08-06 12:19:09Z manu $
+ * $FreeBSD$
  */
 
 #ifndef __CCU_NG_H__
 #define __CCU_NG_H__
 
 #include <arm/allwinner/clkng/aw_clk.h>
+#include <arm/allwinner/clkng/aw_clk_m.h>
+#include <arm/allwinner/clkng/aw_clk_mipi.h>
 #include <arm/allwinner/clkng/aw_clk_nkmp.h>
 #include <arm/allwinner/clkng/aw_clk_nm.h>
+#include <arm/allwinner/clkng/aw_clk_nmm.h>
+#include <arm/allwinner/clkng/aw_clk_np.h>
 #include <arm/allwinner/clkng/aw_clk_prediv_mux.h>
 #include <arm/allwinner/clkng/aw_clk_frac.h>
 #include <dev/extres/clk/clk_mux.h>
@@ -48,6 +52,10 @@ enum aw_ccung_clk_type {
 	AW_CLK_NM,
 	AW_CLK_PREDIV_MUX,
 	AW_CLK_FRAC,
+	AW_CLK_M,
+	AW_CLK_MIPI,
+	AW_CLK_NP,
+	AW_CLK_NMM,
 };
 
 struct aw_ccung_clk {
@@ -60,6 +68,10 @@ struct aw_ccung_clk {
 		struct aw_clk_nm_def		*nm;
 		struct aw_clk_prediv_mux_def	*prediv_mux;
 		struct aw_clk_frac_def		*frac;
+		struct aw_clk_m_def		*m;
+		struct aw_clk_mipi_def		*mipi;
+		struct aw_clk_np_def		*np;
+		struct aw_clk_nmm_def		*nmm;
 	} clk;
 };
 

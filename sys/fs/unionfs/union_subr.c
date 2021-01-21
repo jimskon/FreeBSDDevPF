@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)union_subr.c	8.20 (Berkeley) 5/20/95
- * $FreeBSD: releng/12.1/sys/fs/unionfs/union_subr.c 351778 2019-09-03 19:34:32Z kib $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

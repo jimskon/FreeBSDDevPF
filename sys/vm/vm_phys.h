@@ -30,7 +30,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_phys.h 343424 2019-01-25 11:14:20Z kib $
+ * $FreeBSD$
  */
 
 /*
@@ -122,6 +122,7 @@ vm_phys_domain(vm_page_t m)
 	return (0);
 #endif
 }
+int _vm_phys_domain(vm_paddr_t pa);
 
 #endif	/* _KERNEL */
 #endif	/* !_VM_PHYS_H_ */

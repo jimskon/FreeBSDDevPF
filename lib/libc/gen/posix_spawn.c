@@ -27,9 +27,10 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/posix_spawn.c 326193 2017-11-25 17:12:48Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "namespace.h"
+#include <sys/param.h>
 #include <sys/queue.h>
 #include <sys/wait.h>
 
@@ -194,43 +195,152 @@ process_file_actions(const posix_spawn_file_actions_t fa)
 	return (0);
 }
 
+struct posix_spawn_args {
+	const char *path;
+	const posix_spawn_file_actions_t *fa;
+	const posix_spawnattr_t *sa;
+	char * const * argv;
+	char * const * envp;
+	int use_env_path;
+	volatile int error;
+};
+
+#define	PSPAWN_STACK_ALIGNMENT	16
+#define	PSPAWN_STACK_ALIGNBYTES	(PSPAWN_STACK_ALIGNMENT - 1)
+#define	PSPAWN_STACK_ALIGN(sz) \
+	(((sz) + PSPAWN_STACK_ALIGNBYTES) & ~PSPAWN_STACK_ALIGNBYTES)
+
+#if defined(__i386__) || defined(__amd64__)
+/*
+ * Below we'll assume that _RFORK_THREAD_STACK_SIZE is appropriately aligned for
+ * the posix_spawn() case where we do not end up calling _execvpe and won't ever
+ * try to allocate space on the stack for argv[].
+ */
+#define	_RFORK_THREAD_STACK_SIZE	4096
+_Static_assert((_RFORK_THREAD_STACK_SIZE % PSPAWN_STACK_ALIGNMENT) == 0,
+    "Inappropriate stack size alignment");
+#endif
+
+static int
+_posix_spawn_thr(void *data)
+{
+	struct posix_spawn_args *psa;
+	char * const *envp;
+
+	psa = data;
+	if (psa->sa != NULL) {
+		psa->error = process_spawnattr(*psa->sa);
+		if (psa->error)
+			_exit(127);
+	}
+	if (psa->fa != NULL) {
+		psa->error = process_file_actions(*psa->fa);
+		if (psa->error)
+			_exit(127);
+	}
+	envp = psa->envp != NULL ? psa->envp : environ;
+	if (psa->use_env_path)
+		_execvpe(psa->path, psa->argv, envp);
+	else
+		_execve(psa->path, psa->argv, envp);
+	psa->error = errno;
+
+	/* This is called in such a way that it must not exit. */
+	_exit(127);
+}
+
 static int
 do_posix_spawn(pid_t *pid, const char *path,
     const posix_spawn_file_actions_t *fa,
     const posix_spawnattr_t *sa,
     char * const argv[], char * const envp[], int use_env_path)
 {
+	struct posix_spawn_args psa;
 	pid_t p;
-	volatile int error = 0;
+#ifdef _RFORK_THREAD_STACK_SIZE
+	char *stack;
+	size_t cnt, stacksz;
 
-	p = vfork();
-	switch (p) {
-	case -1:
-		return (errno);
-	case 0:
-		if (sa != NULL) {
-			error = process_spawnattr(*sa);
-			if (error)
-				_exit(127);
-		}
-		if (fa != NULL) {
-			error = process_file_actions(*fa);
-			if (error)
-				_exit(127);
-		}
-		if (use_env_path)
-			_execvpe(path, argv, envp != NULL ? envp : environ);
-		else
-			_execve(path, argv, envp != NULL ? envp : environ);
-		error = errno;
-		_exit(127);
-	default:
-		if (error != 0)
-			_waitpid(p, NULL, WNOHANG);
-		else if (pid != NULL)
-			*pid = p;
-		return (error);
+	stacksz = _RFORK_THREAD_STACK_SIZE;
+	if (use_env_path) {
+		/*
+		 * We need to make sure we have enough room on the stack for the
+		 * potential alloca() in execvPe if it gets kicked back an
+		 * ENOEXEC from execve(2), plus the original buffer we gave
+		 * ourselves; this protects us in the event that the caller
+		 * intentionally or inadvertently supplies enough arguments to
+		 * make us blow past the stack we've allocated from it.
+		 */
+		for (cnt = 0; argv[cnt] != NULL; ++cnt)
+			;
+		stacksz += MAX(3, cnt + 2) * sizeof(char *);
+		stacksz = PSPAWN_STACK_ALIGN(stacksz);
 	}
+
+	/*
+	 * aligned_alloc is not safe to use here, because we can't guarantee
+	 * that aligned_alloc and free will be provided by the same
+	 * implementation.  We've actively hit at least one application that
+	 * will provide its own malloc/free but not aligned_alloc leading to
+	 * a free by the wrong allocator.
+	 */
+	stack = malloc(stacksz);
+	if (stack == NULL)
+		return (ENOMEM);
+	stacksz = (((uintptr_t)stack + stacksz) & ~PSPAWN_STACK_ALIGNBYTES) -
+	    (uintptr_t)stack;
+#endif
+	psa.path = path;
+	psa.fa = fa;
+	psa.sa = sa;
+	psa.argv = argv;
+	psa.envp = envp;
+	psa.use_env_path = use_env_path;
+	psa.error = 0;
+
+	/*
+	 * Passing RFSPAWN to rfork(2) gives us effectively a vfork that drops
+	 * non-ignored signal handlers.  We'll fall back to the slightly less
+	 * ideal vfork(2) if we get an EINVAL from rfork -- this should only
+	 * happen with newer libc on older kernel that doesn't accept
+	 * RFSPAWN.
+	 */
+#ifdef _RFORK_THREAD_STACK_SIZE
+	/*
+	 * x86 stores the return address on the stack, so rfork(2) cannot work
+	 * as-is because the child would clobber the return address om the
+	 * parent.  Because of this, we must use rfork_thread instead while
+	 * almost every other arch stores the return address in a register.
+	 */
+	p = rfork_thread(RFSPAWN, stack + stacksz, _posix_spawn_thr, &psa);
+	free(stack);
+#else
+	p = rfork(RFSPAWN);
+	if (p == 0)
+		/* _posix_spawn_thr does not return */
+		_posix_spawn_thr(&psa);
+#endif
+	/*
+	 * The above block should leave us in a state where we've either
+	 * succeeded and we're ready to process the results, or we need to
+	 * fallback to vfork() if the kernel didn't like RFSPAWN.
+	 */
+
+	if (p == -1 && errno == EINVAL) {
+		p = vfork();
+		if (p == 0)
+			/* _posix_spawn_thr does not return */
+			_posix_spawn_thr(&psa);
+	}
+	if (p == -1)
+		return (errno);
+	if (psa.error != 0)
+		/* Failed; ready to reap */
+		_waitpid(p, NULL, WNOHANG);
+	else if (pid != NULL)
+		/* exec succeeded */
+		*pid = p;
+	return (psa.error);
 }
 
 int

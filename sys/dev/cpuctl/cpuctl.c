@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cpuctl/cpuctl.c 347612 2019-05-15 08:15:44Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -49,6 +49,10 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/cpuctl/cpuctl.c 347612 2019-05-15 08:15:
 #include <sys/smp.h>
 #include <sys/pmckern.h>
 #include <sys/cpuctl.h>
+
+#include <vm/vm.h>
+#include <vm/vm_param.h>
+#include <vm/pmap.h>
 
 #include <machine/cpufunc.h>
 #include <machine/md_var.h>
@@ -534,13 +538,16 @@ cpuctl_do_eval_cpu_features(int cpu, struct thread *td)
 	set_cpu(cpu, td);
 	identify_cpu1();
 	identify_cpu2();
-	hw_ibrs_recalculate();
 	restore_cpu(oldcpu, is_bound, td);
+	hw_ibrs_recalculate(true);
 	hw_ssb_recalculate(true);
 #ifdef __amd64__
 	amd64_syscall_ret_flush_l1d_recalc();
+	pmap_allow_2m_x_ept_recalculate();
 #endif
 	hw_mds_recalculate();
+	x86_taa_recalculate();
+	x86_rngds_mitg_recalculate(true);
 	printcpuinfo();
 	return (0);
 }

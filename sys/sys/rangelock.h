@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/rangelock.h 326256 2017-11-27 15:01:59Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_RANGELOCK_H
@@ -78,6 +78,29 @@ void	*rangelock_rlock(struct rangelock *lock, off_t start, off_t end,
 void	*rangelock_wlock(struct rangelock *lock, off_t start, off_t end,
 	    struct mtx *ilk);
 void	 rlqentry_free(struct rl_q_entry *rlqe);
+#if defined(INVARIANTS) || defined(INVARIANT_SUPPORT)
+void	_rangelock_cookie_assert(void *cookie, int what, const char *file,
+    int line);
+#endif
+
+#ifdef INVARIANTS
+#define	rangelock_cookie_assert_(cookie, what, file, line)	\
+	_rangelock_cookie_assert((cookie), (what), (file), (line))
+#else
+#define	rangelock_cookie_assert_(cookie, what, file, line)		(void)0
+#endif
+
+#define	rangelock_cookie_assert(cookie, what)	\
+	rangelock_cookie_assert_((cookie), (what), __FILE__, __LINE__)
+
+/*
+ * Assertion flags.
+ */
+#if defined(INVARIANTS) || defined(INVARIANT_SUPPORT)
+#define	RCA_LOCKED	0x0001
+#define	RCA_RLOCKED	0x0002
+#define	RCA_WLOCKED	0x0004
+#endif
 
 #endif	/* _KERNEL */
 

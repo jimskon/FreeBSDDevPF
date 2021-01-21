@@ -1,7 +1,7 @@
-# $FreeBSD: releng/12.1/lib/clang/clang.pre.mk 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 .include "llvm.pre.mk"
 
-CLANG_SRCS=	${LLVM_SRCS}/tools/clang
+CLANG_SRCS=	${LLVM_BASE}/clang
 
 CLANG_TBLGEN?=	clang-tblgen

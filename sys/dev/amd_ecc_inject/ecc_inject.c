@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/amd_ecc_inject/ecc_inject.c 338318 2018-08-25 19:38:08Z alc $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -203,7 +203,8 @@ ecc_ei_load(void)
 {
 	uint32_t val;
 
-	if (cpu_vendor_id != CPU_VENDOR_AMD || CPUID_TO_FAMILY(cpu_id) < 0x10) {
+	if ((cpu_vendor_id != CPU_VENDOR_AMD || CPUID_TO_FAMILY(cpu_id) < 0x10) &&
+	    cpu_vendor_id != CPU_VENDOR_HYGON) {
 		printf("DRAM ECC error injection is not supported\n");
 		return (ENXIO);
 	}

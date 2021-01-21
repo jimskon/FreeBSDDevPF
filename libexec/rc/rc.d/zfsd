@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/zfsd 300906 2016-05-28 17:43:40Z asomers $
+# $FreeBSD$
 #
 
 # PROVIDE: zfsd

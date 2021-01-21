@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5212_phy.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -128,7 +128,6 @@ HAL_RATE_TABLE ar5212_11b_table = {
 /*  11 Mb */ {  AH_TRUE,  CCK,   11000,    0x18,    0x04, (0x80|22),   1 }
 	},
 };
-
 
 /* Venice TODO: roundUpRate() is broken when the rate table does not represent rates
  * in increasing order  e.g.  5.5, 11, 6, 9.    

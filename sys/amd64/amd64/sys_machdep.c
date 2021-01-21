@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/amd64/amd64/sys_machdep.c 344848 2019-03-06 17:33:05Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 
@@ -380,7 +380,7 @@ sysarch(struct thread *td, struct sysarch_args *uap)
 		error = pmap_pkru_clear(PCPU_GET(curpmap),
 		    (vm_offset_t)a64pkru.addr,
 		    (vm_offset_t)a64pkru.addr + a64pkru.len);
-		vm_map_unlock(map);
+		vm_map_unlock_read(map);
 		break;
 
 	default:

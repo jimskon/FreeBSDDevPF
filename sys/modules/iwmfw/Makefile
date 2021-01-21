@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/iwmfw/Makefile 331665 2018-03-28 07:59:16Z eadler $
+# $FreeBSD$
 
 SUBDIR=	iwm3160fw \
 	iwm3168fw \
@@ -6,6 +6,8 @@ SUBDIR=	iwm3160fw \
 	iwm7265fw \
 	iwm7265Dfw \
 	iwm8000Cfw \
-	iwm8265fw
+	iwm8265fw \
+	iwm9000fw \
+	iwm9260fw
 
 .include <bsd.subdir.mk>

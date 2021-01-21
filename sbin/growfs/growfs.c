@@ -53,7 +53,7 @@ All rights reserved.\n";
 #endif /* not lint */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/growfs/growfs.c 328426 2018-01-26 00:58:32Z mckusick $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/ioctl.h>
@@ -572,6 +572,7 @@ updjcg(int cylno, time_t modtime, int fsi, int fso, unsigned int Nflag)
 		if (sblock.fs_magic == FS_UFS1_MAGIC)
 			acg.cg_old_ncyl = sblock.fs_old_cpg;
 
+		cgckhash(&acg);
 		wtfs(fsbtodb(&sblock, cgtod(&sblock, cylno)),
 		    (size_t)sblock.fs_cgsize, (void *)&acg, fso, Nflag);
 		DBG_PRINT0("jcg written\n");
@@ -947,6 +948,7 @@ updcsloc(time_t modtime, int fsi, int fso, unsigned int Nflag)
 	 * Now write the former cylinder group containing the cylinder
 	 * summary back to disk.
 	 */
+	cgckhash(&acg);
 	wtfs(fsbtodb(&sblock, cgtod(&sblock, ocscg)),
 	    (size_t)sblock.fs_cgsize, (void *)&acg, fso, Nflag);
 	DBG_PRINT0("oscg written\n");
@@ -1039,6 +1041,7 @@ updcsloc(time_t modtime, int fsi, int fso, unsigned int Nflag)
 	 * Write the new cylinder group containing the cylinder summary
 	 * back to disk.
 	 */
+	cgckhash(&acg);
 	wtfs(fsbtodb(&sblock, cgtod(&sblock, ncscg)),
 	    (size_t)sblock.fs_cgsize, (void *)&acg, fso, Nflag);
 	DBG_PRINT0("nscg written\n");

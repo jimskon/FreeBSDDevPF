@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_init.c 335351 2018-06-19 00:38:28Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -59,7 +59,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8821a/usb/r21au_init.c 335351 20
 #include <dev/rtwn/rtl8821a/usb/r21au.h>
 #include <dev/rtwn/rtl8821a/usb/r21au_reg.h>
 
-
 void
 r21au_init_tx_agg(struct rtwn_softc *sc)
 {
@@ -69,4 +68,3 @@ r21au_init_tx_agg(struct rtwn_softc *sc)
 
 	rtwn_write_1(sc, R21A_DWBCN1_CTRL, uc->tx_agg_desc_num << 1);
 }
-

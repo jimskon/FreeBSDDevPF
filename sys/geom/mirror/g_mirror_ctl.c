@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/mirror/g_mirror_ctl.c 327700 2018-01-08 15:56:40Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -852,7 +852,7 @@ g_mirror_ctl_resize(struct gctl_req *req, struct g_class *mp)
 		return;
 	}
 	/* Deny shrinking of an opened provider */
-	if ((g_debugflags & 16) == 0 && sc->sc_provider_open > 0) {
+	if ((g_debugflags & G_F_FOOTSHOOTING) == 0 && sc->sc_provider_open > 0) {
 		if (sc->sc_mediasize > mediasize) {
 			gctl_error(req, "Device %s is busy.",
 			    sc->sc_provider->name);

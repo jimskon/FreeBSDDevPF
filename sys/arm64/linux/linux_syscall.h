@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/arm64/linux/linux_syscall.h 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #define	LINUX_SYS_linux_setxattr	5
@@ -227,7 +227,7 @@
 #define	LINUX_SYS_mlockall	230
 #define	LINUX_SYS_munlockall	231
 #define	LINUX_SYS_linux_mincore	232
-#define	LINUX_SYS_madvise	233
+#define	LINUX_SYS_linux_madvise	233
 #define	LINUX_SYS_linux_remap_file_pages	234
 #define	LINUX_SYS_linux_mbind	235
 #define	LINUX_SYS_linux_get_mempolicy	236

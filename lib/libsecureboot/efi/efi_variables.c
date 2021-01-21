@@ -23,11 +23,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libsecureboot/efi/efi_variables.c 344840 2019-03-06 06:39:42Z mw $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/efi/efi_variables.c 344840 2019-03-06 06:39:42Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include <stand.h>
 #include <string.h>

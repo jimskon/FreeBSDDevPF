@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/etc/mtree/BSD.var.dist 350878 2019-08-11 23:01:31Z ian $
+# $FreeBSD$
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #

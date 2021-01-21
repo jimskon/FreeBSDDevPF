@@ -33,7 +33,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
- * $FreeBSD: releng/12.1/bin/dd/extern.h 337869 2018-08-15 20:50:38Z kevans $
+ * $FreeBSD$
  */
 
 void block(void);
@@ -58,7 +58,7 @@ extern STAT st;
 extern void (*cfunc)(void);
 extern uintmax_t cpy_cnt;
 extern size_t cbsz;
-extern u_int ddflags;
+extern uint64_t ddflags;
 extern size_t speed;
 extern uintmax_t files_cnt;
 extern const u_char *ctab;

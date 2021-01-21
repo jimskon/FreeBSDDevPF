@@ -29,7 +29,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     @(#)rc.8	8.2 (Berkeley) 12/11/93
-.\" $FreeBSD: releng/12.1/share/man/man8/rc.8 351206 2019-08-19 07:40:42Z avg $
+.\" $FreeBSD$
 .\"
 .Dd August 7, 2019
 .Dt RC 8
@@ -188,6 +188,14 @@ also exists (because it was created by a script), then delete it and reboot.
 .El
 .Ss Operation of Nm rc.shutdown
 .Bl -enum
+.It
+Set
+.Va rc_shutdown
+to the value of the first argument passed to
+.Nm rc.shutdown
+or to
+.Dq Li unspecified
+if no argument was passed.
 .It
 Source
 .Pa /etc/rc.subr

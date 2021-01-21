@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/x86/include/sysarch.h 344850 2019-03-06 17:40:30Z kib $
+ * $FreeBSD$
  */
 
 /*

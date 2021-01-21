@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/isci/isci.c 345530 2019-03-26 11:03:09Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/isci/isci.h>
 
@@ -414,7 +414,8 @@ isci_allocate_dma_buffer(device_t device, struct ISCI_CONTROLLER *controller,
 	uint32_t status;
 
 	status = bus_dma_tag_create(bus_get_dma_tag(device),
-	    0x40 /* cacheline alignment */, 0x0, BUS_SPACE_MAXADDR,
+	    0x40 /* cacheline alignment */,
+	    ISCI_DMA_BOUNDARY, BUS_SPACE_MAXADDR,
 	    BUS_SPACE_MAXADDR, NULL, NULL, memory->size,
 	    0x1 /* we want physically contiguous */,
 	    memory->size, 0, busdma_lock_mutex, &controller->lock,

@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/powerpc/powerpc/elf64_machdep.c 347571 2019-05-14 19:52:18Z trasz $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>

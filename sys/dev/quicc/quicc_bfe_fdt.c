@@ -29,7 +29,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/quicc/quicc_bfe_fdt.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -40,7 +40,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/quicc/quicc_bfe_fdt.c 326255 2017-11-27 
 #include <sys/malloc.h>
 #include <sys/module.h>
 #include <sys/rman.h>
-#include <sys/tty.h>
 #include <machine/bus.h>
 
 #include <dev/ofw/ofw_bus.h>

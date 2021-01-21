@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)libkern.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: releng/12.1/sys/sys/libkern.h 348278 2019-05-25 19:59:59Z johalun $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_LIBKERN_H_
@@ -127,6 +127,7 @@ extern int arc4rand_iniseed_state;
 struct malloc_type;
 uint32_t arc4random(void);
 void	 arc4random_buf(void *, size_t);
+uint32_t arc4random_uniform(uint32_t);
 void	 arc4rand(void *, u_int, int);
 int	 timingsafe_bcmp(const void *, const void *, size_t);
 void	*bsearch(const void *, const void *, size_t,

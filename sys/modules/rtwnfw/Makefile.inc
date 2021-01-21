@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/rtwnfw/Makefile.inc 351875 2019-09-05 17:20:20Z bdrewery $
+# $FreeBSD$
 #
 # Common rules for building firmware.  Note this gets auto-included
 # by the subdir Makefile's as a consequence of included bsd.kmod.mk.

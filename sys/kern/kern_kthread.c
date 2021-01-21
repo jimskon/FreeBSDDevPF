@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/kern_kthread.c 342249 2018-12-19 22:38:06Z mjg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -283,6 +283,8 @@ kthread_add(void (*func)(void *), void *arg, struct proc *p,
 
 	bzero(&newtd->td_startzero,
 	    __rangeof(struct thread, td_startzero, td_endzero));
+	newtd->td_pflags2 = 0;
+	newtd->td_errno = 0;
 	bcopy(&oldtd->td_startcopy, &newtd->td_startcopy,
 	    __rangeof(struct thread, td_startcopy, td_endcopy));
 
@@ -442,12 +444,15 @@ kthread_suspend_check(void)
 		panic("%s: curthread is not a valid kthread", __func__);
 
 	/*
-	 * As long as the double-lock protection is used when accessing the
-	 * TDF_KTH_SUSP flag, synchronizing the read operation via proc mutex
-	 * is fine.
+	 * Setting the TDF_KTH_SUSP flag is protected by process lock.
+	 *
+	 * Do an unlocked read first to avoid serializing with all other threads
+	 * in the common case of not suspending.
 	 */
+	if ((td->td_flags & TDF_KTH_SUSP) == 0)
+		return;
 	PROC_LOCK(p);
-	while (td->td_flags & TDF_KTH_SUSP) {
+	while ((td->td_flags & TDF_KTH_SUSP) != 0) {
 		wakeup(&td->td_flags);
 		msleep(&td->td_flags, &p->p_mtx, PPAUSE, "ktsusp", 0);
 	}

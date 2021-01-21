@@ -1,6 +1,11 @@
-# $FreeBSD: releng/12.1/usr.sbin/mixer/Makefile 201390 2010-01-02 11:07:44Z ed $
+# $FreeBSD$
+
+.include <src.opts.mk>
 
 PROG=	mixer
 MAN=	mixer.8
+
+HAS_TESTS=
+SUBDIR.${MK_TESTS}+= tests
 
 .include <bsd.prog.mk>

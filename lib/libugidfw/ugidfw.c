@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libugidfw/ugidfw.c 335921 2018-07-03 23:47:20Z jamie $
+ * $FreeBSD$
  */
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -334,9 +334,8 @@ bsde_rule_to_string(struct mac_bsdextended_rule *rule, char *buf, size_t buflen)
 		if (rule->mbr_object.mbo_flags & MBO_FSID_DEFINED) {
 			numfs = getmntinfo(&mntbuf, MNT_NOWAIT);
 			for (i = 0; i < numfs; i++)
-				if (memcmp(&(rule->mbr_object.mbo_fsid),
-				    &(mntbuf[i].f_fsid),
-				    sizeof(mntbuf[i].f_fsid)) == 0)
+				if (fsidcmp(&rule->mbr_object.mbo_fsid,
+				    &mntbuf[i].f_fsid) == 0)
 					break;
 			len = snprintf(cur, left, "filesys %s ",
 			    i == numfs ? "???" : mntbuf[i].f_mntonname);

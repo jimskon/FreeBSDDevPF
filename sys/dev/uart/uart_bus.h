@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/uart/uart_bus.h 348342 2019-05-28 22:22:40Z cperciva $
+ * $FreeBSD$
  */
 
 #ifndef _DEV_UART_BUS_H_
@@ -111,6 +111,7 @@ struct uart_softc {
 	int		sc_rxput;
 	int		sc_rxget;
 	int		sc_rxfifosz;	/* Size of RX FIFO. */
+	int		sc_rxoverruns;
 
 	/* Transmitter data. */
 	uint8_t		*sc_txbuf;

@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/tools/build/options/WITH_BIND_NOW 352769 2019-09-26 18:56:41Z emaste $
+.\" $FreeBSD$
 Build all binaries with the
 .Dv DF_BIND_NOW
 flag set to indicate that the run-time loader should perform all relocation

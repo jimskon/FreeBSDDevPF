@@ -41,7 +41,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)primes.c	8.5 (Berkeley) 5/10/95";
 #endif
 static const char rcsid[] =
- "$FreeBSD: releng/12.1/usr.bin/primes/primes.c 335397 2018-06-20 00:13:09Z oshogbo $";
+ "$FreeBSD$";
 #endif /* not lint */
 
 /*
@@ -55,8 +55,8 @@ static const char rcsid[] =
  *	primes [-h] [start [stop]]
  *
  *	Print primes >= start and < stop.  If stop is omitted,
- *	the value 4294967295 (2^32-1) is assumed.  If start is
- *	omitted, start is read from standard input.
+ *	the value 18446744073709551615 (2^64-1) is assumed.  If
+ *	start is omitted, start is read from standard input.
  *
  * validation check: there are 664579 primes between 0 and 10^7
  */

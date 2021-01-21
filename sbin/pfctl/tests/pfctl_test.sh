@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/pfctl/tests/pfctl_test.sh 340551 2018-11-18 09:48:51Z kp $
+# $FreeBSD$
 # Make will add a #! line at the top of this file.
 
 # Tests 0001-0999 are copied from OpenBSD's regress/sbin/pfctl.

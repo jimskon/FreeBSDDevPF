@@ -59,7 +59,7 @@
  * any improvements or extensions that they make and grant Carnegie the
  * rights to redistribute these changes.
  *
- * $FreeBSD: releng/12.1/sys/vm/vm_page.h 352039 2019-09-08 20:37:42Z markj $
+ * $FreeBSD$
  */
 
 /*

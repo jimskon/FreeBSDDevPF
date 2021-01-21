@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.bin/localedef/localedef.h 339825 2018-10-27 21:17:01Z yuripv $
+ * $FreeBSD$
  */
 
 /*
@@ -47,7 +47,9 @@ extern int mb_cur_max;
 extern int mb_cur_min;
 extern int last_kw;
 extern int verbose;
+#if YYDEBUG
 extern int yydebug;
+#endif
 extern int lineno;
 extern int undefok;	/* mostly ignore undefined symbols */
 extern int warnok;

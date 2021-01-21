@@ -40,7 +40,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/an/if_an_pccard.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 
@@ -156,5 +156,7 @@ an_pccard_attach(device_t dev)
 fail:
 	if (error)
 		an_release_resources(dev);
+	else
+		gone_in_dev(dev, 13, "pccard removed, an doesn't support modern crypto");
 	return (error);
 }

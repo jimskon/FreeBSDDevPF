@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	from: vector.s, 386BSD 0.1 unknown origin
- * $FreeBSD: releng/12.1/sys/amd64/amd64/apic_vector.S 331254 2018-03-20 17:58:51Z emaste $
+ * $FreeBSD$
  */
 
 /*
@@ -253,6 +253,16 @@ invltlb_ret:
 	INTR_HANDLER cpususpend
 	call	cpususpend_handler
 	call	as_lapic_eoi
+	jmp	doreti
+
+/*
+ * Executed by a CPU when it receives an IPI_SWI.
+ */
+	INTR_HANDLER ipi_swi
+	call	as_lapic_eoi
+	FAKE_MCOUNT(TF_RIP(%rsp))
+	call	ipi_swi_handler
+	MEXITCOUNT
 	jmp	doreti
 
 /*

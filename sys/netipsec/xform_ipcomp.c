@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netipsec/xform_ipcomp.c 336439 2018-07-18 00:56:25Z cem $	*/
+/*	$FreeBSD$	*/
 /* $OpenBSD: ip_ipcomp.c,v 1.1 2001/07/05 12:08:52 jjbg Exp $ */
 
 /*-
@@ -33,6 +33,7 @@
 /* IP payload compression protocol (IPComp), see RFC 2393 */
 #include "opt_inet.h"
 #include "opt_inet6.h"
+#include "opt_ipsec.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>

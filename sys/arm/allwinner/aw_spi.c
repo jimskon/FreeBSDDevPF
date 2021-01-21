@@ -22,11 +22,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/aw_spi.c 335157 2018-06-14 17:19:44Z manu $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/aw_spi.c 335157 2018-06-14 17:19:44Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -240,7 +240,7 @@ aw_spi_attach(device_t dev)
 
 	sc->spibus = device_add_child(dev, "spibus", -1);
 
-	return (0);
+	return (bus_generic_attach(dev));
 
 fail:
 	aw_spi_detach(dev);

@@ -56,7 +56,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/sysv_msg.c 334486 2018-06-01 13:26:45Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_sysvipc.h"
 
@@ -615,6 +615,13 @@ kern_msgctl(struct thread *td, int msqid, int cmd, struct msqid_ds *msqbuf)
 		*msqbuf = msqkptr->u;
 		if (td->td_ucred->cr_prison != msqkptr->cred->cr_prison)
 			msqbuf->msg_perm.key = IPC_PRIVATE;
+
+		/*
+		 * Try to hide the fact that the structure layout is shared by
+		 * both the kernel and userland.  These pointers are not useful
+		 * to userspace.
+		 */
+		msqbuf->__msg_first = msqbuf->__msg_last = NULL;
 		break;
 
 	default:

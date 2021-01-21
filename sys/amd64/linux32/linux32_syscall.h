@@ -2,7 +2,7 @@
  * System call numbers.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/amd64/linux32/linux32_syscall.h 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 #define	LINUX32_SYS_linux_exit	1
@@ -199,7 +199,7 @@
 #define	LINUX32_SYS_linux_setfsgid	216
 #define	LINUX32_SYS_linux_pivot_root	217
 #define	LINUX32_SYS_linux_mincore	218
-#define	LINUX32_SYS_madvise	219
+#define	LINUX32_SYS_linux_madvise	219
 #define	LINUX32_SYS_linux_getdents64	220
 #define	LINUX32_SYS_linux_fcntl64	221
 #define	LINUX32_SYS_linux_gettid	224

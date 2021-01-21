@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-tblgen/Makefile 346168 2019-04-12 20:03:27Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-tblgen
 
-SRCDIR=		utils/TableGen
+SRCDIR=		llvm/utils/TableGen
 SRCS+=		AsmMatcherEmitter.cpp
 SRCS+=		AsmWriterEmitter.cpp
 SRCS+=		AsmWriterInst.cpp
@@ -22,17 +22,29 @@ SRCS+=		DAGISelMatcher.cpp
 SRCS+=		DAGISelMatcherEmitter.cpp
 SRCS+=		DAGISelMatcherGen.cpp
 SRCS+=		DAGISelMatcherOpt.cpp
+SRCS+=		DFAEmitter.cpp
 SRCS+=		DFAPacketizerEmitter.cpp
 SRCS+=		DisassemblerEmitter.cpp
 SRCS+=		ExegesisEmitter.cpp
 SRCS+=		FastISelEmitter.cpp
 SRCS+=		FixedLenDecoderEmitter.cpp
+SRCS+=		GICombinerEmitter.cpp
+SRCS+=		GlobalISel/CodeExpander.cpp
+SRCS+=		GlobalISel/GIMatchDag.cpp
+SRCS+=		GlobalISel/GIMatchDagEdge.cpp
+SRCS+=		GlobalISel/GIMatchDagInstr.cpp
+SRCS+=		GlobalISel/GIMatchDagOperands.cpp
+SRCS+=		GlobalISel/GIMatchDagPredicate.cpp
+SRCS+=		GlobalISel/GIMatchDagPredicateDependencyEdge.cpp
+SRCS+=		GlobalISel/GIMatchTree.cpp
 SRCS+=		GlobalISelEmitter.cpp
 SRCS+=		InfoByHwMode.cpp
 SRCS+=		InstrDocsEmitter.cpp
 SRCS+=		InstrInfoEmitter.cpp
 SRCS+=		IntrinsicEmitter.cpp
+SRCS+=		OptEmitter.cpp
 SRCS+=		OptParserEmitter.cpp
+SRCS+=		OptRSTEmitter.cpp
 SRCS+=		PredicateExpander.cpp
 SRCS+=		PseudoLoweringEmitter.cpp
 SRCS+=		RISCVCompressInstEmitter.cpp

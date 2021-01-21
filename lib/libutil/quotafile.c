@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libutil/quotafile.c 344998 2019-03-11 03:01:58Z sef $
+ * $FreeBSD$
  */
 
 #include <sys/types.h>

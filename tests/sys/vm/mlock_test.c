@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/tests/sys/vm/mlock_test.c 350699 2019-08-07 20:36:36Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/mman.h>
 #include <sys/ptrace.h>

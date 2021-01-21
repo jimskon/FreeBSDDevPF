@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/geom/part/g_part_gpt.c 352084 2019-09-09 17:43:44Z kevans $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bio.h>
@@ -63,6 +63,8 @@ SYSCTL_UINT(_kern_geom_part_gpt, OID_AUTO, allow_nesting,
 
 CTASSERT(offsetof(struct gpt_hdr, padding) == 92);
 CTASSERT(sizeof(struct gpt_ent) == 128);
+
+extern u_int geom_part_check_integrity;
 
 #define	EQUUID(a,b)	(memcmp(a, b, sizeof(struct uuid)) == 0)
 
@@ -460,8 +462,9 @@ gpt_read_hdr(struct g_part_gpt_table *table, struct g_consumer *cp,
 	if (hdr->hdr_lba_self != table->lba[elt])
 		goto fail;
 	hdr->hdr_lba_alt = le64toh(buf->hdr_lba_alt);
-	if (hdr->hdr_lba_alt == hdr->hdr_lba_self ||
-	    hdr->hdr_lba_alt > last)
+	if (hdr->hdr_lba_alt == hdr->hdr_lba_self)
+		goto fail;
+	if (hdr->hdr_lba_alt > last && geom_part_check_integrity)
 		goto fail;
 
 	/* Check the managed area. */

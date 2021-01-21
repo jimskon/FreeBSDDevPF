@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/nvmecontrol/nsid.c 350946 2019-08-12 19:39:31Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 
@@ -70,9 +70,10 @@ gnsid(const struct cmd *f, int argc, char *argv[])
 	int		fd;
 	uint32_t	nsid;
 
-	arg_parse(argc, argv, f);
+	if (arg_parse(argc, argv, f))
+		return;
 
-	open_dev(nsid_opt.dev, &fd, 1, 1);
+	open_dev(nsid_opt.dev, &fd, 0, 1);
 	get_nsid(fd, &path, &nsid);
 	close(fd);
 	printf("%s\t%u\n", path, nsid);

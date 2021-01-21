@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/accf_data.c 326272 2017-11-27 15:23:17Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #define ACCEPT_FILTER_MOD
 
@@ -42,20 +42,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/accf_data.c 326272 2017-11-27 15:23:
 
 static int	sohasdata(struct socket *so, void *arg, int waitflag);
 
-static struct accept_filter accf_data_filter = {
-	"dataready",
-	sohasdata,
-	NULL,
-	NULL
-};
-
-static moduledata_t accf_data_mod = {
-	"accf_data",
-	accept_filt_generic_mod_event,
-	&accf_data_filter
-};
-
-DECLARE_MODULE(accf_data, accf_data_mod, SI_SUB_DRIVERS, SI_ORDER_MIDDLE);
+ACCEPT_FILTER_DEFINE(accf_data, "dataready", sohasdata, NULL, NULL, 1);
 
 static int
 sohasdata(struct socket *so, void *arg, int waitflag)

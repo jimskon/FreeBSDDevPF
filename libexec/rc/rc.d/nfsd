@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/nfsd 346910 2019-04-29 19:10:24Z mav $
+# $FreeBSD$
 #
 
 # PROVIDE: nfsd

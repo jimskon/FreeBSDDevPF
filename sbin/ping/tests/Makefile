@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/ping/tests/Makefile 352371 2019-09-16 00:56:33Z asomers $
+# $FreeBSD$
 
 WARNS?=	6
 

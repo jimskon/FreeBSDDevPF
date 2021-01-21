@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/arm_ti/ti_i2c/Makefile 349096 2019-06-16 01:22:44Z ian $
+# $FreeBSD$
 
 .PATH: ${SRCTOP}/sys/arm/ti
 

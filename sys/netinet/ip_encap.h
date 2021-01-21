@@ -1,4 +1,4 @@
-/*	$FreeBSD: releng/12.1/sys/netinet/ip_encap.h 340533 2018-11-18 00:09:33Z ae $	*/
+/*	$FreeBSD$	*/
 /*	$KAME: ip_encap.h,v 1.7 2000/03/25 07:23:37 sumikawa Exp $	*/
 
 /*-

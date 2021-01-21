@@ -26,7 +26,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/tools/tools/net80211/wlanstats/main.c 313987 2017-02-20 08:04:06Z adrian $
+ * $FreeBSD$
  */
 
 /*
@@ -63,7 +63,7 @@ static struct {
   },
   {
     "amsdu",
-    "input,output,amsdu_tooshort,amsdu_split,amsdu_decap,amsdu_encap,rssi,rate"
+    "input,output,amsdu_tooshort,amsdu_split,amsdu_decap,amsdu_encap,rx_amsdu_more,rx_amsdu_more_end,rssi,rate"
   },
 };
 

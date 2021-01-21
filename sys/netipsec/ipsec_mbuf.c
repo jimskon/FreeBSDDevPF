@@ -25,12 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/netipsec/ipsec_mbuf.c 333016 2018-04-26 12:23:31Z ae $
+ * $FreeBSD$
  */
 
 /*
  * IPsec-specific mbuf routines.
  */
+
+#include "opt_ipsec.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>

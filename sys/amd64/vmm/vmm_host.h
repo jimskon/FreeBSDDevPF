@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/vmm/vmm_host.h 326257 2017-11-27 15:03:07Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_VMM_HOST_H_
@@ -72,14 +72,11 @@ vmm_get_host_gdtrbase(void)
 	return ((uint64_t)&gdt[NGDT * curcpu]);
 }
 
-struct pcpu;
-extern struct pcpu __pcpu[];
-
 static __inline uint64_t
 vmm_get_host_gsbase(void)
 {
 
-	return ((uint64_t)&__pcpu[curcpu]);
+	return ((uint64_t)get_pcpu());
 }
 
 #endif

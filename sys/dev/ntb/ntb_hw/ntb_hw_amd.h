@@ -41,7 +41,7 @@
  * Contact Information :
  * Rajesh Kumar <rajesh1.kumar@amd.com>
  *
- * $FreeBSD: releng/12.1/sys/dev/ntb/ntb_hw/ntb_hw_amd.h 351537 2019-08-27 04:14:38Z mav $
+ * $FreeBSD$
  */
 
 #ifndef	NTB_HW_AMD_H
@@ -50,6 +50,9 @@
 #define	NTB_HW_AMD_VENDOR_ID	0x1022
 #define	NTB_HW_AMD_DEVICE_ID1	0x145B
 #define	NTB_HW_AMD_DEVICE_ID2	0x148B
+
+#define	NTB_HW_HYGON_VENDOR_ID	0x19D4
+#define	NTB_HW_HYGON_DEVICE_ID1	0x145B
 
 #define	NTB_DEF_PEER_CNT	1
 #define	NTB_DEF_PEER_IDX	0

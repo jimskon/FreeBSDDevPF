@@ -28,7 +28,7 @@ static const char rcsid[] =
     "@(#)$Id: traceroute.c,v 1.68 2000/12/14 08:04:33 leres Exp $ (LBL)";
 #endif
 static const char rcsid[] =
-    "$FreeBSD: releng/12.1/contrib/traceroute/traceroute.c 352188 2019-09-10 20:45:51Z oshogbo $";
+    "$FreeBSD$";
 #endif
 
 /*

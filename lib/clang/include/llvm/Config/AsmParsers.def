@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/lib/clang/include/llvm/Config/AsmParsers.def 346892 2019-04-29 16:16:00Z mhorne $ */
+/* $FreeBSD$ */
 
 #ifndef LLVM_ASM_PARSER
 #  error Please define the macro LLVM_ASM_PARSER(TargetName)

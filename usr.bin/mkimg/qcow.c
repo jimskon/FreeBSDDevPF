@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/mkimg/qcow.c 343765 2019-02-05 08:05:42Z delphij $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/errno.h>
 #include <assert.h>

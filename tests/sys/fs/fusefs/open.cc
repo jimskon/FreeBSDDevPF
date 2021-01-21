@@ -27,12 +27,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/tests/sys/fs/fusefs/open.cc 352351 2019-09-15 04:14:31Z asomers $
+ * $FreeBSD$
  */
 
 extern "C" {
 #include <sys/wait.h>
+
 #include <fcntl.h>
+#include <semaphore.h>
 }
 
 #include "mockfs.hh"
@@ -105,6 +107,9 @@ TEST_F(Open, enoent)
 	const char FULLPATH[] = "mountpoint/some_file.txt";
 	const char RELPATH[] = "some_file.txt";
 	uint64_t ino = 42;
+	sem_t sem;
+
+	ASSERT_EQ(0, sem_init(&sem, 0, 0)) << strerror(errno);
 
 	expect_lookup(RELPATH, ino, S_IFREG | 0644, 0, 1);
 	EXPECT_CALL(*m_mock, process(
@@ -114,8 +119,15 @@ TEST_F(Open, enoent)
 		}, Eq(true)),
 		_)
 	).WillOnce(Invoke(ReturnErrno(ENOENT)));
+	// Since FUSE_OPEN returns ENOENT, the kernel will reclaim the vnode
+	// and send a FUSE_FORGET
+	expect_forget(ino, 1, &sem);
+
 	ASSERT_EQ(-1, open(FULLPATH, O_RDONLY));
 	EXPECT_EQ(ENOENT, errno);
+
+	sem_wait(&sem);
+	sem_destroy(&sem);
 }
 
 /* 

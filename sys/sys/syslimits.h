@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)syslimits.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.1/sys/sys/syslimits.h 327598 2018-01-05 22:26:23Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SYSLIMITS_H_
@@ -48,7 +48,11 @@
  * Do not add any new variables here.  (See the comment at the end of
  * the file for why.)
  */
-#define	ARG_MAX			262144	/* max bytes for an exec function */
+#ifndef __ILP32__
+#define	ARG_MAX	      (2 * 256 * 1024)	/* max bytes for an exec function */
+#else
+#define	ARG_MAX		  (256 * 1024)	/* max bytes for KVA-starved archs */
+#endif
 #ifndef CHILD_MAX
 #define	CHILD_MAX		   40	/* max simultaneous processes */
 #endif

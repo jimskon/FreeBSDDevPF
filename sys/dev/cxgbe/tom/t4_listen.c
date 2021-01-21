@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cxgbe/tom/t4_listen.c 352272 2019-09-13 01:14:58Z np $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -341,48 +341,32 @@ release_lctx(struct adapter *sc, struct listen_ctx *lctx)
 }
 
 static void
-send_reset_synqe(struct toedev *tod, struct synq_entry *synqe)
+send_flowc_wr_synqe(struct adapter *sc, struct synq_entry *synqe)
 {
-	struct adapter *sc = tod->tod_softc;
 	struct mbuf *m = synqe->syn;
 	struct ifnet *ifp = m->m_pkthdr.rcvif;
 	struct vi_info *vi = ifp->if_softc;
 	struct port_info *pi = vi->pi;
-	struct l2t_entry *e = &sc->l2t->l2tab[synqe->params.l2t_idx];
 	struct wrqe *wr;
 	struct fw_flowc_wr *flowc;
-	struct cpl_abort_req *req;
-	int flowclen;
 	struct sge_wrq *ofld_txq;
 	struct sge_ofld_rxq *ofld_rxq;
 	const int nparams = 6;
+	const int flowclen = sizeof(*flowc) + nparams * sizeof(struct fw_flowc_mnemval);
 	const u_int pfvf = sc->pf << S_FW_VIID_PFN;
 
 	INP_WLOCK_ASSERT(synqe->lctx->inp);
-
-	CTR5(KTR_CXGBE, "%s: synqe %p (0x%x), tid %d%s",
-	    __func__, synqe, synqe->flags, synqe->tid,
-	    synqe->flags & TPF_ABORT_SHUTDOWN ?
-	    " (abort already in progress)" : "");
-	if (synqe->flags & TPF_ABORT_SHUTDOWN)
-		return;	/* abort already in progress */
-	synqe->flags |= TPF_ABORT_SHUTDOWN;
+	MPASS((synqe->flags & TPF_FLOWC_WR_SENT) == 0);
 
 	ofld_txq = &sc->sge.ofld_txq[synqe->params.txq_idx];
 	ofld_rxq = &sc->sge.ofld_rxq[synqe->params.rxq_idx];
 
-	/* The wrqe will have two WRs - a flowc followed by an abort_req */
-	flowclen = sizeof(*flowc) + nparams * sizeof(struct fw_flowc_mnemval);
-
-	wr = alloc_wrqe(roundup2(flowclen, EQ_ESIZE) + sizeof(*req), ofld_txq);
+	wr = alloc_wrqe(roundup2(flowclen, 16), ofld_txq);
 	if (wr == NULL) {
 		/* XXX */
 		panic("%s: allocation failure.", __func__);
 	}
 	flowc = wrtod(wr);
-	req = (void *)((caddr_t)flowc + roundup2(flowclen, EQ_ESIZE));
-
-	/* First the flowc ... */
 	memset(flowc, 0, wr->wr_len);
 	flowc->op_to_nparams = htobe32(V_FW_WR_OP(FW_FLOWC_WR) |
 	    V_FW_FLOWC_WR_NPARAMS(nparams));
@@ -396,19 +380,47 @@ send_reset_synqe(struct toedev *tod, struct synq_entry *synqe)
 	flowc->mnemval[2].val = htobe32(pi->tx_chan);
 	flowc->mnemval[3].mnemonic = FW_FLOWC_MNEM_IQID;
 	flowc->mnemval[3].val = htobe32(ofld_rxq->iq.abs_id);
- 	flowc->mnemval[4].mnemonic = FW_FLOWC_MNEM_SNDBUF;
- 	flowc->mnemval[4].val = htobe32(512);
- 	flowc->mnemval[5].mnemonic = FW_FLOWC_MNEM_MSS;
- 	flowc->mnemval[5].val = htobe32(512);
-	synqe->flags |= TPF_FLOWC_WR_SENT;
+	flowc->mnemval[4].mnemonic = FW_FLOWC_MNEM_SNDBUF;
+	flowc->mnemval[4].val = htobe32(512);
+	flowc->mnemval[5].mnemonic = FW_FLOWC_MNEM_MSS;
+	flowc->mnemval[5].val = htobe32(512);
 
-	/* ... then ABORT request */
+	synqe->flags |= TPF_FLOWC_WR_SENT;
+	t4_wrq_tx(sc, wr);
+}
+
+static void
+send_reset_synqe(struct toedev *tod, struct synq_entry *synqe)
+{
+	struct adapter *sc = tod->tod_softc;
+	struct wrqe *wr;
+	struct cpl_abort_req *req;
+
+	INP_WLOCK_ASSERT(synqe->lctx->inp);
+
+	CTR5(KTR_CXGBE, "%s: synqe %p (0x%x), tid %d%s",
+	    __func__, synqe, synqe->flags, synqe->tid,
+	    synqe->flags & TPF_ABORT_SHUTDOWN ?
+	    " (abort already in progress)" : "");
+	if (synqe->flags & TPF_ABORT_SHUTDOWN)
+		return;	/* abort already in progress */
+	synqe->flags |= TPF_ABORT_SHUTDOWN;
+
+	if (!(synqe->flags & TPF_FLOWC_WR_SENT))
+		send_flowc_wr_synqe(sc, synqe);
+
+	wr = alloc_wrqe(sizeof(*req), &sc->sge.ofld_txq[synqe->params.txq_idx]);
+	if (wr == NULL) {
+		/* XXX */
+		panic("%s: allocation failure.", __func__);
+	}
+	req = wrtod(wr);
 	INIT_TP_WR_MIT_CPL(req, CPL_ABORT_REQ, synqe->tid);
 	req->rsvd0 = 0;	/* don't have a snd_nxt */
 	req->rsvd1 = 1;	/* no data sent yet */
 	req->cmd = CPL_ABORT_SEND_RST;
 
-	t4_l2t_send(sc, wr, e);
+	t4_l2t_send(sc, wr, &sc->l2t->l2tab[synqe->params.l2t_idx]);
 }
 
 static int
@@ -889,6 +901,9 @@ do_abort_req_synqe(struct sge_iq *iq, const struct rss_header *rss,
 
 	ofld_txq = &sc->sge.ofld_txq[synqe->params.txq_idx];
 
+	if (!(synqe->flags & TPF_FLOWC_WR_SENT))
+		send_flowc_wr_synqe(sc, synqe);
+
 	/*
 	 * If we'd initiated an abort earlier the reply to it is responsible for
 	 * cleaning up resources.  Otherwise we tear everything down right here
@@ -986,7 +1001,7 @@ t4opt_to_tcpopt(const struct tcp_options *t4opt, struct tcpopt *to)
 
 static void
 pass_accept_req_to_protohdrs(struct adapter *sc, const struct mbuf *m,
-    struct in_conninfo *inc, struct tcphdr *th)
+    struct in_conninfo *inc, struct tcphdr *th, uint8_t *iptos)
 {
 	const struct cpl_pass_accept_req *cpl = mtod(m, const void *);
 	const struct ether_header *eh;
@@ -1001,6 +1016,21 @@ pass_accept_req_to_protohdrs(struct adapter *sc, const struct mbuf *m,
 	} else {
 		l3hdr = ((uintptr_t)eh + G_ETH_HDR_LEN(hlen));
 		tcp = (const void *)(l3hdr + G_IP_HDR_LEN(hlen));
+	}
+
+	/* extract TOS (DiffServ + ECN) byte for AccECN */
+	if (iptos) {
+		if (((struct ip *)l3hdr)->ip_v == IPVERSION) {
+			const struct ip *ip = (const void *)l3hdr;
+			*iptos = ip->ip_tos;
+		}
+#ifdef INET6
+		else
+		if (((struct ip *)l3hdr)->ip_v == (IPV6_VERSION >> 4)) {
+			const struct ip6_hdr *ip6 = (const void *)l3hdr;
+			*iptos = (ntohl(ip6->ip6_flow) >> 20) & 0xff;
+		}
+#endif /* INET */
 	}
 
 	if (inc) {
@@ -1148,6 +1178,7 @@ do_pass_accept_req(struct sge_iq *iq, const struct rss_header *rss,
 	unsigned int opcode = G_CPL_OPCODE(be32toh(OPCODE_TID(cpl)));
 #endif
 	struct offload_settings settings;
+	uint8_t iptos;
 
 	KASSERT(opcode == CPL_PASS_ACCEPT_REQ,
 	    ("%s: unexpected opcode 0x%x", __func__, opcode));
@@ -1206,7 +1237,7 @@ found:
 	if (lctx->vnet != ifp->if_vnet)
 		REJECT_PASS_ACCEPT_REQ(true);
 
-	pass_accept_req_to_protohdrs(sc, m, &inc, &th);
+	pass_accept_req_to_protohdrs(sc, m, &inc, &th, &iptos);
 	if (inc.inc_flags & INC_ISIPV6) {
 
 		/* Don't offload if the ifcap isn't enabled */
@@ -1282,7 +1313,7 @@ found:
 	 * syncache_add.  Note that syncache_add releases the pcb lock.
 	 */
 	t4opt_to_tcpopt(&cpl->tcpopt, &to);
-	toe_syncache_add(&inc, &to, &th, inp, tod, synqe);
+	toe_syncache_add(&inc, &to, &th, inp, tod, synqe, iptos);
 
 	if (atomic_load_int(&synqe->ok_to_respond) > 0) {
 		uint64_t opt0;
@@ -1348,9 +1379,10 @@ synqe_to_protohdrs(struct adapter *sc, struct synq_entry *synqe,
     struct tcphdr *th, struct tcpopt *to)
 {
 	uint16_t tcp_opt = be16toh(cpl->tcp_opt);
+	uint8_t iptos;
 
 	/* start off with the original SYN */
-	pass_accept_req_to_protohdrs(sc, synqe->syn, inc, th);
+	pass_accept_req_to_protohdrs(sc, synqe->syn, inc, th, &iptos);
 
 	/* modify parts to make it look like the ACK to our SYN|ACK */
 	th->th_flags = TH_ACK;
@@ -1405,7 +1437,7 @@ do_pass_establish(struct sge_iq *iq, const struct rss_header *rss,
 
 	ifp = synqe->syn->m_pkthdr.rcvif;
 	vi = ifp->if_softc;
-	KASSERT(vi->pi->adapter == sc,
+	KASSERT(vi->adapter == sc,
 	    ("%s: vi %p, sc %p mismatch", __func__, vi, sc));
 
 	if (__predict_false(inp->inp_flags & INP_DROPPED)) {

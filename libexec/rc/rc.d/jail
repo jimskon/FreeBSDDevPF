@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/jail 341791 2018-12-10 14:09:15Z eugen $
+# $FreeBSD$
 #
 
 # PROVIDE: jail
@@ -168,7 +168,7 @@ parse_options()
 		if [ -z "${_exec_start}" ]; then
 			_exec_start="/bin/sh /etc/rc"
 			if [ -z "${_exec_stop}" ]; then
-				_exec_stop="/bin/sh /etc/rc.shutdown"
+				_exec_stop="/bin/sh /etc/rc.shutdown jail"
 			fi
 		fi
 	fi

@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "test.h"
-__FBSDID("$FreeBSD: releng/12.1/contrib/libarchive/libarchive/test/test_read_extract.c 348605 2019-06-04 10:20:56Z mm $");
+__FBSDID("$FreeBSD$");
 
 #define BUFF_SIZE 1000000
 #define FILE_BUFF_SIZE 100000
@@ -120,7 +120,7 @@ DEFINE_TEST(test_read_extract)
 	assertA(0 == archive_read_support_filter_all(a));
 	assertA(0 == archive_read_open_memory(a, buff, BUFF_SIZE));
 	/* Restore first entry with _EXTRACT_PERM. */
-	failure("Error reading first entry", i);
+	failure("Error reading first entry");
 	assertA(0 == archive_read_next_header(a, &ae));
 	assertA(0 == archive_read_extract(a, ae, ARCHIVE_EXTRACT_PERM));
 	/* Rest of entries get restored with no flags. */

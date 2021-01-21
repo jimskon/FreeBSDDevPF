@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)ptrace.h	8.2 (Berkeley) 1/4/94
- * $FreeBSD: releng/12.1/sys/sys/ptrace.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_PTRACE_H_
@@ -72,6 +72,7 @@
 #define	PT_SET_EVENT_MASK 26	/* set mask of optional events */
 
 #define	PT_GET_SC_ARGS	27	/* fetch syscall args */
+#define	PT_GET_SC_RET	28	/* fetch syscall results */
 
 #define PT_GETREGS      33	/* get general-purpose registers */
 #define PT_SETREGS      34	/* set general-purpose registers */
@@ -154,6 +155,12 @@ struct ptrace_lwpinfo32 {
 	u_int		pl_syscall_narg;
 };
 #endif
+
+/* Argument structure for PT_GET_SC_RET. */
+struct ptrace_sc_ret {
+	register_t	sr_retval[2];	/* Only valid if sr_error == 0. */
+	int		sr_error;
+};
 
 /* Argument structure for PT_VM_ENTRY. */
 struct ptrace_vm_entry {

@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)vnode_pager.h	8.1 (Berkeley) 6/11/93
- * $FreeBSD: releng/12.1/sys/vm/vnode_pager.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef	_VNODE_PAGER_
@@ -50,12 +50,8 @@ int vnode_pager_generic_putpages(struct vnode *vp, vm_page_t *m,
 int vnode_pager_local_getpages(struct vop_getpages_args *ap);
 int vnode_pager_local_getpages_async(struct vop_getpages_async_args *ap);
 int vnode_pager_putpages_ioflags(int pager_flags);
-void vnode_pager_release_writecount(vm_object_t object, vm_offset_t start,
-    vm_offset_t end);
 void vnode_pager_undirty_pages(vm_page_t *ma, int *rtvals, int written,
     off_t eof, int lpos);
-void vnode_pager_update_writecount(vm_object_t object, vm_offset_t start,
-    vm_offset_t end);
 
 #endif				/* _KERNEL */
 #endif				/* _VNODE_PAGER_ */

@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/include/cpufunc.h 336053 2018-07-06 23:49:17Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_CPUFUNC_H_

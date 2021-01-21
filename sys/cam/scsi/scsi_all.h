@@ -14,7 +14,7 @@
  *
  * Ported to run under 386BSD by Julian Elischer (julian@tfs.com) Sept 1992
  *
- * $FreeBSD: releng/12.1/sys/cam/scsi/scsi_all.h 351530 2019-08-27 03:55:38Z mav $
+ * $FreeBSD$
  */
 
 /*
@@ -1482,6 +1482,32 @@ struct scsi_maintenance_in
 	uint8_t  length[4];
 	uint8_t  reserved1;
 	uint8_t  control;
+};
+
+struct scsi_report_ident_info
+{
+	uint8_t  opcode;
+	uint8_t  service_action;
+	uint8_t  reserved[4];
+	uint8_t  length[4];
+	uint8_t  type;
+#define RII_LUII		0x00
+#define RII_LUTII		0x04
+#define RII_IIS			0xfc
+	uint8_t  control;
+};
+
+struct scsi_report_ident_info_data
+{
+	uint8_t  reserved[2];
+	uint8_t  length[2];
+};
+
+struct scsi_report_ident_info_descr
+{
+	uint8_t  type;
+	uint8_t  reserved;
+	uint8_t  length[2];
 };
 
 struct scsi_report_supported_opcodes

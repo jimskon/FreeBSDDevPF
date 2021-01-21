@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/aw_if_dwc.c 332310 2018-04-08 22:59:34Z gonzo $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -114,7 +114,7 @@ static int
 a20_if_dwc_mac_type(device_t dev)
 {
 
-	return (DWC_GMAC_ALT_DESC);
+	return (DWC_GMAC_NORMAL_DESC);
 }
 
 static int

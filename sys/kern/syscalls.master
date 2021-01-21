@@ -1,4 +1,4 @@
- $FreeBSD: releng/12.1/sys/kern/syscalls.master 345181 2019-03-15 14:16:16Z kib $
+ $FreeBSD$
 ;	from: @(#)syscalls.master	8.2 (Berkeley) 1/13/94
 ;
 ; System call name/number master file.
@@ -1164,7 +1164,7 @@
 ; XXX: see the comment for open
 499	AUE_OPENAT_RWTC	STD	{ int openat(int fd, _In_z_ char *path,  \
 				    int flag, mode_t mode); }
-500	AUE_READLINKAT	STD	{ int readlinkat(int fd, \
+500	AUE_READLINKAT	STD	{ ssize_t readlinkat(int fd, \
 				    _In_z_ char *path, \
 				    _Out_writes_bytes_(bufsize) char *buf, \
 				    size_t bufsize); }
@@ -1368,6 +1368,30 @@
 		    size_t bufsize \
 		); \
 	}
+568	AUE_NULL	UNIMPL	funlinkat
+569	AUE_NULL	UNIMPL	copy_file_range
+570	AUE_SYSCTL	STD { \
+		int __sysctlbyname( \
+		    _In_reads_(namelen) const char *name, \
+		    size_t namelen, \
+		    _Out_writes_bytes_opt_(*oldlenp) void *old, \
+		    _Inout_opt_ size_t *oldlenp, \
+		    _In_reads_bytes_opt_(newlen) void *new, \
+		    size_t newlen \
+		); \
+	}
+571	AUE_NULL	UNIMPL	shm_open2
+572	AUE_NULL	UNIMPL	shm_rename
+573	AUE_NULL	UNIMPL	sigfastblock
+574	AUE_NULL	UNIMPL	__realpathat
+575	AUE_CLOSERANGE	STD { \
+		int close_range( \
+		    u_int lowfd, \
+		    u_int highfd, \
+		    int flags \
+		); \
+	}
+
 
 ; Please copy any additions and changes to the following compatability tables:
 ; sys/compat/freebsd32/syscalls.master

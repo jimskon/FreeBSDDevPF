@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/w/w.c 351966 2019-09-06 21:53:04Z karels $");
+__FBSDID("$FreeBSD$");
 
 #ifndef lint
 static const char copyright[] =

@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/linux/radix-tree.h 334483 2018-06-01 11:42:09Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_LINUX_RADIX_TREE_H_
 #define	_LINUX_RADIX_TREE_H_
@@ -78,6 +78,7 @@ radix_tree_exception(void *arg)
 void	*radix_tree_lookup(struct radix_tree_root *, unsigned long);
 void	*radix_tree_delete(struct radix_tree_root *, unsigned long);
 int	radix_tree_insert(struct radix_tree_root *, unsigned long, void *);
+int	radix_tree_store(struct radix_tree_root *, unsigned long, void **);
 bool	radix_tree_iter_find(struct radix_tree_root *, struct radix_tree_iter *, void ***);
 void	radix_tree_iter_delete(struct radix_tree_root *, struct radix_tree_iter *, void **);
 

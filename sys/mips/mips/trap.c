@@ -41,7 +41,7 @@
  *	JNPR: trap.c,v 1.13.2.2 2007/08/29 10:03:49 girish
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/mips/mips/trap.c 344905 2019-03-08 00:20:37Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ddb.h"
 #include "opt_ktrace.h"
@@ -670,8 +670,9 @@ trap(struct trapframe *trapframe)
 			int rv;
 
 	kernel_fault:
-			va = trunc_page((vm_offset_t)trapframe->badvaddr);
-			rv = vm_fault(kernel_map, va, ftype, VM_FAULT_NORMAL);
+			va = (vm_offset_t)trapframe->badvaddr;
+			rv = vm_fault_trap(kernel_map, va, ftype,
+			    VM_FAULT_NORMAL, NULL, NULL);
 			if (rv == KERN_SUCCESS)
 				return (trapframe->pc);
 			if (td->td_pcb->pcb_onfault != NULL) {
@@ -706,7 +707,7 @@ dofault:
 
 			vm = p->p_vmspace;
 			map = &vm->vm_map;
-			va = trunc_page((vm_offset_t)trapframe->badvaddr);
+			va = (vm_offset_t)trapframe->badvaddr;
 			if (KERNLAND(trapframe->badvaddr)) {
 				/*
 				 * Don't allow user-mode faults in kernel
@@ -715,7 +716,8 @@ dofault:
 				goto nogo;
 			}
 
-			rv = vm_fault(map, va, ftype, VM_FAULT_NORMAL);
+			rv = vm_fault_trap(map, va, ftype, VM_FAULT_NORMAL,
+			    &i, &ucode);
 			/*
 			 * XXXDTRACE: add dtrace_doubletrap_func here?
 			 */
@@ -740,11 +742,6 @@ dofault:
 				}
 				goto err;
 			}
-			i = SIGSEGV;
-			if (rv == KERN_PROTECTION_FAILURE)
-				ucode = SEGV_ACCERR;
-			else
-				ucode = SEGV_MAPERR;
 			addr = trapframe->pc;
 
 			msg = "BAD_PAGE_FAULT";
@@ -788,10 +785,8 @@ dofault:
 
 	case T_SYSCALL + T_USER:
 		{
-			int error;
-
 			td->td_sa.trapframe = trapframe;
-			error = syscallenter(td);
+			syscallenter(td);
 
 #if !defined(SMP) && (defined(DDB) || defined(DEBUG))
 			if (trp == trapdebug)
@@ -807,7 +802,7 @@ dofault:
 			 * instead of being done here under a special check
 			 * for SYS_ptrace().
 			 */
-			syscallret(td, error);
+			syscallret(td);
 			return (trapframe->pc);
 		}
 
@@ -1409,7 +1404,7 @@ log_illegal_instruction(const char *msg, struct trapframe *frame)
 {
 	pt_entry_t *ptep;
 	pd_entry_t *pdep;
-	unsigned int *addr;
+	unsigned int *addr, instr[4];
 	struct thread *td;
 	struct proc *p;
 	register_t pc;
@@ -1436,17 +1431,16 @@ log_illegal_instruction(const char *msg, struct trapframe *frame)
 	 * Dump a few words around faulting instruction, if the addres is
 	 * valid.
 	 */
-	if (!(pc & 3) &&
-	    useracc((caddr_t)(intptr_t)pc, sizeof(int) * 4, VM_PROT_READ)) {
+	addr = (unsigned int *)(intptr_t)pc;
+	if ((pc & 3) == 0 && copyin(addr, instr, sizeof(instr)) == 0) {
 		/* dump page table entry for faulting instruction */
 		log(LOG_ERR, "Page table info for pc address %#jx: pde = %p, pte = %#jx\n",
 		    (intmax_t)pc, (void *)(intptr_t)*pdep, (uintmax_t)(ptep ? *ptep : 0));
 
-		addr = (unsigned int *)(intptr_t)pc;
 		log(LOG_ERR, "Dumping 4 words starting at pc address %p: \n",
 		    addr);
 		log(LOG_ERR, "%08x %08x %08x %08x\n",
-		    addr[0], addr[1], addr[2], addr[3]);
+		    instr[0], instr[1], instr[2], instr[3]);
 	} else {
 		log(LOG_ERR, "pc address %#jx is inaccessible, pde = %p, pte = %#jx\n",
 		    (intmax_t)pc, (void *)(intptr_t)*pdep, (uintmax_t)(ptep ? *ptep : 0));
@@ -1458,7 +1452,7 @@ log_bad_page_fault(char *msg, struct trapframe *frame, int trap_type)
 {
 	pt_entry_t *ptep;
 	pd_entry_t *pdep;
-	unsigned int *addr;
+	unsigned int *addr, instr[4];
 	struct thread *td;
 	struct proc *p;
 	char *read_or_write;
@@ -1506,18 +1500,18 @@ log_bad_page_fault(char *msg, struct trapframe *frame, int trap_type)
 	 * Dump a few words around faulting instruction, if the addres is
 	 * valid.
 	 */
-	if (!(pc & 3) && (pc != frame->badvaddr) &&
-	    (trap_type != T_BUS_ERR_IFETCH) &&
-	    useracc((caddr_t)(intptr_t)pc, sizeof(int) * 4, VM_PROT_READ)) {
+	addr = (unsigned int *)(intptr_t)pc;
+	if ((pc & 3) == 0 && pc != frame->badvaddr &&
+	    trap_type != T_BUS_ERR_IFETCH &&
+	    copyin((caddr_t)(intptr_t)pc, instr, sizeof(instr)) == 0) {
 		/* dump page table entry for faulting instruction */
 		log(LOG_ERR, "Page table info for pc address %#jx: pde = %p, pte = %#jx\n",
 		    (intmax_t)pc, (void *)(intptr_t)*pdep, (uintmax_t)(ptep ? *ptep : 0));
 
-		addr = (unsigned int *)(intptr_t)pc;
 		log(LOG_ERR, "Dumping 4 words starting at pc address %p: \n",
 		    addr);
 		log(LOG_ERR, "%08x %08x %08x %08x\n",
-		    addr[0], addr[1], addr[2], addr[3]);
+		    instr[0], instr[1], instr[2], instr[3]);
 	} else {
 		log(LOG_ERR, "pc address %#jx is inaccessible, pde = %p, pte = %#jx\n",
 		    (intmax_t)pc, (void *)(intptr_t)*pdep, (uintmax_t)(ptep ? *ptep : 0));

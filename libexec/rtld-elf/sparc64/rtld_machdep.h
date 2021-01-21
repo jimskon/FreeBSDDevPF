@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/libexec/rtld-elf/sparc64/rtld_machdep.h 326274 2017-11-27 15:25:02Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -58,9 +58,9 @@ Elf_Addr reloc_jmpslot(Elf_Addr *, Elf_Addr,
 
 #define round(size, align)				\
 	(((size) + (align) - 1) & ~((align) - 1))
-#define calculate_first_tls_offset(size, align) \
+#define calculate_first_tls_offset(size, align, offset) \
 	round(size, align)
-#define calculate_tls_offset(prev_offset, prev_size, size, align) \
+#define calculate_tls_offset(prev_offset, prev_size, size, align, offset) \
 	round((prev_offset) + (size), align)
 #define calculate_tls_end(off, size) 	((off) + (size))
 

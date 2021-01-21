@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-dwarfdump/Makefile 327952 2018-01-14 00:08:34Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-dwarfdump
 
-SRCDIR=		tools/llvm-dwarfdump
+SRCDIR=		llvm/tools/llvm-dwarfdump
 SRCS+=		Statistics.cpp
 SRCS+=		llvm-dwarfdump.cpp
 

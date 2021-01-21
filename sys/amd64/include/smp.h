@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/smp.h 332073 2018-04-05 14:39:51Z royger $
+ * $FreeBSD$
  *
  */
 
@@ -46,6 +46,7 @@ inthand_t
 	IDTVEC(invlrng_pcid),
 	IDTVEC(invlcache_pti),
 	IDTVEC(ipi_intr_bitmap_handler_pti),
+	IDTVEC(ipi_swi_pti),
 	IDTVEC(cpustop_pti),
 	IDTVEC(cpususpend_pti),
 	IDTVEC(rendezvous_pti);

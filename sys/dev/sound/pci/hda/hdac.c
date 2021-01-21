@@ -51,7 +51,7 @@
 
 #define HDA_DRV_TEST_REV	"20120126_0002"
 
-SND_DECLARE_FILE("$FreeBSD: releng/12.1/sys/dev/sound/pci/hda/hdac.c 345821 2019-04-03 01:30:38Z mav $");
+SND_DECLARE_FILE("$FreeBSD$");
 
 #define hdac_lock(sc)		snd_mtxlock((sc)->lock)
 #define hdac_unlock(sc)		snd_mtxunlock((sc)->lock)
@@ -66,7 +66,7 @@ static const struct {
 	const char *key;
 	uint32_t value;
 } hdac_quirks_tab[] = {
-	{ "64bit", HDAC_QUIRK_DMAPOS },
+	{ "64bit", HDAC_QUIRK_64BIT },
 	{ "dmapos", HDAC_QUIRK_DMAPOS },
 	{ "msi", HDAC_QUIRK_MSI },
 };
@@ -80,15 +80,19 @@ static const struct {
 	char		quirks_off;
 } hdac_devices[] = {
 	{ HDA_INTEL_OAK,     "Intel Oaktrail",	0, 0 },
+	{ HDA_INTEL_CMLKLP,  "Intel Comet Lake-LP",	0, 0 },
+	{ HDA_INTEL_CMLKH,   "Intel Comet Lake-H",	0, 0 },
 	{ HDA_INTEL_BAY,     "Intel BayTrail",	0, 0 },
 	{ HDA_INTEL_HSW1,    "Intel Haswell",	0, 0 },
 	{ HDA_INTEL_HSW2,    "Intel Haswell",	0, 0 },
 	{ HDA_INTEL_HSW3,    "Intel Haswell",	0, 0 },
 	{ HDA_INTEL_BDW1,    "Intel Broadwell",	0, 0 },
 	{ HDA_INTEL_BDW2,    "Intel Broadwell",	0, 0 },
+	{ HDA_INTEL_BXTNT,   "Intel Broxton-T",	0, 0 },
 	{ HDA_INTEL_CPT,     "Intel Cougar Point",	0, 0 },
 	{ HDA_INTEL_PATSBURG,"Intel Patsburg",  0, 0 },
 	{ HDA_INTEL_PPT1,    "Intel Panther Point",	0, 0 },
+	{ HDA_INTEL_BR,      "Intel Braswell",	0, 0 },
 	{ HDA_INTEL_LPT1,    "Intel Lynx Point",	0, 0 },
 	{ HDA_INTEL_LPT2,    "Intel Lynx Point",	0, 0 },
 	{ HDA_INTEL_WCPT,    "Intel Wildcat Point",	0, 0 },
@@ -102,15 +106,26 @@ static const struct {
 	{ HDA_INTEL_KBLK,    "Intel Kaby Lake",	0, 0 },
 	{ HDA_INTEL_KBLKH,   "Intel Kaby Lake-H",	0, 0 },
 	{ HDA_INTEL_CFLK,    "Intel Coffee Lake",	0, 0 },
+	{ HDA_INTEL_CMLKS,   "Intel Comet Lake-S",	0, 0 },
+	{ HDA_INTEL_CNLK,    "Intel Cannon Lake",	0, 0 },
+	{ HDA_INTEL_ICLK,    "Intel Ice Lake",		0, 0 },
+	{ HDA_INTEL_CMLKLP,  "Intel Comet Lake-LP",	0, 0 },
+	{ HDA_INTEL_CMLKH,   "Intel Comet Lake-H",	0, 0 },
+	{ HDA_INTEL_TGLK,    "Intel Tiger Lake",	0, 0 },
+	{ HDA_INTEL_GMLK,    "Intel Gemini Lake",	0, 0 },
 	{ HDA_INTEL_82801F,  "Intel 82801F",	0, 0 },
 	{ HDA_INTEL_63XXESB, "Intel 631x/632xESB",	0, 0 },
 	{ HDA_INTEL_82801G,  "Intel 82801G",	0, 0 },
 	{ HDA_INTEL_82801H,  "Intel 82801H",	0, 0 },
 	{ HDA_INTEL_82801I,  "Intel 82801I",	0, 0 },
+	{ HDA_INTEL_JLK,     "Intel Jasper Lake",	0, 0 },
 	{ HDA_INTEL_82801JI, "Intel 82801JI",	0, 0 },
 	{ HDA_INTEL_82801JD, "Intel 82801JD",	0, 0 },
 	{ HDA_INTEL_PCH,     "Intel Ibex Peak",	0, 0 },
 	{ HDA_INTEL_PCH2,    "Intel Ibex Peak",	0, 0 },
+	{ HDA_INTEL_ELLK,    "Intel Elkhart Lake",	0, 0 },
+	{ HDA_INTEL_JLK2,    "Intel Jasper Lake",	0, 0 },
+	{ HDA_INTEL_BXTNP,   "Intel Broxton-P",	0, 0 },
 	{ HDA_INTEL_SCH,     "Intel SCH",	0, 0 },
 	{ HDA_NVIDIA_MCP51,  "NVIDIA MCP51",	0, HDAC_QUIRK_MSI },
 	{ HDA_NVIDIA_MCP55,  "NVIDIA MCP55",	0, HDAC_QUIRK_MSI },
@@ -168,10 +183,14 @@ static const struct {
 	{ HDA_ATI_RV940,     "ATI RV940",	0, 0 },
 	{ HDA_ATI_RV970,     "ATI RV970",	0, 0 },
 	{ HDA_ATI_R1000,     "ATI R1000",	0, 0 },
+	{ HDA_AMD_X370,      "AMD X370",	0, 0 },
+	{ HDA_AMD_X570,      "AMD X570",	0, 0 },
+	{ HDA_AMD_STONEY,    "AMD Stoney",	0, 0 },
+	{ HDA_AMD_RAVEN,     "AMD Raven",	0, 0 },
 	{ HDA_AMD_HUDSON2,   "AMD Hudson-2",	0, 0 },
 	{ HDA_RDC_M3010,     "RDC M3010",	0, 0 },
 	{ HDA_VIA_VT82XX,    "VIA VT8251/8237A",0, 0 },
-	{ HDA_SIS_966,       "SiS 966",		0, 0 },
+	{ HDA_SIS_966,       "SiS 966/968",	0, 0 },
 	{ HDA_ULI_M5461,     "ULI M5461",	0, 0 },
 	/* Unknown */
 	{ HDA_INTEL_ALL,  "Intel",		0, 0 },
@@ -192,6 +211,7 @@ static const struct {
 } hdac_pcie_snoop[] = {
 	{  INTEL_VENDORID, 0x00, 0x00, 0x00 },
 	{    ATI_VENDORID, 0x42, 0xf8, 0x02 },
+	{    AMD_VENDORID, 0x42, 0xf8, 0x02 },
 	{ NVIDIA_VENDORID, 0x4e, 0xf0, 0x0f },
 };
 
@@ -276,10 +296,10 @@ hdac_config_fetch(struct hdac_softc *sc, uint32_t *on, uint32_t *off)
 			);
 			if (inv == 0) {
 				*on |= hdac_quirks_tab[k].value;
-				*on &= ~hdac_quirks_tab[k].value;
+				*off &= ~hdac_quirks_tab[k].value;
 			} else if (inv != 0) {
 				*off |= hdac_quirks_tab[k].value;
-				*off &= ~hdac_quirks_tab[k].value;
+				*on &= ~hdac_quirks_tab[k].value;
 			}
 			break;
 		}
@@ -287,34 +307,36 @@ hdac_config_fetch(struct hdac_softc *sc, uint32_t *on, uint32_t *off)
 	}
 }
 
-/****************************************************************************
- * void hdac_intr_handler(void *)
- *
- * Interrupt handler. Processes interrupts received from the hdac.
- ****************************************************************************/
 static void
-hdac_intr_handler(void *context)
+hdac_one_intr(struct hdac_softc *sc, uint32_t intsts)
 {
-	struct hdac_softc *sc;
 	device_t dev;
-	uint32_t intsts;
 	uint8_t rirbsts;
 	int i;
 
-	sc = (struct hdac_softc *)context;
-	hdac_lock(sc);
-
-	/* Do we have anything to do? */
-	intsts = HDAC_READ_4(&sc->mem, HDAC_INTSTS);
-	if ((intsts & HDAC_INTSTS_GIS) == 0) {
-		hdac_unlock(sc);
-		return;
-	}
-
 	/* Was this a controller interrupt? */
 	if (intsts & HDAC_INTSTS_CIS) {
-		rirbsts = HDAC_READ_1(&sc->mem, HDAC_RIRBSTS);
+		/*
+		 * Placeholder: if we ever enable any bits in HDAC_WAKEEN, then
+		 * we will need to check and clear HDAC_STATESTS.
+		 * That event is used to report codec status changes such as
+		 * a reset or a wake-up event.
+		 */
+		/*
+		 * Placeholder: if we ever enable HDAC_CORBCTL_CMEIE, then we
+		 * will need to check and clear HDAC_CORBSTS_CMEI in
+		 * HDAC_CORBSTS.
+		 * That event is used to report CORB memory errors.
+		 */
+		/*
+		 * Placeholder: if we ever enable HDAC_RIRBCTL_RIRBOIC, then we
+		 * will need to check and clear HDAC_RIRBSTS_RIRBOIS in
+		 * HDAC_RIRBSTS.
+		 * That event is used to report response FIFO overruns.
+		 */
+
 		/* Get as many responses that we can */
+		rirbsts = HDAC_READ_1(&sc->mem, HDAC_RIRBSTS);
 		while (rirbsts & HDAC_RIRBSTS_RINTFL) {
 			HDAC_WRITE_1(&sc->mem,
 			    HDAC_RIRBSTS, HDAC_RIRBSTS_RINTFL);
@@ -330,16 +352,45 @@ hdac_intr_handler(void *context)
 			if ((intsts & (1 << i)) == 0)
 				continue;
 			HDAC_WRITE_1(&sc->mem, (i << 5) + HDAC_SDSTS,
-			    HDAC_SDSTS_DESE | HDAC_SDSTS_FIFOE | HDAC_SDSTS_BCIS );
+			    HDAC_SDSTS_DESE | HDAC_SDSTS_FIFOE | HDAC_SDSTS_BCIS);
 			if ((dev = sc->streams[i].dev) != NULL) {
 				HDAC_STREAM_INTR(dev,
 				    sc->streams[i].dir, sc->streams[i].stream);
 			}
 		}
 	}
+}
 
-	HDAC_WRITE_4(&sc->mem, HDAC_INTSTS, intsts);
-	hdac_unlock(sc);
+/****************************************************************************
+ * void hdac_intr_handler(void *)
+ *
+ * Interrupt handler. Processes interrupts received from the hdac.
+ ****************************************************************************/
+static void
+hdac_intr_handler(void *context)
+{
+	struct hdac_softc *sc;
+	uint32_t intsts;
+
+	sc = (struct hdac_softc *)context;
+
+	/*
+	 * Loop until HDAC_INTSTS_GIS gets clear.
+	 * It is plausible that hardware interrupts a host only when GIS goes
+	 * from zero to one.  GIS is formed by OR-ing multiple hardware
+	 * statuses, so it's possible that a previously cleared status gets set
+	 * again while another status has not been cleared yet.  Thus, there
+	 * will be no new interrupt as GIS always stayed set.  If we don't
+	 * re-examine GIS then we can leave it set and never get an interrupt
+	 * again.
+	 */
+	intsts = HDAC_READ_4(&sc->mem, HDAC_INTSTS);
+	while ((intsts & HDAC_INTSTS_GIS) != 0) {
+		hdac_lock(sc);
+		hdac_one_intr(sc, intsts);
+		hdac_unlock(sc);
+		intsts = HDAC_READ_4(&sc->mem, HDAC_INTSTS);
+	}
 }
 
 static void
@@ -961,7 +1012,7 @@ hdac_unsolq_flush(struct hdac_softc *sc)
 }
 
 /****************************************************************************
- * uint32_t hdac_command_sendone_internal
+ * uint32_t hdac_send_command
  *
  * Wrapper function that sends only one command to a given codec
  ****************************************************************************/
@@ -995,7 +1046,8 @@ hdac_send_command(struct hdac_softc *sc, nid_t cad, uint32_t verb)
 	} while (sc->codecs[cad].pending != 0 && --timeout);
 
 	if (sc->codecs[cad].pending != 0) {
-		device_printf(sc->dev, "Command timeout on address %d\n", cad);
+		device_printf(sc->dev, "Command 0x%08x timeout on address %d\n",
+		    verb, cad);
 		sc->codecs[cad].pending = 0;
 	}
 
@@ -1407,21 +1459,11 @@ hdac_poll_reinit(struct hdac_softc *sc)
 		pollticks >>= 1;
 		if (pollticks > hz)
 			pollticks = hz;
-		if (pollticks < 1) {
-			HDA_BOOTVERBOSE(
-				device_printf(sc->dev,
-				    "poll interval < 1 tick !\n");
-			);
+		if (pollticks < 1)
 			pollticks = 1;
-		}
 		if (min > pollticks)
 			min = pollticks;
 	}
-	HDA_BOOTVERBOSE(
-		device_printf(sc->dev,
-		    "poll interval %d -> %d ticks\n",
-		    sc->poll_ival, min);
-	);
 	sc->poll_ival = min;
 	if (min == 1000000)
 		callout_stop(&sc->poll_callout);
@@ -1502,6 +1544,24 @@ hdac_attach2(void *arg)
 		device_printf(sc->dev, "Starting RIRB Engine...\n");
 	);
 	hdac_rirb_start(sc);
+
+	/*
+	 * Clear HDAC_WAKEEN as at present we have no use for SDI wake
+	 * (status change) interrupts.  The documentation says that we
+	 * should not make any assumptions about the state of this register
+	 * and set it explicitly.
+	 * NB: this needs to be done before the interrupt is enabled as
+	 * the handler does not expect this interrupt source.
+	 */
+	HDAC_WRITE_2(&sc->mem, HDAC_WAKEEN, 0);
+
+	/*
+	 * Read and clear post-reset SDI wake status.
+	 * Each set bit corresponds to a codec that came out of reset.
+	 */
+	statests = HDAC_READ_2(&sc->mem, HDAC_STATESTS);
+	HDAC_WRITE_2(&sc->mem, HDAC_STATESTS, statests);
+
 	HDA_BOOTHVERBOSE(
 		device_printf(sc->dev,
 		    "Enabling controller interrupt...\n");
@@ -1517,7 +1577,6 @@ hdac_attach2(void *arg)
 	HDA_BOOTHVERBOSE(
 		device_printf(sc->dev, "Scanning HDA codecs ...\n");
 	);
-	statests = HDAC_READ_2(&sc->mem, HDAC_STATESTS);
 	hdac_unlock(sc);
 	for (i = 0; i < HDAC_CODEC_MAX; i++) {
 		if (HDAC_STATESTS_SDIWAKE(statests, i)) {
@@ -1534,7 +1593,7 @@ hdac_attach2(void *arg)
 			if (vendorid == HDA_INVALID &&
 			    revisionid == HDA_INVALID) {
 				device_printf(sc->dev,
-				    "CODEC is not responding!\n");
+				    "CODEC at address %d not responding!\n", i);
 				continue;
 			}
 			sc->codecs[i].vendor_id =
@@ -1631,6 +1690,19 @@ hdac_resume(device_t dev)
 		device_printf(dev, "Starting RIRB Engine...\n");
 	);
 	hdac_rirb_start(sc);
+
+	/*
+	 * Clear HDAC_WAKEEN as at present we have no use for SDI wake
+	 * (status change) events.  The documentation says that we should
+	 * not make any assumptions about the state of this register and
+	 * set it explicitly.
+	 * Also, clear HDAC_STATESTS.
+	 * NB: this needs to be done before the interrupt is enabled as
+	 * the handler does not expect this interrupt source.
+	 */
+	HDAC_WRITE_2(&sc->mem, HDAC_WAKEEN, 0);
+	HDAC_WRITE_2(&sc->mem, HDAC_STATESTS, HDAC_STATESTS_SDIWAKE_MASK);
+
 	HDA_BOOTHVERBOSE(
 		device_printf(dev, "Enabling controller interrupt...\n");
 	);

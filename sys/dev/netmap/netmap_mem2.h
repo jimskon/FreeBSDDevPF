@@ -29,7 +29,7 @@
  */
 
 /*
- * $FreeBSD: releng/12.1/sys/dev/netmap/netmap_mem2.h 341815 2018-12-11 11:31:13Z vmaffione $
+ * $FreeBSD$
  *
  * (New) memory allocator for netmap
  */

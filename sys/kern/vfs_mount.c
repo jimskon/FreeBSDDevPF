@@ -37,7 +37,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/vfs_mount.c 353104 2019-10-04 14:10:56Z andrew $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/conf.h>
@@ -1438,9 +1438,7 @@ dounmount(struct mount *mp, int flags, struct thread *td)
 	MNT_IUNLOCK(mp);
 	cache_purgevfs(mp, false); /* remove cache entries for this file sys */
 	vfs_deallocate_syncvnode(mp);
-	if ((mp->mnt_flag & MNT_RDONLY) != 0 || (flags & MNT_FORCE) != 0 ||
-	    (error = VFS_SYNC(mp, MNT_WAIT)) == 0)
-		error = VFS_UNMOUNT(mp, flags);
+	error = VFS_UNMOUNT(mp, flags);
 	vn_finished_write(mp);
 	/*
 	 * If we failed to flush the dirty blocks for this mount point,
@@ -2045,6 +2043,13 @@ kernel_vmount(int flags, ...)
 	return (error);
 }
 
+/*
+ * Convert the old export args format into new export args.
+ *
+ * The old export args struct does not have security flavors.  Otherwise, the
+ * structs are identical.  The default security flavor 'sys' is applied by
+ * vfs_export when .ex_numsecflavors is 0.
+ */
 void
 vfs_oexport_conv(const struct oexport_args *oexp, struct export_args *exp)
 {

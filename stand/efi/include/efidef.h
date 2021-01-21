@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/efi/include/efidef.h 342993 2019-01-13 07:19:20Z tsoome $ */
+/* $FreeBSD$ */
 #ifndef _EFI_DEF_H
 #define _EFI_DEF_H
 
@@ -63,6 +63,7 @@ typedef VOID            *EFI_EVENT;
     #define IN
     #define OUT
     #define OPTIONAL
+    #define CONST const
 #endif
 
 
@@ -120,6 +121,19 @@ typedef struct {
 typedef struct {
     UINT8                   Addr[32];
 } EFI_MAC_ADDRESS;
+
+typedef struct {
+    UINT32 ReceivedQueueTimeoutValue;
+    UINT32 TransmitQueueTimeoutValue;
+    UINT16 ProtocolTypeFilter;
+    BOOLEAN EnableUnicastReceive;
+    BOOLEAN EnableMulticastReceive;
+    BOOLEAN EnableBroadcastReceive;
+    BOOLEAN EnablePromiscuousReceive;
+    BOOLEAN FlushQueuesOnReset;
+    BOOLEAN EnableReceiveTimestamps;
+    BOOLEAN DisableBackgroundPolling;
+} EFI_MANAGED_NETWORK_CONFIG_DATA;
 
 //
 // Memory

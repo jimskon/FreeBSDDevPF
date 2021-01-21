@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/isci/isci_controller.c 345530 2019-03-26 11:03:09Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include <dev/isci/isci.h>
 
@@ -477,9 +477,9 @@ int isci_controller_allocate_memory(struct ISCI_CONTROLLER *controller)
 	 *  will enable better performance than creating the DMA maps every time we get
 	 *  an I/O.
 	 */
-	status = bus_dma_tag_create(bus_get_dma_tag(device), 0x1, 0x0,
-	    BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR, NULL, NULL,
-	    isci_io_request_get_max_io_size(),
+	status = bus_dma_tag_create(bus_get_dma_tag(device), 0x1,
+	    ISCI_DMA_BOUNDARY, BUS_SPACE_MAXADDR, BUS_SPACE_MAXADDR,
+	    NULL, NULL, isci_io_request_get_max_io_size(),
 	    SCI_MAX_SCATTER_GATHER_ELEMENTS, max_segment_size, 0,
 	    busdma_lock_mutex, &controller->lock,
 	    &controller->buffer_dma_tag);

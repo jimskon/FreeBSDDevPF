@@ -23,7 +23,7 @@
 \ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 \ SUCH DAMAGE.
 \
-\ $FreeBSD: releng/12.1/stand/forth/loader.4th 332413 2018-04-11 18:02:13Z imp $
+\ $FreeBSD$
 
 only forth definitions
 
@@ -48,6 +48,12 @@ include /boot/delay.4th
 include /boot/check-password.4th
 
 only forth definitions
+
+: maybe-resetcons ( -- )
+  loader_color? if
+    ris
+  then
+;
 
 : bootmsg ( -- )
   loader_color? dup ( -- bool bool )

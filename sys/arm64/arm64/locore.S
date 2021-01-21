@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm64/arm64/locore.S 352403 2019-09-16 14:51:24Z andrew $
+ * $FreeBSD$
  */
 
 #include "assym.inc"
@@ -132,6 +132,7 @@ virtdone:
 	str	x1,  [x0]	/* modulep */
 	str	x26, [x0, 8]	/* kern_l1pt */
 	str	x29, [x0, 16]	/* kern_delta */
+	adr	x25, initstack
 	str	x25, [x0, 24]	/* kern_stack */
 	str	x24, [x0, 32]	/* kern_l0pt */
 
@@ -182,11 +183,10 @@ ENTRY(mpentry)
 	br	x15
 
 mp_virtdone:
-	ldr	x4, =secondary_stacks
-	mov	x5, #(PAGE_SIZE * KSTACK_PAGES)
-	mul	x5, x0, x5
-	add	sp, x4, x5
-
+	/* Start using the AP boot stack */
+	ldr	x4, =bootstack
+	ldr	x4, [x4]
+	mov	sp, x4
 	b	init_secondary
 END(mpentry)
 #endif

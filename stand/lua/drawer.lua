@@ -26,7 +26,7 @@
 -- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 -- SUCH DAMAGE.
 --
--- $FreeBSD: releng/12.1/stand/lua/drawer.lua 352349 2019-09-15 02:48:15Z kevans $
+-- $FreeBSD$
 --
 
 local color = require("color")
@@ -258,6 +258,11 @@ local function drawlogo()
 		else
 			logodef = getLogodef(drawer.default_bw_logodef)
 		end
+
+		-- Something has gone terribly wrong.
+		if logodef == nil then
+			logodef = getLogodef(drawer.default_fallback_logodef)
+		end
 	end
 
 	if logodef ~= nil and logodef.graphic == none then
@@ -355,6 +360,9 @@ shift = default_shift
 drawer.default_brand = 'fbsd'
 drawer.default_color_logodef = 'orb'
 drawer.default_bw_logodef = 'orbbw'
+-- For when things go terribly wrong; this def should be present here in the
+-- drawer module in case it's a filesystem issue.
+drawer.default_fallback_logodef = 'none'
 
 function drawer.addBrand(name, def)
 	branddefs[name] = def

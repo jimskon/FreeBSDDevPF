@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/dts/arm64/overlays/spigen-rpi3.dtso 343718 2019-02-03 15:34:09Z gonzo $ */
+/* $FreeBSD$ */
 
 /dts-v1/;
 /plugin/;

@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/in.c 346710 2019-04-25 21:28:28Z rgrimes $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_mpath.h"
 
@@ -998,6 +998,13 @@ in_ifdetach(struct ifnet *ifp)
 	in_pcbpurgeif0(&V_ulitecbinfo, ifp);
 	in_purgemaddrs(ifp);
 	IN_MULTI_UNLOCK();
+
+	/*
+	 * Make sure all multicast deletions invoking if_ioctl() are
+	 * completed before returning. Else we risk accessing a freed
+	 * ifnet structure pointer.
+	 */
+	inm_release_wait(NULL);
 }
 
 /*

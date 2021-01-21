@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet6/scope6.c 336676 2018-07-24 16:35:52Z andrew $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/malloc.h>
@@ -419,6 +419,10 @@ in6_setscope(struct in6_addr *in6, struct ifnet *ifp, u_int32_t *ret_id)
 			in6->s6_addr16[1] = htons(zoneid & 0xffff); /* XXX */
 		} else if (scope != IPV6_ADDR_SCOPE_GLOBAL) {
 			IF_AFDATA_RLOCK(ifp);
+			if (ifp->if_afdata[AF_INET6] == NULL) {
+				IF_AFDATA_RUNLOCK(ifp);
+				return (ENETDOWN);
+			}
 			sid = SID(ifp);
 			zoneid = sid->s6id_list[scope];
 			IF_AFDATA_RUNLOCK(ifp);

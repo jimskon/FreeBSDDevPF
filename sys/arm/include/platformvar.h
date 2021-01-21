@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/include/platformvar.h 350822 2019-08-09 11:20:05Z mmel $
+ * $FreeBSD$
  */
 
 #ifndef _MACHINE_PLATFORMVAR_H_

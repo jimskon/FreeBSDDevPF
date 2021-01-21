@@ -22,12 +22,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/netif 300931 2016-05-29 02:59:03Z ngie $
+# $FreeBSD$
 #
 
 # PROVIDE: netif
 # REQUIRE: FILESYSTEMS iovctl serial sppp sysctl
-# REQUIRE: hostid ipfilter ipfs
+# REQUIRE: hostid ipfs
 # KEYWORD: nojailvnet
 
 . /etc/rc.subr

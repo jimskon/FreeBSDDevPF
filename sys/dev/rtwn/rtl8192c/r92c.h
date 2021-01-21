@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_urtwnreg.h,v 1.3 2010/11/16 18:02:59 damien Exp $
- * $FreeBSD: releng/12.1/sys/dev/rtwn/rtl8192c/r92c.h 342830 2019-01-07 04:23:06Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTL8192C_H
@@ -34,7 +34,6 @@
 #define R92C_CAM_ENTRY_COUNT	32
 
 #define R92C_CALIB_THRESHOLD	2
-
 
 /*
  * Function declarations.

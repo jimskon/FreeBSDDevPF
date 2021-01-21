@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/asm/atomic-long.h 350085 2019-07-17 16:38:40Z johalun $
+ * $FreeBSD$
  */
 #ifndef	_ATOMIC_LONG_H_
 #define	_ATOMIC_LONG_H_
@@ -116,6 +116,20 @@ atomic_long_add_unless(atomic_long_t *v, long a, long u)
 			break;
 	}
 	return (c != u);
+}
+
+static inline long
+atomic_long_fetch_add_unless(atomic_long_t *v, long a, long u)
+{
+	long c = atomic_long_read(v);
+
+	for (;;) {
+		if (unlikely(c == u))
+			break;
+		if (likely(atomic_fcmpset_long(&v->counter, &c, c + a)))
+			break;
+	}
+	return (c);
 }
 
 static inline long

@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/systat/main.c 337680 2018-08-12 07:47:44Z cy $");
+__FBSDID("$FreeBSD$");
 
 #ifdef lint
 static const char sccsid[] = "@(#)main.c	8.1 (Berkeley) 6/6/93";
@@ -300,17 +300,8 @@ display(void)
 		    GETSYSCTL("kstat.zfs.misc.arcstats.dbuf_size", arc_stat);
 		    arc[6] += arc_stat;
 		    wmove(wload, 0, 0); wclrtoeol(wload);
-		    for (i = 0 ; i < nitems(arc); i++) {
-			if (arc[i] > 10llu * 1024 * 1024 * 1024 ) {
-				wprintw(wload, "%7lluG", arc[i] >> 30);
-			}
-			else if (arc[i] > 10 * 1024 * 1024 ) {
-				wprintw(wload, "%7lluM", arc[i] >> 20);
-			}
-			else {
-				wprintw(wload, "%7lluK", arc[i] >> 10);
-			}
-		    }
+		    for (i = 0 ; i < nitems(arc); i++)
+			sysputuint64(wload, 0, i*8+2, 6, arc[i], 0);
 	    }
 	}
 	(*curcmd->c_refresh)();

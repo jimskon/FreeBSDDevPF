@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/efi/loader/arch/arm64/Makefile.inc 325694 2017-11-10 23:54:58Z imp $
+# $FreeBSD$
 
 HAVE_FDT=yes
 

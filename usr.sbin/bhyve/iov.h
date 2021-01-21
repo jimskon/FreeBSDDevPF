@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/iov.h 342080 2018-12-14 14:44:38Z mav $
+ * $FreeBSD$
  */
 
 #ifndef _IOV_H_
@@ -38,7 +38,7 @@ void seek_iov(const struct iovec *iov1, int niov1, struct iovec *iov2,
 void truncate_iov(struct iovec *iov, int *niov, size_t length);
 size_t count_iov(const struct iovec *iov, int niov);
 ssize_t iov_to_buf(const struct iovec *iov, int niov, void **buf);
-ssize_t buf_to_iov(const void *buf, size_t buflen, struct iovec *iov, int niov,
-    size_t seek);
+ssize_t buf_to_iov(const void *buf, size_t buflen, const struct iovec *iov,
+    int niov, size_t seek);
 
 #endif	/* _IOV_H_ */

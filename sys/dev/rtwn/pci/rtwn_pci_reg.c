@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/pci/rtwn_pci_reg.c 343892 2019-02-08 04:32:41Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/lock.h>
@@ -49,7 +49,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/pci/rtwn_pci_reg.c 343892 2019-02-0
 
 #include <dev/rtwn/pci/rtwn_pci_var.h>
 #include <dev/rtwn/pci/rtwn_pci_reg.h>
-
 
 int
 rtwn_pci_write_1(struct rtwn_softc *sc, uint16_t addr, uint8_t val)

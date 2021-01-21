@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_bsd_addr.c 336511 2018-07-19 20:16:33Z tuexen $");
+__FBSDID("$FreeBSD$");
 
 #include <netinet/sctp_os.h>
 #include <netinet/sctp_var.h>
@@ -357,20 +357,9 @@ sctp_addr_change(struct ifaddr *ifa, int cmd)
 }
 
 void
-     sctp_add_or_del_interfaces(int (*pred) (struct ifnet *), int add){
-	struct ifnet *ifn;
-	struct ifaddr *ifa;
-
-	IFNET_RLOCK();
-	CK_STAILQ_FOREACH(ifn, &MODULE_GLOBAL(ifnet), if_link) {
-		if (!(*pred) (ifn)) {
-			continue;
-		}
-		CK_STAILQ_FOREACH(ifa, &ifn->if_addrhead, ifa_link) {
-			sctp_addr_change(ifa, add ? RTM_ADD : RTM_DELETE);
-		}
-	}
-	IFNET_RUNLOCK();
+sctp_addr_change_event_handler(void *arg __unused, struct ifaddr *ifa, int cmd)
+{
+	sctp_addr_change(ifa, cmd);
 }
 
 struct mbuf *

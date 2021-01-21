@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filio.h	8.1 (Berkeley) 3/28/94
- * $FreeBSD: releng/12.1/sys/sys/filio.h 350956 2019-08-12 20:21:36Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_FILIO_H_

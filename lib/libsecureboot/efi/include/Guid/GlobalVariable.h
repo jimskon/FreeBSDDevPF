@@ -15,7 +15,7 @@
 #define __GLOBAL_VARIABLE_GUID_H__
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/efi/include/Guid/GlobalVariable.h 344840 2019-03-06 06:39:42Z mw $");
+__FBSDID("$FreeBSD$");
 
 #ifndef EFI_GLOBAL_VARIABLE
 #define EFI_GLOBAL_VARIABLE \

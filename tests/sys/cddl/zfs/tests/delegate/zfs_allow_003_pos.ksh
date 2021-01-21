@@ -20,7 +20,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/zfs_allow_003_pos.ksh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2009 Sun Microsystems, Inc.  All rights reserved.
@@ -60,7 +60,6 @@
 verify_runnable "both"
 
 log_assert "Verify option '-l' only allow permission to the dataset itself."
-log_onexit restore_root_datasets
 
 childfs=$ROOT_TESTFS/childfs
 
@@ -72,10 +71,6 @@ userprop"
 else
 	typeset perms="snapshot,reservation,compression,checksum,\
 allow,userprop"
-fi
-
-if check_version "5.10" ; then
-	perms="${perms},send"
 fi
 
 log_must $ZFS create $childfs
@@ -112,7 +107,5 @@ for dtst in $DATASETS ; do
 			$STAFF1 $STAFF2 $OTHER1 $OTHER2
 	fi
 done
-
-log_must restore_root_datasets
 
 log_pass "Verify option '-l' only allow permission to the dataset itself pass."

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.sbin/nfsuserd/Makefile 346461 2019-04-21 00:05:12Z rmacklem $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

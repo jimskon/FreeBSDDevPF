@@ -1,5 +1,5 @@
 #
-# $FreeBSD: releng/12.1/sys/modules/hwpmc/Makefile 349315 2019-06-23 16:59:06Z ian $
+# $FreeBSD$
 #
 
 .PATH: ${SRCTOP}/sys/dev/hwpmc

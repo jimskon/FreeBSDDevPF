@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/usb/r12au_rx.c 307529 2016-10-17 20:38:24Z avos $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_wlan.h"
 
@@ -57,7 +57,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/dev/rtwn/rtl8812a/usb/r12au_rx.c 307529 2016
 #include <dev/rtwn/rtl8812a/r12a_rx_desc.h>
 
 #include <dev/rtwn/rtl8812a/usb/r12au.h>
-
 
 int
 r12au_classify_intr(struct rtwn_softc *sc, void *buf, int len)

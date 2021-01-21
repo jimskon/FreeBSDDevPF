@@ -28,7 +28,7 @@
  *
  * Avago Technologies (LSI) MPT-Fusion Host Adapter FreeBSD
  *
- * $FreeBSD: releng/12.1/sys/dev/mps/mps_sas.h 326255 2017-11-27 14:52:40Z pfg $
+ * $FreeBSD$
  */
 
 struct mps_fw_event_work;
@@ -62,6 +62,7 @@ struct mpssas_target {
 	SLIST_HEAD(, mpssas_lun) luns;
 	TAILQ_HEAD(, mps_command) commands;
 	struct mps_command *tm;
+	struct mps_command *pending_remove_tm;
 	TAILQ_HEAD(, mps_command) timedout_commands;
 	uint16_t        exp_dev_handle;
 	uint16_t        phy_num;

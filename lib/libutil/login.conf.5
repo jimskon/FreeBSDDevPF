@@ -17,9 +17,9 @@
 .\" 5. Modifications may be freely made to this file providing the above
 .\"    conditions are met.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libutil/login.conf.5 296723 2016-03-12 14:54:34Z kib $
+.\" $FreeBSD$
 .\"
-.Dd July 8, 2011
+.Dd May 10, 2020
 .Dt LOGIN.CONF 5
 .Os
 .Sh NAME
@@ -237,6 +237,7 @@ for details.
 .It "label	string		Default MAC policy; see"
 .Xr maclabel 7 .
 .It "lang	string		Set $LANG environment variable to the specified value."
+.It "mail	string		Set $MAIL environment variable to the specified value."
 .It "manpath	path		Default search path for manpages."
 .It "nocheckmail	bool	false	Display mail status at login."
 .It "nologin	file		If the file exists it will be displayed and"
@@ -470,3 +471,8 @@ lists.
 .Xr ttys 5 ,
 .Xr ftpd 8 ,
 .Xr pam_passwdqc 8
+.Sh HISTORY
+The file
+.Nm
+first appeared in
+.Fx 2.1.5 .

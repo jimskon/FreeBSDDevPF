@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/sys/fs/msdosfs/msdosfs_denode.c 352692 2019-09-25 17:16:21Z kevans $ */
+/* $FreeBSD$ */
 /*	$NetBSD: msdosfs_denode.c,v 1.28 1998/02/10 14:10:00 mrg Exp $	*/
 
 /*-

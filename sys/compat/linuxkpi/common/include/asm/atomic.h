@@ -26,7 +26,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/asm/atomic.h 337527 2018-08-09 09:39:32Z hselasky $
+ * $FreeBSD$
  */
 
 #ifndef _ASM_ATOMIC_H_
@@ -117,6 +117,20 @@ atomic_add_unless(atomic_t *v, int a, int u)
 			break;
 	}
 	return (c != u);
+}
+
+static inline int
+atomic_fetch_add_unless(atomic_t *v, int a, int u)
+{
+	int c = atomic_read(v);
+
+	for (;;) {
+		if (unlikely(c == u))
+			break;
+		if (likely(atomic_fcmpset_int(&v->counter, &c, c + a)))
+			break;
+	}
+	return (c);
 }
 
 static inline void

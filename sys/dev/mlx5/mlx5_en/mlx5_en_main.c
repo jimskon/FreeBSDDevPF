@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_en/mlx5_en_main.c 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include "en.h"
@@ -164,6 +164,10 @@ static const struct media mlx5e_mode_table[MLX5E_LINK_SPEEDS_NUMBER][MLX5E_LINK_
 	},
 	[MLX5E_50GBASE_KR2][MLX5E_KR2] = {
 		.subtype = IFM_50G_KR2,
+		.baudrate = IF_Gbps(50ULL),
+	},
+	[MLX5E_50GBASE_KR4][MLX5E_KR4] = {
+		.subtype = IFM_50G_KR4,
 		.baudrate = IF_Gbps(50ULL),
 	},
 };
@@ -312,6 +316,10 @@ static const struct media mlx5e_ext_mode_table[MLX5E_EXT_LINK_SPEEDS_NUMBER][MLX
 	},
 	[MLX5E_50GAUI_2_LAUI_2_50GBASE_CR2_KR2][MLX5E_KR2] = {
 		.subtype = IFM_50G_KR2,
+		.baudrate = IF_Gbps(50ULL),
+	},
+	[MLX5E_50GAUI_2_LAUI_2_50GBASE_CR2_KR2][MLX5E_KR4] = {
+		.subtype = IFM_50G_KR4,
 		.baudrate = IF_Gbps(50ULL),
 	},
 	[MLX5E_50GAUI_2_LAUI_2_50GBASE_CR2_KR2][MLX5E_SR2] = {
@@ -837,7 +845,6 @@ mlx5e_update_stats_locked(struct mlx5e_priv *priv)
 	struct mlx5_core_dev *mdev = priv->mdev;
 	struct mlx5e_vport_stats *s = &priv->stats.vport;
 	struct mlx5e_sq_stats *sq_stats;
-	struct buf_ring *sq_br;
 #if (__FreeBSD_version < 1100000)
 	struct ifnet *ifp = priv->ifp;
 #endif
@@ -887,13 +894,11 @@ mlx5e_update_stats_locked(struct mlx5e_priv *priv)
 
 		for (j = 0; j < priv->num_tc; j++) {
 			sq_stats = &pch->sq[j].stats;
-			sq_br = pch->sq[j].br;
 
 			tso_packets += sq_stats->tso_packets;
 			tso_bytes += sq_stats->tso_bytes;
 			tx_queue_dropped += sq_stats->dropped;
-			if (sq_br != NULL)
-				tx_queue_dropped += sq_br->br_drops;
+			tx_queue_dropped += sq_stats->enobuf;
 			tx_defragged += sq_stats->defragged;
 			tx_offload_none += sq_stats->csum_offload_none;
 		}
@@ -1030,6 +1035,15 @@ free_out:
 		mlx5_en_err(priv->ifp,
 		    "Updating FEC failed: %d\n", error);
 	}
+
+	/* Update temperature, if any */
+	if (priv->params_ethtool.hw_num_temp != 0) {
+		error = mlx5e_hw_temperature_update(priv);
+		if (error != 0 && error != EOPNOTSUPP) {
+			mlx5_en_err(priv->ifp,
+			    "Updating temperature failed: %d\n", error);
+		}
+	}
 }
 
 static void
@@ -1037,9 +1051,10 @@ mlx5e_update_stats_work(struct work_struct *work)
 {
 	struct mlx5e_priv *priv;
 
-	priv  = container_of(work, struct mlx5e_priv, update_stats_work);
+	priv = container_of(work, struct mlx5e_priv, update_stats_work);
 	PRIV_LOCK(priv);
-	if (test_bit(MLX5E_STATE_OPENED, &priv->state) != 0)
+	if (test_bit(MLX5E_STATE_OPENED, &priv->state) != 0 &&
+	    !test_bit(MLX5_INTERFACE_STATE_TEARDOWN, &priv->mdev->intf_state))
 		mlx5e_update_stats_locked(priv);
 	PRIV_UNLOCK(priv);
 }
@@ -3180,6 +3195,7 @@ mlx5e_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 {
 	struct mlx5e_priv *priv;
 	struct ifreq *ifr;
+	struct ifdownreason *ifdr;
 	struct ifi2creq i2c;
 	int error = 0;
 	int mask = 0;
@@ -3270,6 +3286,7 @@ mlx5e_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 
 			if (IFCAP_TSO4 & ifp->if_capenable &&
 			    !(IFCAP_TXCSUM & ifp->if_capenable)) {
+				mask &= ~IFCAP_TSO4;
 				ifp->if_capenable &= ~IFCAP_TSO4;
 				ifp->if_hwassist &= ~CSUM_IP_TSO;
 				mlx5_en_err(ifp,
@@ -3282,6 +3299,7 @@ mlx5e_ioctl(struct ifnet *ifp, u_long command, caddr_t data)
 
 			if (IFCAP_TSO6 & ifp->if_capenable &&
 			    !(IFCAP_TXCSUM_IPV6 & ifp->if_capenable)) {
+				mask &= ~IFCAP_TSO6;
 				ifp->if_capenable &= ~IFCAP_TSO6;
 				ifp->if_hwassist &= ~CSUM_IP6_TSO;
 				mlx5_en_err(ifp,
@@ -3440,6 +3458,16 @@ out:
 err_i2c:
 		PRIV_UNLOCK(priv);
 		break;
+	case SIOCGIFDOWNREASON:
+		ifdr = (struct ifdownreason *)data;
+		bzero(ifdr->ifdr_msg, sizeof(ifdr->ifdr_msg));
+		PRIV_LOCK(priv);
+		error = -mlx5_query_pddr_troubleshooting_info(priv->mdev, NULL,
+		    ifdr->ifdr_msg, sizeof(ifdr->ifdr_msg));
+		PRIV_UNLOCK(priv);
+		if (error == 0)
+			ifdr->ifdr_reason = IFDR_REASON_MSG;
+		break;
 
 	default:
 		error = ether_ioctl(ifp, command, data);
@@ -3470,15 +3498,19 @@ mlx5e_check_required_hca_cap(struct mlx5_core_dev *mdev)
 static u16
 mlx5e_get_max_inline_cap(struct mlx5_core_dev *mdev)
 {
-	uint32_t bf_buf_size = (1U << MLX5_CAP_GEN(mdev, log_bf_reg_size)) / 2U;
+	const int min_size = ETHER_VLAN_ENCAP_LEN + ETHER_HDR_LEN;
+	const int max_size = MLX5E_MAX_TX_INLINE;
+	const int bf_buf_size =
+	    ((1U << MLX5_CAP_GEN(mdev, log_bf_reg_size)) / 2U) -
+	    (sizeof(struct mlx5e_tx_wqe) - 2);
 
-	bf_buf_size -= sizeof(struct mlx5e_tx_wqe) - 2;
-
-	/* verify against driver hardware limit */
-	if (bf_buf_size > MLX5E_MAX_TX_INLINE)
-		bf_buf_size = MLX5E_MAX_TX_INLINE;
-
-	return (bf_buf_size);
+	/* verify against driver limits */
+	if (bf_buf_size > max_size)
+		return (max_size);
+	else if (bf_buf_size < min_size)
+		return (min_size);
+	else
+		return (bf_buf_size);
 }
 
 static int
@@ -4482,8 +4514,8 @@ mlx5e_show_version(void __unused *arg)
 }
 SYSINIT(mlx5e_show_version, SI_SUB_DRIVERS, SI_ORDER_ANY, mlx5e_show_version, NULL);
 
-module_init_order(mlx5e_init, SI_ORDER_THIRD);
-module_exit_order(mlx5e_cleanup, SI_ORDER_THIRD);
+module_init_order(mlx5e_init, SI_ORDER_SIXTH);
+module_exit_order(mlx5e_cleanup, SI_ORDER_SIXTH);
 
 #if (__FreeBSD_version >= 1100000)
 MODULE_DEPEND(mlx5en, linuxkpi, 1, 1, 1);

@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/clkng/aw_clk_frac.h 350629 2019-08-06 12:19:09Z manu $
+ * $FreeBSD$
  */
 
 #ifndef	__AW_CLK_FRAC_H__
@@ -37,6 +37,9 @@ struct aw_clk_frac_def {
 	struct aw_clk_factor	m;
 	struct aw_clk_factor	n;
 	struct aw_clk_frac	frac;
+
+	uint64_t		min_freq;
+	uint64_t		max_freq;
 
 	uint32_t		mux_shift;
 	uint32_t		mux_width;

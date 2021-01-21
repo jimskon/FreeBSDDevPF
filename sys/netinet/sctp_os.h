@@ -33,7 +33,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_os.h 326023 2017-11-20 19:43:44Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #ifndef _NETINET_SCTP_OS_H_
 #define _NETINET_SCTP_OS_H_
@@ -63,7 +63,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet/sctp_os.h 326023 2017-11-20 19:43:44
  */
 
 #include <netinet/sctp_os_bsd.h>
-
 
 
 

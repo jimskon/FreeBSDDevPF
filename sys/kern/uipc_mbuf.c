@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/uipc_mbuf.c 334054 2018-05-22 15:54:25Z fabient $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_param.h"
 #include "opt_mbuf_stress_test.h"
@@ -71,6 +71,13 @@ SDT_PROBE_DEFINE3_XLATE(sdt, , , m__get,
 SDT_PROBE_DEFINE4_XLATE(sdt, , , m__getcl,
     "uint32_t", "uint32_t",
     "uint16_t", "uint16_t",
+    "uint32_t", "uint32_t",
+    "struct mbuf *", "mbufinfo_t *");
+
+SDT_PROBE_DEFINE5_XLATE(sdt, , , m__getjcl,
+    "uint32_t", "uint32_t",
+    "uint16_t", "uint16_t",
+    "uint32_t", "uint32_t",
     "uint32_t", "uint32_t",
     "struct mbuf *", "mbufinfo_t *");
 

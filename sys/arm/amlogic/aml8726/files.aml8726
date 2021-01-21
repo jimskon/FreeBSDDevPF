@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.1/sys/arm/amlogic/aml8726/files.aml8726 350603 2019-08-05 18:13:13Z manu $
+#$FreeBSD$
 
 arm/amlogic/aml8726/aml8726_l2cache.c		standard
 

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/cam/ata/ata_all.c 350735 2019-08-08 02:29:42Z mav $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 

@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/cmx/cmx_pccard.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -95,7 +95,7 @@ cmx_pccard_attach(device_t dev)
 		return rv;
 	}
 
-	device_printf(dev, "attached\n");
+	gone_in_dev(dev, 13, "pccard removed");
 	return 0;
 }
 

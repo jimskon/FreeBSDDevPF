@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libcasper/services/cap_sysctl/cap_sysctl.3 331125 2018-03-18 16:06:35Z oshogbo $
+.\" $FreeBSD$
 .\"
-.Dd March 18, 2018
+.Dd May 5, 2020
 .Dt CAP_SYSCTL 3
 .Os
 .Sh NAME
@@ -132,6 +132,11 @@ cap_close(capsysctl);
 .Xr sysctlbyname 3 ,
 .Xr capsicum 4 ,
 .Xr nv 9
+.Sh HISTORY
+The
+.Nm cap_sysctl
+service first appeared in
+.Fx 10.3 .
 .Sh AUTHORS
 The
 .Nm cap_sysctl

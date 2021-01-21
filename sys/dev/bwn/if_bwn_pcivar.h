@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  * 
- * $FreeBSD: releng/12.1/sys/dev/bwn/if_bwn_pcivar.h 328183 2018-01-19 22:43:08Z landonf $
+ * $FreeBSD$
  */
 
 #ifndef _IF_BWN_PCIVAR_H_
@@ -90,7 +90,6 @@ struct bwn_pci_device {
 	const char	*desc;
 	uint32_t	quirks;
 };
-
 
 #define	BWN_BCM_DEV(_devid, _desc, _quirks)		\
     { PCI_VENDOR_BROADCOM, PCI_DEVID_ ## _devid,	\

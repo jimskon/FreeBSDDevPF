@@ -1,10 +1,10 @@
-# $FreeBSD: releng/12.1/secure/lib/libcrypto/Makefile.inc 352192 2019-09-10 21:13:37Z jkim $
+# $FreeBSD$
 
 .include <bsd.own.mk>
 
 # OpenSSL version used for manual page generation
-OPENSSL_VER=	1.1.1d
-OPENSSL_DATE=	2019-09-10
+OPENSSL_VER=	1.1.1h
+OPENSSL_DATE=	2020-09-22
 
 LCRYPTO_SRC=	${SRCTOP}/crypto/openssl
 LCRYPTO_DOC=	${LCRYPTO_SRC}/doc

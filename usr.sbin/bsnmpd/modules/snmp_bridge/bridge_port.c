@@ -28,7 +28,7 @@
  * Bridge MIB implementation for SNMPd.
  * Bridge ports.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bsnmpd/modules/snmp_bridge/bridge_port.c 335885 2018-07-03 08:44:40Z harti $
+ * $FreeBSD$
  */
 
 #include <sys/queue.h>
@@ -1232,9 +1232,9 @@ op_begemot_stp_port(struct snmp_context *ctx, struct snmp_value *val,
 
 		    case LEAF_begemotBridgeStpPortEnable:
 			if (val->v.integer !=
-			    begemotBridgeStpPortEnable_enabled ||
+			    (int32_t)begemotBridgeStpPortEnable_enabled ||
 			    val->v.integer !=
-			    begemotBridgeStpPortEnable_disabled)
+			    (int32_t)begemotBridgeStpPortEnable_disabled)
 			    return (SNMP_ERR_WRONG_VALUE);
 
 			ctx->scratch->int1 = bp->enable;

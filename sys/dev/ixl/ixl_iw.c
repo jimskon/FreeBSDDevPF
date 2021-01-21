@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
-/*$FreeBSD: releng/12.1/sys/dev/ixl/ixl_iw.c 343864 2019-02-07 10:30:11Z marius $*/
+/*$FreeBSD$*/
 
 #include "ixl.h"
 #include "ixl_pf.h"

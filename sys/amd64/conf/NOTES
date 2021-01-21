@@ -4,7 +4,7 @@
 # This file contains machine dependent kernel configuration notes.  For
 # machine independent notes, look in /sys/conf/NOTES.
 #
-# $FreeBSD: releng/12.1/sys/amd64/conf/NOTES 351536 2019-08-27 04:13:22Z mav $
+# $FreeBSD$
 #
 
 #
@@ -306,6 +306,8 @@ options 	DRM_DEBUG	# Include debug printfs (slow)
 # ed:   Western Digital and SMC 80xx; Novell NE1000 and NE2000; 3Com 3C503
 #       HP PC Lan+, various PC Card devices
 #       (requires miibus)
+# ice:	Intel 800 Series Physical Function
+#	Requires the ice_ddp module for full functionality
 # ipw:	Intel PRO/Wireless 2100 IEEE 802.11 adapter
 #	Requires the ipw firmware module
 # iwi:	Intel PRO/Wireless 2200BG/2225BG/2915ABG IEEE 802.11 adapters
@@ -332,6 +334,8 @@ device		iwi		# Intel 2200BG/2225BG/2915ABG wireless NICs.
 device		iwn		# Intel 4965/1000/5000/6000 wireless NICs.
 device		ixl		# Intel 700 Series Physical Function
 device		iavf		# Intel Adaptive Virtual Function
+device		ice		# Intel 800 Series Physical Function
+device		ice_ddp		# Intel 800 Series DDP Package
 device  	mthca		# Mellanox HCA InfiniBand
 device  	mlx4		# Shared code module between IB and Ethernet
 device  	mlx4ib		# Mellanox ConnectX HCA InfiniBand
@@ -572,11 +576,13 @@ device		ioat		# Intel I/OAT DMA engine
 # amdsbwd: AMD SB7xx watchdog timer
 # viawd: VIA south bridge watchdog timer
 # wbwd: Winbond watchdog timer
+# itwd: ITE Super I/O watchdog timer
 #
 device		ichwd
 device		amdsbwd
 device		viawd
 device		wbwd
+device		itwd
 
 #
 # Temperature sensors:
@@ -592,6 +598,11 @@ device		amdtemp
 # microcode update feature.
 #
 device		cpuctl
+
+#
+# SuperIO driver.
+#
+device		superio
 
 #
 # System Management Bus (SMB)

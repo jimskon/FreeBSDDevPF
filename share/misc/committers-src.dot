@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/share/misc/committers-src.dot 348928 2019-06-11 15:36:36Z vmaffione $
+# $FreeBSD$
 
 # This file is meant to list all FreeBSD src committers and describe the
 # mentor-mentee relationships between them.
@@ -171,6 +171,7 @@ fabient [label="Fabien Thomas\nfabient@FreeBSD.org\n2009/03/16"]
 fanf [label="Tony Finch\nfanf@FreeBSD.org\n2002/05/05"]
 fjoe [label="Max Khon\nfjoe@FreeBSD.org\n2001/08/06"]
 flz [label="Florent Thoumie\nflz@FreeBSD.org\n2006/03/30"]
+freqlabs [label="Ryan Moeller\nfreqlabs@FreeBSD.org\n2020/02/10"]
 fsu [label="Fedor Uporov\nfsu@FreeBSD.org\n2017/08/28"]
 gabor [label="Gabor Kovesdan\ngabor@FreeBSD.org\n2010/02/02"]
 gad [label="Garance A. Drosehn\ngad@FreeBSD.org\n2000/10/27"]
@@ -303,6 +304,7 @@ royger [label="Roger Pau Monne\nroyger@FreeBSD.org\n2013/11/26"]
 rpaulo [label="Rui Paulo\nrpaulo@FreeBSD.org\n2007/09/25"]
 rpokala [label="Ravi Pokala\nrpokala@FreeBSD.org\n2015/11/19"]
 rrs [label="Randall R Stewart\nrrs@FreeBSD.org\n2007/02/08"]
+rscheff [label="Richard Scheffenegger\nrscheff@FreeBSD.org\n2020/04/06"]
 rse [label="Ralf S. Engelschall\nrse@FreeBSD.org\n1997/07/31"]
 rstone [label="Ryan Stone\nrstone@FreeBSD.org\n2010/04/19"]
 ru [label="Ruslan Ermilov\nru@FreeBSD.org\n1999/05/27"]
@@ -697,6 +699,7 @@ markm -> sheldonh
 
 mav -> ae
 mav -> eugen
+mav -> freqlabs
 mav -> ram
 
 mdf -> gleb
@@ -709,6 +712,8 @@ mlaier -> benjsc
 mlaier -> dhartmei
 mlaier -> thompsa
 mlaier -> eri
+
+mmacy -> freqlabs
 
 msmith -> cokane
 msmith -> jasone
@@ -762,6 +767,7 @@ pjd -> smh
 pjd -> trociny
 
 rgrimes -> markm
+rgrimes -> rscheff
 
 rmacklem -> jwd
 
@@ -851,6 +857,8 @@ thompsa -> eri
 
 trasz -> jh
 trasz -> mjg
+
+tuexen -> rscheff
 
 ume -> jinmei
 ume -> suz

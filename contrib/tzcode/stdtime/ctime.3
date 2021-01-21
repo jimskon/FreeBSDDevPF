@@ -28,7 +28,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"     From: @(#)ctime.3	8.1 (Berkeley) 6/4/93
-.\" $FreeBSD: releng/12.1/contrib/tzcode/stdtime/ctime.3 314436 2017-02-28 23:42:47Z imp $
+.\" $FreeBSD$
 .\"
 .Dd January 2, 1999
 .Dt CTIME 3
@@ -335,6 +335,33 @@ the time package contributed to Berkeley by
 .An Arthur Olson
 and which appeared in
 .Bx 4.3 .
+.Pp
+The functions
+.Fn asctime ,
+.Fn gmtime ,
+and
+.Fn localtime
+first appeared in
+.At v5 ,
+.Fn difftime
+and
+.Fn mktime
+in
+.Bx 4.3 Reno ,
+and
+.Fn timegm
+and
+.Fn timelocal
+in SunOS 4.0.
+.Pp
+The functions
+.Fn asctime_r ,
+.Fn ctime_r ,
+.Fn gmtime_r ,
+and
+.Fn localtime_r
+have been available since
+.Fx 8.0 .
 .Sh BUGS
 Except for
 .Fn difftime ,

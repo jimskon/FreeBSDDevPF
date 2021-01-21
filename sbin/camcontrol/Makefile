@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sbin/camcontrol/Makefile 335101 2018-06-14 01:15:19Z imp $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/contrib/ipfilter/man/ipf.5 319962 2017-06-15 00:59:02Z cy $
+.\" $FreeBSD$
 .TH IPF 5
 .SH NAME
 ipf, ipf.conf \- IPFilter firewall rules file format
@@ -1191,7 +1191,7 @@ pass in log or-block first quick proto tcp from any \\
 .fi
 .PP
 By default, IPFilter will only log the header portion of a packet received
-on the network. A portion of the body of a packet, upto 128 bytes, can also
+on the network. Up to 128 bytes of a packet's body can also
 be logged with the body keyword. ipmon(8) will display the contents of the
 portion of the body logged in hex.
 .PP

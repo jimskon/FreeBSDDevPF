@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $FreeBSD: releng/12.1/libexec/rc/rc.d/accounting 350878 2019-08-11 23:01:31Z ian $
+# $FreeBSD$
 #
 
 # PROVIDE: accounting

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/stand/lua/Makefile 338086 2018-08-20 02:40:10Z kevans $
+# $FreeBSD$
 
 .include <bsd.init.mk>
 
@@ -12,7 +12,7 @@ MAN=	cli.lua.8 \
 	password.lua.8 \
 	screen.lua.8
 
-FILESDIR=	/boot/lua
+FILESDIR=	${LUAPATH}
 FILES=	cli.lua \
 	color.lua \
 	config.lua \

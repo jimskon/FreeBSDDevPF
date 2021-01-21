@@ -36,7 +36,7 @@
  * 
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: releng/12.1/sys/netgraph/ng_l2tp.c 308748 2016-11-17 14:03:44Z bz $
+ * $FreeBSD$
  */
 
 /*
@@ -1454,13 +1454,16 @@ ng_l2tp_seq_rack_timeout(node_p node, hook_p hook, void *arg1, int arg2)
 	struct mbuf *m;
 	u_int delay;
 
-	/* Make sure callout is still active before doing anything */
-	if (callout_pending(&seq->rack_timer) ||
-	    (!callout_active(&seq->rack_timer)))
-		return;
-
 	/* Sanity check */
 	L2TP_SEQ_CHECK(seq);
+
+	mtx_lock(&seq->mtx);
+	/* Make sure callout is still active before doing anything */
+	if (callout_pending(&seq->rack_timer) ||
+	    !callout_active(&seq->rack_timer)) {
+		mtx_unlock(&seq->mtx);
+		return;
+	}
 
 	priv->stats.xmitRetransmits++;
 
@@ -1482,7 +1485,9 @@ ng_l2tp_seq_rack_timeout(node_p node, hook_p hook, void *arg1, int arg2)
 	seq->acks = 0;
 
 	/* Retransmit oldest unack'd packet */
-	if ((m = L2TP_COPY_MBUF(seq->xwin[0], M_NOWAIT)) == NULL)
+	m = L2TP_COPY_MBUF(seq->xwin[0], M_NOWAIT);
+	mtx_unlock(&seq->mtx);
+	if (m == NULL)
 		priv->stats.memoryFailures++;
 	else
 		ng_l2tp_xmit_ctrl(priv, m, seq->ns++);

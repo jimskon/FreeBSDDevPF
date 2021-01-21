@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)types.h	8.6 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.1/sys/sys/types.h 350956 2019-08-12 20:21:36Z asomers $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TYPES_H_
@@ -302,7 +302,7 @@ typedef	_Bool	bool;
 
 #define offsetof(type, field) __offsetof(type, field)
 
-#endif /* !_KERNEL */
+#endif /* _KERNEL */
 
 /*
  * The following are all things that really shouldn't exist in this header,

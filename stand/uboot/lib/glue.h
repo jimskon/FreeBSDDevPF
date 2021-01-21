@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/stand/uboot/lib/glue.h 328446 2018-01-26 21:50:59Z imp $
+ * $FreeBSD$
  */
 
 /*
@@ -56,7 +56,7 @@
 #endif
 
 int syscall(int, int *, ...);
-void *syscall_ptr;
+extern void *syscall_ptr;
 
 int api_parse_cmdline_sig(int argc, char **argv, struct api_signature **sig);
 int api_search_sig(struct api_signature **sig);

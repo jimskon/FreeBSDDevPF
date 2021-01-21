@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * $OpenBSD: if_rsureg.h,v 1.3 2013/04/15 09:23:01 mglocker Exp $
- * $FreeBSD: releng/12.1/sys/dev/usb/wlan/if_rsureg.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 /* USB Requests. */

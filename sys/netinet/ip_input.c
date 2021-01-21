@@ -32,7 +32,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/ip_input.c 346710 2019-04-25 21:28:28Z rgrimes $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_bootp.h"
 #include "opt_ipstealth.h"

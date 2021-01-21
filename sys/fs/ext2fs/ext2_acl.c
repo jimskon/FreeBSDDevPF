@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/ext2fs/ext2_acl.c 326474 2017-12-02 17:22:55Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/param.h>
@@ -234,8 +234,6 @@ ext2_getacl_posix1e(struct vop_getacl_args *ap)
 
 	len = sizeof(*ap->a_aclp) + sizeof(struct ext2_acl_header);
 	value = malloc(len, M_ACL, M_WAITOK);
-	if (!value)
-		return (ENOMEM);
 
 	error = vn_extattr_get(ap->a_vp, IO_NODELOCKED, attrnamespace, attrname,
 	    &len, value, ap->a_td);

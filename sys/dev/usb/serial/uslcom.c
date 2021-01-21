@@ -1,7 +1,7 @@
 /*	$OpenBSD: uslcom.c,v 1.17 2007/11/24 10:52:12 jsg Exp $	*/
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/serial/uslcom.c 332963 2018-04-24 19:11:05Z manu $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Copyright (c) 2006 Jonathan Gray <jsg@openbsd.org>
@@ -313,6 +313,7 @@ static const STRUCT_USB_HOST_ID uslcom_devs[] = {
     USLCOM_DEV(SILABS, HAMLINKUSB),
     USLCOM_DEV(SILABS, HELICOM),
     USLCOM_DEV(SILABS, HUBZ),
+    USLCOM_DEV(SILABS, BV_AV2010_10),
     USLCOM_DEV(SILABS, IMS_USB_RS422),
     USLCOM_DEV(SILABS, INFINITY_MIC),
     USLCOM_DEV(SILABS, INGENI_ZIGBEE),
@@ -624,7 +625,11 @@ uslcom_pre_param(struct ucom_softc *ucom, struct termios *t)
 	case USLCOM_PARTNUM_CP2102:
 	case USLCOM_PARTNUM_CP2103:
 	default:
-		maxspeed = 921600;
+		/*
+		 * Datasheet for cp2102 says 921600 max.  Testing shows that
+		 * 1228800 and 1843200 work fine.
+		 */
+		maxspeed = 1843200;
 		break;
 	}
 	if (t->c_ospeed <= 0 || t->c_ospeed > maxspeed)

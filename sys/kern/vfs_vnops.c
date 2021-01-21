@@ -43,7 +43,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/vfs_vnops.c 351733 2019-09-03 06:40:17Z kib $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_hwpmc_hooks.h"
 
@@ -86,7 +86,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/kern/vfs_vnops.c 351733 2019-09-03 06:40:17Z
 #include <vm/vm_map.h>
 #include <vm/vm_object.h>
 #include <vm/vm_page.h>
-#include <vm/vnode_pager.h>
+#include <vm/vm_pager.h>
 
 #ifdef HWPMC_HOOKS
 #include <sys/pmckern.h>
@@ -131,6 +131,11 @@ SYSCTL_INT(_debug, OID_AUTO, vn_io_fault_prefault, CTLFLAG_RW,
 static u_long vn_io_faults_cnt;
 SYSCTL_ULONG(_debug, OID_AUTO, vn_io_faults, CTLFLAG_RD,
     &vn_io_faults_cnt, 0, "Count of vn_io_fault lock avoidance triggers");
+
+static int vfs_allow_read_dir = 0;
+SYSCTL_INT(_security_bsd, OID_AUTO, allow_read_dir, CTLFLAG_RW,
+    &vfs_allow_read_dir, 0,
+    "Enable read(2) of directory for filesystems that support it");
 
 /*
  * Returns true if vn_io_fault mode of handling the i/o request should
@@ -216,7 +221,8 @@ restart:
 			ndp->ni_cnd.cn_flags |= AUDITVNODE1;
 		if (vn_open_flags & VN_OPEN_NOCAPCHECK)
 			ndp->ni_cnd.cn_flags |= NOCAPCHECK;
-		bwillwrite();
+		if ((vn_open_flags & VN_OPEN_INVFS) == 0)
+			bwillwrite();
 		if ((error = namei(ndp)) != 0)
 			return (error);
 		if (ndp->ni_vp == NULL) {
@@ -259,6 +265,10 @@ restart:
 			vp = ndp->ni_vp;
 			if (fmode & O_EXCL) {
 				error = EEXIST;
+				goto bad;
+			}
+			if (vp->v_type == VDIR) {
+				error = EISDIR;
 				goto bad;
 			}
 			fmode &= ~O_CREAT;
@@ -1148,6 +1158,20 @@ vn_io_fault(struct file *fp, struct uio *uio, struct ucred *active_cred,
 
 	doio = uio->uio_rw == UIO_READ ? vn_read : vn_write;
 	vp = fp->f_vnode;
+
+	/*
+	 * The ability to read(2) on a directory has historically been
+	 * allowed for all users, but this can and has been the source of
+	 * at least one security issue in the past.  As such, it is now hidden
+	 * away behind a sysctl for those that actually need it to use it.
+	 */
+	if (vp->v_type == VDIR) {
+		KASSERT(uio->uio_rw == UIO_READ,
+		    ("illegal write attempted on a directory"));
+		if (!vfs_allow_read_dir)
+			return (EISDIR);
+	}
+
 	foffset_lock_uio(fp, uio, flags);
 	if (do_vn_io_fault(vp, uio)) {
 		args.kind = VN_IO_FAULT_FOP;
@@ -1442,7 +1466,7 @@ vn_stat(struct vnode *vp, struct stat *sb, struct ucred *active_cred,
 	 *   "a filesystem-specific preferred I/O block size for this 
 	 *    object.  In some filesystem types, this may vary from file
 	 *    to file"
-	 * Use miminum/default of PAGE_SIZE (e.g. for VCHR).
+	 * Use minimum/default of PAGE_SIZE (e.g. for VCHR).
 	 */
 
 	sb->st_blksize = max(PAGE_SIZE, vap->va_blocksize);
@@ -2479,7 +2503,7 @@ vn_mmap(struct file *fp, vm_map_t map, vm_offset_t *addr, vm_size_t size,
 		 * writecount, then undo that now.
 		 */
 		if (writecounted)
-			vnode_pager_release_writecount(object, 0, size);
+			vm_pager_release_writecount(object, 0, size);
 		vm_object_deallocate(object);
 	}
 #ifdef HWPMC_HOOKS

@@ -19,7 +19,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sbin/pfctl/pfctl_altq.c 344026 2019-02-11 23:13:38Z pkelsey $");
+__FBSDID("$FreeBSD$");
 
 #define PFIOC_USE_LATEST
 

@@ -46,7 +46,7 @@ static const char sccsid[] = "from: @(#)quota.c	8.1 (Berkeley) 6/6/93";
  * Disk quota reporting program.
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.bin/quota/quota.c 336017 2018-07-05 22:56:13Z sef $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/types.h>
@@ -606,7 +606,7 @@ getnfsquota(struct statfs *fst, struct quotause *qup, long id, int quotatype)
 	call_stat = callaurpc(host, RQUOTAPROG, EXT_RQUOTAVERS,
 			      RQUOTAPROC_GETQUOTA, (xdrproc_t)xdr_ext_getquota_args, (char *)&gq_args,
 			      (xdrproc_t)xdr_getquota_rslt, (char *)&gq_rslt);
-	if (call_stat == RPC_PROGVERSMISMATCH) {
+	if (call_stat == RPC_PROGVERSMISMATCH || call_stat == RPC_PROGNOTREGISTERED) {
 		if (quotatype == USRQUOTA) {
 			old_gq_args.gqa_pathp = cp + 1;
 			old_gq_args.gqa_uid = id;

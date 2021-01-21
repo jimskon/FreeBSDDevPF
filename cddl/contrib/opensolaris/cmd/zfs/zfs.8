@@ -23,17 +23,16 @@
 .\" Copyright (c) 2012, Glen Barber <gjb@FreeBSD.org>
 .\" Copyright (c) 2012, Bryan Drewery <bdrewery@FreeBSD.org>
 .\" Copyright (c) 2013 by Saso Kiselkov. All rights reserved.
-.\" Copyright (c) 2014, Joyent, Inc. All rights reserved.
 .\" Copyright (c) 2013, Steven Hartland <smh@FreeBSD.org>
 .\" Copyright (c) 2016 Nexenta Systems, Inc. All Rights Reserved.
 .\" Copyright (c) 2014, Xin LI <delphij@FreeBSD.org>
 .\" Copyright (c) 2014-2015, The FreeBSD Foundation, All Rights Reserved.
-.\" Copyright 2018 Joyent, Inc.
+.\" Copyright 2019 Joyent, Inc.
 .\" Copyright (c) 2018 Datto Inc.
 .\"
-.\" $FreeBSD: releng/12.1/cddl/contrib/opensolaris/cmd/zfs/zfs.8 352901 2019-09-30 14:19:18Z avg $
+.\" $FreeBSD$
 .\"
-.Dd February 15, 2018
+.Dd September 12, 2020
 .Dt ZFS 8
 .Os
 .Sh NAME
@@ -103,6 +102,9 @@
 .Cm rename
 .Fl r
 .Ar snapshot snapshot
+.Nm
+.Cm rename
+.Ar bookmark bookmark
 .Nm
 .Cm rename
 .Fl u
@@ -633,6 +635,16 @@ property can be either
 .Cm yes
 or
 .Cm no .
+.It Sy objsetid
+A unique identifier for this dataset within the pool. Unlike the dataset's
+.Sy guid
+, the
+.Sy objsetid
+of a dataset is not transferred to other pools when the snapshot is copied
+with a send/receive operation.
+The
+.Sy objsetid
+can be reused (for a new datatset) after the dataset is deleted.
 .It Sy origin
 For cloned file systems or volumes, the snapshot from which the clone was
 created. See also the
@@ -999,9 +1011,9 @@ for more information on these algorithms.
 .Pp
 Changing this property affects only newly-written data.
 .Pp
-Salted checksum algorithms
-.Pq Cm edonr , skein
-are currently not supported for any filesystem on the boot pools.
+The salted checksum algorithm
+.Pq Cm edonr
+is currently not supported on FreeBSD.
 .It Sy compression Ns = Ns Cm on | off | lzjb | gzip | gzip- Ns Ar N | Cm zle | Cm lz4
 Controls the compression algorithm used for this dataset.
 Setting compression to
@@ -1132,8 +1144,23 @@ This feature must be enabled to be used
 .Po see
 .Xr zpool-features 7
 .Pc .
+.It Sy special_small_blocks Ns = Ns Ar size
+This value represents the threshold block size for including small file
+blocks into the special allocation class.
+Blocks smaller than or equal to this value will be assigned to the special
+allocation class while greater blocks will be assigned to the regular class.
+Valid values are zero or a power of two from 512B up to 128K.
+The default size is 0 which means no small file blocks will be allocated in
+the special class.
+.Pp
+Before setting this property, a special class vdev must be added to the
+pool.
+See
+.Xr zpool 8
+for more details on the special allocation class.
 .It Sy mountpoint Ns = Ns Ar path | Cm none | legacy
-Controls the mount point used for this file system. See the
+Controls the mount point used for this file system.
+See the
 .Qq Sx Mount Points
 section for more information on how this property is used.
 .Pp
@@ -2092,6 +2119,16 @@ Recursively rename the snapshots of all descendent datasets. Snapshots are the
 only dataset that can be renamed recursively.
 .It Xo
 .Nm
+.Cm rename
+.Ar bookmark bookmark
+.Xc
+.Pp
+Renames the given bookmark.
+Bookmarks can only be renamed within the parent file system or volume.
+When renaming a bookmark, the parent file system or volume of the bookmark
+does not need to be specified as part of the second argument.
+.It Xo
+.Nm
 .Cm list
 .Op Fl r Ns | Ns Fl d Ar depth
 .Op Fl Hp
@@ -2323,7 +2360,7 @@ option was not specified.
 .Ar filesystem Ns | Ns Ar volume
 .Xc
 .Pp
-Remap the indirect blocks in the given fileystem or volume so that they no
+Remap the indirect blocks in the given filesystem or volume so that they no
 longer reference blocks on previously removed vdevs and we can eventually
 shrink the size of the indirect mapping objects for the previously removed
 vdevs. Note that remapping all blocks might not be possible and that
@@ -3009,7 +3046,7 @@ property of the filesystem or volume which is received into.
 To use this flag, the storage pool must have the
 .Sy extensible_dataset
 feature enabled.  See
-.Xr zpool-features 5
+.Xr zpool-features 7
 for details on ZFS feature flags.
 .El
 .It Xo
@@ -3915,7 +3952,13 @@ M       F       /tank/test/modified
 .Xr jail 8 ,
 .Xr mount 8 ,
 .Xr umount 8 ,
+.Xr zfs-program 8 ,
 .Xr zpool 8
+.Sh HISTORY
+The
+.Nm
+utility first appeared in
+.Fx 7.0 .
 .Sh AUTHORS
 This manual page is a
 .Xr mdoc 7

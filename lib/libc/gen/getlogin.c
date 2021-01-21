@@ -31,7 +31,7 @@
 
 #include <sys/cdefs.h>
 __SCCSID("@(#)getlogin.c	8.1 (Berkeley) 6/4/93");
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/gen/getlogin.c 335898 2018-07-03 17:31:45Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <errno.h>
@@ -58,7 +58,7 @@ getlogin(void)
 }
 
 int
-getlogin_r(char *logname, int namelen)
+getlogin_r(char *logname, size_t namelen)
 {
 	char tmpname[MAXLOGNAME];
 	int	len;
@@ -75,3 +75,13 @@ getlogin_r(char *logname, int namelen)
 	strlcpy(logname, tmpname, len);
 	return (0);
 }
+
+/* FreeBSD 12 and earlier compat. */
+int
+__getlogin_r_fbsd12(char *logname, int namelen)
+{
+	if (namelen < 1)
+		return (ERANGE);
+	return (getlogin_r(logname, namelen));
+}
+__sym_compat(getlogin_r, __getlogin_r_fbsd12, FBSD_1.0);

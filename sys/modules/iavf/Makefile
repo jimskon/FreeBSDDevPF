@@ -1,4 +1,4 @@
-#$FreeBSD: releng/12.1/sys/modules/iavf/Makefile 351940 2019-09-06 17:21:21Z asomers $
+#$FreeBSD$
 
 .PATH:  ${SRCTOP}/sys/dev/ixl
 

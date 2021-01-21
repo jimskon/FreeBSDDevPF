@@ -44,7 +44,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/wi/if_wi_macio.c 325966 2017-11-18 14:26:50Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/kernel.h>
@@ -87,7 +87,6 @@ static device_method_t wi_macio_methods[] = {
 	DEVMETHOD(device_attach,	wi_macio_attach),
 	DEVMETHOD(device_detach,	wi_detach),
 	DEVMETHOD(device_shutdown,	wi_shutdown),
-
 	{ 0, 0 }
 };
 
@@ -142,6 +141,8 @@ wi_macio_attach(device_t dev)
 		error = wi_attach(dev);
 		if (error != 0)
 			wi_free(dev);
+		else
+			gone_in_dev(dev, 13, "pccard removed, wi doesn't support modern crypto");
 	}
 	return error;
 }

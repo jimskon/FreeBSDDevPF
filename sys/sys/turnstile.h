@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/turnstile.h 350373 2019-07-27 16:11:04Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_TURNSTILE_H_

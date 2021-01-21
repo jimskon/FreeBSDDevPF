@@ -1,6 +1,6 @@
-# $FreeBSD: releng/12.1/share/doc/llvm/clang/Makefile 314652 2017-03-04 11:26:40Z ngie $
+# $FreeBSD$
 
-SRCDIR=		${SRCTOP}/contrib/llvm/tools/clang
+SRCDIR=		${SRCTOP}/contrib/llvm-project/clang
 
 .PATH: ${SRCDIR}
 

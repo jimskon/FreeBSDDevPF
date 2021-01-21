@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/riscv/include/atomic.h 337433 2018-08-07 18:56:51Z marius $
+ * $FreeBSD$
  */
 
 #ifndef	_MACHINE_ATOMIC_H_
@@ -116,7 +116,7 @@ atomic_cmpset_32(volatile uint32_t *p, uint32_t cmpval, uint32_t newval)
 			"bnez %1, 0b\n"
 		"1:"
 			: "=&r" (tmp), "=&r" (res), "+A" (*p)
-			: "rJ" (cmpval), "rJ" (newval)
+			: "rJ" ((long)(int32_t)cmpval), "rJ" (newval)
 			: "memory");
 
 	return (!res);
@@ -141,7 +141,7 @@ atomic_fcmpset_32(volatile uint32_t *p, uint32_t *cmpval, uint32_t newval)
 			"sw   %0, %3\n"		/* Save old value */
 		"2:"
 			: "=&r" (tmp), "=&r" (res), "+A" (*p), "+A" (*cmpval)
-			: "rJ" (*cmpval), "rJ" (newval)
+			: "rJ" ((long)(int32_t)*cmpval), "rJ" (newval)
 			: "memory");
 
 	return (!res);

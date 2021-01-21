@@ -13,7 +13,7 @@
 # purpose.
 #
 
-# $FreeBSD: releng/12.1/stand/i386/btx/lib/btxv86.s 50477 1999-08-28 01:08:13Z peter $
+# $FreeBSD$
 
 #
 # BTX V86 interface.

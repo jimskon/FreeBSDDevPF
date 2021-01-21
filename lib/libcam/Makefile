@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/lib/libcam/Makefile 350717 2019-08-08 02:01:01Z mav $
+# $FreeBSD$
 
 PACKAGE=	lib${LIB}
 LIB=		cam

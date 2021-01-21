@@ -27,7 +27,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/netinet6/mld6_var.h 343650 2019-02-01 09:08:19Z hselasky $
+ * $FreeBSD$
  */
 #ifndef _NETINET6_MLD6_VAR_H_
 #define _NETINET6_MLD6_VAR_H_
@@ -167,7 +167,7 @@ struct mld_ifsoftc *
 void	mld_domifdetach(struct ifnet *);
 void	mld_fasttimo(void);
 void	mld_ifdetach(struct ifnet *, struct in6_multi_head *);
-int	mld_input(struct mbuf *, int, int);
+int	mld_input(struct mbuf **, int, int);
 void	mld_slowtimo(void);
 
 #ifdef SYSCTL_DECL

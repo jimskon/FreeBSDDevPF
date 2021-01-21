@@ -34,7 +34,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)signal.h	8.4 (Berkeley) 5/4/95
- * $FreeBSD: releng/12.1/sys/sys/signal.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_SIGNAL_H_
@@ -315,11 +315,13 @@ struct siginfo32 {
 #define BUS_ADRALN	1	/* Invalid address alignment.		*/
 #define BUS_ADRERR	2	/* Nonexistent physical address.	*/
 #define BUS_OBJERR	3	/* Object-specific hardware error.	*/
+#define BUS_OOMERR	100	/* Non-standard: No memory.		*/
 
 /* codes for SIGSEGV */
 #define SEGV_MAPERR	1	/* Address not mapped to object.	*/
 #define SEGV_ACCERR	2	/* Invalid permissions for mapped	*/
 				/* object.				*/
+#define	SEGV_PKUERR	100	/* x86: PKU violation			*/
 
 /* codes for SIGFPE */
 #define FPE_INTOVF	1	/* Integer overflow.			*/

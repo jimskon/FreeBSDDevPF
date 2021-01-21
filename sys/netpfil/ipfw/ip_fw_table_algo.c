@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/ipfw/ip_fw_table_algo.c 335250 2018-06-16 08:26:23Z ae $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Lookup table algorithms.
@@ -3204,7 +3204,8 @@ ta_lookup_fhash(struct table_info *ti, void *key, uint32_t keylen,
 	struct fhashentry *ent;
 	struct fhashentry4 *m4;
 	struct ipfw_flow_id *id;
-	uint16_t hash, hsize;
+	uint32_t hsize;
+	uint16_t hash;
 
 	id = (struct ipfw_flow_id *)key;
 	head = (struct fhashbhead *)ti->state;

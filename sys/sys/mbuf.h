@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mbuf.h	8.5 (Berkeley) 2/19/95
- * $FreeBSD: releng/12.1/sys/sys/mbuf.h 337423 2018-08-07 16:36:48Z markj $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MBUF_H_
@@ -64,6 +64,7 @@ SDT_PROBE_DECLARE(sdt, , , m__init);
 SDT_PROBE_DECLARE(sdt, , , m__gethdr);
 SDT_PROBE_DECLARE(sdt, , , m__get);
 SDT_PROBE_DECLARE(sdt, , , m__getcl);
+SDT_PROBE_DECLARE(sdt, , , m__getjcl);
 SDT_PROBE_DECLARE(sdt, , , m__clget);
 SDT_PROBE_DECLARE(sdt, , , m__cljget);
 SDT_PROBE_DECLARE(sdt, , , m__cljset);
@@ -310,6 +311,7 @@ struct mbuf {
 #define	M_TSTMP_HPREC	0x00000800 /* rcv_tstmp is high-prec, typically
 				      hw-stamped on port (useful for IEEE 1588
 				      and 802.1AS) */
+#define M_TSTMP_LRO	0x00001000 /* Time LRO pushed in pkt is valid in (PH_loc) */
 
 #define	M_PROTO1	0x00001000 /* protocol-specific */
 #define	M_PROTO2	0x00002000 /* protocol-specific */
@@ -519,6 +521,8 @@ struct mbuf {
 #define	CSUM_L5_VALID		0x20000000	/* checksum is correct */
 #define	CSUM_COALESCED		0x40000000	/* contains merged segments */
 
+#define	CSUM_SND_TAG		0x80000000	/* Packet header has send tag */
+
 /*
  * CSUM flag description for use with printf(9) %b identifier.
  */
@@ -528,7 +532,7 @@ struct mbuf {
     "\12CSUM_IP6_UDP\13CSUM_IP6_TCP\14CSUM_IP6_SCTP\15CSUM_IP6_TSO" \
     "\16CSUM_IP6_ISCSI" \
     "\31CSUM_L3_CALC\32CSUM_L3_VALID\33CSUM_L4_CALC\34CSUM_L4_VALID" \
-    "\35CSUM_L5_CALC\36CSUM_L5_VALID\37CSUM_COALESCED"
+    "\35CSUM_L5_CALC\36CSUM_L5_VALID\37CSUM_COALESCED\40CSUM_SND_TAG"
 
 /* CSUM flags compatibility mappings. */
 #define	CSUM_IP_CHECKED		CSUM_L3_CALC

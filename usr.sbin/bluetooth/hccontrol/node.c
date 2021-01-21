@@ -28,7 +28,7 @@
  * SUCH DAMAGE.
  *
  * $Id: node.c,v 1.6 2003/07/22 21:14:02 max Exp $
- * $FreeBSD: releng/12.1/usr.sbin/bluetooth/hccontrol/node.c 326276 2017-11-27 15:37:16Z pfg $
+ * $FreeBSD$
  */
 
 #include <sys/ioctl.h>
@@ -153,7 +153,7 @@ hci_read_node_features(int s, int argc, char **argv)
 {
 	struct ng_btsocket_hci_raw_node_features	r;
 	int						n;
-	char						buffer[1024];
+	char						buffer[2048];
 
 	memset(&r, 0, sizeof(r));
 	if (ioctl(s, SIOC_HCI_RAW_NODE_GET_FEATURES, &r, sizeof(r)) < 0)

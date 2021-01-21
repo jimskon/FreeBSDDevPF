@@ -1,7 +1,8 @@
-# $FreeBSD: releng/12.1/sys/modules/allwinner/Makefile 350602 2019-08-05 18:05:22Z manu $
+# $FreeBSD$
 # Build modules specific to Allwinner.
 
 SUBDIR = \
+	aw_mmc \
 	aw_pwm \
 	aw_rtc \
 	aw_rsb \

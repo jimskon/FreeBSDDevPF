@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfsdport.h 326268 2017-11-27 15:15:37Z pfg $
+ * $FreeBSD$
  */
 
 /*
@@ -85,8 +85,7 @@ struct nfsexstuff {
 #define	NFSVNO_SETEXRDONLY(e)	((e)->nes_exflag = (MNT_EXPORTED|MNT_EXRDONLY))
 
 #define	NFSVNO_CMPFH(f1, f2)						\
-    ((f1)->fh_fsid.val[0] == (f2)->fh_fsid.val[0] &&			\
-     (f1)->fh_fsid.val[1] == (f2)->fh_fsid.val[1] &&			\
+    (fsidcmp(&(f1)->fh_fsid, &(f2)->fh_fsid) == 0 &&			\
      bcmp(&(f1)->fh_fid, &(f2)->fh_fid, sizeof(struct fid)) == 0)
 
 #define	NFSLOCKHASH(f) 							\

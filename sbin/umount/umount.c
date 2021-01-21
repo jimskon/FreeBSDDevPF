@@ -40,7 +40,7 @@ static const char copyright[] =
 static char sccsid[] = "@(#)umount.c	8.8 (Berkeley) 5/8/95";
 #endif
 static const char rcsid[] =
-  "$FreeBSD: releng/12.1/sbin/umount/umount.c 338639 2018-09-13 13:57:42Z mjg $";
+  "$FreeBSD$";
 #endif /* not lint */
 
 #include <sys/param.h>
@@ -505,8 +505,7 @@ getmntentry(const char *fromname, const char *onname, fsid_t *fsid, dowhat what)
 			continue;
 		if (onname != NULL && strcmp(sfs->f_mntonname, onname) != 0)
 			continue;
-		if (fsid != NULL && bcmp(&sfs->f_fsid, fsid,
-		    sizeof(*fsid)) != 0)
+		if (fsid != NULL && fsidcmp(&sfs->f_fsid, fsid) != 0)
 			continue;
 
 		switch (what) {

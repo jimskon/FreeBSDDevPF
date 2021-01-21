@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/sys/modules/linux/Makefile 352094 2019-09-09 18:27:52Z imp $
+# $FreeBSD$
 
 .if ${MACHINE_CPUARCH} == "amd64"
 SFX= 32
@@ -78,15 +78,6 @@ ${VDSO}.so: linux${SFX}_locore.o
 .endif
 
 linux${SFX}_genassym.o: offset.inc
-	${CC} -c ${CFLAGS:N-flto:N-fno-common} ${.IMPSRC}
-
-.if !defined(KERNBUILDDIR)
-.if defined(KTR)
-CFLAGS+=	-DKTR
-.endif
-.if defined(DEBUG)
-CFLAGS+=	-DDEBUG
-.endif
-.endif
+	${CC} -c ${CFLAGS:N-flto:N-fno-common} -fcommon ${.IMPSRC}
 
 .include <bsd.kmod.mk>

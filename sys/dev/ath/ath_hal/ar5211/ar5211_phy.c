@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5211/ar5211_phy.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -80,7 +80,6 @@ HAL_RATE_TABLE ar5211_11b_table = {
 #undef	OFDM
 #undef	CCK
 #undef	TURBO
-
 
 const HAL_RATE_TABLE *
 ar5211GetRateTable(struct ath_hal *ah, u_int mode)

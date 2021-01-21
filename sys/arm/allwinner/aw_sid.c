@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/arm/allwinner/aw_sid.c 350602 2019-08-05 18:05:22Z manu $
+ * $FreeBSD$
  */
 
 /*
@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/aw_sid.c 350602 2019-08-05 18:05:22Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/endian.h>
 #include <sys/param.h>
@@ -101,11 +101,11 @@ static struct aw_sid_efuse a64_efuses[] = {
 		.public = true,
 	},
 	{
-		.name = "ths-calib",
+		.name = "calibration",
 		.desc = "Thermal Sensor Calibration Data",
 		.base = EFUSE_OFFSET,
 		.offset = 0x34,
-		.size = 6,
+		.size = 8,
 		.id = AW_SID_FUSE_THSSENSOR,
 		.public = true,
 	},
@@ -122,7 +122,7 @@ static struct aw_sid_efuse a83t_efuses[] = {
 		.public = true,
 	},
 	{
-		.name = "ths-calib",
+		.name = "calibration",
 		.desc = "Thermal Sensor Calibration Data",
 		.base = EFUSE_OFFSET,
 		.offset = 0x34,
@@ -143,11 +143,11 @@ static struct aw_sid_efuse h3_efuses[] = {
 		.public = true,
 	},
 	{
-		.name = "ths-calib",
+		.name = "calibration",
 		.desc = "Thermal Sensor Calibration Data",
 		.base = EFUSE_OFFSET,
 		.offset = 0x34,
-		.size = 2,
+		.size = 4,
 		.id = AW_SID_FUSE_THSSENSOR,
 		.public = false,
 	},
@@ -164,7 +164,7 @@ static struct aw_sid_efuse h5_efuses[] = {
 		.public = true,
 	},
 	{
-		.name = "ths-calib",
+		.name = "calibration",
 		.desc = "Thermal Sensor Calibration Data",
 		.base = EFUSE_OFFSET,
 		.offset = 0x34,
@@ -351,8 +351,7 @@ aw_sid_read(device_t dev, uint32_t offset, uint32_t size, uint8_t *buffer)
 	sc = device_get_softc(dev);
 
 	for (i = 0; i < sc->sid_conf->nfuses; i++)
-		if (offset == (sc->sid_conf->efuses[i].base +
-		    sc->sid_conf->efuses[i].offset)) {
+		if (offset == sc->sid_conf->efuses[i].offset) {
 			fuse_id = sc->sid_conf->efuses[i].id;
 			break;
 		}
@@ -412,6 +411,6 @@ static driver_t aw_sid_driver = {
 static devclass_t aw_sid_devclass;
 
 EARLY_DRIVER_MODULE(aw_sid, simplebus, aw_sid_driver, aw_sid_devclass, 0, 0,
-    BUS_PASS_RESOURCE + BUS_PASS_ORDER_FIRST);
+    BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_FIRST);
 MODULE_VERSION(aw_sid, 1);
 SIMPLEBUS_PNP_INFO(compat_data);

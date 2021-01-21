@@ -1,7 +1,7 @@
 #
 # GXEMUL "oldtestmips" sample kernel configuration.
 #
-# $FreeBSD: releng/12.1/sys/mips/conf/GXEMUL 324810 2017-10-20 21:40:59Z bz $
+# $FreeBSD$
 #
 
 ident		GXEMUL
@@ -54,7 +54,7 @@ device		gxemul_ether
 device		loop		# Network loopback
 device		random		# Entropy device
 device		ether		# Ethernet support
-device		tun		# Packet tunnel.
+device		tuntap		# Packet tunnel.
 device		md		# Memory "disks"
 device		gif		# IPv6 and IPv4 tunneling
 

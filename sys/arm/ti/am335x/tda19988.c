@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/ti/am335x/tda19988.c 351870 2019-09-05 16:46:16Z ian $");
+__FBSDID("$FreeBSD$");
 /*
 * NXP TDA19988 HDMI encoder 
 */

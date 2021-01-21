@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGES.
  *
- * $FreeBSD: releng/12.1/sys/dev/bwn/if_bwnvar.h 345634 2019-03-28 09:16:00Z avos $
+ * $FreeBSD$
  */
 
 #ifndef _IF_BWNVAR_H
@@ -129,7 +129,7 @@ struct bwn_mac;
 		mac->mac_phy.phy_maskset(mac, offset, mask, 0);		\
 	} else								\
 		BWN_PHY_WRITE(mac, offset,				\
-		    BWN_PHY_READ(mac, offset) & mask);			\
+		    BWN_PHY_READ(mac, offset) & (mask));		\
 } while (0)
 #define	BWN_PHY_COPY(mac, dst, src)	do {				\
 	KASSERT(mac->mac_status < BWN_MAC_STATUS_INITED ||		\
@@ -160,7 +160,6 @@ struct bwn_mac;
 	(BWN_READ_4(dr->dr_mac, dr->dr_base + offset))
 #define	BWN_DMA_WRITE(dr, offset, value)			\
 	(BWN_WRITE_4(dr->dr_mac, dr->dr_base + offset, value))
-
 
 typedef enum {
 	BWN_PHY_BAND_2G = 0,

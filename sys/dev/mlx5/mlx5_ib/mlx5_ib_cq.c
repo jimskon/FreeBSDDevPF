@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_ib/mlx5_ib_cq.c 347722 2019-05-16 15:49:35Z hselasky $
+ * $FreeBSD$
  */
 
 #include <linux/kref.h>

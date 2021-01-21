@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/12.1/stand/usb/storage/umass_loader.c 317097 2017-04-18 18:07:54Z tsoome $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2014 Hans Petter Selasky <hselasky@FreeBSD.org>
  * All rights reserved.
@@ -196,8 +196,8 @@ umass_disk_print(int verbose)
 		return (ret);
 	dev.d_dev = &umass_disk;
 	dev.d_unit = 0;
-	dev.d_slice = -1;
-	dev.d_partition = -1;
+	dev.d_slice = D_SLICENONE;
+	dev.d_partition = D_PARTNONE;
 
 	if (umass_disk_open_sub(&dev) == 0) {
 		ret = disk_print(&dev, "    umass0", verbose);

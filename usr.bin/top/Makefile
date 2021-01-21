@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/top/Makefile 344382 2019-02-20 20:28:48Z dim $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

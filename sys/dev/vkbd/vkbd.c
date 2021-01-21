@@ -30,7 +30,7 @@
  * SUCH DAMAGE.
  *
  * $Id: vkbd.c,v 1.20 2004/11/15 23:53:30 max Exp $
- * $FreeBSD: releng/12.1/sys/dev/vkbd/vkbd.c 332122 2018-04-06 17:35:35Z brooks $
+ * $FreeBSD$
  */
 
 #include "opt_kbd.h"
@@ -578,9 +578,7 @@ static keyboard_switch_t vkbdsw = {
 	.clear_state =	vkbd_clear_state,
 	.get_state =	vkbd_get_state,
 	.set_state =	vkbd_set_state,
-	.get_fkeystr =	genkbd_get_fkeystr,
 	.poll =		vkbd_poll,
-	.diag =		genkbd_diag,
 };
 
 static int	typematic(int delay, int rate);

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/i2c/i2c.c 349310 2019-06-23 15:55:41Z ian $");
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <errno.h>
@@ -590,7 +590,7 @@ i2c_rdwr_transfer(char *dev, struct options i2c_opt, char *i2c_buf)
 	 * because of the NOSTOP flag used above.
 	 */
 	if (i2c_opt.dir == 'w')
-		msgs[i].flags = IIC_M_WR | (i > 0) ? IIC_M_NOSTART : 0;
+		msgs[i].flags = IIC_M_WR | ((i > 0) ? IIC_M_NOSTART : 0);
 	else
 		msgs[i].flags = IIC_M_RD;
 	msgs[i].slave = i2c_opt.addr;

@@ -79,7 +79,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/ti/if_ti.c 349139 2019-06-17 15:11:04Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_ti.h"
 

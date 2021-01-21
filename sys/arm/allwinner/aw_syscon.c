@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/arm/allwinner/aw_syscon.c 350605 2019-08-05 18:27:25Z manu $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/bus.h>
@@ -82,5 +82,5 @@ DEFINE_CLASS_1(aw_syscon, aw_syscon_driver, aw_syscon_methods,
 static devclass_t aw_syscon_devclass;
 /* aw_syscon needs to attach prior to if_awg */
 EARLY_DRIVER_MODULE(aw_syscon, simplebus, aw_syscon_driver, aw_syscon_devclass,
-    0, 0, BUS_PASS_SUPPORTDEV + BUS_PASS_ORDER_MIDDLE);
+    0, 0, BUS_PASS_SCHEDULER + BUS_PASS_ORDER_LAST);
 MODULE_VERSION(aw_syscon, 1);

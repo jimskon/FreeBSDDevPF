@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $FreeBSD: releng/12.1/sys/dev/ath/ath_hal/ar5212/ar5111.c 326695 2017-12-08 15:57:29Z pfg $
+ * $FreeBSD$
  */
 #include "opt_ah.h"
 
@@ -336,7 +336,6 @@ ar5111SetRfRegs(struct ath_hal *ah, const struct ieee80211_channel *chan,
         	ar5212ModifyRfBuffer(rfReg, rfWaitS, 5, 19, 0);
         	ar5212ModifyRfBuffer(rfReg, rfWaitI, 5, 24, 0);
         	ar5212ModifyRfBuffer(rfReg, rfMaxTime, 2, 49, 0);
-
 	}
 
 	HAL_INI_WRITE_BANK(ah, ar5212Bank7_5111, rfReg, regWrites);

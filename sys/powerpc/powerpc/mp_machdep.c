@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/powerpc/mp_machdep.c 338143 2018-08-21 16:43:46Z alc $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -60,8 +60,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/powerpc/powerpc/mp_machdep.c 338143 2018-08-
 #include <machine/smp.h>
 
 #include "pic_if.h"
-
-extern struct pcpu __pcpu[MAXCPU];
 
 volatile static int ap_awake;
 volatile static u_int ap_letgo;
@@ -182,6 +180,10 @@ cpu_mp_start(void)
 next:
 		error = platform_smp_next_cpu(&cpu);
 	}
+
+#ifdef SMP
+	platform_smp_probe_threads();
+#endif
 }
 
 void

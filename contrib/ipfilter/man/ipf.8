@@ -1,4 +1,4 @@
-.\" $FreeBSD: releng/12.1/contrib/ipfilter/man/ipf.8 301775 2016-06-10 01:10:48Z cy $
+.\" $FreeBSD$
 .TH IPF 8
 .SH NAME
 ipf \- alters packet filtering lists for IP packet input and output
@@ -158,6 +158,15 @@ display the statistics prior to them being zeroed.
 Zero global statistics held in the kernel for filtering only (this doesn't
 affect fragment or state statistics).
 .DT
+.SH ENVIRONMENT
+.NM utilizes the following environment variable.
+.TP
+.B IPF_PREDEFINED
+ipfilter variables, see VARIABLES in ipf(5), can be specified in this
+environment variable providing shell access to ipfilter and ipnat variables.
+For example,
+.br
+IPF_PREDEFINED='my_server="10.1.1.1"; my_client="10.1.1.2";'
 .SH FILES
 /dev/ipauth
 .br

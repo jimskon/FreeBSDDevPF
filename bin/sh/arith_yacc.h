@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/bin/sh/arith_yacc.h 345117 2019-03-13 21:53:10Z jilles $
+ * $FreeBSD$
  */
 
 #define ARITH_ASS 1

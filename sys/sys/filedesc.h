@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)filedesc.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: releng/12.1/sys/sys/filedesc.h 332657 2018-04-17 18:07:40Z jhb $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_FILEDESC_H_

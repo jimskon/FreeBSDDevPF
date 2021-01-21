@@ -2,7 +2,7 @@
  * System call names.
  *
  * DO NOT EDIT-- this file is automatically @generated.
- * $FreeBSD: releng/12.1/sys/amd64/linux32/linux32_syscalls.c 351565 2019-08-28 07:43:31Z brooks $
+ * $FreeBSD$
  */
 
 const char *linux32_syscallnames[] = {
@@ -226,7 +226,7 @@ const char *linux32_syscallnames[] = {
 	"linux_setfsgid",			/* 216 = linux_setfsgid */
 	"linux_pivot_root",			/* 217 = linux_pivot_root */
 	"linux_mincore",			/* 218 = linux_mincore */
-	"madvise",			/* 219 = madvise */
+	"linux_madvise",			/* 219 = linux_madvise */
 	"linux_getdents64",			/* 220 = linux_getdents64 */
 	"linux_fcntl64",			/* 221 = linux_fcntl64 */
 	"#222",			/* 222 =  */

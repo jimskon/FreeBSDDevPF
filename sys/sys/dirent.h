@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)dirent.h	8.3 (Berkeley) 8/10/94
- * $FreeBSD: releng/12.1/sys/sys/dirent.h 340970 2018-11-26 14:01:05Z markj $
+ * $FreeBSD$
  */
 
 #ifndef	_SYS_DIRENT_H_

@@ -58,7 +58,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/kern/sys_capability.c 342047 2018-12-13 15:51:07Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_capsicum.h"
 #include "opt_ktrace.h"
@@ -182,10 +182,10 @@ cap_check(const cap_rights_t *havep, const cap_rights_t *needp)
 /*
  * Convert capability rights into VM access flags.
  */
-u_char
+vm_prot_t
 cap_rights_to_vmprot(const cap_rights_t *havep)
 {
-	u_char maxprot;
+	vm_prot_t maxprot;
 
 	maxprot = VM_PROT_NONE;
 	if (cap_rights_is_set(havep, CAP_MMAP_R))
@@ -223,6 +223,7 @@ kern_cap_rights_limit(struct thread *td, int fd, cap_rights_t *rights)
 {
 	struct filedesc *fdp;
 	struct filedescent *fdep;
+	u_long *ioctls;
 	int error;
 
 	fdp = td->td_proc->p_fd;
@@ -232,18 +233,22 @@ kern_cap_rights_limit(struct thread *td, int fd, cap_rights_t *rights)
 		FILEDESC_XUNLOCK(fdp);
 		return (EBADF);
 	}
+	ioctls = NULL;
 	error = _cap_check(cap_rights(fdp, fd), rights, CAPFAIL_INCREASE);
 	if (error == 0) {
+		seq_write_begin(&fdep->fde_seq);
 		fdep->fde_rights = *rights;
 		if (!cap_rights_is_set(rights, CAP_IOCTL)) {
-			free(fdep->fde_ioctls, M_FILECAPS);
+			ioctls = fdep->fde_ioctls;
 			fdep->fde_ioctls = NULL;
 			fdep->fde_nioctls = 0;
 		}
 		if (!cap_rights_is_set(rights, CAP_FCNTL))
 			fdep->fde_fcntls = 0;
+		seq_write_end(&fdep->fde_seq);
 	}
 	FILEDESC_XUNLOCK(fdp);
+	free(ioctls, M_FILECAPS);
 	return (error);
 }
 
@@ -428,8 +433,10 @@ kern_cap_ioctls_limit(struct thread *td, int fd, u_long *cmds, size_t ncmds)
 		goto out;
 
 	ocmds = fdep->fde_ioctls;
+	seq_write_begin(&fdep->fde_seq);
 	fdep->fde_ioctls = cmds;
 	fdep->fde_nioctls = ncmds;
+	seq_write_end(&fdep->fde_seq);
 
 	cmds = ocmds;
 	error = 0;
@@ -586,7 +593,9 @@ sys_cap_fcntls_limit(struct thread *td, struct cap_fcntls_limit_args *uap)
 		return (ENOTCAPABLE);
 	}
 
+	seq_write_begin(&fdep->fde_seq);
 	fdep->fde_fcntls = fcntlrights;
+	seq_write_end(&fdep->fde_seq);
 	FILEDESC_XUNLOCK(fdp);
 
 	return (0);

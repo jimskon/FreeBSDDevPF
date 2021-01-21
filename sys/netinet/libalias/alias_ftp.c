@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet/libalias/alias_ftp.c 326272 2017-11-27 15:23:17Z pfg $");
+__FBSDID("$FreeBSD$");
 
 /*
     Alias_ftp.c performs special processing for FTP sessions under
@@ -754,7 +754,8 @@ NewFtpMessage(struct libalias *la, struct ip *pip,
 		{
 			u_short new_len;
 
-			new_len = htons(hlen + slen);
+			new_len = htons(hlen +
+			    MIN(slen, maxpacketsize - hlen));
 			DifferentialChecksum(&pip->ip_sum,
 			    &new_len,
 			    &pip->ip_len,

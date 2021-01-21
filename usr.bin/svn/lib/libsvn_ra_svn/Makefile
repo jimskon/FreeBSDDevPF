@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/usr.bin/svn/lib/libsvn_ra_svn/Makefile 333355 2018-05-08 04:54:36Z peter $
+# $FreeBSD$
 
 .include "${.CURDIR}/../Makefile.inc"
 
@@ -7,10 +7,20 @@
 INTERNALLIB=	yes
 LIB=		svn_ra_svn
 
-SRCS=		client.c cram.c cyrus_auth.c deprecated.c editorp.c \
-		internal_auth.c marshal.c streams.c wrapped_sasl.c version.c
+SRCS=		client.c \
+		cram.c \
+		cyrus_auth.c \
+		deprecated.c \
+		editorp.c \
+		internal_auth.c \
+		marshal.c \
+		streams.c \
+		version.c \
+		wrapped_sasl.c
 
-CFLAGS+=	-I${SVNDIR}/include -I${SVNDIR} -I${.CURDIR}/../.. \
+CFLAGS+=	-I${SVNDIR}/include \
+		-I${SVNDIR} \
+		-I${.CURDIR}/../.. \
 		-I${.CURDIR}/../libapr \
 		-I${APR}/include/arch/unix \
 		-I${APR}/include \

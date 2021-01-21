@@ -12,7 +12,7 @@
 # LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 # A PARTICULAR PURPOSE.
 #
-# $FreeBSD: releng/12.1/usr.sbin/mld6query/Makefile 351941 2019-09-06 17:43:00Z asomers $
+# $FreeBSD$
 
 PROG=	mld6query
 MAN=	mld6query.8

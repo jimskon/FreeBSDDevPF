@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/etc/mtree/BSD.usr.dist 350256 2019-07-23 18:40:32Z dim $
+# $FreeBSD$
 #
 # Please see the file src/etc/mtree/README before making changes to this file.
 #
@@ -37,9 +37,21 @@
         aout
         ..
         clang
-            8.0.1
+            10.0.1
                 include
+                    cuda_wrappers
+                    ..
+                    fuzzer
+                    ..
+                    openmp_wrappers
+                    ..
+                    ppc_wrappers
+                    ..
+                    profile
+                    ..
                     sanitizer
+                    ..
+                    xray
                     ..
                 ..
                 lib
@@ -192,6 +204,12 @@
             ru_RU.UTF-8
             ..
             uk_UA.KOI8-U
+            ..
+        ..
+        certs
+            blacklisted
+            ..
+            trusted
             ..
         ..
         dict
@@ -1166,6 +1184,10 @@
                 ..
                 man3
                 ..
+                man5
+                ..
+                man7
+                ..
             ..
         ..
         pc-sysinstall
@@ -1237,15 +1259,25 @@
             ..
             Australia
             ..
+            Brazil
+            ..
+            Canada
+            ..
+            Chile
+            ..
             Etc
             ..
             Europe
             ..
             Indian
             ..
+            Mexico
+            ..
             Pacific
             ..
             SystemV
+            ..
+            US
             ..
         ..
     ..

@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/mrsas/mrsas_cam.c 346943 2019-04-30 07:10:11Z kadesai $");
+__FBSDID("$FreeBSD$");
 
 #include "dev/mrsas/mrsas.h"
 
@@ -1908,13 +1908,14 @@ mrsas_track_scsiio(struct mrsas_softc *sc, target_id_t tgt_id, u_int32_t bus_id)
 	for (i = 0 ; i < sc->max_fw_cmds; i++) {
 		mpt_cmd = sc->mpt_cmd_list[i];
 
-	/*
-	 * Check if the target_id and bus_id is same as the timeout IO
-	 */
-	if (mpt_cmd->ccb_ptr) {
-		/* bus_id = 1 denotes a VD */
-		if (bus_id == 1)
-			tgt_id = (mpt_cmd->ccb_ptr->ccb_h.target_id - (MRSAS_MAX_PD - 1));
+		/*
+		 * Check if the target_id and bus_id is same as the timeout IO
+		 */
+		if (mpt_cmd->ccb_ptr) {
+			/* bus_id = 1 denotes a VD */
+			if (bus_id == 1)
+				tgt_id =
+				    (mpt_cmd->ccb_ptr->ccb_h.target_id - (MRSAS_MAX_PD - 1));
 
 			if (mpt_cmd->ccb_ptr->cpi.bus_id == bus_id &&
 			    mpt_cmd->ccb_ptr->ccb_h.target_id == tgt_id) {

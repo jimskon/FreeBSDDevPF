@@ -29,7 +29,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)mman.h	8.2 (Berkeley) 1/9/95
- * $FreeBSD: releng/12.1/sys/sys/mman.h 326023 2017-11-20 19:43:44Z pfg $
+ * $FreeBSD$
  */
 
 #ifndef _SYS_MMAN_H_
@@ -207,7 +207,7 @@ typedef	__size_t	size_t;
 struct file;
 
 struct shmfd {
-	size_t		shm_size;
+	size_t		shm_oldsize;
 	vm_object_t	shm_object;
 	int		shm_refs;
 	uid_t		shm_uid;
@@ -230,6 +230,7 @@ struct shmfd {
 
 	struct rangelock shm_rl;
 	struct mtx	shm_mtx;
+	vm_ooffset_t	shm_size;
 };
 #endif
 

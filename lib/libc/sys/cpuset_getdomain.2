@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libc/sys/cpuset_getdomain.2 331529 2018-03-25 07:42:44Z jeff $
+.\" $FreeBSD$
 .\"
-.Dd Mar 19, 2018
+.Dd June 18, 2020
 .Dt CPUSET_GETDOMAIN 2
 .Os
 .Sh NAME
@@ -37,7 +37,7 @@
 .In sys/param.h
 .In sys/domainset.h
 .Ft int
-.Fn cpuset_getdomain "cpulevel_t level" "cpuwhich_t which" "id_t id" "size_t setsize" "domainet_t *mask" "int *policy"
+.Fn cpuset_getdomain "cpulevel_t level" "cpuwhich_t which" "id_t id" "size_t setsize" "domainset_t *mask" "int *policy"
 .Ft int
 .Fn cpuset_setdomain "cpulevel_t level" "cpuwhich_t which" "id_t id" "size_t setsize" "const domainset_t *mask" "int policy"
 .Sh DESCRIPTION
@@ -47,7 +47,7 @@ and
 allow the manipulation of sets of memory domains and allocation policy available
 to processes, threads, jails and other resources.
 These functions may manipulate sets of memory domains that contain many processes
-or per-object anonymous masks that effect only a single object.
+or per-object anonymous masks that affect only a single object.
 .Pp
 The valid values for the
 .Fa level
@@ -97,7 +97,8 @@ mask and policy from the object specified by
 and
 .Fa id
 and stores it in the space provided by
-.Fa mask and
+.Fa mask
+and
 .Fa policy .
 .Pp
 .Fn cpuset_setdomain
@@ -107,7 +108,8 @@ attempts to set the mask and policy for the object specified by
 and
 .Fa id
 to the values in
-.Fa mask and
+.Fa mask
+and
 .Fa policy .
 .Sh ALLOCATION POLICIES
 Valid policy values are as follows:

@@ -1,3 +1,3 @@
-# $FreeBSD: releng/12.1/lib/googletest/gtest_main/Makefile.inc 344086 2019-02-13 04:58:15Z ngie $
+# $FreeBSD$
 
 include ../Makefile.inc

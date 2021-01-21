@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD: releng/12.1/usr.sbin/newsyslog/tests/legacy_test.sh 337049 2018-08-01 18:41:43Z markj $
+# $FreeBSD$
 
 # A regular expression matching the format of an RFC-5424 log line header,
 # including the timestamp up through the seconds indicator; it does not include
@@ -194,7 +194,8 @@ ckstr()
 
 tmpdir_create()
 {
-	mkdir -p ${TMPDIR}/log ${TMPDIR}/alog
+	rm -rf ${TMPDIR}/log ${TMPDIR}/alog
+	mkdir ${TMPDIR}/log ${TMPDIR}/alog
 	cd ${TMPDIR}/log
 }
 
@@ -211,6 +212,8 @@ run_newsyslog()
 }
 
 tests_normal_rotate() {
+	local dir ext name_postfix newsyslog_args
+
 	ext="$1"
 	dir="$2"
 
@@ -286,6 +289,8 @@ tests_normal_rotate() {
 }
 
 tests_normal_rotate_keepn() {
+	local cnt dir ext name_postfix newsyslog_args
+
 	cnt="$1"
 	ext="$2"
 	dir="$3"
@@ -354,6 +359,8 @@ tests_normal_rotate_keepn() {
 }
 
 tests_time_rotate() {
+	local dir ext name_postfix newsyslog_args
+
 	ext="$1"
 	dir="$2"
 
@@ -413,6 +420,8 @@ tests_time_rotate() {
 }
 
 tests_rfc5424() {
+	local dir ext name_postfix newsyslog_args
+
 	ext="$1"
 	dir="$2"
 
@@ -451,7 +460,73 @@ tests_rfc5424() {
 	tmpdir_clean
 }
 
-echo 1..180
+tests_p_flag_rotate() {
+	local ext
+
+	ext="$1"
+
+	tmpdir_create
+
+	begin "create file"
+	run_newsyslog -C
+	ckfe $LOGFNAME
+	cknt ${LOGFNAME}.0
+	cknt ${LOGFNAME}.0${ext}
+	end
+
+	begin "rotate p flag 1 ${ext}"
+	run_newsyslog
+	ckfe $LOGFNAME
+	ckfe ${LOGFNAME}.0
+	cknt ${LOGFNAME}.0${ext}
+	run_newsyslog
+	ckfe $LOGFNAME
+	ckfe ${LOGFNAME}.0
+	cknt ${LOGFNAME}.0${ext}
+	ckfe ${LOGFNAME}.1${ext}
+	run_newsyslog
+	ckfe $LOGFNAME
+	ckfe ${LOGFNAME}.0
+	cknt ${LOGFNAME}.0${ext}
+	ckfe ${LOGFNAME}.1${ext}
+	ckfe ${LOGFNAME}.2${ext}
+	end
+
+	tmpdir_clean
+}
+
+tests_normal_rotate_recompress() {
+	local ext
+
+	ext=".gz"
+
+	tmpdir_create
+
+	begin "create file recompress"
+	run_newsyslog -C
+	ckfe $LOGFNAME
+	cknt ${LOGFNAME}.0${ext}
+	end
+
+	begin "rotate normal 1"
+	run_newsyslog
+	ckfe $LOGFNAME
+	ckfe ${LOGFNAME}.0${ext}
+	cknt ${LOGFNAME}.1${ext}
+	end
+
+	begin "rotate recompress 1"
+	gunzip ${LOGFNAME}.0${ext}
+	ckfe ${LOGFNAME}.0
+	cknt ${LOGFNAME}.0${ext}
+	run_newsyslog
+	ckfe $LOGFNAME
+	ckfe ${LOGFNAME}.0${ext}
+	ckfe ${LOGFNAME}.1${ext}
+	end
+}
+
+echo 1..185
 mkdir -p ${TMPDIR}
 cd ${TMPDIR}
 
@@ -556,5 +631,11 @@ tests_time_rotate "zst" "${TMPDIR}/alog/"
 echo "$LOGFPATH5424	640  3	   *	@T00  NCT" > newsyslog.conf
 echo "$LOGFPATH	640  3	   *	@T00  NC" >> newsyslog.conf
 tests_rfc5424
+
+echo "$LOGFPATH 640  3     *    @T00  NCpZ" > newsyslog.conf
+tests_p_flag_rotate ".gz"
+
+echo "$LOGFPATH 640  3     *    @T00  NCZ" > newsyslog.conf
+tests_normal_rotate_recompress
 
 rm -rf "${TMPDIR}"

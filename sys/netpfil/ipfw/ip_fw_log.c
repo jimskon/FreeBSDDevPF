@@ -26,7 +26,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netpfil/ipfw/ip_fw_log.c 343931 2019-02-09 11:05:03Z ae $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Logging support for ipfw

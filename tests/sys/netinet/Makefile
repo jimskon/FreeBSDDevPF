@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/netinet/Makefile 340902 2018-11-24 17:08:49Z markj $
+# $FreeBSD$
 
 TESTSDIR=	${TESTSBASE}/sys/netinet
 BINDIR=		${TESTSDIR}

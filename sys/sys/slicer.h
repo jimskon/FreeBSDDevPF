@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/sys/slicer.h 346508 2019-04-22 00:38:25Z ian $
+ * $FreeBSD$
  */
 
 #ifndef _FLASH_SLICER_H_

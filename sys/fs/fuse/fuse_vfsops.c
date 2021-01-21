@@ -61,7 +61,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/fs/fuse/fuse_vfsops.c 352351 2019-09-15 04:14:31Z asomers $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/param.h>
 #include <sys/buf.h>
@@ -425,6 +425,11 @@ fuse_vfsop_mount(struct mount *mp)
 	 */
 	mp->mnt_flag &= ~MNT_LOCAL;
 	mp->mnt_kern_flag |= MNTK_USES_BCACHE;
+	/* 
+	 * Disable nullfs cacheing because it can consume too many resources in
+	 * the FUSE server.
+	 */
+	mp->mnt_kern_flag |= MNTK_NULL_NOCACHE;
 	MNT_IUNLOCK(mp);
 	/* We need this here as this slot is used by getnewvnode() */
 	mp->mnt_stat.f_iosize = maxbcachebuf;

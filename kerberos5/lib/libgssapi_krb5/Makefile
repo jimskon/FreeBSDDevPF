@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/kerberos5/lib/libgssapi_krb5/Makefile 344199 2019-02-16 03:18:09Z nyan $
+# $FreeBSD$
 
 LIB=	gssapi_krb5
 LDFLAGS= -Wl,-Bsymbolic -Wl,--no-undefined

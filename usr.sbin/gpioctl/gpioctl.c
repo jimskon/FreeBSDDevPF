@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/gpioctl/gpioctl.c 326276 2017-11-27 15:37:16Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include <fcntl.h>
 #include <getopt.h>
@@ -62,6 +62,11 @@ static struct flag_desc gpio_flags[] = {
 	{ "II", GPIO_PIN_INVIN },
 	{ "IO", GPIO_PIN_INVOUT },
 	{ "PULSE", GPIO_PIN_PULSATE },
+	{ "INTRLL", GPIO_INTR_LEVEL_LOW},
+	{ "INTRLH", GPIO_INTR_LEVEL_HIGH},
+	{ "INTRER", GPIO_INTR_EDGE_RISING},
+	{ "INTREF", GPIO_INTR_EDGE_FALLING},
+	{ "INTREB", GPIO_INTR_EDGE_BOTH},
 	{ NULL, 0 },
 };
 

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/fs/fusefs/Makefile 350455 2019-07-30 19:47:45Z asomers $
+# $FreeBSD$
 
 PACKAGE=	tests
 
@@ -10,6 +10,7 @@ TESTSDIR=	${TESTSBASE}/sys/fs/fusefs
 GTESTS+=	access
 GTESTS+=	allow_other
 GTESTS+=	bmap
+GTESTS+=	cache
 GTESTS+=	create
 GTESTS+=	default_permissions
 GTESTS+=	default_permissions_privileged

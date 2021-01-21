@@ -1,8 +1,8 @@
-# $FreeBSD: releng/12.1/usr.bin/clang/llvm-extract/Makefile 309124 2016-11-24 22:54:55Z dim $
+# $FreeBSD$
 
 PROG_CXX=	llvm-extract
 
-SRCDIR=		tools/llvm-extract
+SRCDIR=		llvm/tools/llvm-extract
 SRCS+=		llvm-extract.cpp
 
 LIBADD+=	z

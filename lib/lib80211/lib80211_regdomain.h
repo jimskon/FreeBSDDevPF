@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/lib80211/lib80211_regdomain.h 311577 2017-01-07 01:56:10Z adrian $
+ * $FreeBSD$
  */
 #ifndef _LIB80211_REGDOMAIN_H_
 #define _LIB80211_REGDOMAIN_H_
@@ -73,10 +73,10 @@ struct regdomain {
 	netband_head	 bands_11b;	/* 11b operation */
 	netband_head	 bands_11g;	/* 11g operation */
 	netband_head	 bands_11a;	/* 11a operation */
-	netband_head	 bands_11ng;/* 11ng operation */
-	netband_head	 bands_11na;/* 11na operation */
-	netband_head	 bands_11ac;/* 11ac 5GHz operation */
-	netband_head	 bands_11acg;/* 11ac 2GHz operation */
+	netband_head	 bands_11ng;	/* 11ng operation */
+	netband_head	 bands_11na;	/* 11na operation */
+	netband_head	 bands_11ac;	/* 11ac 5GHz operation */
+	netband_head	 bands_11acg;	/* 11ac 2GHz operation */
 
 	LIST_ENTRY(regdomain)	next;
 };

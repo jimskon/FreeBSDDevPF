@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGES.
  *
  * $Id: //depot/users/kenm/FreeBSD-test2/sys/cam/ctl/ctl_ioctl.h#4 $
- * $FreeBSD: releng/12.1/sys/cam/ctl/ctl_ioctl.h 344717 2019-03-02 03:17:23Z mav $
+ * $FreeBSD$
  */
 /*
  * CAM Target Layer ioctl interface.
@@ -247,7 +247,9 @@ typedef enum {
 	CTL_OOACMD_FLAG_BLOCKED		= 0x02,
 	CTL_OOACMD_FLAG_ABORT		= 0x04,
 	CTL_OOACMD_FLAG_RTR		= 0x08,
-	CTL_OOACMD_FLAG_DMA_QUEUED	= 0x10
+	CTL_OOACMD_FLAG_DMA_QUEUED	= 0x10,
+	CTL_OOACMD_FLAG_STATUS_QUEUED	= 0x20,
+	CTL_OOACMD_FLAG_STATUS_SENT	= 0x40
 } ctl_ooa_cmd_flags;
 
 struct ctl_ooa_entry {

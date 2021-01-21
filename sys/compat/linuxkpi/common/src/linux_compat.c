@@ -28,7 +28,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/linuxkpi/common/src/linux_compat.c 352388 2019-09-16 12:51:28Z emaste $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_stack.h"
 
@@ -85,6 +85,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/compat/linuxkpi/common/src/linux_compat.c 35
 #include <linux/compat.h>
 #include <linux/poll.h>
 #include <linux/smp.h>
+#include <linux/wait_bit.h>
 
 #if defined(__i386__) || defined(__amd64__)
 #include <asm/smp.h>
@@ -116,6 +117,9 @@ struct list_head pci_devices;
 spinlock_t pci_lock;
 
 unsigned long linux_timer_hz_mask;
+
+wait_queue_head_t linux_bit_waitq;
+wait_queue_head_t linux_var_waitq;
 
 int
 panic_cmp(struct rb_node *one, struct rb_node *two)
@@ -528,14 +532,14 @@ linux_cdev_pager_populate(vm_object_t vm_obj, vm_pindex_t pidx, int fault_type,
 	struct vm_area_struct *vmap;
 	int err;
 
-	linux_set_current(curthread);
-
 	/* get VM area structure */
 	vmap = linux_cdev_handle_find(vm_obj->handle);
 	MPASS(vmap != NULL);
 	MPASS(vmap->vm_private_data == vm_obj->handle);
 
 	VM_OBJECT_WUNLOCK(vm_obj);
+
+	linux_set_current(curthread);
 
 	down_write(&vmap->vm_mm->mmap_sem);
 	if (unlikely(vmap->vm_ops == NULL)) {
@@ -1493,6 +1497,7 @@ static int
 linux_file_close(struct file *file, struct thread *td)
 {
 	struct linux_file *filp;
+	int (*release)(struct inode *, struct linux_file *);
 	const struct file_operations *fop;
 	struct linux_cdev *ldev;
 	int error;
@@ -1502,13 +1507,21 @@ linux_file_close(struct file *file, struct thread *td)
 	KASSERT(file_count(filp) == 0,
 	    ("File refcount(%d) is not zero", file_count(filp)));
 
+	if (td == NULL)
+		td = curthread;
+
 	error = 0;
 	filp->f_flags = file->f_flag;
 	linux_set_current(td);
 	linux_poll_wait_dequeue(filp);
 	linux_get_fop(filp, &fop, &ldev);
-	if (fop->release != NULL)
-		error = -OPW(file, td, fop->release(filp->f_vnode, filp));
+	/*
+	 * Always use the real release function, if any, to avoid
+	 * leaking device resources:
+	 */
+	release = filp->f_op->release;
+	if (release != NULL)
+		error = -OPW(file, td, release(filp->f_vnode, filp));
 	funsetown(&filp->f_sigio);
 	if (filp->f_vnode != NULL)
 		vdrop(filp->f_vnode);
@@ -1527,7 +1540,9 @@ linux_file_ioctl(struct file *fp, u_long cmd, void *data, struct ucred *cred,
 	struct linux_file *filp;
 	const struct file_operations *fop;
 	struct linux_cdev *ldev;
-	int error;
+	struct fiodgname_arg *fgn;
+	const char *p;
+	int error, i;
 
 	error = 0;
 	filp = (struct linux_file *)fp->f_data;
@@ -1554,6 +1569,20 @@ linux_file_ioctl(struct file *fp, u_long cmd, void *data, struct ucred *cred,
 		break;
 	case FIOGETOWN:
 		*(int *)data = fgetown(&filp->f_sigio);
+		break;
+	case FIODGNAME:
+		if (filp->f_cdev == NULL || filp->f_cdev->cdev == NULL) {
+			error = ENXIO;
+			break;
+		}
+		fgn = data;
+		p = devtoname(filp->f_cdev->cdev);
+		i = strlen(p) + 1;
+		if (i > fgn->len) {
+			error = EINVAL;
+			break;
+		}
+		error = copyout(p, fgn->buf, i);
 		break;
 	default:
 		error = linux_file_ioctl_sub(fp, filp, fop, cmd, data, td);
@@ -1878,14 +1907,19 @@ linux_timer_callback_wrapper(void *context)
 	timer->function(timer->data);
 }
 
-void
+int
 mod_timer(struct timer_list *timer, int expires)
 {
+	int ret;
 
 	timer->expires = expires;
-	callout_reset(&timer->callout,
+	ret = callout_reset(&timer->callout,
 	    linux_timer_jiffies_until(expires),
 	    &linux_timer_callback_wrapper, timer);
+
+	MPASS(ret == 0 || ret == 1);
+
+	return (ret == 1);
 }
 
 void
@@ -1915,9 +1949,47 @@ del_timer(struct timer_list *timer)
 	return (1);
 }
 
+int
+del_timer_sync(struct timer_list *timer)
+{
+
+	if (callout_drain(&(timer)->callout) == -1)
+		return (0);
+	return (1);
+}
+
+/* greatest common divisor, Euclid equation */
+static uint64_t
+lkpi_gcd_64(uint64_t a, uint64_t b)
+{
+	uint64_t an;
+	uint64_t bn;
+
+	while (b != 0) {
+		an = b;
+		bn = a % b;
+		a = an;
+		b = bn;
+	}
+	return (a);
+}
+
+uint64_t lkpi_nsec2hz_rem;
+uint64_t lkpi_nsec2hz_div = 1000000000ULL;
+uint64_t lkpi_nsec2hz_max;
+
+uint64_t lkpi_usec2hz_rem;
+uint64_t lkpi_usec2hz_div = 1000000ULL;
+uint64_t lkpi_usec2hz_max;
+
+uint64_t lkpi_msec2hz_rem;
+uint64_t lkpi_msec2hz_div = 1000ULL;
+uint64_t lkpi_msec2hz_max;
+
 static void
 linux_timer_init(void *arg)
 {
+	uint64_t gcd;
 
 	/*
 	 * Compute an internal HZ value which can divide 2**32 to
@@ -1928,6 +2000,27 @@ linux_timer_init(void *arg)
 	while (linux_timer_hz_mask < (unsigned long)hz)
 		linux_timer_hz_mask *= 2;
 	linux_timer_hz_mask--;
+
+	/* compute some internal constants */
+	
+	lkpi_nsec2hz_rem = hz;
+	lkpi_usec2hz_rem = hz;
+	lkpi_msec2hz_rem = hz;
+
+	gcd = lkpi_gcd_64(lkpi_nsec2hz_rem, lkpi_nsec2hz_div);
+	lkpi_nsec2hz_rem /= gcd;
+	lkpi_nsec2hz_div /= gcd;
+	lkpi_nsec2hz_max = -1ULL / lkpi_nsec2hz_rem;
+
+	gcd = lkpi_gcd_64(lkpi_usec2hz_rem, lkpi_usec2hz_div);
+	lkpi_usec2hz_rem /= gcd;
+	lkpi_usec2hz_div /= gcd;
+	lkpi_usec2hz_max = -1ULL / lkpi_usec2hz_rem;
+
+	gcd = lkpi_gcd_64(lkpi_msec2hz_rem, lkpi_msec2hz_div);
+	lkpi_msec2hz_rem /= gcd;
+	lkpi_msec2hz_div /= gcd;
+	lkpi_msec2hz_max = -1ULL / lkpi_msec2hz_rem;
 }
 SYSINIT(linux_timer, SI_SUB_DRIVERS, SI_ORDER_FIRST, linux_timer_init, NULL);
 
@@ -2434,6 +2527,8 @@ linux_compat_init(void *arg)
 	mtx_init(&vmmaplock, "IO Map lock", NULL, MTX_DEF);
 	for (i = 0; i < VMMAP_HASH_SIZE; i++)
 		LIST_INIT(&vmmaphead[i]);
+	init_waitqueue_head(&linux_bit_waitq);
+	init_waitqueue_head(&linux_var_waitq);
 }
 SYSINIT(linux_compat, SI_SUB_DRIVERS, SI_ORDER_SECOND, linux_compat_init, NULL);
 

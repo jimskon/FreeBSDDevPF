@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/powerpc/aim/mmu_oea64.c 333599 2018-05-14 04:00:52Z nwhitehorn $");
+__FBSDID("$FreeBSD$");
 
 /*
  * Manages physical address maps.
@@ -2794,6 +2794,7 @@ moea64_unmapdev(mmu_t mmu, vm_offset_t va, vm_size_t size)
 	offset = va & PAGE_MASK;
 	size = roundup2(offset + size, PAGE_SIZE);
 
+	moea64_qremove(mmu, base, atop(size));
 	kva_free(base, size);
 }
 

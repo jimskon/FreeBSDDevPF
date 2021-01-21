@@ -31,7 +31,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/usb/misc/ufm.c 326255 2017-11-27 14:52:40Z pfg $");
+__FBSDID("$FreeBSD$");
 
 
 #include <sys/stdint.h>
@@ -165,6 +165,7 @@ ufm_attach(device_t dev)
 	if (error) {
 		goto detach;
 	}
+	gone_in_dev(dev, 13, "Driver no longer relevant");
 	return (0);			/* success */
 
 detach:

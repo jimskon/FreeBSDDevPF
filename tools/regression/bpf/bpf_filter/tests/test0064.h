@@ -1,7 +1,7 @@
 /*-
  * Test 0064:	Check boundary conditions (BPF_LD+BPF_B+BPF_IND)
  *
- * $FreeBSD: releng/12.1/tools/regression/bpf/bpf_filter/tests/test0064.h 307708 2016-10-21 06:56:30Z jkim $
+ * $FreeBSD$
  */
 
 /* BPF program */

@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/dev/xdma/xdma.c 348623 2019-06-04 15:35:46Z br $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_platform.h"
 #include <sys/param.h>
@@ -312,8 +312,7 @@ xdma_handle_mem_node(vmem_t *vmem, phandle_t memory)
 	pcell_t *regp;
 	int addr_cells, size_cells;
 	int i, reg_len, ret, tuple_size, tuples;
-	vmem_addr_t mem_start;
-	vmem_size_t mem_size;
+	u_long mem_start, mem_size;
 
 	if ((ret = fdt_addrsize_cells(OF_parent(memory), &addr_cells,
 	    &size_cells)) != 0)

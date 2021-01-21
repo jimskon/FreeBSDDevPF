@@ -17,7 +17,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * 
- * $FreeBSD: releng/12.1/sys/dev/rtwn/pci/rtwn_pci_var.h 342830 2019-01-07 04:23:06Z avos $
+ * $FreeBSD$
  */
 
 #ifndef RTWN_PCI_VAR_H
@@ -100,7 +100,6 @@ enum {
 #define RTWN_PCI_INTR_RX \
 	(RTWN_PCI_INTR_RX_ERROR | RTWN_PCI_INTR_RX_OVERFLOW | \
 	 RTWN_PCI_INTR_RX_DESC_UNAVAIL | RTWN_PCI_INTR_RX_DONE)
-
 
 struct rtwn_pci_softc {
 	struct rtwn_softc	pc_sc;		/* must be the first */

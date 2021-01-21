@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/netmap/netmap_kloop.c 352355 2019-09-15 14:26:19Z vmaffione $
+ * $FreeBSD$
  */
 
 /*

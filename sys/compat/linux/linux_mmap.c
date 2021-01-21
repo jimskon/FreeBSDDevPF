@@ -28,19 +28,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linux/linux_mmap.c 350278 2019-07-24 12:46:55Z tijl $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/compat/linux/linux_mmap.c 350278 2019-07-24 12:46:55Z tijl $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/capsicum.h>
 #include <sys/file.h>
 #include <sys/imgact.h>
 #include <sys/ktr.h>
+#include <sys/lock.h>
 #include <sys/mman.h>
 #include <sys/proc.h>
 #include <sys/resourcevar.h>
+#include <sys/rwlock.h>
 #include <sys/syscallsubr.h>
 #include <sys/sysent.h>
 #include <sys/sysproto.h>
@@ -48,6 +50,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/compat/linux/linux_mmap.c 350278 2019-07-24 
 #include <vm/pmap.h>
 #include <vm/vm_extern.h>
 #include <vm/vm_map.h>
+#include <vm/vm_object.h>
 
 #include <compat/linux/linux_emul.h>
 #include <compat/linux/linux_mmap.h>
@@ -62,6 +65,16 @@ __FBSDID("$FreeBSD: releng/12.1/sys/compat/linux/linux_mmap.c 350278 2019-07-24 
 static void linux_fixup_prot(struct thread *td, int *prot);
 #endif
 
+static int
+linux_mmap_check_fp(struct file *fp, int flags, int prot, int maxprot)
+{
+
+	/* Linux mmap() just fails for O_WRONLY files */
+	if ((fp->f_flag & FREAD) == 0)
+		return (EACCES);
+
+	return (0);
+}
 
 int
 linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
@@ -103,6 +116,14 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 	if (flags & LINUX_MAP_GROWSDOWN)
 		bsd_flags |= MAP_STACK;
 
+#if defined(__amd64__)
+	/*
+	 * According to the Linux mmap(2) man page, "MAP_32BIT flag
+	 * is ignored when MAP_FIXED is set."
+	 */
+	if ((flags & LINUX_MAP_32BIT) && (flags & LINUX_MAP_FIXED) == 0)
+		bsd_flags |= MAP_32BIT;
+
 	/*
 	 * PROT_READ, PROT_WRITE, or PROT_EXEC implies PROT_READ and PROT_EXEC
 	 * on Linux/i386 if the binary requires executable stack.
@@ -111,37 +132,11 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 	 *
 	 * XXX. Linux checks that the file system is not mounted with noexec.
 	 */
-#if defined(__amd64__)
 	linux_fixup_prot(td, &prot);
 #endif
 
 	/* Linux does not check file descriptor when MAP_ANONYMOUS is set. */
 	fd = (bsd_flags & MAP_ANON) ? -1 : fd;
-	if (fd != -1) {
-		/*
-		 * Linux follows Solaris mmap(2) description:
-		 * The file descriptor fildes is opened with
-		 * read permission, regardless of the
-		 * protection options specified.
-		 */
-
-		error = fget(td, fd, &cap_mmap_rights, &fp);
-		if (error != 0)
-			return (error);
-		if (fp->f_type != DTYPE_VNODE && fp->f_type != DTYPE_DEV) {
-			fdrop(fp, td);
-			return (EINVAL);
-		}
-
-		/* Linux mmap() just fails for O_WRONLY files */
-		if (!(fp->f_flag & FREAD)) {
-			fdrop(fp, td);
-			return (EACCES);
-		}
-
-		fdrop(fp, td);
-	}
-
 	if (flags & LINUX_MAP_GROWSDOWN) {
 		/*
 		 * The Linux MAP_GROWSDOWN option does not limit auto
@@ -211,13 +206,15 @@ linux_mmap_common(struct thread *td, uintptr_t addr, size_t len, int prot,
 	 */
 	if (addr != 0 && (bsd_flags & MAP_FIXED) == 0 &&
 	    (bsd_flags & MAP_EXCL) == 0) {
-		error = kern_mmap(td, addr, len, prot,
-		    bsd_flags | MAP_FIXED | MAP_EXCL, fd, pos);
+		error = kern_mmap_fpcheck(td, addr, len, prot,
+		    bsd_flags | MAP_FIXED | MAP_EXCL, fd, pos,
+		    linux_mmap_check_fp);
 		if (error == 0)
 			goto out;
 	}
 
-	error = kern_mmap(td, addr, len, prot, bsd_flags, fd, pos);
+	error = kern_mmap_fpcheck(td, addr, len, prot, bsd_flags, fd, pos,
+	    linux_mmap_check_fp);
 out:
 	LINUX_CTR2(mmap2, "return: %d (%p)", error, td->td_retval[0]);
 
@@ -237,6 +234,167 @@ linux_mprotect_common(struct thread *td, uintptr_t addr, size_t len, int prot)
 	linux_fixup_prot(td, &prot);
 #endif
 	return (kern_mprotect(td, addr, len, prot));
+}
+
+/*
+ * Implement Linux madvise(MADV_DONTNEED), which has unusual semantics: for
+ * anonymous memory, pages in the range are immediately discarded.
+ */
+static int
+linux_madvise_dontneed(struct thread *td, vm_offset_t start, vm_offset_t end)
+{
+	vm_map_t map;
+	vm_map_entry_t entry;
+	vm_object_t backing_object, object;
+	vm_offset_t estart, eend;
+	vm_pindex_t pstart, pend;
+	int error;
+
+	map = &td->td_proc->p_vmspace->vm_map;
+
+	if (!vm_map_range_valid(map, start, end))
+		return (EINVAL);
+	start = trunc_page(start);
+	end = round_page(end);
+
+	error = 0;
+	vm_map_lock_read(map);
+	if (!vm_map_lookup_entry(map, start, &entry))
+		entry = entry->next;
+	for (; entry->start < end; entry = entry->next) {
+		if ((entry->eflags & MAP_ENTRY_IS_SUB_MAP) != 0)
+			continue;
+
+		if (entry->wired_count != 0) {
+			error = EINVAL;
+			break;
+		}
+
+		object = entry->object.vm_object;
+		if (object == NULL)
+			continue;
+		if ((object->flags & (OBJ_UNMANAGED | OBJ_FICTITIOUS)) != 0)
+			continue;
+
+		pstart = OFF_TO_IDX(entry->offset);
+		if (start > entry->start) {
+			pstart += atop(start - entry->start);
+			estart = start;
+		} else {
+			estart = entry->start;
+		}
+		pend = OFF_TO_IDX(entry->offset) +
+		    atop(entry->end - entry->start);
+		if (entry->end > end) {
+			pend -= atop(entry->end - end);
+			eend = end;
+		} else {
+			eend = entry->end;
+		}
+
+		if ((object->type == OBJT_DEFAULT ||
+		    object->type == OBJT_SWAP) && object->handle == NULL &&
+		    (object->flags & (OBJ_ONEMAPPING | OBJ_NOSPLIT)) ==
+		    OBJ_ONEMAPPING) {
+			/*
+			 * Singly-mapped anonymous memory is discarded.  This
+			 * does not match Linux's semantics when the object
+			 * belongs to a shadow chain of length > 1, since
+			 * subsequent faults may retrieve pages from an
+			 * intermediate anonymous object.  However, handling
+			 * this case correctly introduces a fair bit of
+			 * complexity.
+			 */
+			VM_OBJECT_WLOCK(object);
+			if ((object->flags & OBJ_ONEMAPPING) != 0) {
+				vm_object_collapse(object);
+				vm_object_page_remove(object, pstart, pend, 0);
+				backing_object = object->backing_object;
+				if (backing_object != NULL &&
+				    (backing_object->type == OBJT_DEFAULT ||
+				    backing_object->type == OBJT_SWAP) &&
+				    backing_object->handle == NULL &&
+				    (backing_object->flags & OBJ_NOSPLIT) == 0)
+					linux_msg(td,
+					    "possibly incorrect MADV_DONTNEED");
+				VM_OBJECT_WUNLOCK(object);
+				continue;
+			}
+			VM_OBJECT_WUNLOCK(object);
+		}
+
+		/*
+		 * Handle shared mappings.  Remove them outright instead of
+		 * calling pmap_advise(), for consistency with Linux.
+		 */
+		pmap_remove(map->pmap, estart, eend);
+		vm_object_madvise(object, pstart, pend, MADV_DONTNEED);
+	}
+	vm_map_unlock_read(map);
+
+	return (error);
+}
+
+int
+linux_madvise_common(struct thread *td, uintptr_t addr, size_t len, int behav)
+{
+
+	switch (behav) {
+	case LINUX_MADV_NORMAL:
+		return (kern_madvise(td, addr, len, MADV_NORMAL));
+	case LINUX_MADV_RANDOM:
+		return (kern_madvise(td, addr, len, MADV_RANDOM));
+	case LINUX_MADV_SEQUENTIAL:
+		return (kern_madvise(td, addr, len, MADV_SEQUENTIAL));
+	case LINUX_MADV_WILLNEED:
+		return (kern_madvise(td, addr, len, MADV_WILLNEED));
+	case LINUX_MADV_DONTNEED:
+		return (linux_madvise_dontneed(td, addr, addr + len));
+	case LINUX_MADV_FREE:
+		return (kern_madvise(td, addr, len, MADV_FREE));
+	case LINUX_MADV_REMOVE:
+		linux_msg(curthread, "unsupported madvise MADV_REMOVE");
+		return (EINVAL);
+	case LINUX_MADV_DONTFORK:
+		return (kern_minherit(td, addr, len, INHERIT_NONE));
+	case LINUX_MADV_DOFORK:
+		return (kern_minherit(td, addr, len, INHERIT_COPY));
+	case LINUX_MADV_MERGEABLE:
+		linux_msg(curthread, "unsupported madvise MADV_MERGEABLE");
+		return (EINVAL);
+	case LINUX_MADV_UNMERGEABLE:
+		/* We don't merge anyway. */
+		return (0);
+	case LINUX_MADV_HUGEPAGE:
+		/* Ignored; on FreeBSD huge pages are always on. */
+		return (0);
+	case LINUX_MADV_NOHUGEPAGE:
+#if 0
+		/*
+		 * Don't warn - Firefox uses it a lot, and in real Linux it's
+		 * an optional feature.
+		 */
+		linux_msg(curthread, "unsupported madvise MADV_NOHUGEPAGE");
+#endif
+		return (EINVAL);
+	case LINUX_MADV_DONTDUMP:
+		return (kern_madvise(td, addr, len, MADV_NOCORE));
+	case LINUX_MADV_DODUMP:
+		return (kern_madvise(td, addr, len, MADV_CORE));
+	case LINUX_MADV_WIPEONFORK:
+		return (kern_minherit(td, addr, len, INHERIT_ZERO));
+	case LINUX_MADV_KEEPONFORK:
+		return (kern_minherit(td, addr, len, INHERIT_COPY));
+	case LINUX_MADV_HWPOISON:
+		linux_msg(curthread, "unsupported madvise MADV_HWPOISON");
+		return (EINVAL);
+	case LINUX_MADV_SOFT_OFFLINE:
+		linux_msg(curthread, "unsupported madvise MADV_SOFT_OFFLINE");
+		return (EINVAL);
+	default:
+		linux_msg(curthread, "unsupported madvise behav %d", behav);
+		return (EINVAL);
+	}
 }
 
 #if defined(__amd64__)

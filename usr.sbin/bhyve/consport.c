@@ -25,11 +25,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/bhyve/consport.c 349961 2019-07-13 00:23:20Z jhb $
+ * $FreeBSD$
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/consport.c 349961 2019-07-13 00:23:20Z jhb $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/types.h>
 #ifndef WITHOUT_CAPSICUM
@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: releng/12.1/usr.sbin/bhyve/consport.c 349961 2019-07-13 00:2
 
 #include "inout.h"
 #include "pci_lpc.h"
+#include "debug.h"
 
 #define	BVM_CONSOLE_PORT	0x220
 #define	BVM_CONS_SIG		('b' << 8 | 'v')
@@ -70,6 +71,7 @@ ttyopen(void)
 
 	cfmakeraw(&tio_new);
 	tcsetattr(STDIN_FILENO, TCSANOW, &tio_new);	
+	raw_stdio = 1;
 
 	atexit(ttyclose);
 }

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/delegate/Makefile 346055 2019-04-09 16:16:10Z ngie $
+# $FreeBSD$
 
 .include <src.opts.mk>
 

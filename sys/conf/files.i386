@@ -1,7 +1,7 @@
 # This file tells config what files go into building a kernel,
 # files marked standard are always included.
 #
-# $FreeBSD: releng/12.1/sys/conf/files.i386 352235 2019-09-11 23:45:58Z mav $
+# $FreeBSD$
 #
 # The long compile-with and dependency lines are required because of
 # limitations in config: backslash-newline doesn't work in strings, and
@@ -21,7 +21,7 @@ cloudabi32_vdso_blob.o		optional	compat_cloudabi32	\
 #
 linux_genassym.o		optional	compat_linux		\
 	dependency 	"$S/i386/linux/linux_genassym.c offset.inc"		\
-	compile-with	"${CC} ${CFLAGS:N-flto:N-fno-common} -c ${.IMPSRC}" \
+	compile-with	"${CC} ${CFLAGS:N-flto:N-fno-common} -fcommon -c ${.IMPSRC}" \
 	no-obj no-implicit-rule						\
 	clean		"linux_genassym.o"
 #
@@ -32,7 +32,7 @@ linux_assym.h			optional	compat_linux		\
 	clean		"linux_assym.h"
 #
 linux_locore.o			optional	compat_linux		\
-	dependency 	"linux_assym.h $S/i386/linux/linux_locore.s"	\
+	dependency 	"linux_assym.h $S/i386/linux/linux_locore.asm"	\
 	compile-with	"${CC} -x assembler-with-cpp -DLOCORE -shared -s -pipe -I. -I$S ${WERROR} -Wall -fPIC -fno-common -nostdinc -nostdlib -Wl,-T$S/i386/linux/linux_vdso.lds.s -Wl,-soname=linux_vdso.so,--eh-frame-hdr,-warn-common ${.IMPSRC} -o ${.TARGET}" \
 	no-obj no-implicit-rule						\
 	clean		"linux_locore.o"
@@ -189,9 +189,10 @@ dev/bxe/57712_init_values.c     optional bxe pci
 dev/ce/ceddk.c			optional ce
 dev/ce/if_ce.c			optional ce
 dev/ce/tau32-ddk.c		optional ce \
-	compile-with "${NORMAL_C} ${NO_WCONSTANT_CONVERSION}"
+	compile-with "${NORMAL_C} ${NO_WCONSTANT_CONVERSION} ${NO_WMISLEADING_INDENTATION}"
 dev/coretemp/coretemp.c		optional coretemp
-dev/cp/cpddk.c			optional cp
+dev/cp/cpddk.c			optional cp \
+	compile-with "${NORMAL_C} ${NO_WMISLEADING_INDENTATION}"
 dev/cp/if_cp.c			optional cp
 dev/cpuctl/cpuctl.c		optional cpuctl
 dev/ctau/ctau.c			optional ctau
@@ -282,6 +283,7 @@ dev/ipmi/ipmi_smbios.c		optional ipmi
 dev/ipmi/ipmi_ssif.c		optional ipmi smbus
 dev/ipmi/ipmi_pci.c		optional ipmi pci
 dev/ipmi/ipmi_linux.c		optional ipmi compat_linux
+dev/itwd/itwd.c			optional itwd
 dev/le/if_le_isa.c		optional le isa
 dev/mse/mse.c			optional mse
 dev/mse/mse_isa.c		optional mse isa
@@ -318,6 +320,7 @@ dev/sio/sio_pccard.c		optional sio pccard
 dev/sio/sio_pci.c		optional sio pci
 dev/sio/sio_puc.c		optional sio puc
 dev/speaker/spkr.c		optional speaker
+dev/superio/superio.c		optional superio isa
 dev/syscons/apm/apm_saver.c	optional apm_saver apm
 dev/syscons/scterm-teken.c	optional sc
 dev/syscons/scvesactl.c		optional sc vga vesa
@@ -342,6 +345,7 @@ dev/vmware/vmci/vmci_resource.c		optional	vmci
 dev/acpica/acpi_if.m		standard
 dev/acpica/acpi_hpet.c		optional acpi
 dev/acpica/acpi_timer.c		optional acpi
+dev/acpica/acpi_pxm.c		optional acpi
 dev/acpi_support/acpi_wmi_if.m	standard
 dev/wbwd/wbwd.c			optional wbwd
 dev/isci/isci.c							optional isci

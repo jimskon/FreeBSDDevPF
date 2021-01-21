@@ -28,7 +28,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/cam/cam_xpt.h 337723 2018-08-13 19:59:32Z imp $
+ * $FreeBSD$
  */
 
 #ifndef _CAM_CAM_XPT_H
@@ -139,8 +139,6 @@ cam_status		xpt_compile_path(struct cam_path *new_path,
 					 target_id_t target_id,
 					 lun_id_t lun_id);
 cam_status		xpt_clone_path(struct cam_path **new_path,
-				      struct cam_path *path);
-void			xpt_copy_path(struct cam_path *new_path,
 				      struct cam_path *path);
 
 void			xpt_release_path(struct cam_path *path);

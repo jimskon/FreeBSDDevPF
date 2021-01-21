@@ -37,7 +37,7 @@
 static char sccsid[] = "@(#)floatunsdidf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libc/quad/floatunsdidf.c 326025 2017-11-20 19:49:47Z pfg $");
+__FBSDID("$FreeBSD$");
 
 #include "quad.h"
 
@@ -53,7 +53,7 @@ __floatunsdidf(x)
 	union uu u;
 
 	u.uq = x;
-	d = (double)u.ul[H] * ((1 << (LONG_BITS - 2)) * 4.0);
+	d = (double)u.ul[H] * ((1L << (LONG_BITS - 2)) * 4.0);
 	d += u.ul[L];
 	return (d);
 }

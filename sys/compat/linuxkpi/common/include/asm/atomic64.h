@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/compat/linuxkpi/common/include/asm/atomic64.h 337527 2018-08-09 09:39:32Z hselasky $
+ * $FreeBSD$
  */
 #ifndef	_ASM_ATOMIC64_H_
 #define	_ASM_ATOMIC64_H_
@@ -101,6 +101,20 @@ atomic64_add_unless(atomic64_t *v, int64_t a, int64_t u)
 			break;
 	}
 	return (c != u);
+}
+
+static inline int64_t
+atomic64_fetch_add_unless(atomic64_t *v, int64_t a, int64_t u)
+{
+	int64_t c = atomic64_read(v);
+
+	for (;;) {
+		if (unlikely(c == u))
+			break;
+		if (likely(atomic_fcmpset_64(&v->counter, &c, c + a)))
+			break;
+	}
+	return (c);
 }
 
 static inline int64_t

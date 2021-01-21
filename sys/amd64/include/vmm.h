@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/amd64/include/vmm.h 351751 2019-09-03 16:18:07Z emaste $
+ * $FreeBSD$
  */
 
 #ifndef _VMM_H_
@@ -95,6 +95,7 @@ enum vm_reg_name {
 	VM_REG_GUEST_DR2,
 	VM_REG_GUEST_DR3,
 	VM_REG_GUEST_DR6,
+	VM_REG_GUEST_ENTRY_INST_LENGTH,
 	VM_REG_LAST
 };
 
@@ -267,7 +268,7 @@ void vm_exit_reqidle(struct vm *vm, int vcpuid, uint64_t rip);
  * forward progress when the rendezvous is in progress.
  */
 typedef void (*vm_rendezvous_func_t)(struct vm *vm, int vcpuid, void *arg);
-void vm_smp_rendezvous(struct vm *vm, int vcpuid, cpuset_t dest,
+int vm_smp_rendezvous(struct vm *vm, int vcpuid, cpuset_t dest,
     vm_rendezvous_func_t func, void *arg);
 cpuset_t vm_active_cpus(struct vm *vm);
 cpuset_t vm_debug_cpus(struct vm *vm);
@@ -434,6 +435,7 @@ enum vm_cap_type {
 	VM_CAP_PAUSE_EXIT,
 	VM_CAP_UNRESTRICTED_GUEST,
 	VM_CAP_ENABLE_INVPCID,
+	VM_CAP_BPT_EXIT,
 	VM_CAP_MAX
 };
 
@@ -559,6 +561,7 @@ enum vm_exitcode {
 	VM_EXITCODE_REQIDLE,
 	VM_EXITCODE_DEBUG,
 	VM_EXITCODE_VMINSN,
+	VM_EXITCODE_BPT,
 	VM_EXITCODE_MAX
 };
 
@@ -645,6 +648,9 @@ struct vm_exit {
 			uint64_t	exitinfo1;
 			uint64_t	exitinfo2;
 		} svm;
+		struct {
+			int		inst_length;
+		} bpt;
 		struct {
 			uint32_t	code;		/* ecx value */
 			uint64_t	wval;

@@ -1,4 +1,4 @@
-# $FreeBSD: releng/12.1/tests/sys/Makefile 344966 2019-03-09 10:34:42Z kp $
+# $FreeBSD$
 
 .include <src.opts.mk>
 
@@ -19,6 +19,7 @@ TESTS_SUBDIRS+=		kqueue
 TESTS_SUBDIRS+=		mac
 TESTS_SUBDIRS+=		mqueue
 TESTS_SUBDIRS+=		netinet
+TESTS_SUBDIRS+=		netinet6
 TESTS_SUBDIRS+=		netipsec
 TESTS_SUBDIRS+=		netmap
 TESTS_SUBDIRS+=		netpfil

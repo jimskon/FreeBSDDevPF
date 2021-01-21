@@ -1,5 +1,5 @@
 #!/bin/sh
-# $FreeBSD: releng/12.1/tests/sys/geom/class/eli/setkey_test.sh 344135 2019-02-14 20:26:59Z asomers $
+# $FreeBSD$
 
 . $(atf_get_srcdir)/conf.sh
 

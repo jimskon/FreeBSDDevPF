@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/usr.sbin/ctld/token.l 352276 2019-09-13 07:08:43Z bapt $
+ * $FreeBSD$
  */
 
 #include <stdio.h>

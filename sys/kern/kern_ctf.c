@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/kern/kern_ctf.c 349712 2019-07-03 21:30:18Z jhibbits $
+ * $FreeBSD$
  */
 
 /*

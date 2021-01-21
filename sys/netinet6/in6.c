@@ -63,7 +63,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet6/in6.c 346434 2019-04-20 11:01:47Z markj $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -84,6 +84,7 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet6/in6.c 346434 2019-04-20 11:01:47Z m
 #include <sys/kernel.h>
 #include <sys/lock.h>
 #include <sys/rmlock.h>
+#include <sys/sysctl.h>
 #include <sys/syslog.h>
 
 #include <net/if.h>
@@ -2022,8 +2023,6 @@ in6_if2idlen(struct ifnet *ifp)
 		return (64);
 	}
 }
-
-#include <sys/sysctl.h>
 
 struct in6_llentry {
 	struct llentry		base;

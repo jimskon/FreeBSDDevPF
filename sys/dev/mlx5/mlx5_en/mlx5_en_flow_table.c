@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/dev/mlx5/mlx5_en/mlx5_en_flow_table.c 353272 2019-10-07 13:13:06Z hselasky $
+ * $FreeBSD$
  */
 
 #include "en.h"
@@ -874,7 +874,8 @@ retry:
 		if (mlx5e_add_eth_addr_to_hash(priv->eth_addr.if_uc, hn) == 0)
 			continue;
 		if (hn->mpfs_index == -1U)
-			mlx5_mpfs_add_mac(priv->mdev, &hn->mpfs_index, hn->ai.addr);
+			mlx5_mpfs_add_mac(priv->mdev, &hn->mpfs_index,
+			    hn->ai.addr, 0, 0);
 	}
 
 	/* insert L2 multicast addresses into hash list */

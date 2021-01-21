@@ -67,7 +67,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/sys/netinet6/in6_pcb.c 349762 2019-07-05 10:31:37Z hselasky $");
+__FBSDID("$FreeBSD$");
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -110,9 +110,6 @@ __FBSDID("$FreeBSD: releng/12.1/sys/netinet6/in6_pcb.c 349762 2019-07-05 10:31:3
 #include <netinet/in_pcb.h>
 #include <netinet6/in6_pcb.h>
 #include <netinet6/scope6_var.h>
-
-static struct inpcb *in6_pcblookup_hash_locked(struct inpcbinfo *,
-    struct in6_addr *, u_int, struct in6_addr *, u_int, int, struct ifnet *);
 
 int
 in6_pcbbind(struct inpcb *inp, struct sockaddr *nam,
@@ -412,12 +409,15 @@ in6_pcbladdr(struct inpcb *inp, struct sockaddr *nam,
  */
 int
 in6_pcbconnect_mbuf(struct inpcb *inp, struct sockaddr *nam,
-    struct ucred *cred, struct mbuf *m)
+    struct ucred *cred, struct mbuf *m, bool rehash)
 {
 	struct inpcbinfo *pcbinfo = inp->inp_pcbinfo;
 	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)nam;
-	struct in6_addr addr6;
+	struct sockaddr_in6 laddr6;
 	int error;
+
+	bzero(&laddr6, sizeof(laddr6));
+	laddr6.sin6_family = AF_INET6;
 
 	INP_WLOCK_ASSERT(inp);
 	INP_HASH_WLOCK_ASSERT(pcbinfo);
@@ -426,23 +426,28 @@ in6_pcbconnect_mbuf(struct inpcb *inp, struct sockaddr *nam,
 	 * Call inner routine, to assign local interface address.
 	 * in6_pcbladdr() may automatically fill in sin6_scope_id.
 	 */
-	if ((error = in6_pcbladdr(inp, nam, &addr6)) != 0)
+	if ((error = in6_pcbladdr(inp, nam, &laddr6.sin6_addr)) != 0)
 		return (error);
 
 	if (in6_pcblookup_hash_locked(pcbinfo, &sin6->sin6_addr,
 			       sin6->sin6_port,
 			      IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_laddr)
-			      ? &addr6 : &inp->in6p_laddr,
+			      ? &laddr6.sin6_addr : &inp->in6p_laddr,
 			      inp->inp_lport, 0, NULL) != NULL) {
 		return (EADDRINUSE);
 	}
 	if (IN6_IS_ADDR_UNSPECIFIED(&inp->in6p_laddr)) {
 		if (inp->inp_lport == 0) {
-			error = in6_pcbbind(inp, (struct sockaddr *)0, cred);
+			KASSERT(rehash == true,
+			    ("Rehashing required for unbound inps"));
+			rehash = false;
+			error = in_pcb_lport_dest(inp,
+			    (struct sockaddr *) &laddr6, &inp->inp_lport,
+			    (struct sockaddr *) sin6, sin6->sin6_port, cred, 0);
 			if (error)
 				return (error);
 		}
-		inp->in6p_laddr = addr6;
+		inp->in6p_laddr = laddr6.sin6_addr;
 	}
 	inp->in6p_faddr = sin6->sin6_addr;
 	inp->inp_fport = sin6->sin6_port;
@@ -452,7 +457,11 @@ in6_pcbconnect_mbuf(struct inpcb *inp, struct sockaddr *nam,
 		inp->inp_flow |=
 		    (htonl(ip6_randomflowlabel()) & IPV6_FLOWLABEL_MASK);
 
-	in_pcbrehash_mbuf(inp, m);
+	if (rehash) {
+		in_pcbrehash_mbuf(inp, m);
+	} else {
+		in_pcbinshash_mbuf(inp, m);
+	}
 
 	return (0);
 }
@@ -461,7 +470,7 @@ int
 in6_pcbconnect(struct inpcb *inp, struct sockaddr *nam, struct ucred *cred)
 {
 
-	return (in6_pcbconnect_mbuf(inp, nam, cred, NULL));
+	return (in6_pcbconnect_mbuf(inp, nam, cred, NULL, true));
 }
 
 void
@@ -802,20 +811,20 @@ in6_pcblookup_local(struct inpcbinfo *pcbinfo, struct in6_addr *laddr,
 void
 in6_pcbpurgeif0(struct inpcbinfo *pcbinfo, struct ifnet *ifp)
 {
-	struct inpcb *in6p;
+	struct inpcb *inp;
 	struct in6_multi *inm;
 	struct in6_mfilter *imf;
 	struct ip6_moptions *im6o;
 
 	INP_INFO_WLOCK(pcbinfo);
-	CK_LIST_FOREACH(in6p, pcbinfo->ipi_listhead, inp_list) {
-		INP_WLOCK(in6p);
-		if (__predict_false(in6p->inp_flags2 & INP_FREED)) {
-			INP_WUNLOCK(in6p);
+	CK_LIST_FOREACH(inp, pcbinfo->ipi_listhead, inp_list) {
+		INP_WLOCK(inp);
+		if (__predict_false(inp->inp_flags2 & INP_FREED)) {
+			INP_WUNLOCK(inp);
 			continue;
 		}
-		im6o = in6p->in6p_moptions;
-		if ((in6p->inp_vflag & INP_IPV6) && im6o != NULL) {
+		im6o = inp->in6p_moptions;
+		if ((inp->inp_vflag & INP_IPV6) && im6o != NULL) {
 			/*
 			 * Unselect the outgoing ifp for multicast if it
 			 * is being detached.
@@ -839,7 +848,7 @@ restart:
 				goto restart;
 			}
 		}
-		INP_WUNLOCK(in6p);
+		INP_WUNLOCK(inp);
 	}
 	INP_INFO_WUNLOCK(pcbinfo);
 }
@@ -1115,9 +1124,9 @@ found:
 #endif /* PCBGROUP */
 
 /*
- * Lookup PCB in hash list.
+ * Lookup PCB in hash list.  Used in in_pcb.c as well as here.
  */
-static struct inpcb *
+struct inpcb *
 in6_pcblookup_hash_locked(struct inpcbinfo *pcbinfo, struct in6_addr *faddr,
     u_int fport_arg, struct in6_addr *laddr, u_int lport_arg,
     int lookupflags, struct ifnet *ifp)

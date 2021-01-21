@@ -22,9 +22,9 @@
 .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 .\" SUCH DAMAGE.
 .\"
-.\" $FreeBSD: releng/12.1/lib/libcasper/services/cap_pwd/cap_pwd.3 335389 2018-06-19 22:19:42Z oshogbo $
+.\" $FreeBSD$
 .\"
-.Dd June 20, 2018
+.Dd May 5, 2020
 .Dt CAP_PWD 3
 .Os
 .Sh NAME
@@ -223,6 +223,11 @@ cap_close(cappwd);
 .Xr setpwent 3 ,
 .Xr capsicum 4 ,
 .Xr nv 9
+.Sh HISTORY
+The
+.Nm cap_pwd
+service first appeared in
+.Fx 10.3 .
 .Sh AUTHORS
 The
 .Nm cap_pwd

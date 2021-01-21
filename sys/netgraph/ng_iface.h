@@ -37,7 +37,7 @@
  *
  * Author: Archie Cobbs <archie@freebsd.org>
  *
- * $FreeBSD: releng/12.1/sys/netgraph/ng_iface.h 337278 2018-08-03 22:55:58Z glebius $
+ * $FreeBSD$
  * $Whistle: ng_iface.h,v 1.5 1999/01/20 00:22:13 archie Exp $
  */
 
@@ -54,8 +54,6 @@
 /* My hook names */
 #define NG_IFACE_HOOK_INET		"inet"
 #define NG_IFACE_HOOK_INET6		"inet6"
-#define NG_IFACE_HOOK_ATM		"atm"
-#define NG_IFACE_HOOK_NATM		"natm"
 
 /* MTU bounds */
 #define NG_IFACE_MTU_MIN		72

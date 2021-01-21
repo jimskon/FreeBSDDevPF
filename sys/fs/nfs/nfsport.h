@@ -31,7 +31,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/sys/fs/nfs/nfsport.h 335130 2018-06-14 10:00:19Z rmacklem $
+ * $FreeBSD$
  */
 
 #ifndef _NFS_NFSPORT_H_
@@ -103,11 +103,6 @@
 #include <rpc/rpc.h>
 #include <rpc/rpcsec_gss.h>
 
-/*
- * For Darwin, these functions should be "static" when built in a kext.
- * (This is always defined as nil otherwise.)
- */
-#define	APPLESTATIC
 #include <ufs/ufs/dir.h>
 #include <ufs/ufs/quota.h>
 #include <ufs/ufs/inode.h>
@@ -669,6 +664,7 @@ void nfsrvd_rcv(struct socket *, void *, int);
 #define	NFSLOCKSOCK()		mtx_lock(&nfs_slock_mutex)
 #define	NFSUNLOCKSOCK()		mtx_unlock(&nfs_slock_mutex)
 #define	NFSNAMEIDMUTEX		extern struct mtx nfs_nameid_mutex
+#define	NFSNAMEIDMUTEXPTR	(&nfs_nameid_mutex)
 #define	NFSLOCKNAMEID()		mtx_lock(&nfs_nameid_mutex)
 #define	NFSUNLOCKNAMEID()	mtx_unlock(&nfs_nameid_mutex)
 #define	NFSNAMEIDREQUIRED()	mtx_assert(&nfs_nameid_mutex, MA_OWNED)
@@ -688,8 +684,12 @@ void nfsrvd_rcv(struct socket *, void *, int);
 #define	NFSUNLOCKV4ROOTMUTEX()	mtx_unlock(&nfs_v4root_mutex)
 #define	NFSLOCKNODE(n)		mtx_lock(&((n)->n_mtx))
 #define	NFSUNLOCKNODE(n)	mtx_unlock(&((n)->n_mtx))
+#define	NFSASSERTNODE(n)	mtx_assert(&((n)->n_mtx), MA_OWNED)
 #define	NFSLOCKMNT(m)		mtx_lock(&((m)->nm_mtx))
 #define	NFSUNLOCKMNT(m)		mtx_unlock(&((m)->nm_mtx))
+#define	NFSLOCKIOD()		mtx_lock(&ncl_iod_mutex)
+#define	NFSUNLOCKIOD()		mtx_unlock(&ncl_iod_mutex)
+#define	NFSASSERTIOD()		mtx_assert(&ncl_iod_mutex, MA_OWNED)
 #define	NFSLOCKREQUEST(r)	mtx_lock(&((r)->r_mtx))
 #define	NFSUNLOCKREQUEST(r)	mtx_unlock(&((r)->r_mtx))
 #define	NFSPROCLISTLOCK()	sx_slock(&allproc_lock)
@@ -857,11 +857,11 @@ MALLOC_DECLARE(M_NEWNFSDSESSION);
 #define	NFSWRITERPC_SETTIME(w, n, a, v4)				\
 	do {								\
 		if (w) {						\
-			mtx_lock(&((n)->n_mtx));			\
+			NFSLOCKNODE(n);					\
 			(n)->n_mtime = (a)->na_mtime;			\
 			if (v4)						\
 				(n)->n_change = (a)->na_filerev;	\
-			mtx_unlock(&((n)->n_mtx));			\
+			NFSUNLOCKNODE(n);				\
 		}							\
 	} while (0)
 
@@ -876,6 +876,7 @@ MALLOC_DECLARE(M_NEWNFSDSESSION);
 int nfscl_loadattrcache(struct vnode **, struct nfsvattr *, void *, void *,
     int, int);
 int newnfs_realign(struct mbuf **, int);
+bool ncl_pager_setsize(struct vnode *vp, u_quad_t *nsizep);
 
 /*
  * If the port runs on an SMP box that can enforce Atomic ops with low

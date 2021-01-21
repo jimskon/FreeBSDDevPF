@@ -23,10 +23,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/12.1/lib/libsecureboot/pass_manifest.c 346737 2019-04-26 11:12:51Z mw $
+ * $FreeBSD$
  */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/12.1/lib/libsecureboot/pass_manifest.c 346737 2019-04-26 11:12:51Z mw $");
+__FBSDID("$FreeBSD$");
 
 #include <sys/stat.h>
 

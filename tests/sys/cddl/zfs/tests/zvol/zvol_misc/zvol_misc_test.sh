@@ -18,7 +18,7 @@
 # CDDL HEADER END
 #
 
-# $FreeBSD: releng/12.1/tests/sys/cddl/zfs/tests/zvol/zvol_misc/zvol_misc_test.sh 329867 2018-02-23 16:31:00Z asomers $
+# $FreeBSD$
 
 #
 # Copyright 2012 Spectra Logic.  All rights reserved.
@@ -30,7 +30,6 @@ atf_test_case zvol_misc_001_neg cleanup
 zvol_misc_001_neg_head()
 {
 	atf_set "descr" "Verify that ZFS volume cannot act as dump device until dumpswap supported."
-	atf_set "require.progs"  dumpadm
 }
 zvol_misc_001_neg_body()
 {
@@ -82,6 +81,7 @@ zvol_misc_003_neg_head()
 }
 zvol_misc_003_neg_body()
 {
+	atf_skip "FreeBSD does not yet support dumping to a zvol"
 	. $(atf_get_srcdir)/../../../include/default.cfg
 	. $(atf_get_srcdir)/zvol_misc.cfg
 
@@ -106,6 +106,7 @@ zvol_misc_004_pos_head()
 }
 zvol_misc_004_pos_body()
 {
+	atf_skip "FreeBSD does not yet support dumping to a zvol"
 	. $(atf_get_srcdir)/../../../include/default.cfg
 	. $(atf_get_srcdir)/zvol_misc.cfg
 
@@ -130,6 +131,7 @@ zvol_misc_005_neg_head()
 }
 zvol_misc_005_neg_body()
 {
+	atf_skip "FreeBSD does not yet support dumping to a zvol"
 	. $(atf_get_srcdir)/../../../include/default.cfg
 	. $(atf_get_srcdir)/zvol_misc.cfg
 
@@ -154,6 +156,7 @@ zvol_misc_006_pos_head()
 }
 zvol_misc_006_pos_body()
 {
+	atf_skip "FreeBSD does not yet support dumping to a zvol"
 	. $(atf_get_srcdir)/../../../include/default.cfg
 	. $(atf_get_srcdir)/zvol_misc.cfg
 
